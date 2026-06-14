@@ -1,0 +1,1352 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>🗼 パリ旅行しおり 2026</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:        #1a237e;
+      --navy-dark:   #0d1b5e;
+      --blue:        #1565c0;
+      --gold:        #c9a84c;
+      --gold-light:  #f5e6c2;
+      --green:       #2e7d32;
+      --green-light: #e8f5e9;
+      --purple:      #6a1b9a;
+      --purple-light:#f3e5f5;
+      --orange:      #e65100;
+      --orange-light:#fff3e0;
+      --rose:        #ad1457;
+      --rose-light:  #fce4ec;
+      --blue-light:  #e3f2fd;
+      --bg:          #f0f0ec;
+      --white:       #ffffff;
+      --text:        #1a1a1a;
+      --muted:       #757575;
+      --border:      #e0e0e0;
+      --shadow:      0 2px 16px rgba(0,0,0,0.09);
+      --radius:      14px;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans',
+                   'Hiragino Kaku Gothic ProN', 'Noto Sans JP', 'Yu Gothic UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding-bottom: 48px;
+    }
+
+    /* ─── HERO ─────────────────────────────────────────────── */
+    .hero {
+      background: linear-gradient(160deg, var(--navy-dark) 0%, var(--navy) 55%, #1e3a8a 100%);
+      color: #fff;
+      padding: 36px 20px 0;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-deco {
+      position: absolute;
+      top: 10px; right: 10px;
+      font-size: 96px;
+      opacity: 0.06;
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.13);
+      border: 1px solid rgba(255,255,255,0.28);
+      color: var(--gold-light);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      padding: 4px 14px;
+      border-radius: 20px;
+      margin-bottom: 14px;
+      text-transform: uppercase;
+    }
+
+    .hero h1 {
+      font-size: 30px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      margin-bottom: 6px;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.4);
+    }
+
+    .hero-sub {
+      font-size: 13px;
+      opacity: 0.82;
+      margin-bottom: 18px;
+    }
+
+    .hero-dates {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255,255,255,0.13);
+      border-radius: 30px;
+      padding: 9px 20px;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 24px;
+    }
+    .hero-dates .sep { opacity: 0.5; font-weight: 400; }
+
+    /* Paris skyline SVG */
+    .skyline {
+      display: block;
+      width: 100%;
+      height: 72px;
+      margin-top: 4px;
+    }
+
+    /* ─── TABS ─────────────────────────────────────────────── */
+    .tabs-wrap {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--white);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.11);
+    }
+
+    .tabs {
+      display: flex;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+      padding: 0 6px;
+    }
+    .tabs::-webkit-scrollbar { display: none; }
+
+    .tab {
+      flex: 0 0 auto;
+      min-width: 64px;
+      padding: 11px 14px;
+      border: none;
+      background: none;
+      cursor: pointer;
+      border-bottom: 3px solid transparent;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 600;
+      white-space: nowrap;
+      transition: color 0.18s, border-color 0.18s;
+      text-align: center;
+    }
+    .tab:hover  { color: var(--navy); }
+    .tab.active { color: var(--navy); border-bottom-color: var(--navy); }
+    .tab .dn    { display: block; font-size: 20px; font-weight: 800; line-height: 1.1; }
+    .tab .dl    { display: block; font-size: 9px; letter-spacing: 0.4px; margin-top: 2px; }
+
+    /* ─── CONTENT ──────────────────────────────────────────── */
+    .content {
+      max-width: 620px;
+      margin: 0 auto;
+      padding: 20px 14px;
+    }
+
+    .pane { display: none; }
+    .pane.active {
+      display: block;
+      animation: fadeUp 0.22s ease;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Day header */
+    .day-hd {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 22px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    .day-circle {
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--navy), var(--blue));
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .day-circle .cn { font-size: 22px; font-weight: 900; line-height: 1; }
+    .day-circle .ct { font-size: 8px;  font-weight: 700; letter-spacing: 1px; opacity: 0.8; }
+    .day-hd h2  { font-size: 18px; font-weight: 800; }
+    .day-hd p   { font-size: 12px; color: var(--muted); margin-top: 3px; }
+
+    /* Section label */
+    .sec-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin: 0 0 10px 2px;
+    }
+    .sec-icon {
+      width: 26px; height: 26px;
+      border-radius: 7px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px;
+    }
+
+    /* Cards */
+    .card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 16px;
+      box-shadow: var(--shadow);
+      margin-bottom: 10px;
+      position: relative;
+      overflow: hidden;
+    }
+    .card::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 4px;
+      border-radius: 4px 0 0 4px;
+    }
+    .card.c-flight::before     { background: var(--blue); }
+    .card.c-hotel::before      { background: var(--green); }
+    .card.c-spot::before       { background: var(--purple); }
+    .card.c-restaurant::before { background: var(--orange); }
+    .card.c-tip::before        { background: var(--gold); }
+    .card.c-transport::before  { background: var(--rose); }
+    .card.c-schedule::before   { background: var(--purple); }
+
+    .card-title { font-size: 15px; font-weight: 800; margin-bottom: 3px; }
+    .card-sub   { font-size: 12px; color: var(--muted); margin-bottom: 12px; }
+
+    /* Info rows */
+    .row {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      padding: 6px 0;
+      font-size: 13px;
+      border-bottom: 1px solid #f4f4f4;
+    }
+    .row:last-of-type { border-bottom: none; }
+    .rl { color: var(--muted); min-width: 70px; flex-shrink: 0; font-size: 12px; padding-top: 1px; }
+    .rv { flex: 1; font-weight: 500; line-height: 1.4; }
+
+    /* Badges */
+    .badge {
+      display: inline-block;
+      padding: 2px 9px;
+      border-radius: 12px;
+      font-size: 10px;
+      font-weight: 700;
+      margin: 2px 3px 2px 0;
+    }
+    .b-blue   { background: var(--blue-light);   color: var(--blue); }
+    .b-green  { background: var(--green-light);  color: var(--green); }
+    .b-purple { background: var(--purple-light); color: var(--purple); }
+    .b-orange { background: var(--orange-light); color: var(--orange); }
+    .b-gold   { background: var(--gold-light);   color: #7a6020; }
+    .b-rose   { background: var(--rose-light);   color: var(--rose); }
+
+    /* Flight route */
+    .flight-route {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 0 10px;
+    }
+    .airport { text-align: center; }
+    .iata    { font-size: 26px; font-weight: 900; color: var(--navy); }
+    .city    { font-size: 11px; color: var(--muted); margin-top: 2px; }
+    .ftime   { font-size: 17px; font-weight: 800; margin-top: 4px; }
+    .fnote   { font-size: 10px; color: var(--muted); }
+    .f-mid   { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 0 10px; }
+    .f-plane { font-size: 22px; }
+    .f-dur   { font-size: 11px; color: var(--muted); }
+    .f-line  { width: 100%; height: 1px; background: var(--border); }
+
+    /* Timeline */
+    .timeline { position: relative; padding-left: 28px; }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 10px; top: 8px; bottom: 20px;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--navy) 0%, var(--border) 100%);
+    }
+    .tl-item { position: relative; padding-bottom: 18px; }
+    .tl-item:last-child { padding-bottom: 0; }
+    .tl-item::before {
+      content: '';
+      position: absolute;
+      left: -22px; top: 5px;
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--navy);
+      border: 2px solid #fff;
+      box-shadow: 0 0 0 2px var(--navy);
+    }
+    .tl-time { font-size: 10px; font-weight: 700; color: var(--muted); margin-bottom: 5px; }
+    .tl-box  { background: #fafafa; border: 1px solid var(--border); border-radius: 10px; padding: 11px 13px; }
+    .tl-head { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+    .tl-desc { font-size: 12px; color: var(--muted); line-height: 1.55; }
+
+    /* Tips list */
+    .tip-item {
+      display: flex;
+      gap: 10px;
+      padding: 8px 0;
+      font-size: 13px;
+      line-height: 1.55;
+      border-bottom: 1px solid #f5f5f5;
+    }
+    .tip-item:last-child { border-bottom: none; }
+    .tip-ico { font-size: 18px; flex-shrink: 0; }
+
+    /* Map button */
+    .map-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: var(--blue-light);
+      color: var(--blue);
+      text-decoration: none;
+      padding: 6px 13px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      margin-top: 10px;
+      transition: background 0.15s;
+    }
+    .map-btn:hover { background: #c3d9f5; }
+
+    /* Section spacing */
+    .section { margin-bottom: 20px; }
+
+    /* Info page grid */
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .info-tile {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 16px 12px;
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+    .info-tile .ti   { font-size: 28px; margin-bottom: 5px; }
+    .info-tile .tlbl { font-size: 10px; color: var(--muted); }
+    .info-tile .tval { font-size: 14px; font-weight: 800; margin-top: 3px; }
+
+    /* Emergency box */
+    .emer-box {
+      background: #fff5f5;
+      border: 1px solid #ffcdd2;
+      border-radius: var(--radius);
+      padding: 16px;
+      margin-bottom: 10px;
+    }
+    .emer-box h3 { color: #c62828; font-size: 14px; font-weight: 800; margin-bottom: 12px; }
+
+    /* Budget rows */
+    .bud-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 9px 0;
+      font-size: 13px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .bud-row:last-child { border-bottom: none; }
+    .bud-label  { color: var(--muted); }
+    .bud-amount { font-weight: 800; }
+
+    /* Phrase table */
+    .phrase-tbl { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .phrase-tbl th {
+      text-align: left;
+      font-size: 10px;
+      color: var(--muted);
+      padding: 6px 6px;
+      border-bottom: 2px solid var(--border);
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+    .phrase-tbl td { padding: 8px 6px; border-bottom: 1px solid #f2f2f2; vertical-align: top; }
+    .phrase-tbl tr:last-child td { border-bottom: none; }
+    .fr { font-weight: 700; color: var(--navy); }
+
+    /* Memo */
+    .memo {
+      background: #fffde7;
+      border: 1px solid #f9a825;
+      border-radius: 10px;
+      padding: 14px 16px;
+      font-size: 13px;
+      line-height: 1.65;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 28px 16px 12px;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    /* Print */
+    @media print {
+      .tabs-wrap { position: static; box-shadow: none; }
+      .pane { display: block !important; page-break-before: always; }
+      .pane:first-child { page-break-before: auto; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════ HERO ═══════════════════ -->
+<header class="hero">
+  <div class="hero-deco">🗼</div>
+  <div class="hero-badge">✈ VOYAGE À PARIS ✈</div>
+  <h1>🗼 パリ旅行しおり</h1>
+  <p class="hero-sub">2人でめぐる美しき光の都へ</p>
+  <div class="hero-dates">
+    📅 2026年10月1日（木）<span class="sep">→</span>10月5日（月）
+    <span class="sep">|</span> 4泊5日
+  </div>
+
+  <!-- Paris silhouette SVG -->
+  <svg class="skyline" viewBox="0 0 400 72" preserveAspectRatio="xMidYMax meet"
+       xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#f0f0ec"/>
+        <stop offset="100%" stop-color="#f0f0ec"/>
+      </linearGradient>
+    </defs>
+    <!-- Ground -->
+    <rect x="0" y="65" width="400" height="7" fill="#f0f0ec"/>
+
+    <!-- Left buildings -->
+    <rect x="0"  y="48" width="28" height="17" fill="#f0f0ec"/>
+    <rect x="8"  y="40" width="12" height="8"  fill="#f0f0ec"/>
+    <rect x="30" y="52" width="22" height="13" fill="#f0f0ec"/>
+    <rect x="35" y="45" width="12" height="7"  fill="#f0f0ec"/>
+
+    <!-- Arc de Triomphe (rough) -->
+    <rect x="55" y="38" width="30" height="27" fill="#f0f0ec"/>
+    <rect x="63" y="50" width="14" height="15" fill="#1a237e"/>
+    <rect x="57" y="32" width="26" height="6"  fill="#f0f0ec"/>
+
+    <!-- Mid buildings -->
+    <rect x="88"  y="50" width="18" height="15" fill="#f0f0ec"/>
+    <rect x="92"  y="43" width="10" height="7"  fill="#f0f0ec"/>
+    <rect x="108" y="46" width="20" height="19" fill="#f0f0ec"/>
+    <rect x="112" y="36" width="12" height="10" fill="#f0f0ec"/>
+    <rect x="114" y="32" width="8"  height="4"  fill="#f0f0ec"/>
+
+    <!-- Notre-Dame (rough silhouette) -->
+    <rect x="130" y="44" width="36" height="21" fill="#f0f0ec"/>
+    <polygon points="130,44 148,30 166,44" fill="#f0f0ec"/>
+    <rect x="130" y="36" width="6"  height="8"  fill="#f0f0ec"/>
+    <rect x="160" y="36" width="6"  height="8"  fill="#f0f0ec"/>
+
+    <!-- Eiffel Tower (center piece) -->
+    <g transform="translate(185,2)">
+      <!-- legs -->
+      <polygon points="14,63 22,63 19,38 17,38" fill="#f0f0ec"/>
+      <polygon points="16,63 14,63 11,38 13,38" fill="#f0f0ec"/>
+      <!-- body -->
+      <polygon points="11,38 19,38 17,20 13,20" fill="#f0f0ec"/>
+      <!-- top -->
+      <polygon points="13,20 17,20 15,4 15,4"   fill="#f0f0ec"/>
+      <!-- platform 1 -->
+      <rect x="8"  y="36" width="14" height="2" fill="#f0f0ec"/>
+      <!-- platform 2 -->
+      <rect x="11" y="18" width="8"  height="2" fill="#f0f0ec"/>
+      <!-- antenna -->
+      <rect x="14.5" y="0" width="1" height="4" fill="#f0f0ec"/>
+    </g>
+
+    <!-- Right buildings -->
+    <rect x="220" y="44" width="22" height="21" fill="#f0f0ec"/>
+    <rect x="225" y="36" width="12" height="8"  fill="#f0f0ec"/>
+    <rect x="244" y="50" width="18" height="15" fill="#f0f0ec"/>
+    <rect x="248" y="42" width="10" height="8"  fill="#f0f0ec"/>
+
+    <!-- Louvre (rough) -->
+    <rect x="264" y="46" width="40" height="19" fill="#f0f0ec"/>
+    <polygon points="264,46 284,34 304,46"       fill="#f0f0ec"/>
+    <!-- Pyramid -->
+    <polygon points="276,46 284,36 292,46"       fill="#1a237e" opacity="0.25"/>
+
+    <!-- Far right -->
+    <rect x="306" y="50" width="20" height="15" fill="#f0f0ec"/>
+    <rect x="310" y="42" width="12" height="8"  fill="#f0f0ec"/>
+    <rect x="328" y="48" width="24" height="17" fill="#f0f0ec"/>
+    <rect x="334" y="38" width="12" height="10" fill="#f0f0ec"/>
+    <rect x="354" y="52" width="26" height="13" fill="#f0f0ec"/>
+    <rect x="360" y="44" width="14" height="8"  fill="#f0f0ec"/>
+    <rect x="376" y="46" width="24" height="19" fill="#f0f0ec"/>
+  </svg>
+</header>
+
+<!-- ═══════════════════ TABS ═══════════════════ -->
+<div class="tabs-wrap">
+  <div class="tabs" role="tablist">
+    <button class="tab active" onclick="show('day1',0)" role="tab" aria-selected="true">
+      <span class="dn">1</span><span class="dl">出発日</span>
+    </button>
+    <button class="tab" onclick="show('day2',1)" role="tab">
+      <span class="dn">2</span><span class="dl">エッフェル</span>
+    </button>
+    <button class="tab" onclick="show('day3',2)" role="tab">
+      <span class="dn">3</span><span class="dl">ルーヴル</span>
+    </button>
+    <button class="tab" onclick="show('day4',3)" role="tab">
+      <span class="dn">4</span><span class="dl">ヴェルサイユ</span>
+    </button>
+    <button class="tab" onclick="show('day5',4)" role="tab">
+      <span class="dn">5</span><span class="dl">帰国日</span>
+    </button>
+    <button class="tab" onclick="show('info',5)" role="tab">
+      <span class="dn" style="font-size:18px">📋</span><span class="dl">基本情報</span>
+    </button>
+  </div>
+</div>
+
+<!-- ═══════════════════ CONTENT ═══════════════════ -->
+<main class="content">
+
+<!-- ─────────────────── DAY 1 ─────────────────── -->
+<div id="day1" class="pane active">
+
+  <div class="day-hd">
+    <div class="day-circle"><span class="cn">1</span><span class="ct">DAY</span></div>
+    <div>
+      <h2>10月1日（木）出発日</h2>
+      <p>成田発 → パリ・シャルル・ド・ゴール着</p>
+    </div>
+  </div>
+
+  <!-- Flight -->
+  <div class="section">
+    <div class="sec-title">
+      <div class="sec-icon" style="background:var(--blue-light)">✈️</div>
+      <span style="color:var(--blue)">フライト情報</span>
+    </div>
+    <div class="card c-flight">
+      <div class="card-title">エールフランス AF275</div>
+      <div class="card-sub">成田国際空港 → パリ・シャルル・ド・ゴール空港</div>
+      <div class="flight-route">
+        <div class="airport">
+          <div class="iata">NRT</div>
+          <div class="city">成田</div>
+          <div class="ftime">11:20</div>
+        </div>
+        <div class="f-mid">
+          <div class="f-plane">✈️</div>
+          <div class="f-line"></div>
+          <div class="f-dur">約13時間</div>
+        </div>
+        <div class="airport">
+          <div class="iata">CDG</div>
+          <div class="city">パリ</div>
+          <div class="ftime">17:50</div>
+          <div class="fnote">現地時間</div>
+        </div>
+      </div>
+      <div class="row"><span class="rl">📋 便名</span><span class="rv">AF275</span></div>
+      <div class="row"><span class="rl">💺 座席</span><span class="rv">24A・24B（エコノミークラス）</span></div>
+      <div class="row"><span class="rl">🎒 荷物</span><span class="rv">23kg × 1個/人（受託手荷物）</span></div>
+      <div class="row"><span class="rl">📞 予約番号</span><span class="rv">XXXXXX（要記入）</span></div>
+    </div>
+  </div>
+
+  <!-- Hotel -->
+  <div class="section">
+    <div class="sec-title">
+      <div class="sec-icon" style="background:var(--green-light)">🏨</div>
+      <span style="color:var(--green)">ホテル情報（全泊）</span>
+    </div>
+    <div class="card c-hotel">
+      <div class="card-title">Hôtel du Marais（オテル・デュ・マレ）</div>
+      <div class="card-sub">⭐⭐⭐⭐ マレ地区 • 10月1日〜5日（4泊）</div>
+      <div class="row"><span class="rl">📍 住所</span><span class="rv">3 Rue des Archives, 75004 Paris</span></div>
+      <div class="row"><span class="rl">🕐 C/I</span><span class="rv">15:00〜（前日までに連絡で早め可能な場合あり）</span></div>
+      <div class="row"><span class="rl">🕐 C/O</span><span class="rv">11:00</span></div>
+      <div class="row"><span class="rl">📞 電話</span><span class="rv">+33 1 42 78 XX XX</span></div>
+      <div class="row"><span class="rl">📋 予約番号</span><span class="rv">BK-2026-XXXXXX（要記入）</span></div>
+      <div class="row"><span class="rl">🚇 アクセス</span><span class="rv">メトロ11号線 Hôtel de Ville駅 徒歩3分</span></div>
+      <a href="https://maps.google.com/?q=3+Rue+des+Archives+75004+Paris" class="map-btn" target="_blank" rel="noopener">🗺️ Google マップで見る</a>
+    </div>
+  </div>
+
+  <!-- Schedule -->
+  <div class="section">
+    <div class="sec-title">
+      <div class="sec-icon" style="background:var(--purple-light)">📅</div>
+      <span style="color:var(--purple)">本日のスケジュール</span>
+    </div>
+    <div class="card c-schedule">
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-time">08:00</div>
+          <div class="tl-box">
+            <div class="tl-head">🏠 自宅出発</div>
+            <div class="tl-desc">成田空港（第1ターミナル）へ。余裕を持って出発！電車なら成田エクスプレス利用が便利</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">09:30</div>
+          <div class="tl-box">
+            <div class="tl-head">✈️ 成田空港着・搭乗手続き</div>
+            <div class="tl-desc">エールフランス専用カウンターでチェックイン。出国審査後は免税店でショッピングを楽しもう！</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">11:20</div>
+          <div class="tl-box">
+            <div class="tl-head">✈️ 成田出発</div>
+            <div class="tl-desc">AF275便 パリへ出発！機内食2回あり。日本との時差は−7時間（夏時間）</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">17:50</div>
+          <div class="tl-box">
+            <div class="tl-head">🛬 パリ・CDG空港到着</div>
+            <div class="tl-desc">ターミナル2F着。入国審査 → 荷物受け取り → CDG駅へ。スーツケース受け取りに30分前後かかることも</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">19:00</div>
+          <div class="tl-box">
+            <div class="tl-head">🚄 RER B でパリ市内へ</div>
+            <div class="tl-desc">CDG空港駅 → 北駅（Gare du Nord）約35分、€13.40/人。Navigo Visitカードを購入してもOK</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">20:00</div>
+          <div class="tl-box">
+            <div class="tl-head">🏨 ホテルにチェックイン</div>
+            <div class="tl-desc">荷物を置いてひとまず休憩。近くのブラッスリーでパリ最初の夕食を。長旅お疲れ様でした！</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tips -->
+  <div class="section">
+    <div class="sec-title">
+      <div class="sec-icon" style="background:var(--gold-light)">💡</div>
+      <span style="color:var(--orange)">今日のポイント</span>
+    </div>
+    <div class="card c-tip">
+      <div class="tip-item"><span class="tip-ico">💶</span><span>空港での両替は割高。ホテル周辺のATMでクレカからキャッシングが手数料1〜2%程度でお得</span></div>
+      <div class="tip-item"><span class="tip-ico">📶</span><span>空港でプリペイドSIMを購入しよう。OrangeかSFRがおすすめ（€30〜で10GB程度）</span></div>
+      <div class="tip-item"><span class="tip-ico">🕐</span><span>10月26日〜夏時間が終わるため、旅行期間中の時差は日本−7時間で固定</span></div>
+      <div class="tip-item"><span class="tip-ico">🚇</span><span>メトロ1日券（Navigo Jour）€8.65で市内乗り放題。ゾーン1〜2対応</span></div>
+    </div>
+  </div>
+</div><!-- /day1 -->
+
+<!-- ─────────────────── DAY 2 ─────────────────── -->
+<div id="day2" class="pane">
+
+  <div class="day-hd">
+    <div class="day-circle"><span class="cn">2</span><span class="ct">DAY</span></div>
+    <div>
+      <h2>10月2日（金）エッフェル塔の日</h2>
+      <p>トロカデロ・セーヌ川クルーズ・モンマルトル</p>
+    </div>
+  </div>
+
+  <!-- Schedule -->
+  <div class="section">
+    <div class="sec-title">
+      <div class="sec-icon" style="background:var(--purple-light)">📅</div>
+      <span style="color:var(--purple)">本日のスケジュール</span>
+    </div>
+    <div class="card c-schedule">
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-time">08:30</div>
+          <div class="tl-box">
+            <div class="tl-head">☕ 近くのカフェで朝食</div>
+            <div class="tl-desc">パリのカフェでクロワッサン＆カフェ・オ・レを。フランス式朝食を楽しもう</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">09:30</div>
+          <div class="tl-box">
+            <div class="tl-head">🗼 エッフェル塔（La Tour Eiffel）</div>
+            <div class="tl-desc">事前予約済チケットで混雑前に入場。第2展望台か最上階へ。晴れた日のパリの眺めは最高！</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">12:00</div>
+          <div class="tl-box">
+            <div class="tl-head">🌿 シャン・ド・マルス公園（Champ de Mars）</div>
+            <div class="tl-desc">エッフェル塔を正面に眺めながらピクニックランチ。近くのマルシェでパンやチーズを調達しよう</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">14:00</div>
+          <div class="tl-box">
+            <div class="tl-head">🏛️ トロカデロ（Trocadéro）</div>
+            <div class="tl-desc">シャイヨー宮テラスからエッフェル塔を一望。2人の写真を撮るならここが最高のスポット！</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">16:00</div>
+          <div class="tl-box">
+            <div class="tl-head">🚢 セーヌ川クルーズ（Bateaux Mouches）</div>
+            <div class="tl-desc">アルマ橋付近から乗船。約70分でパリの名所を川から観光。夕暮れ時がロマンティック（€17/人）</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">19:00</div>
+          <div class="tl-box">
+            <div class="tl-head">🎨 モンマルトル（Montmartre）散策</div>
+            <div class="tl-desc">サクレ・クール寺院のステップから夜景を満喫！芸術家の街をふたりで散歩</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">20:30</div>
+          <div class="tl-box">
+            <div class="tl-head">🍽️ モンマルトルで夕食</div>
+            <div class="tl-desc">Rue Lepicの地元ビストロで本場フランス料理をどうぞ</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Spots -->
+  <div class="section">
+    <div class="sec-title">
+      <div class="sec-icon" style="background:var(--purple-light)">🗺️</div>
+      <span style="color:var(--purple)">観光スポット</span>
+    </div>
+
+    <div class="card c-spot">
+      <div class="card-title">エッフェル塔 La Tour Eiffel</div>
+      <div class="card-sub">パリの象徴的シンボル • 7区</div>
+      <div class="row"><span class="rl">🕐 営業時間</span><span class="rv">9:00〜23:45（9〜6月）</span></div>
+      <div class="row"><span class="rl">💶 料金</span><span class="rv">最上階€29.4 / 第2展望台€18.8（要事前予約）</span></div>
+      <div class="row"><span class="rl">🚇 アクセス</span><span class="rv">メトロ6号線 Bir-Hakeim駅 徒歩5分</span></div>
+      <div style="margin-top:8px"><span class="badge b-blue">要予約</span><span class="badge b-gold">絶景</span><span class="badge b-rose">カップル必見</span></div>
+      <a href="https://maps.google.com/?q=Tour+Eiffel+Paris" class="map-btn" target="_blank" rel="noopener">🗺️ マップ</a>
+    </div>
+
+    <div class="card c-spot">
+      <div class="card-title">サクレ・クール寺院 Sacré-Cœur</div>
+      <div class="card-sub">モンマルトルの丘 • 18区</div>
+      <div class="row"><span class="rl">🕐 営業時間</span><span class="rv">6:00〜22:30（無休・無料）</span></div>
+      <div class="row"><span class="rl">💶 クーポール</span><span class="rv">€8（円蓋上れる）</span></div>
+      <div class="row"><span class="rl">🚇 アクセス</span><span class="rv">メトロ2号線 Anvers駅 or ケーブルカー</span></div>
+      <a href="https://maps.google.com/?q=Sacre+Coeur+Montmartre+Paris" class="map-btn" target="_blank" rel="noopener">🗺️ マップ</a>
+    </div>
+  </div>
+
+  <!-- Restaurants -->
+  <div class="section">
+    <div class="sec-title">
+      <div class="sec-icon" style="background:var(--orange-light)">🍽️</div>
+      <span style="color:var(--orange)">レストラン</span>
+    </div>
+
+    <div class="card c-restaurant">
+      <div class="card-title">Le Café de l'Homme</div>
+      <div class="card-sub">🗼 エッフェル塔正面ビュー • トロカデロ • 16区</div>
+      <div class="row"><span class="rl">📍 住所</span><span class="rv">17 Pl. du Trocadéro, 75016 Paris</span></div>
+      <div class="row"><span class="rl">💶 予算</span><span class="rv">€40〜65/人（ランチは€28〜）</span></div>
+      <div class="row"><span class="rl">⭐ おすすめ</span><span class="rv">エッフェル塔正面のテラス席。ランチタイムが比較的リーズナブル</span></div>
+      <div style="margin-top:8px"><span class="badge b-rose">ロマンティック</span><span class="badge b-orange">要予約</span></div>
+    </div>
+
+    <div class="card c-restaurant">
+      <div class="card-title">Le Relais de la Butte</div>
+      <div class="card-sub">🇫🇷 フレンチビストロ • モンマルトル • 18区</div>
+      <div class="row"><span class="rl">📍 住所</span><span class="rv">12 Rue Ravignan, 75018 Paris</span></div>
+      <div class="row"><span class="rl">🕐 営業時間</span><span class="rv">12:00〜23:00</span></div>
+      <div class="row"><span class="rl">💶 予算</span><span class="rv">€25〜38/人（コース）</span></div>
+      <div class="row"><span class="rl">⭐ おすすめ</span><span class="rv">鴨のコンフィ、ブルゴーニュワイン、テラス席あり</span></div>
+      <div style="margin-top:8px"><span class="badge b-orange">予約推奨</span><span class="badge b-gold">テラス席</span></div>
+    </div>
+  </div>
+
+  <!-- Tips -->
+  <div class="section">
+    <div class="sec-title">
+      <div class="sec-icon" style="background:var(--gold-light)">💡</div>
+      <span style="color:var(--orange)">今日のポイント</span>
+    </div>
+    <div class="card c-tip">
+      <div class="tip-item"><span class="tip-ico">✨</span><span>エッフェル塔は夜22時以降のライトアップが幻想的。毎時0分の5分間キラキラ点滅は必見！</span></div>
+      <div class="tip-item"><span class="tip-ico">👮</span><span>エッフェル塔周辺はスリが多い。貴重品は体の前側に。署名を求めてくる人は無視でOK</span></div>
+      <div class="tip-item"><span class="tip-ico">🎫</span><span>エッフェル塔チケットはオンライン事前予約必須。当日券は2〜3時間待ちになることも</span></div>
+      <div class="tip-item"><span class="tip-ico">📸</span><span>トロカデロからのエッフェル塔写真は朝イチか夕暮れ時が光が美しくておすすめ</span></div>
+    </div>
+  </div>
+</div><!-- /day2 -->
+
+<!-- ─────────────────── DAY 3 ─────────────────── -->
+<div id="day3" class="pane">
+
+  <div class="day-hd">
+    <div class="day-circle"><span class="cn">3</span><span class="ct">DAY</span></div>
+    <div>
+      <h2>10月3日（土）ルーヴルの日</h2>
+      <p>ルーヴル美術館・チュイルリー庭園・シャンゼリゼ</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="sec-title">
+      <div class="sec-icon" style="background:var(--purple-light)">📅</div>
+      <span style="color:var(--purple)">本日のスケジュール</span>
+    </div>
+    <div class="card c-schedule">
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-time">09:00</div>
+          <div class="tl-box">
+            <div class="tl-head">🖼️ ルーヴル美術館（Musée du Louvre）</div>
+            <div class="tl-desc">開館直後が空いている！モナ・リザ、ミロのヴィーナス、サモトラケのニケを中心に半日かけてじっくり</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">12:30</div>
+          <div class="tl-box">
+            <div class="tl-head">🌿 チュイルリー庭園（Jardin des Tuileries）</div>
+            <div class="tl-desc">美術館を出てそのまま庭園へ。テラスカフェでランチ休憩。秋の紅葉の中を散歩しよう</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">14:00</div>
+          <div class="tl-box">
+            <div class="tl-head">🛍️ シャンゼリゼ通り（Champs-Élysées）</div>
+            <div class="tl-desc">ルイ・ヴィトン、ディオール、カルティエ本店が並ぶ世界最美の通りを散歩。お土産探しにも◎</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">16:30</div>
+          <div class="tl-box">
+            <div class="tl-head">🏛️ 凱旋門（Arc de Triomphe）</div>
+            <div class="tl-desc">屋上展望台からシャンゼリゼとエッフェル塔が見渡せる絶景夕景！地下道を使って安全にアクセス</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">18:30</div>
+          <div class="tl-box">
+            <div class="tl-head">🍽️ 凱旋門周辺でディナー</div>
+            <div class="tl-desc">8区・16区のシックなビストロでゆっくりディナー</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="sec-title">
+      <div class="sec-icon" style="background:var(--purple-light)">🗺️</div>
+      <span style="color:var(--purple)">観光スポット</span>
+    </div>
+
+    <div class="card c-spot">
+      <div class="card-title">ルーヴル美術館 Musée du Louvre</div>
+      <div class="card-sub">世界最大の美術館 • 1区</div>
+      <div class="row"><span class="rl">🕐 営業時間</span><span class="rv">9:00〜18:00（火曜休）/ 月・水・木は21:45まで</span></div>
+      <div class="row"><span class="rl">💶 料金</span><span class="rv">€22（オンライン事前購入推奨）</span></div>
+      <div class="row"><span class="rl">🚇 アクセス</span><span class="rv">メトロ1号線 Palais Royal-Musée du Louvre駅直結</span></div>
+      <div class="row"><span class="rl">⭐ 必見</span><span class="rv">モナ・リザ / ミロのヴィーナス / サモトラケのニケ</span></div>
+      <div style="margin-top:8px"><span class="badge b-blue">要予約</span><span class="badge b-purple">世界遺産</span></div>
+      <a href="https://maps.google.com/?q=Musee+du+Louvre+Paris" class="map-btn" target="_blank" rel="noopener">🗺️ マップ</a>
+    </div>
+
+    <div class="card c-spot">
+      <div class="card-title">凱旋門 Arc de Triomphe</div>
+      <div class="card-sub">エトワール広場 • 8区</div>
+      <div class="row"><span class="rl">🕐 営業時間</span><span class="rv">10:00〜23:00（10〜3月は22:30まで）</span></div>
+      <div class="row"><span class="rl">💶 料金</span><span class="rv">€16（屋上展望台含む）</span></div>
+      <div class="row"><span class="rl">⚠️ 注意</span><span class="rv">車道は絶対に渡らない！地下道を利用すること</span></div>
+      <a href="https://maps.google.com/?q=Arc+de+Triomphe+Paris" class="map-btn" target="_blank" rel="noopener">🗺️ マップ</a>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="sec-title">
+      <div class="sec-icon" style="background:var(--orange-light)">🍽️</div>
+      <span style="color:var(--orange)">レストラン</span>
+    </div>
+
+    <div class="card c-restaurant">
+      <div class="card-title">Café Marly</div>
+      <div class="card-sub">🖼️ ルーヴル内テラス • 1区</div>
+      <div class="row"><span class="rl">📍 住所</span><span class="rv">93 Rue de Rivoli, 75001 Paris</span></div>
+      <div class="row"><span class="rl">💶 予算</span><span class="rv">€20〜35/人（ランチ）</span></div>
+      <div class="row"><span class="rl">⭐ おすすめ</span><span class="rv">ルーヴルのガラスピラミッドを眺めながらランチ。ロケーションが最高</span></div>
+      <div style="margin-top:8px"><span class="badge b-purple">絶景ビュー</span><span class="badge b-orange">要予約</span></div>
+    </div>
+
+    <div class="card c-restaurant">
+      <div class="card-title">L'Ardoise</div>
+      <div class="card-sub">🇫🇷 正統ビストロ • コンコルド広場近く • 1区</div>
+      <div class="row"><span class="rl">📍 住所</span><span class="rv">28 Rue du Mont Thabor, 75001 Paris</span></div>
+      <div class="row"><span class="rl">💶 予算</span><span class="rv">€18〜30/人（2コースランチ€17〜）</span></div>
+      <div class="row"><span class="rl">⭐ おすすめ</span><span class="rv">オニオングラタンスープ、牛ほほ肉の赤ワイン煮込み</span></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="sec-title">
+      <div class="sec-icon" style="background:var(--gold-light)">💡</div>
+      <span style="color:var(--orange)">今日のポイント</span>
+    </div>
+    <div class="card c-tip">
+      <div class="tip-item"><span class="tip-ico">⏰</span><span>ルーヴルは広大すぎて全部は無理。事前に見たい作品をリストアップして動線を決めておこう（公式アプリが便利）</span></div>
+      <div class="tip-item"><span class="tip-ico">🎧</span><span>音声ガイド€6。日本語対応ガイドあり。主要作品の背景がわかって格段に楽しくなる</span></div>
+      <div class="tip-item"><span class="tip-ico">👟</span><span>シャンゼリゼは約2km。疲れたらメトロで移動も◎。とにかく歩きやすい靴で来ること！</span></div>
+    </div>
+  </div>
+</div><!-- /day3 -->
+
+<!-- ─────────────────── DAY 4 ─────────────────── -->
+<div id="day4" class="pane">
+
+  <div class="day-hd">
+    <div class="day-circle"><span class="cn">4</span><span class="ct">DAY</span></div>
+    <div>
+      <h2>10月4日（日）ヴェルサイユの日</h2>
+      <p>ヴェルサイユ宮殿 → マレ地区の夜</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="sec-title">
+      <div class="sec-icon" style="background:var(--purple-light)">📅</div>
+      <span style="color:var(--purple)">本日のスケジュール</span>
+    </div>
+    <div class="card c-schedule">
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-time">08:15</div>
+          <div class="tl-box">
+            <div class="tl-head">🚄 RER C でヴェルサイユへ</div>
+            <div class="tl-desc">サン・ミシェル・ノートルダム駅 → Versailles-Château-Rive Gauche駅（約40分、€6.05/人）</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">09:30</div>
+          <div class="tl-box">
+            <div class="tl-head">🏰 ヴェルサイユ宮殿（Château de Versailles）</div>
+            <div class="tl-desc">鏡の間は圧巻！王妃の居室、礼拝堂など2〜3時間でじっくり見学。混雑前の午前中に入場が鉄則</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">13:00</div>
+          <div class="tl-box">
+            <div class="tl-head">🌸 ヴェルサイユ庭園（Les jardins de Versailles）</div>
+            <div class="tl-desc">広大なフランス式整形庭園。電動カート（€9）orレンタサイクル（€8）がおすすめ。噴水ショーもあり</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">15:30</div>
+          <div class="tl-box">
+            <div class="tl-head">🚄 パリ市内へ帰還</div>
+            <div class="tl-desc">RER C でパリへ。マレ地区（Le Marais）に立ち寄り</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">17:00</div>
+          <div class="tl-box">
+            <div class="tl-head">🕍 マレ地区散策（Le Marais）</div>
+            <div class="tl-desc">ヴォージュ広場、ピカソ美術館外観、おしゃれなセレクトショップやギャラリーを散歩</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">19:30</div>
+          <div class="tl-box">
+            <div class="tl-head">🥙 マレ地区で夕食</div>
+            <div class="tl-desc">マレはユダヤ人街でもあり、名物ファラフェルをぜひ！Rue des Rosiers界隈へ</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="sec-title">
+      <div class="sec-icon" style="background:var(--purple-light)">🗺️</div>
+      <span style="color:var(--purple)">観光スポット</span>
+    </div>
+
+    <div class="card c-spot">
+      <div class="card-title">ヴェルサイユ宮殿 Château de Versailles</div>
+      <div class="card-sub">フランス王室の宮殿 • ヴェルサイユ市</div>
+      <div class="row"><span class="rl">🕐 営業時間</span><span class="rv">9:00〜17:30（月曜休）</span></div>
+      <div class="row"><span class="rl">💶 料金</span><span class="rv">宮殿€21 / 宮殿+庭園€28（パスポートチケット）</span></div>
+      <div class="row"><span class="rl">🚄 アクセス</span><span class="rv">RER C Versailles-Château-Rive Gauche駅 徒歩10分</span></div>
+      <div class="row"><span class="rl">⭐ 必見</span><span class="rv">鏡の間（Galerie des Glaces）/ 庭園の噴水ショー（土日 €10）</span></div>
+      <div style="margin-top:8px"><span class="badge b-blue">事前予約必須</span><span class="badge b-purple">世界遺産</span></div>
+      <a href="https://maps.google.com/?q=Chateau+de+Versailles" class="map-btn" target="_blank" rel="noopener">🗺️ マップ</a>
+    </div>
+
+    <div class="card c-spot">
+      <div class="card-title">ヴォージュ広場 Place des Vosges</div>
+      <div class="card-sub">パリ最古の広場 • マレ地区 4区</div>
+      <div class="row"><span class="rl">🕐 開放時間</span><span class="rv">終日（無料）</span></div>
+      <div class="row"><span class="rl">⭐ 見どころ</span><span class="rv">赤レンガのアーケード / ヴィクトル・ユゴーの家（€0）</span></div>
+      <a href="https://maps.google.com/?q=Place+des+Vosges+Paris" class="map-btn" target="_blank" rel="noopener">🗺️ マップ</a>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="sec-title">
+      <div class="sec-icon" style="background:var(--orange-light)">🍽️</div>
+      <span style="color:var(--orange)">レストラン</span>
+    </div>
+
+    <div class="card c-restaurant">
+      <div class="card-title">L'As du Fallafel</div>
+      <div class="card-sub">🥙 ファラフェル専門店 • ユダヤ人街 • 4区</div>
+      <div class="row"><span class="rl">📍 住所</span><span class="rv">34 Rue des Rosiers, 75004 Paris</span></div>
+      <div class="row"><span class="rl">🕐 営業時間</span><span class="rv">11:00〜24:00（土曜のみ休 ※ユダヤ安息日）</span></div>
+      <div class="row"><span class="rl">💶 予算</span><span class="rv">€8〜12（テイクアウトも可）</span></div>
+      <div class="row"><span class="rl">⭐ おすすめ</span><span class="rv">スペシャルファラフェル（野菜たっぷり）</span></div>
+      <div style="margin-top:8px"><span class="badge b-green">地元の名店</span><span class="badge b-gold">行列覚悟</span></div>
+    </div>
+
+    <div class="card c-restaurant">
+      <div class="card-title">Breizh Café</div>
+      <div class="card-sub">🥞 ブルターニュ風そば粉クレープ • マレ地区</div>
+      <div class="row"><span class="rl">📍 住所</span><span class="rv">109 Rue Vieille du Temple, 75003 Paris</span></div>
+      <div class="row"><span class="rl">💶 予算</span><span class="rv">€15〜22/人</span></div>
+      <div class="row"><span class="rl">⭐ おすすめ</span><span class="rv">そば粉ガレット（ハム＆チーズ）、デザートクレープ</span></div>
+      <div style="margin-top:8px"><span class="badge b-rose">カジュアル</span><span class="badge b-orange">予約推奨</span></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="sec-title">
+      <div class="sec-icon" style="background:var(--gold-light)">💡</div>
+      <span style="color:var(--orange)">今日のポイント</span>
+    </div>
+    <div class="card c-tip">
+      <div class="tip-item"><span class="tip-ico">⏰</span><span>ヴェルサイユは週末が大混雑。9時の開館と同時入場が鉄則！公式サイトで事前購入を</span></div>
+      <div class="tip-item"><span class="tip-ico">🎵</span><span>土日の庭園噴水ショー「Les Grandes Eaux Musicales」（€10追加）は圧巻。ぜひ見て！</span></div>
+      <div class="tip-item"><span class="tip-ico">👟</span><span>庭園は約100ヘクタール！電動カートかレンタサイクルを必ず活用しよう</span></div>
+    </div>
+  </div>
+</div><!-- /day4 -->
+
+<!-- ─────────────────── DAY 5 ─────────────────── -->
+<div id="day5" class="pane">
+
+  <div class="day-hd">
+    <div class="day-circle"><span class="cn">5</span><span class="ct">DAY</span></div>
+    <div>
+      <h2>10月5日（月）帰国日</h2>
+      <p>最後のパリ → 成田へ</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="sec-title">
+      <div class="sec-icon" style="background:var(--purple-light)">📅</div>
+      <span style="color:var(--purple)">本日のスケジュール</span>
+    </div>
+    <div class="card c-schedule">
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-time">08:00</div>
+          <div class="tl-box">
+            <div class="tl-head">🏨 ホテルチェックアウト</div>
+            <div class="tl-desc">荷物を預けて身軽に最後の散策へ（フロントで預かり可能か確認）。近くのカフェで最後の朝食を</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">09:00</div>
+          <div class="tl-box">
+            <div class="tl-head">🛍️ 最後のお買い物</div>
+            <div class="tl-desc">ギャラリー・ラファイエット（Galeries Lafayette）かボン・マルシェ（Le Bon Marché）でお土産を</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">11:00</div>
+          <div class="tl-box">
+            <div class="tl-head">🚄 CDG空港へ出発</div>
+            <div class="tl-desc">RER B でシャトレ・レ・アル駅orノートルダム駅からCDG空港へ（約35分）。フライト3時間前着が目安</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">12:00</div>
+          <div class="tl-box">
+            <div class="tl-head">✈️ CDG空港着・チェックイン</div>
+            <div class="tl-desc">税関でデタックス（免税）手続きを忘れずに！€100以上の購入品が対象</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">15:10</div>
+          <div class="tl-box">
+            <div class="tl-head">✈️ パリ出発 AF274</div>
+            <div class="tl-desc">素敵な旅の思い出と共に帰路へ。Bon voyage！</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">翌 10:00</div>
+          <div class="tl-box">
+            <div class="tl-head">🛬 成田空港着 → お帰りなさい！</div>
+            <div class="tl-desc">入国審査 → 荷物受け取り。素敵な旅でしたね！</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="sec-title">
+      <div class="sec-icon" style="background:var(--blue-light)">✈️</div>
+      <span style="color:var(--blue)">帰国フライト</span>
+    </div>
+    <div class="card c-flight">
+      <div class="card-title">エールフランス AF274</div>
+      <div class="card-sub">パリ・シャルル・ド・ゴール → 成田国際空港</div>
+      <div class="flight-route">
+        <div class="airport">
+          <div class="iata">CDG</div>
+          <div class="city">パリ</div>
+          <div class="ftime">15:10</div>
+        </div>
+        <div class="f-mid">
+          <div class="f-plane">✈️</div>
+          <div class="f-line"></div>
+          <div class="f-dur">約12時間</div>
+        </div>
+        <div class="airport">
+          <div class="iata">NRT</div>
+          <div class="city">成田</div>
+          <div class="ftime">10:00</div>
+          <div class="fnote">翌日 (+1)</div>
+        </div>
+      </div>
+      <div class="row"><span class="rl">📋 便名</span><span class="rv">AF274</span></div>
+      <div class="row"><span class="rl">💺 座席</span><span class="rv">24A・24B（エコノミークラス）</span></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="sec-title">
+      <div class="sec-icon" style="background:var(--orange-light)">🛍️</div>
+      <span style="color:var(--orange)">おすすめお土産リスト</span>
+    </div>
+    <div class="card c-restaurant">
+      <div class="card-title">パリで買いたいもの</div>
+      <div class="tip-item"><span class="tip-ico">🍫</span><span><strong>ラ・メゾン・デュ・ショコラ</strong> — 高級チョコレート。賞味期限2週間前後なので注意</span></div>
+      <div class="tip-item"><span class="tip-ico">🥐</span><span><strong>ピエール・エルメのマカロン</strong> — 世界一のマカロン。ラ・デュレも定番</span></div>
+      <div class="tip-item"><span class="tip-ico">🧴</span><span><strong>ロクシタン / ジョー・マローン</strong> — コスメ・バスグッズ。日本より安いことも</span></div>
+      <div class="tip-item"><span class="tip-ico">🍷</span><span><strong>ボルドー・ブルゴーニュワイン</strong> — スーパーで€10〜でも絶品が買える</span></div>
+      <div class="tip-item"><span class="tip-ico">🍯</span><span><strong>コンフィチュール（ジャム）</strong> — Bonne Mamanブランドが定番。賞味期限が長くお土産に最適</span></div>
+      <div class="tip-item"><span class="tip-ico">🎨</span><span><strong>エッフェル塔グッズ</strong> — 安く買うならRue de Rivoliの屋台へ。免税店は割高</span></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="sec-title">
+      <div class="sec-icon" style="background:var(--gold-light)">💡</div>
+      <span style="color:var(--orange)">今日のポイント</span>
+    </div>
+    <div class="card c-tip">
+      <div class="tip-item"><span class="tip-ico">🧾</span><span>デタックス（税金還付）：€100超の購入品が対象。空港の税関窓口でスタンプをもらうこと。電子申請ならBorderFreeアプリが便利</span></div>
+      <div class="tip-item"><span class="tip-ico">⏰</span><span>CDG空港は広大で移動に時間がかかる。国際線は出発3時間前には到着を</span></div>
+      <div class="tip-item"><span class="tip-ico">💶</span><span>余ったユーロは帰国後に日本で換金（レートは低め）。空港内より市内の銀行が少しお得</span></div>
+    </div>
+  </div>
+</div><!-- /day5 -->
+
+<!-- ─────────────────── INFO ─────────────────── -->
+<div id="info" class="pane">
+
+  <div class="day-hd">
+    <div class="day-circle" style="background:linear-gradient(135deg,var(--gold),#8a6010)">
+      <span style="font-size:24px;line-height:1">📋</span>
+    </div>
+    <div>
+      <h2>基本情報 &amp; 緊急連絡先</h2>
+      <p>旅先で役立つ情報まとめ</p>
+    </div>
+  </div>
+
+  <!-- Quick tiles -->
+  <div class="info-grid">
+    <div class="info-tile"><div class="ti">💶</div><div class="tlbl">通貨</div><div class="tval">ユーロ（EUR）</div></div>
+    <div class="info-tile"><div class="ti">💱</div><div class="tlbl">参考レート</div><div class="tval">1€ ≈ 165円</div></div>
+    <div class="info-tile"><div class="ti">🌡️</div><div class="tlbl">10月の気温</div><div class="tval">13〜18℃</div></div>
+    <div class="info-tile"><div class="ti">🕐</div><div class="tlbl">時差（日本）</div><div class="tval">−7時間</div></div>
+    <div class="info-tile"><div class="ti">🔌</div><div class="tlbl">コンセント</div><div class="tval">220V / Cタイプ</div></div>
+    <div class="info-tile"><div class="ti">📞</div><div class="tlbl">日本→フランス</div><div class="tval">010-33-番号</div></div>
+  </div>
+
+  <!-- Emergency -->
+  <div class="section">
+    <div class="sec-title">
+      <div class="sec-icon" style="background:#ffebee">🆘</div>
+      <span style="color:#c62828">緊急連絡先</span>
+    </div>
+    <div class="emer-box">
+      <h3>🆘 緊急連絡先一覧</h3>
+      <div class="row"><span class="rl">🚔 警察</span><span class="rv"><strong>17</strong>（フランス国内）</span></div>
+      <div class="row"><span class="rl">🚑 救急</span><span class="rv"><strong>15</strong>（SAMU）</span></div>
+      <div class="row"><span class="rl">🚒 消防</span><span class="rv"><strong>18</strong></span></div>
+      <div class="row"><span class="rl">🌐 EU共通</span><span class="rv"><strong>112</strong>（どこからでも繋がる）</span></div>
+      <div class="row"><span class="rl">🇯🇵 日本大使館</span><span class="rv">+33-1-48-88-62-00（在仏日本大使館）</span></div>
+      <div class="row"><span class="rl">💳 VISA紛失</span><span class="rv">+1-800-847-2911（24時間フリーダイヤル）</span></div>
+    </div>
+  </div>
+
+  <!-- Budget -->
+  <div class="section">
+    <div class="sec-title">
+      <div class="sec-icon" style="background:var(--green-light)">💰</div>
+      <span style="color:var(--green)">旅行予算目安（2人合計）</span>
+    </div>
+    <div class="card c-hotel">
+      <div class="bud-row"><span class="bud-label">✈️ 航空券（往復・2人）</span><span class="bud-amount">¥180,000</span></div>
+      <div class="bud-row"><span class="bud-label">🏨 ホテル（4泊・2人）</span><span class="bud-amount">¥100,000</span></div>
+      <div class="bud-row"><span class="bud-label">🎫 観光入場料</span><span class="bud-amount">¥30,000</span></div>
+      <div class="bud-row"><span class="bud-label">🍽️ 食事（5日間）</span><span class="bud-amount">¥60,000</span></div>
+      <div class="bud-row"><span class="bud-label">🚇 現地交通費</span><span class="bud-amount">¥15,000</span></div>
+      <div class="bud-row"><span class="bud-label">🛍️ お土産・買い物</span><span class="bud-amount">¥50,000</span></div>
+      <div class="bud-row" style="border-top:2px solid var(--border);padding-top:12px">
+        <span style="font-weight:800;font-size:14px">合計目安</span>
+        <span class="bud-amount" style="color:var(--green);font-size:20px">¥435,000</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Transport -->
+  <div class="section">
+    <div class="sec-title">
+      <div class="sec-icon" style="background:var(--rose-light)">🚇</div>
+      <span style="color:var(--rose)">交通手段まとめ</span>
+    </div>
+    <div class="card c-transport">
+      <div class="card-title">パリの移動手段</div>
+      <div class="row"><span class="rl">🚇 メトロ1回</span><span class="rv">€2.15 / 10枚綴りカルネ€17.35</span></div>
+      <div class="row"><span class="rl">📅 1日乗り放題</span><span class="rv">Navigo Jour €8.65（ゾーン1-2対応）</span></div>
+      <div class="row"><span class="rl">🚄 RER B（空港線）</span><span class="rv">空港↔市内 €13.40/人</span></div>
+      <div class="row"><span class="rl">🚄 RER C（ヴェルサイユ）</span><span class="rv">€6.05/人（ゾーン4まで）</span></div>
+      <div class="row"><span class="rl">🚖 タクシー・Uber</span><span class="rv">空港↔市内 €55〜80程度</span></div>
+      <div class="row"><span class="rl">🚲 ヴェリブ</span><span class="rv">シェアサイクル €3.5/30分。短距離移動に便利</span></div>
+    </div>
+  </div>
+
+  <!-- Phrases -->
+  <div class="section">
+    <div class="sec-title">
+      <div class="sec-icon" style="background:var(--purple-light)">🗣️</div>
+      <span style="color:var(--purple)">使えるフランス語フレーズ</span>
+    </div>
+    <div class="card c-spot">
+      <table class="phrase-tbl">
+        <thead>
+          <tr><th>日本語</th><th>フランス語</th><th>読み方</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>こんにちは</td><td class="fr">Bonjour</td><td>ボンジュール</td></tr>
+          <tr><td>ありがとう</td><td class="fr">Merci beaucoup</td><td>メルシー・ボクー</td></tr>
+          <tr><td>すみません</td><td class="fr">Excusez-moi</td><td>エクスキュゼ・モワ</td></tr>
+          <tr><td>はい / いいえ</td><td class="fr">Oui / Non</td><td>ウィ / ノン</td></tr>
+          <tr><td>〜はどこですか？</td><td class="fr">Où est ~ ?</td><td>ウ・エ〜？</td></tr>
+          <tr><td>いくらですか？</td><td class="fr">C'est combien ?</td><td>セ・コンビアン？</td></tr>
+          <tr><td>メニューをください</td><td class="fr">La carte, s'il vous plaît</td><td>ラ・カルト・シルブプレ</td></tr>
+          <tr><td>美味しい！</td><td class="fr">C'est délicieux !</td><td>セ・デリシュー！</td></tr>
+          <tr><td>写真を撮っていいですか？</td><td class="fr">Je peux prendre une photo ?</td><td>ジュ・プ・プランドル・ユン・フォト？</td></tr>
+          <tr><td>助けてください！</td><td class="fr">Au secours !</td><td>オ・スクール！</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Packing -->
+  <div class="section">
+    <div class="sec-title">
+      <div class="sec-icon" style="background:var(--gold-light)">🎒</div>
+      <span style="color:var(--orange)">持ち物チェックリスト</span>
+    </div>
+    <div class="card c-tip">
+      <div class="tip-item"><span class="tip-ico">📘</span><span><strong>パスポート</strong>（有効期限：帰国後6ヶ月以上）</span></div>
+      <div class="tip-item"><span class="tip-ico">💳</span><span><strong>クレジットカード</strong>（VISA＆Mastercard両方。海外キャッシング用も）</span></div>
+      <div class="tip-item"><span class="tip-ico">🔌</span><span><strong>変換プラグ（Cタイプ）</strong>・スマホ充電器（220V対応確認を）</span></div>
+      <div class="tip-item"><span class="tip-ico">🧥</span><span><strong>薄手のジャケット＋重ね着</strong>（10月は朝晩10℃前後に冷えることも）</span></div>
+      <div class="tip-item"><span class="tip-ico">👟</span><span><strong>歩きやすいスニーカー</strong>（石畳にヒールや革靴は厳禁！）</span></div>
+      <div class="tip-item"><span class="tip-ico">☂️</span><span><strong>折りたたみ傘</strong>（10月のパリは雨が多い）</span></div>
+      <div class="tip-item"><span class="tip-ico">📱</span><span><strong>モバイルバッテリー</strong>（終日観光でスマホがすぐ切れる）</span></div>
+      <div class="tip-item"><span class="tip-ico">🔒</span><span><strong>ウエストポーチ（前掛け）</strong>（スリ対策に必須）</span></div>
+      <div class="tip-item"><span class="tip-ico">💊</span><span><strong>常備薬</strong>（胃薬・頭痛薬・整腸剤。現地調達は大変）</span></div>
+      <div class="tip-item"><span class="tip-ico">🧴</span><span><strong>日焼け止め</strong>（秋でも日差しが強い日あり）</span></div>
+    </div>
+  </div>
+
+  <!-- Memo -->
+  <div class="section">
+    <div class="memo">
+      <strong>✍️ パリを楽しむ心得</strong><br><br>
+      パリジャンにとって最初の一声「<strong>Bonjour !</strong>」はとても重要です。お店に入るときは必ず挨拶から始めましょう。英語が通じないことも多いですが、笑顔と少しのフランス語で、現地の人もきっと笑顔で返してくれます。<br><br>
+      カフェでゆっくりコーヒーを飲みながら街を眺める時間も、パリ旅行の醍醐味のひとつ。急がず、ふたりのペースで楽しんでください。<br><br>
+      <strong>Bon voyage ! 良い旅を！ 🗼</strong>
+    </div>
+  </div>
+</div><!-- /info -->
+
+</main>
+
+<footer>
+  <p>🗼 パリ旅行しおり 2026 &nbsp;|&nbsp; ✈️ Bon voyage, deux amoureux !</p>
+</footer>
+
+<script>
+  function show(id, idx) {
+    document.querySelectorAll('.pane').forEach(function(el) {
+      el.classList.remove('active');
+    });
+    document.querySelectorAll('.tab').forEach(function(el) {
+      el.classList.remove('active');
+      el.setAttribute('aria-selected', 'false');
+    });
+
+    document.getElementById(id).classList.add('active');
+
+    var tabs = document.querySelectorAll('.tab');
+    if (tabs[idx]) {
+      tabs[idx].classList.add('active');
+      tabs[idx].setAttribute('aria-selected', 'true');
+      tabs[idx].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    }
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+</body>
+</html>
