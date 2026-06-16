@@ -3,16 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-  <title>🗼 パリ旅行しおり 2026</title>
+  <title>🦘 オーストラリア旅行しおり 2026</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
-      --navy:        #1a237e;
-      --navy-dark:   #0d1b5e;
-      --blue:        #1565c0;
-      --gold:        #c9a84c;
-      --gold-light:  #f5e6c2;
+      --navy:        #01579b;
+      --navy-dark:   #003c6e;
+      --blue:        #0277bd;
+      --gold:        #f57f17;
+      --gold-light:  #fff8e1;
       --green:       #2e7d32;
       --green-light: #e8f5e9;
       --purple:      #6a1b9a;
@@ -30,1323 +29,1841 @@
       --shadow:      0 2px 16px rgba(0,0,0,0.09);
       --radius:      14px;
     }
-
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans',
-                   'Hiragino Kaku Gothic ProN', 'Noto Sans JP', 'Yu Gothic UI', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-      padding-bottom: 48px;
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sans JP', 'Yu Gothic UI', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; padding-bottom: 80px; }
+    html { -webkit-tap-highlight-color: transparent; }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
     }
 
-    /* ─── HERO ─────────────────────────────────────────────── */
-    .hero {
-      background: linear-gradient(160deg, var(--navy-dark) 0%, var(--navy) 55%, #1e3a8a 100%);
-      color: #fff;
-      padding: 36px 20px 0;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
+    /* HERO */
+    .hero { background: linear-gradient(168deg, #001020 0%, #00204a 20%, #012f6e 42%, #0266aa 64%, #028cc8 78%, #a85018 91%, #cc7c14 100%); color: #fff; padding: 40px 24px 0; text-align: left; position: relative; overflow: hidden; }
+    .hero::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 60%; background-image: radial-gradient(circle, rgba(255,255,255,.85) 1px, transparent 1px), radial-gradient(circle, rgba(255,255,255,.6) 1px, transparent 1px); background-size: 38px 38px, 68px 68px; background-position: 10px 6px, 34px 22px; opacity: 0; animation: starsIn 1.8s .6s forwards; pointer-events: none; }
+    @keyframes starsIn { to { opacity: .3; } }
+    .hero h1 { font-size: 26px; font-weight: 900; letter-spacing: -0.5px; margin-bottom: 6px; text-shadow: 0 2px 20px rgba(0,0,0,0.5), 0 0 60px rgba(2,140,255,0.35); }
+    .hero-sub { font-size: 13px; opacity: .82; margin-bottom: 18px; }
+    .hero-dates { display: inline-flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.13); border-radius: 30px; padding: 9px 20px; font-size: 13px; font-weight: 600; margin-bottom: 12px; }
+    .hero-dates .sep { opacity: .5; font-weight: 400; }
+    .skyline { display: block; width: 100%; height: 96px; margin-top: 4px; }
+    .skyline rect, .skyline path, .skyline polygon { fill: rgba(255,255,255,.88); }
 
-    .hero-deco {
-      position: absolute;
-      top: 10px; right: 10px;
-      font-size: 96px;
-      opacity: 0.06;
-      line-height: 1;
-      pointer-events: none;
-    }
-
-    .hero-badge {
-      display: inline-block;
-      background: rgba(255,255,255,0.13);
-      border: 1px solid rgba(255,255,255,0.28);
-      color: var(--gold-light);
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 2.5px;
-      padding: 4px 14px;
-      border-radius: 20px;
-      margin-bottom: 14px;
-      text-transform: uppercase;
-    }
-
-    .hero h1 {
-      font-size: 30px;
-      font-weight: 900;
-      letter-spacing: -0.5px;
-      margin-bottom: 6px;
-      text-shadow: 0 2px 12px rgba(0,0,0,0.4);
-    }
-
-    .hero-sub {
-      font-size: 13px;
-      opacity: 0.82;
-      margin-bottom: 18px;
-    }
-
-    .hero-dates {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      background: rgba(255,255,255,0.13);
-      border-radius: 30px;
-      padding: 9px 20px;
-      font-size: 13px;
-      font-weight: 600;
-      margin-bottom: 24px;
-    }
-    .hero-dates .sep { opacity: 0.5; font-weight: 400; }
-
-    /* Paris skyline SVG */
-    .skyline {
-      display: block;
-      width: 100%;
-      height: 72px;
-      margin-top: 4px;
-    }
-
-    /* ─── TABS ─────────────────────────────────────────────── */
-    .tabs-wrap {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: var(--white);
-      box-shadow: 0 2px 10px rgba(0,0,0,0.11);
-    }
-
-    .tabs {
-      display: flex;
-      overflow-x: auto;
-      scrollbar-width: none;
-      -webkit-overflow-scrolling: touch;
-      padding: 0 6px;
-    }
+    /* TABS */
+    .tabs-wrap { position: sticky; top: 0; z-index: 100; background: #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.11); }
+    .tabs { display: flex; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; padding: 0 6px; }
     .tabs::-webkit-scrollbar { display: none; }
-
-    .tab {
-      flex: 0 0 auto;
-      min-width: 64px;
-      padding: 11px 14px;
-      border: none;
-      background: none;
-      cursor: pointer;
-      border-bottom: 3px solid transparent;
-      color: var(--muted);
-      font-size: 12px;
-      font-weight: 600;
-      white-space: nowrap;
-      transition: color 0.18s, border-color 0.18s;
-      text-align: center;
-    }
+    .tab { flex: 0 0 auto; min-width: 60px; padding: 10px 12px; border: none; background: none; cursor: pointer; border-bottom: 3px solid transparent; color: var(--muted); font-size: 12px; font-weight: 600; white-space: nowrap; transition: color .18s, border-color .18s, transform .15s; text-align: center; }
     .tab:hover  { color: var(--navy); }
-    .tab.active { color: var(--navy); border-bottom-color: var(--navy); }
-    .tab .dn    { display: block; font-size: 20px; font-weight: 800; line-height: 1.1; }
-    .tab .dl    { display: block; font-size: 9px; letter-spacing: 0.4px; margin-top: 2px; }
+    .tab:active { transform: scale(.94); }
+    .tab.active { color: var(--navy); border-bottom-color: var(--navy); background: linear-gradient(to bottom, transparent, rgba(1,87,155,.07)); }
+    .tab .dn { display: block; font-size: 18px; font-weight: 800; line-height: 1.1; }
+    .tab .dl { display: block; font-size: 9px; letter-spacing: .4px; margin-top: 2px; }
+    .edit-banner { display: none; background: #fff8e1; border-bottom: 2px solid #f9a825; padding: 7px 16px; font-size: 11px; font-weight: 700; color: var(--orange); text-align: center; }
+    body.edit-mode .edit-banner { display: block; }
 
-    /* ─── CONTENT ──────────────────────────────────────────── */
-    .content {
-      max-width: 620px;
-      margin: 0 auto;
-      padding: 20px 14px;
-    }
-
+    /* CONTENT */
+    .content { max-width: 620px; margin: 0 auto; padding: 20px 14px; }
     .pane { display: none; }
-    .pane.active {
-      display: block;
-      animation: fadeUp 0.22s ease;
-    }
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(8px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
+    .pane.active { display: block; animation: tabSlide .28s cubic-bezier(.4,0,.2,1); }
+    .pane.active.dir-left { animation-name: tabSlideLeft; }
+    @keyframes tabSlide     { from { opacity:0; transform:translateX(18px); }  to { opacity:1; transform:translateX(0); } }
+    @keyframes tabSlideLeft { from { opacity:0; transform:translateX(-18px); } to { opacity:1; transform:translateX(0); } }
 
-    /* Day header */
-    .day-hd {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      margin-bottom: 22px;
-      padding-bottom: 16px;
-      border-bottom: 1px solid var(--border);
-    }
-    .day-circle {
-      width: 54px;
-      height: 54px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--navy), var(--blue));
-      color: #fff;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
+    .day-hd { display: flex; align-items: center; gap: 14px; margin-bottom: 22px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+    .day-circle { width: 54px; height: 54px; border-radius: 50%; background: linear-gradient(135deg, var(--navy), var(--blue)); color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; flex-shrink: 0; }
     .day-circle .cn { font-size: 22px; font-weight: 900; line-height: 1; }
-    .day-circle .ct { font-size: 8px;  font-weight: 700; letter-spacing: 1px; opacity: 0.8; }
-    .day-hd h2  { font-size: 18px; font-weight: 800; }
-    .day-hd p   { font-size: 12px; color: var(--muted); margin-top: 3px; }
+    .day-circle .ct { font-size: 8px; font-weight: 700; letter-spacing: 1px; opacity: .8; }
+    .day-hd h2 { font-size: 17px; font-weight: 800; }
+    .day-hd p  { font-size: 12px; color: var(--muted); margin-top: 3px; }
 
-    /* Section label */
-    .sec-title {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      margin: 0 0 10px 2px;
-    }
-    .sec-icon {
-      width: 26px; height: 26px;
-      border-radius: 7px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 14px;
-    }
+    .sec-title { display: flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; margin: 0 0 10px 2px; }
+    .sec-icon  { width: 5px; height: 17px; border-radius: 3px; flex-shrink: 0; }
 
-    /* Cards */
-    .card {
-      background: var(--white);
-      border-radius: var(--radius);
-      padding: 16px;
-      box-shadow: var(--shadow);
-      margin-bottom: 10px;
-      position: relative;
-      overflow: hidden;
-    }
-    .card::before {
-      content: '';
-      position: absolute;
-      left: 0; top: 0; bottom: 0;
-      width: 4px;
-      border-radius: 4px 0 0 4px;
-    }
-    .card.c-flight::before     { background: var(--blue); }
-    .card.c-hotel::before      { background: var(--green); }
-    .card.c-spot::before       { background: var(--purple); }
-    .card.c-restaurant::before { background: var(--orange); }
-    .card.c-tip::before        { background: var(--gold); }
-    .card.c-transport::before  { background: var(--rose); }
-    .card.c-schedule::before   { background: var(--purple); }
-
+    .card { background: #fff; border-radius: var(--radius); padding: 16px; box-shadow: 0 2px 10px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04); margin-bottom: 10px; position: relative; overflow: hidden; transition: box-shadow .2s, transform .2s; }
+    .card:hover { box-shadow: 0 6px 24px rgba(0,0,0,0.1), 0 2px 6px rgba(0,0,0,0.06); transform: translateY(-2px); }
+    .card:active { transform: scale(.985); }
+    body.edit-mode .card:hover, body.edit-mode .card:active { transform: none; box-shadow: 0 2px 10px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04); }
+    .card.c-flight     { border-left: 3px solid var(--blue); }
+    .card.c-hotel      { border-left: 3px solid var(--green); }
+    .card.c-spot       { border-left: 3px solid var(--purple); }
+    .card.c-restaurant { border-left: 3px solid var(--orange); }
+    .card.c-tip        { border-left: 3px solid var(--gold); }
+    .card.c-transport  { border-left: 3px solid var(--rose); }
+    .card.c-schedule   { border-left: 3px solid var(--purple); }
+    .card.c-warn       { border-left: 3px solid #c62828; }
     .card-title { font-size: 15px; font-weight: 800; margin-bottom: 3px; }
     .card-sub   { font-size: 12px; color: var(--muted); margin-bottom: 12px; }
 
-    /* Info rows */
-    .row {
-      display: flex;
-      align-items: flex-start;
-      gap: 8px;
-      padding: 6px 0;
-      font-size: 13px;
-      border-bottom: 1px solid #f4f4f4;
-    }
+    .row { display: flex; align-items: flex-start; gap: 8px; padding: 6px 0; font-size: 13px; border-bottom: 1px solid #f4f4f4; }
     .row:last-of-type { border-bottom: none; }
     .rl { color: var(--muted); min-width: 70px; flex-shrink: 0; font-size: 12px; padding-top: 1px; }
     .rv { flex: 1; font-weight: 500; line-height: 1.4; }
 
-    /* Badges */
-    .badge {
-      display: inline-block;
-      padding: 2px 9px;
-      border-radius: 12px;
-      font-size: 10px;
-      font-weight: 700;
-      margin: 2px 3px 2px 0;
-    }
+    .badge { display: inline-block; padding: 2px 9px; border-radius: 12px; font-size: 10px; font-weight: 700; margin: 2px 3px 2px 0; }
     .b-blue   { background: var(--blue-light);   color: var(--blue); }
     .b-green  { background: var(--green-light);  color: var(--green); }
     .b-purple { background: var(--purple-light); color: var(--purple); }
     .b-orange { background: var(--orange-light); color: var(--orange); }
     .b-gold   { background: var(--gold-light);   color: #7a6020; }
     .b-rose   { background: var(--rose-light);   color: var(--rose); }
+    .b-red    { background: #ffebee; color: #c62828; }
 
-    /* Flight route */
-    .flight-route {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 14px 0 10px;
-    }
+    .flight-route { display: flex; align-items: center; justify-content: space-between; padding: 14px 0 10px; }
     .airport { text-align: center; }
-    .iata    { font-size: 26px; font-weight: 900; color: var(--navy); }
-    .city    { font-size: 11px; color: var(--muted); margin-top: 2px; }
-    .ftime   { font-size: 17px; font-weight: 800; margin-top: 4px; }
-    .fnote   { font-size: 10px; color: var(--muted); }
-    .f-mid   { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 0 10px; }
+    .iata  { font-size: 26px; font-weight: 900; color: var(--navy); }
+    .city  { font-size: 11px; color: var(--muted); margin-top: 2px; }
+    .ftime { font-size: 17px; font-weight: 800; margin-top: 4px; }
+    .fnote { font-size: 10px; color: var(--muted); }
+    .f-mid { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 0 10px; }
     .f-plane { font-size: 22px; }
-    .f-dur   { font-size: 11px; color: var(--muted); }
-    .f-line  { width: 100%; height: 1px; background: var(--border); }
+    .f-dur { font-size: 11px; color: var(--muted); }
+    .f-line { width: 100%; height: 1px; background: var(--border); }
 
-    /* Timeline */
     .timeline { position: relative; padding-left: 28px; }
-    .timeline::before {
-      content: '';
-      position: absolute;
-      left: 10px; top: 8px; bottom: 20px;
-      width: 2px;
-      background: linear-gradient(to bottom, var(--navy) 0%, var(--border) 100%);
-    }
+    .timeline::before { content: ''; position: absolute; left: 10px; top: 8px; bottom: 20px; width: 2px; background: linear-gradient(to bottom, var(--navy) 0%, var(--border) 100%); }
     .tl-item { position: relative; padding-bottom: 18px; }
     .tl-item:last-child { padding-bottom: 0; }
-    .tl-item::before {
-      content: '';
-      position: absolute;
-      left: -22px; top: 5px;
-      width: 10px; height: 10px;
-      border-radius: 50%;
-      background: var(--navy);
-      border: 2px solid #fff;
-      box-shadow: 0 0 0 2px var(--navy);
-    }
+    .tl-item::before { content: ''; position: absolute; left: -22px; top: 5px; width: 10px; height: 10px; border-radius: 50%; background: var(--navy); border: 2px solid #fff; box-shadow: 0 0 0 2px var(--navy); }
     .tl-time { font-size: 10px; font-weight: 700; color: var(--muted); margin-bottom: 5px; }
-    .tl-box  { background: #fafafa; border: 1px solid var(--border); border-radius: 10px; padding: 11px 13px; }
+    .tl-box  { background: linear-gradient(160deg,#fafafa,#ffffff); border: 1px solid var(--border); border-radius: 10px; padding: 11px 13px; transition: border-color .15s, box-shadow .15s, transform .15s; position: relative; }
+    .tl-item:hover .tl-box { border-color: #bdbdbd; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+    .tl-item:active .tl-box { transform: scale(.98); }
+    body.edit-mode .tl-item:hover .tl-box, body.edit-mode .tl-item:active .tl-box { border-color: var(--border); box-shadow: none; transform: none; }
+
+    /* NOW / NEXT */
+    .tl-now-badge, .tl-next-badge { position: absolute; top: -10px; right: 12px; display: inline-flex; align-items: center; gap: 3px; font-size: 10px; font-weight: 800; padding: 3px 9px; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,.2); z-index: 2; color: #fff; white-space: nowrap; }
+    .tl-now-badge  { background: var(--green); animation: nowBlink 1.8s ease-in-out infinite; }
+    .tl-next-badge { background: var(--blue); }
+    @keyframes nowBlink { 0%,100% { opacity: 1; } 50% { opacity: .55; } }
+    .tl-item.tl-now .tl-box  { border-color: var(--green); box-shadow: 0 2px 14px rgba(46,125,50,.2); }
+    .tl-item.tl-next .tl-box { border-color: var(--blue); border-style: dashed; }
+    .tl-item.tl-now::before { background: var(--green); box-shadow: 0 0 0 2px var(--green); animation: nowDotPulse 1.6s ease-in-out infinite; }
+    @keyframes nowDotPulse { 0%,100% { box-shadow: 0 0 0 2px var(--green), 0 0 0 4px rgba(46,125,50,.3); } 50% { box-shadow: 0 0 0 2px var(--green), 0 0 0 9px rgba(46,125,50,0); } }
     .tl-head { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
     .tl-desc { font-size: 12px; color: var(--muted); line-height: 1.55; }
+    .tl-links { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; }
+    .tl-map-btn, .tl-web-btn { display: inline-flex; align-items: center; gap: 3px; text-decoration: none; padding: 4px 10px; border-radius: 14px; font-size: 11px; font-weight: 700; }
+    .tl-map-btn { background: var(--blue-light); color: var(--blue); }
+    .tl-web-btn { background: var(--green-light); color: var(--green); }
+    body.edit-mode .tl-map-btn, body.edit-mode .tl-web-btn { pointer-events: none; opacity: .4; }
 
-    /* Tips list */
-    .tip-item {
-      display: flex;
-      gap: 10px;
-      padding: 8px 0;
-      font-size: 13px;
-      line-height: 1.55;
-      border-bottom: 1px solid #f5f5f5;
-    }
+    .tip-item { display: flex; gap: 10px; padding: 8px 0; font-size: 13px; line-height: 1.55; border-bottom: 1px solid #f5f5f5; }
     .tip-item:last-child { border-bottom: none; }
-    .tip-ico { font-size: 18px; flex-shrink: 0; }
+    .tip-ico  { font-size: 18px; flex-shrink: 0; }
+    .tip-text { flex: 1; }
 
-    /* Map button */
-    .map-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      background: var(--blue-light);
-      color: var(--blue);
-      text-decoration: none;
-      padding: 6px 13px;
-      border-radius: 20px;
-      font-size: 12px;
-      font-weight: 700;
-      margin-top: 10px;
-      transition: background 0.15s;
-    }
-    .map-btn:hover { background: #c3d9f5; }
+    .map-btn { display: inline-flex; align-items: center; gap: 5px; background: var(--blue-light); color: var(--blue); text-decoration: none; padding: 6px 13px; border-radius: 20px; font-size: 12px; font-weight: 700; margin-top: 10px; }
 
-    /* Section spacing */
     .section { margin-bottom: 20px; }
 
-    /* Info page grid */
-    .info-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-bottom: 20px;
-    }
-    .info-tile {
-      background: var(--white);
-      border-radius: var(--radius);
-      padding: 16px 12px;
-      text-align: center;
-      box-shadow: var(--shadow);
-    }
+    .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+    .info-tile { background: #fff; border-radius: var(--radius); padding: 16px 12px; text-align: center; box-shadow: var(--shadow); transition: transform .15s; }
+    .info-tile:active { transform: scale(.95); }
     .info-tile .ti   { font-size: 28px; margin-bottom: 5px; }
     .info-tile .tlbl { font-size: 10px; color: var(--muted); }
     .info-tile .tval { font-size: 14px; font-weight: 800; margin-top: 3px; }
 
-    /* Emergency box */
-    .emer-box {
-      background: #fff5f5;
-      border: 1px solid #ffcdd2;
-      border-radius: var(--radius);
-      padding: 16px;
-      margin-bottom: 10px;
-    }
+    .emer-box { background: #fff5f5; border: 1px solid #ffcdd2; border-radius: var(--radius); padding: 16px; margin-bottom: 10px; }
     .emer-box h3 { color: #c62828; font-size: 14px; font-weight: 800; margin-bottom: 12px; }
 
-    /* Budget rows */
-    .bud-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 9px 0;
-      font-size: 13px;
-      border-bottom: 1px solid #f0f0f0;
-    }
+    .bud-row { display: flex; justify-content: space-between; align-items: center; padding: 9px 0; font-size: 13px; border-bottom: 1px solid #f0f0f0; }
     .bud-row:last-child { border-bottom: none; }
     .bud-label  { color: var(--muted); }
     .bud-amount { font-weight: 800; }
 
-    /* Phrase table */
-    .phrase-tbl { width: 100%; border-collapse: collapse; font-size: 13px; }
-    .phrase-tbl th {
-      text-align: left;
-      font-size: 10px;
-      color: var(--muted);
-      padding: 6px 6px;
-      border-bottom: 2px solid var(--border);
-      font-weight: 700;
-      letter-spacing: 0.5px;
-    }
-    .phrase-tbl td { padding: 8px 6px; border-bottom: 1px solid #f2f2f2; vertical-align: top; }
-    .phrase-tbl tr:last-child td { border-bottom: none; }
-    .fr { font-weight: 700; color: var(--navy); }
+    .memo { background: #e8f5e9; border: 1px solid #a5d6a7; border-radius: 10px; padding: 14px 16px; font-size: 13px; line-height: 1.65; }
+    .warn-box { background: #fff8e1; border: 1px solid #ffe082; border-radius: 10px; padding: 12px 14px; font-size: 13px; line-height: 1.6; margin-bottom: 10px; }
+    .warn-box strong { color: var(--orange); }
 
-    /* Memo */
-    .memo {
-      background: #fffde7;
-      border: 1px solid #f9a825;
-      border-radius: 10px;
-      padding: 14px 16px;
-      font-size: 13px;
-      line-height: 1.65;
-    }
+    footer { text-align: center; padding: 28px 16px 12px; font-size: 11px; color: var(--muted); }
 
-    /* Footer */
-    footer {
-      text-align: center;
-      padding: 28px 16px 12px;
-      font-size: 11px;
-      color: var(--muted);
-    }
+    /* MAP SUMMARY */
+    .map-city-hd { background: linear-gradient(135deg, var(--navy), var(--blue)); color: #fff; border-radius: 12px; padding: 12px 16px; margin: 4px 0 12px; font-size: 14px; font-weight: 800; display: flex; align-items: center; gap: 8px; }
+    .map-item { display: flex; align-items: center; gap: 10px; padding: 11px 14px; background: #fff; border-radius: 12px; box-shadow: var(--shadow); margin-bottom: 8px; transition: transform .15s; }
+    .map-item:active { transform: scale(.97); }
+    .map-ico { font-size: 20px; width: 28px; text-align: center; flex-shrink: 0; }
+    .map-body { flex: 1; min-width: 0; }
+    .map-name { font-size: 13px; font-weight: 700; line-height: 1.3; }
+    .map-en { font-size: 10px; color: var(--muted); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .map-day-tag { display: inline-block; font-size: 9px; font-weight: 700; background: var(--blue-light); color: var(--blue); padding: 2px 8px; border-radius: 10px; margin-top: 5px; }
+    .map-actions { display: flex; flex-direction: column; gap: 5px; flex-shrink: 0; }
+    .map-go { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; background: var(--blue-light); color: var(--blue); border-radius: 10px; font-size: 18px; text-decoration: none; transition: background .15s; }
+    .map-go:hover { background: var(--blue); color: #fff; }
+    .web-go { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; background: var(--green-light); color: var(--green); border-radius: 10px; font-size: 18px; text-decoration: none; transition: background .15s; }
+    .web-go:hover { background: var(--green); color: #fff; }
+    body.edit-mode .map-go, body.edit-mode .web-go { pointer-events: none; opacity: .4; }
 
-    /* Print */
+    /* EDIT MODE */
+    body.edit-mode .editable { outline: 2px dashed #f9a825 !important; border-radius: 4px; background: #fffde7 !important; cursor: text; min-width: 20px; }
+    body.edit-mode .editable:focus { outline: 2px solid var(--navy) !important; background: #fff !important; }
+    body.edit-mode .map-btn { pointer-events: none; opacity: .45; }
+    .tl-item { position: relative; }
+    .rm-item-btn { float: right; padding: 1px 8px; background: #ffebee; color: #c62828; border: 1px solid #ffcdd2; border-radius: 12px; font-size: 11px; font-weight: 700; cursor: pointer; margin-left: 8px; margin-bottom: 4px; display: none; }
+    body.edit-mode .rm-item-btn { display: inline-block; }
+    .add-item-btn { display: none; width: 100%; padding: 9px; margin-top: 10px; background: #e3f2fd; color: var(--blue); border: 2px dashed var(--blue); border-radius: 9px; font-size: 13px; font-weight: 700; cursor: pointer; text-align: center; }
+    body.edit-mode .add-item-btn { display: block; }
+
+    #edit-fab { position: fixed; bottom: 84px; right: 18px; width: 52px; height: 52px; border-radius: 50%; background: var(--navy); color: #fff; border: none; font-size: 22px; cursor: pointer; box-shadow: 0 4px 16px rgba(0,0,0,0.28); z-index: 200; display: flex; align-items: center; justify-content: center; transition: transform .2s; }
+    #edit-fab:hover { transform: scale(1.08); }
+    body.edit-mode #edit-fab { background: #555; }
+
+    #edit-bar { position: fixed; bottom: 0; left: 0; right: 0; background: #fff; border-top: 2px solid var(--border); padding: 10px 14px; display: none; align-items: center; gap: 8px; z-index: 190; box-shadow: 0 -4px 20px rgba(0,0,0,0.1); }
+    body.edit-mode #edit-bar { display: flex; }
+    .eb-label { font-size: 11px; color: var(--muted); flex: 1; }
+    .btn-save   { padding: 10px 18px; background: var(--green); color: #fff; border: none; border-radius: 9px; font-size: 13px; font-weight: 800; cursor: pointer; }
+    .btn-cancel { padding: 10px 14px; background: var(--bg); color: var(--text); border: 1px solid var(--border); border-radius: 9px; font-size: 13px; font-weight: 600; cursor: pointer; }
+    .btn-reset  { padding: 10px 12px; background: #ffebee; color: #c62828; border: 1px solid #ffcdd2; border-radius: 9px; font-size: 13px; font-weight: 600; cursor: pointer; }
+
+    #toast { position: fixed; bottom: 88px; left: 50%; transform: translateX(-50%) translateY(16px); background: #2e2e2e; color: #fff; padding: 10px 22px; border-radius: 22px; font-size: 13px; font-weight: 700; opacity: 0; transition: all .25s; z-index: 300; pointer-events: none; white-space: nowrap; }
+    #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    /* COUNTDOWN */
+    .hero-countdown { display: inline-flex; align-items: center; gap: 6px; background: rgba(255,215,0,0.15); border: 1px solid rgba(255,215,0,0.4); color: #fff8e1; font-size: 13px; font-weight: 700; padding: 7px 20px; border-radius: 20px; margin-bottom: 20px; }
+
+    /* CHECKLIST */
+    .cl-progress { display: flex; align-items: center; gap: 10px; padding-bottom: 12px; margin-bottom: 4px; border-bottom: 1px solid #f0f0f0; }
+    .cl-progress-label { font-size: 12px; color: var(--muted); white-space: nowrap; }
+    .cl-progress-label strong { color: var(--green); font-size: 15px; }
+    .cl-bar { flex: 1; height: 7px; background: #e8f5e9; border-radius: 4px; overflow: hidden; }
+    .cl-fill { height: 100%; background: linear-gradient(to right, #43a047, #66bb6a); border-radius: 4px; transition: width .4s cubic-bezier(.34,1.56,.64,1); }
+    .cl-item { position: relative; cursor: pointer; padding-right: 36px; transition: opacity .2s; }
+    .cl-item.checked { opacity: .5; }
+    .cl-item.checked .tip-text { text-decoration: line-through; }
+    .cl-check { position: absolute; right: 0; top: 50%; transform: translateY(-50%); width: 24px; height: 24px; border-radius: 50%; border: 2px solid var(--border); background: #fff; display: flex; align-items: center; justify-content: center; font-size: 12px; color: transparent; transition: all .18s; flex-shrink: 0; }
+    .cl-item.checked .cl-check { background: var(--green); border-color: var(--green); color: #fff; animation: checkPop .35s cubic-bezier(.34,1.56,.64,1); }
+    @keyframes checkPop { 0% { transform: translateY(-50%) scale(.6); } 55% { transform: translateY(-50%) scale(1.3); } 100% { transform: translateY(-50%) scale(1); } }
+    .cl-item:active .tip-ico { transform: scale(.85); }
+    .tip-ico { display: inline-block; transition: transform .15s; }
+    body.edit-mode .cl-item { cursor: text; padding-right: 0; }
+    body.edit-mode .cl-check { display: none; }
+    body.edit-mode .cl-progress { display: none; }
+
+    /* TIME BADGE (override earlier rule) */
+    .tl-time { display: inline-block; font-size: 10px; font-weight: 800; color: var(--navy); background: var(--blue-light); padding: 2px 9px; border-radius: 10px; margin-bottom: 6px; }
+
+    /* DAY CHIPS */
+    .day-chips { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; padding-bottom: 14px; -webkit-overflow-scrolling: touch; }
+    .day-chips::-webkit-scrollbar { display: none; }
+    .day-chip { flex-shrink: 0; background: #fff; border: 1.5px solid var(--border); border-radius: 20px; padding: 5px 12px; font-size: 11px; font-weight: 600; cursor: pointer; white-space: nowrap; color: var(--text); transition: background .15s, border-color .15s, color .15s; }
+    .day-chip:hover, .day-chip:active { background: var(--navy); color: #fff; border-color: var(--navy); }
+    @keyframes tlFlash { 0%,100%{ background:linear-gradient(160deg,#fafafa,#fff); } 35%,65%{ background:var(--blue-light); border-color:var(--blue); } }
+    .tl-item.tl-flash .tl-box { animation: tlFlash .9s ease; }
+
+    /* TRANSPORT GRID */
+    .trans-grid { display: grid; gap: 8px; margin-top: 10px; }
+    .trans-item { display: flex; gap: 12px; align-items: flex-start; padding: 10px 12px; background: var(--bg); border-radius: 10px; }
+    .trans-ico { font-size: 22px; flex-shrink: 0; width: 32px; text-align: center; margin-top: 1px; }
+    .trans-name { font-size: 12px; font-weight: 700; margin-bottom: 3px; }
+    .trans-note { font-size: 11px; color: var(--muted); line-height: 1.45; }
+    .trans-free { display: inline-block; font-size: 9px; font-weight: 800; background: var(--green-light); color: var(--green); padding: 1px 7px; border-radius: 8px; margin-left: 5px; vertical-align: middle; }
+
+    /* CONVERTER */
+    .conv-wrap { display: flex; align-items: stretch; gap: 10px; margin: 14px 0 10px; }
+    .conv-from, .conv-to { flex: 1; background: var(--bg); border-radius: 10px; padding: 10px 12px; }
+    .conv-label { font-size: 11px; font-weight: 700; color: var(--muted); margin-bottom: 5px; }
+    .conv-input { width: 100%; border: none; background: none; font-size: 22px; font-weight: 800; color: var(--navy); outline: none; -moz-appearance: textfield; }
+    .conv-input::-webkit-outer-spin-button, .conv-input::-webkit-inner-spin-button { -webkit-appearance: none; }
+    .conv-result { font-size: 22px; font-weight: 800; color: var(--green); min-height: 33px; display: flex; align-items: center; }
+    .conv-swap { background: var(--navy); color: #fff; border: none; border-radius: 50%; width: 38px; height: 38px; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; align-self: center; transition: transform .3s, background .2s; }
+    .conv-swap:hover { transform: rotate(180deg); background: var(--blue); }
+    .conv-rate { font-size: 11px; color: var(--muted); text-align: center; }
+    body.edit-mode .conv-input { pointer-events: none; }
+    body.edit-mode .conv-swap { pointer-events: none; opacity: .5; }
+
+    /* BOTTOM SHEET */
+    .sheet-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 500; opacity: 0; pointer-events: none; transition: opacity .25s; }
+    .sheet-overlay.open { opacity: 1; pointer-events: all; }
+    .bottom-sheet { position: fixed; bottom: 0; left: 0; right: 0; background: #fff; border-radius: 22px 22px 0 0; z-index: 501; transform: translateY(100%); transition: transform .35s cubic-bezier(.32,0,.67,0); max-height: 78vh; display: flex; flex-direction: column; box-shadow: 0 -4px 24px rgba(0,0,0,0.15); }
+    .bottom-sheet.open { transform: translateY(0); transition-timing-function: cubic-bezier(.33,1,.68,1); }
+    .sheet-drag { padding: 14px 20px 0; text-align: center; flex-shrink: 0; cursor: pointer; }
+    .sheet-drag-bar { display: inline-block; width: 36px; height: 4px; background: #ddd; border-radius: 2px; }
+    .sheet-body { overflow-y: auto; padding: 0 20px 8px; flex: 1; -webkit-overflow-scrolling: touch; }
+    .sheet-head { font-size: 15px; font-weight: 800; color: var(--navy); padding: 12px 0 14px; border-bottom: 1px solid var(--border); margin-bottom: 14px; }
+    .sheet-section { margin-bottom: 14px; }
+    .sheet-section-label { font-size: 10px; font-weight: 800; letter-spacing: 1.2px; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+    .sheet-step { display: flex; gap: 10px; align-items: flex-start; padding: 7px 0; border-bottom: 1px solid #f5f5f5; }
+    .sheet-step:last-child { border-bottom: none; }
+    .sheet-step-num { width: 22px; height: 22px; border-radius: 50%; background: var(--navy); color: #fff; font-size: 10px; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+    .sheet-step-text { font-size: 13px; line-height: 1.6; color: var(--text); }
+    .sheet-tip { display: flex; align-items: flex-start; gap: 8px; background: var(--gold-light); border-left: 3px solid var(--gold); border-radius: 0 8px 8px 0; padding: 8px 12px; margin-bottom: 6px; font-size: 12px; line-height: 1.55; color: var(--text); }
+    .sheet-warn { display: flex; align-items: flex-start; gap: 8px; background: #fce4ec; border-left: 3px solid var(--rose); border-radius: 0 8px 8px 0; padding: 8px 12px; margin-bottom: 6px; font-size: 12px; line-height: 1.55; color: var(--text); }
+    .sheet-close { width: calc(100% - 40px); margin: 8px 20px 20px; background: var(--navy); color: #fff; border: none; border-radius: 12px; padding: 14px; font-size: 14px; font-weight: 700; cursor: pointer; flex-shrink: 0; }
+    .tl-info-btn { display: inline-flex; align-items: center; gap: 4px; background: var(--blue-light); color: var(--blue); border: none; border-radius: 16px; padding: 4px 10px; font-size: 11px; font-weight: 700; cursor: pointer; transition: background .15s, color .15s; }
+    .tl-info-btn:hover { background: var(--navy); color: #fff; }
+    body.edit-mode .tl-info-btn { display: none; }
+
+    /* DAY BANNERS */
+    .day-banner { height: 114px; border-radius: var(--radius); margin-bottom: 20px; position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; padding: 14px 16px; }
+    .day-banner::before { content: ''; position: absolute; inset: 0; background-image: radial-gradient(circle, rgba(255,255,255,.22) 1px, transparent 1px); background-size: 22px 22px; pointer-events: none; }
+    .day-banner-emoji { position: absolute; top: 12px; right: 16px; font-size: 52px; line-height: 1; opacity: .18; pointer-events: none; user-select: none; }
+    .day-banner-day { font-size: 9px; font-weight: 800; letter-spacing: 2px; color: rgba(255,255,255,.72); text-transform: uppercase; margin-bottom: 5px; position: relative; }
+    .day-banner-label { font-size: 14px; font-weight: 800; color: #fff; text-shadow: 0 1px 10px rgba(0,0,0,.45); position: relative; line-height: 1.35; }
+    body.edit-mode .day-banner { opacity: .45; pointer-events: none; }
+
+    /* TAP FEEDBACK */
+    .tl-info-btn, .tl-map-btn, .tl-web-btn, .map-go, .web-go, .map-btn, .day-chip, .btn-save, .btn-cancel, .btn-reset { transition: transform .15s, background .15s, color .15s; }
+    .tl-info-btn:active, .tl-map-btn:active, .tl-web-btn:active, .map-go:active, .web-go:active, .map-btn:active, .day-chip:active, .btn-save:active, .btn-cancel:active, .btn-reset:active { transform: scale(.92); }
+    #edit-fab:active { transform: scale(.88); }
+    .conv-swap:active { transform: scale(.85) rotate(180deg); }
+
     @media print {
       .tabs-wrap { position: static; box-shadow: none; }
       .pane { display: block !important; page-break-before: always; }
       .pane:first-child { page-break-before: auto; }
+      #edit-fab, #edit-bar { display: none !important; }
     }
   </style>
 </head>
 <body>
 
-<!-- ═══════════════════ HERO ═══════════════════ -->
+<!-- HERO -->
 <header class="hero">
-  <div class="hero-deco">🗼</div>
-  <div class="hero-badge">✈ VOYAGE À PARIS ✈</div>
-  <h1>🗼 パリ旅行しおり</h1>
-  <p class="hero-sub">2人でめぐる美しき光の都へ</p>
+  <h1>🦘 オーストラリア旅行しおり</h1>
+  <p class="hero-sub">メルボルン → シドニー 2人旅</p>
   <div class="hero-dates">
-    📅 2026年10月1日（木）<span class="sep">→</span>10月5日（月）
-    <span class="sep">|</span> 4泊5日
+    <span class="editable">2026年9月20日（日）→ 9月26日（土）</span>
+    <span class="sep">|</span>
+    <span class="editable">5泊7日</span>
   </div>
-
-  <!-- Paris silhouette SVG -->
-  <svg class="skyline" viewBox="0 0 400 72" preserveAspectRatio="xMidYMax meet"
-       xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <div id="countdown" class="hero-countdown"><span id="cd-text">…</span></div>
+  <!-- Sydney skyline SVG -->
+  <svg class="skyline" viewBox="0 0 400 96" preserveAspectRatio="xMidYMax meet" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <defs>
-      <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="#f0f0ec"/>
-        <stop offset="100%" stop-color="#f0f0ec"/>
+      <linearGradient id="wg" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="rgba(255,255,255,0.35)"/>
+        <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
       </linearGradient>
     </defs>
-    <!-- Ground -->
     <rect x="0" y="65" width="400" height="7" fill="#f0f0ec"/>
-
-    <!-- Left buildings -->
-    <rect x="0"  y="48" width="28" height="17" fill="#f0f0ec"/>
-    <rect x="8"  y="40" width="12" height="8"  fill="#f0f0ec"/>
-    <rect x="30" y="52" width="22" height="13" fill="#f0f0ec"/>
-    <rect x="35" y="45" width="12" height="7"  fill="#f0f0ec"/>
-
-    <!-- Arc de Triomphe (rough) -->
-    <rect x="55" y="38" width="30" height="27" fill="#f0f0ec"/>
-    <rect x="63" y="50" width="14" height="15" fill="#1a237e"/>
-    <rect x="57" y="32" width="26" height="6"  fill="#f0f0ec"/>
-
-    <!-- Mid buildings -->
-    <rect x="88"  y="50" width="18" height="15" fill="#f0f0ec"/>
-    <rect x="92"  y="43" width="10" height="7"  fill="#f0f0ec"/>
-    <rect x="108" y="46" width="20" height="19" fill="#f0f0ec"/>
-    <rect x="112" y="36" width="12" height="10" fill="#f0f0ec"/>
-    <rect x="114" y="32" width="8"  height="4"  fill="#f0f0ec"/>
-
-    <!-- Notre-Dame (rough silhouette) -->
-    <rect x="130" y="44" width="36" height="21" fill="#f0f0ec"/>
-    <polygon points="130,44 148,30 166,44" fill="#f0f0ec"/>
-    <rect x="130" y="36" width="6"  height="8"  fill="#f0f0ec"/>
-    <rect x="160" y="36" width="6"  height="8"  fill="#f0f0ec"/>
-
-    <!-- Eiffel Tower (center piece) -->
-    <g transform="translate(185,2)">
-      <!-- legs -->
-      <polygon points="14,63 22,63 19,38 17,38" fill="#f0f0ec"/>
-      <polygon points="16,63 14,63 11,38 13,38" fill="#f0f0ec"/>
-      <!-- body -->
-      <polygon points="11,38 19,38 17,20 13,20" fill="#f0f0ec"/>
-      <!-- top -->
-      <polygon points="13,20 17,20 15,4 15,4"   fill="#f0f0ec"/>
-      <!-- platform 1 -->
-      <rect x="8"  y="36" width="14" height="2" fill="#f0f0ec"/>
-      <!-- platform 2 -->
-      <rect x="11" y="18" width="8"  height="2" fill="#f0f0ec"/>
-      <!-- antenna -->
-      <rect x="14.5" y="0" width="1" height="4" fill="#f0f0ec"/>
-    </g>
-
+    <!-- Left CBD buildings -->
+    <rect x="0"  y="42" width="14" height="23" fill="#f0f0ec"/>
+    <rect x="3"  y="33" width="8"  height="9"  fill="#f0f0ec"/>
+    <rect x="5"  y="27" width="4"  height="6"  fill="#f0f0ec"/>
+    <rect x="6"  y="22" width="2"  height="5"  fill="#f0f0ec"/>
+    <rect x="16" y="48" width="12" height="17" fill="#f0f0ec"/>
+    <rect x="18" y="41" width="8"  height="7"  fill="#f0f0ec"/>
+    <rect x="30" y="44" width="16" height="21" fill="#f0f0ec"/>
+    <rect x="33" y="34" width="10" height="10" fill="#f0f0ec"/>
+    <rect x="35" y="28" width="6"  height="6"  fill="#f0f0ec"/>
+    <rect x="37" y="24" width="2"  height="4"  fill="#f0f0ec"/>
+    <!-- Harbor Bridge -->
+    <path d="M 52,54 Q 52,6 112,6 Q 172,6 172,54" fill="none" stroke="#f0f0ec" stroke-width="5"/>
+    <rect x="46" y="52" width="130" height="5" fill="#f0f0ec"/>
+    <rect x="46" y="34" width="10"  height="22" fill="#f0f0ec"/>
+    <polygon points="46,34 51,23 56,34" fill="#f0f0ec"/>
+    <rect x="166" y="34" width="10" height="22" fill="#f0f0ec"/>
+    <polygon points="166,34 171,23 176,34" fill="#f0f0ec"/>
+    <rect x="65"  y="20" width="1" height="32" fill="#f0f0ec"/>
+    <rect x="80"  y="12" width="1" height="40" fill="#f0f0ec"/>
+    <rect x="95"  y="8"  width="1" height="44" fill="#f0f0ec"/>
+    <rect x="110" y="8"  width="1" height="44" fill="#f0f0ec"/>
+    <rect x="125" y="12" width="1" height="40" fill="#f0f0ec"/>
+    <rect x="140" y="20" width="1" height="32" fill="#f0f0ec"/>
+    <rect x="155" y="30" width="1" height="22" fill="#f0f0ec"/>
+    <!-- Small buildings -->
+    <rect x="178" y="52" width="10" height="13" fill="#f0f0ec"/>
+    <rect x="180" y="46" width="6"  height="6"  fill="#f0f0ec"/>
+    <!-- Opera House platform -->
+    <rect x="190" y="57" width="74" height="8" fill="#f0f0ec"/>
+    <!-- Opera House sails -->
+    <path d="M 194,57 Q 202,42 210,57 Z" fill="#f0f0ec"/>
+    <path d="M 207,57 Q 219,28 231,57 Z" fill="#f0f0ec"/>
+    <path d="M 226,57 Q 242,14 258,57 Z" fill="#f0f0ec"/>
+    <path d="M 248,57 Q 258,30 268,57 Z" fill="#f0f0ec"/>
     <!-- Right buildings -->
-    <rect x="220" y="44" width="22" height="21" fill="#f0f0ec"/>
-    <rect x="225" y="36" width="12" height="8"  fill="#f0f0ec"/>
-    <rect x="244" y="50" width="18" height="15" fill="#f0f0ec"/>
-    <rect x="248" y="42" width="10" height="8"  fill="#f0f0ec"/>
-
-    <!-- Louvre (rough) -->
-    <rect x="264" y="46" width="40" height="19" fill="#f0f0ec"/>
-    <polygon points="264,46 284,34 304,46"       fill="#f0f0ec"/>
-    <!-- Pyramid -->
-    <polygon points="276,46 284,36 292,46"       fill="#1a237e" opacity="0.25"/>
-
-    <!-- Far right -->
-    <rect x="306" y="50" width="20" height="15" fill="#f0f0ec"/>
-    <rect x="310" y="42" width="12" height="8"  fill="#f0f0ec"/>
-    <rect x="328" y="48" width="24" height="17" fill="#f0f0ec"/>
-    <rect x="334" y="38" width="12" height="10" fill="#f0f0ec"/>
-    <rect x="354" y="52" width="26" height="13" fill="#f0f0ec"/>
-    <rect x="360" y="44" width="14" height="8"  fill="#f0f0ec"/>
-    <rect x="376" y="46" width="24" height="19" fill="#f0f0ec"/>
+    <rect x="268" y="50" width="14" height="15" fill="#f0f0ec"/>
+    <rect x="270" y="43" width="10" height="7"  fill="#f0f0ec"/>
+    <rect x="284" y="44" width="18" height="21" fill="#f0f0ec"/>
+    <rect x="287" y="35" width="12" height="9"  fill="#f0f0ec"/>
+    <rect x="289" y="29" width="8"  height="6"  fill="#f0f0ec"/>
+    <rect x="304" y="50" width="14" height="15" fill="#f0f0ec"/>
+    <rect x="306" y="43" width="10" height="7"  fill="#f0f0ec"/>
+    <rect x="320" y="46" width="16" height="19" fill="#f0f0ec"/>
+    <rect x="323" y="37" width="10" height="9"  fill="#f0f0ec"/>
+    <rect x="325" y="31" width="6"  height="6"  fill="#f0f0ec"/>
+    <rect x="338" y="48" width="14" height="17" fill="#f0f0ec"/>
+    <rect x="340" y="41" width="10" height="7"  fill="#f0f0ec"/>
+    <rect x="354" y="44" width="18" height="21" fill="#f0f0ec"/>
+    <rect x="357" y="35" width="12" height="9"  fill="#f0f0ec"/>
+    <rect x="374" y="50" width="26" height="15" fill="#f0f0ec"/>
+    <rect x="377" y="42" width="14" height="8"  fill="#f0f0ec"/>
+    <!-- Harbor water reflection -->
+    <rect x="0" y="65" width="400" height="31" style="fill:url(#wg)"/>
+    <rect x="42"  y="72" width="90"  height="1" style="fill:rgba(255,255,255,.22)"/>
+    <rect x="180" y="70" width="110" height="1" style="fill:rgba(255,255,255,.18)"/>
+    <rect x="65"  y="80" width="50"  height="1" style="fill:rgba(255,255,255,.12)"/>
+    <rect x="200" y="78" width="80"  height="1" style="fill:rgba(255,255,255,.12)"/>
+    <path d="M 55,65 Q 55,82 112,82 Q 169,82 169,65" style="fill:none" stroke="rgba(255,255,255,.16)" stroke-width="2.5"/>
+    <path d="M 226,65 Q 242,77 258,65 Z" style="fill:rgba(255,255,255,.09)"/>
+    <path d="M 207,65 Q 219,73 231,65 Z" style="fill:rgba(255,255,255,.07)"/>
   </svg>
 </header>
 
-<!-- ═══════════════════ TABS ═══════════════════ -->
+<!-- TABS -->
 <div class="tabs-wrap">
   <div class="tabs" role="tablist">
-    <button class="tab active" onclick="show('day1',0)" role="tab" aria-selected="true">
-      <span class="dn">1</span><span class="dl">出発日</span>
-    </button>
-    <button class="tab" onclick="show('day2',1)" role="tab">
-      <span class="dn">2</span><span class="dl">エッフェル</span>
-    </button>
-    <button class="tab" onclick="show('day3',2)" role="tab">
-      <span class="dn">3</span><span class="dl">ルーヴル</span>
-    </button>
-    <button class="tab" onclick="show('day4',3)" role="tab">
-      <span class="dn">4</span><span class="dl">ヴェルサイユ</span>
-    </button>
-    <button class="tab" onclick="show('day5',4)" role="tab">
-      <span class="dn">5</span><span class="dl">帰国日</span>
-    </button>
-    <button class="tab" onclick="show('info',5)" role="tab">
-      <span class="dn" style="font-size:18px">📋</span><span class="dl">基本情報</span>
-    </button>
+    <button class="tab active" onclick="show('day1',0)"><span class="dn">1</span><span class="dl">出発日</span></button>
+    <button class="tab" onclick="show('day2',1)"><span class="dn">2</span><span class="dl">MEL①</span></button>
+    <button class="tab" onclick="show('day3',2)"><span class="dn">3</span><span class="dl">MEL②</span></button>
+    <button class="tab" onclick="show('day4',3)"><span class="dn">4</span><span class="dl">移動日</span></button>
+    <button class="tab" onclick="show('day5',4)"><span class="dn">5</span><span class="dl">ブルーM</span></button>
+    <button class="tab" onclick="show('day6',5)"><span class="dn">6</span><span class="dl">SYD</span></button>
+    <button class="tab" onclick="show('day7',6)"><span class="dn">7</span><span class="dl">帰国日</span></button>
+    <button class="tab" onclick="show('info',7)"><span class="dn" style="font-size:16px">📋</span><span class="dl">基本情報</span></button>
+    <button class="tab" onclick="show('map',8)"><span class="dn" style="font-size:16px">🗺️</span><span class="dl">MAP</span></button>
+  </div>
+  <div class="edit-banner">✏️ 編集モード中 — フィールドをタップして変更できます</div>
+</div>
+
+<main class="content">
+
+<!-- ═══ DAY 1 ═══ -->
+<div id="day1" class="pane active">
+  <div class="day-hd">
+    <div class="day-circle"><span class="cn">1</span><span class="ct">DAY</span></div>
+    <div><h2 class="editable">9月20日（日）日本出発</h2><p class="editable">成田発 → メルボルン行き（機中泊）</p></div>
+  </div>
+
+  <div class="section">
+    <div class="sec-title"><div class="sec-icon" style="background:var(--blue)"></div><span style="color:var(--blue)">往路フライト</span></div>
+    <div class="card c-flight">
+      <div class="card-title editable">JAL JL773（JAL Sky Suite）</div>
+      <div class="card-sub editable">成田国際空港（第2ターミナル）→ メルボルン空港（第2ターミナル）</div>
+      <div class="flight-route">
+        <div class="airport"><div class="iata editable">NRT</div><div class="city editable">成田</div><div class="ftime editable">18:40</div></div>
+        <div class="f-mid"><div class="f-plane">✈️</div><div class="f-line"></div><div class="f-dur editable">約10時間05分（機中泊）</div></div>
+        <div class="airport"><div class="iata editable">MEL</div><div class="city editable">メルボルン</div><div class="ftime editable">05:45</div><div class="fnote editable">翌日</div></div>
+      </div>
+      <div class="row"><span class="rl">📋 便名</span><span class="rv editable">JL773</span></div>
+      <div class="row"><span class="rl">💺 搭乗クラス</span><span class="rv editable">エコノミー / JAL Sky Wider</span></div>
+      <div class="row"><span class="rl">🪑 座席</span><span class="rv editable">XXXX（要記入）</span></div>
+      <div class="row"><span class="rl">📞 予約番号</span><span class="rv editable">XXXXXX（要記入）</span></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="sec-title"><div class="sec-icon" style="background:var(--purple)"></div><span style="color:var(--purple)">本日のスケジュール</span></div>
+    <div class="card c-schedule">
+      <div class="timeline">
+        <div class="tl-item"><div class="tl-time editable">15:30</div><div class="tl-box"><div class="tl-head editable">✈️ 成田空港 第2ターミナル到着</div><div class="tl-desc editable">JALカウンターにてチェックイン、荷物預け。Wi-Fiルーター受取等。時間に余裕を持って到着を</div><div class="tl-links"><a href="https://maps.google.com/?q=Narita+International+Airport+Terminal+2" class="tl-map-btn" target="_blank" rel="noopener">🗺️ MAP</a><a href="https://www.narita-airport.jp/" class="tl-web-btn" target="_blank" rel="noopener">🌐 公式</a><button class="tl-info-btn" onclick="openSheet('narita-checkin')">ℹ️ 詳細</button></div></div></div>
+        <div class="tl-item"><div class="tl-time editable">18:40</div><div class="tl-box"><div class="tl-head editable">✈️ メルボルンへ出発！</div><div class="tl-desc editable">JALフライトにてメルボルンへ。いよいよオーストラリアへ！</div><div class="tl-links"><button class="tl-info-btn" onclick="openSheet('mel-flight')">ℹ️ 機内のコツ</button></div></div></div>
+        <div class="tl-item"><div class="tl-time editable">夜〜翌朝</div><div class="tl-box"><div class="tl-head editable">🌙 機中泊</div><div class="tl-desc editable">離陸後の機内食を終えたら、アイマスクとノイズキャンセリングを活用して睡眠を確保。翌朝からの体力がここで決まります</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="sec-title"><div class="sec-icon" style="background:var(--gold)"></div><span style="color:var(--orange)">今日のポイント</span></div>
+    <div class="card c-tip">
+      <div class="tip-item"><span class="tip-ico">🛂</span><span class="tip-text editable">ETAの事前申請は完了していますか？スマホアプリから申請必須（日本出国前に）</span></div>
+      <div class="tip-item"><span class="tip-ico">🍱</span><span class="tip-text editable">機内に食品を持ち込む場合は入国カードで「あり（YES）」に必ずチェック。申告すれば没収だけで罰金なし</span></div>
+      <div class="tip-item"><span class="tip-ico">😴</span><span class="tip-text editable">機内では積極的に睡眠を取ること。翌朝05:45着でそのまま丸1日活動するため体力が命</span></div>
+    </div>
   </div>
 </div>
 
-<!-- ═══════════════════ CONTENT ═══════════════════ -->
-<main class="content">
-
-<!-- ─────────────────── DAY 1 ─────────────────── -->
-<div id="day1" class="pane active">
-
-  <div class="day-hd">
-    <div class="day-circle"><span class="cn">1</span><span class="ct">DAY</span></div>
-    <div>
-      <h2>10月1日（木）出発日</h2>
-      <p>成田発 → パリ・シャルル・ド・ゴール着</p>
-    </div>
-  </div>
-
-  <!-- Flight -->
-  <div class="section">
-    <div class="sec-title">
-      <div class="sec-icon" style="background:var(--blue-light)">✈️</div>
-      <span style="color:var(--blue)">フライト情報</span>
-    </div>
-    <div class="card c-flight">
-      <div class="card-title">エールフランス AF275</div>
-      <div class="card-sub">成田国際空港 → パリ・シャルル・ド・ゴール空港</div>
-      <div class="flight-route">
-        <div class="airport">
-          <div class="iata">NRT</div>
-          <div class="city">成田</div>
-          <div class="ftime">11:20</div>
-        </div>
-        <div class="f-mid">
-          <div class="f-plane">✈️</div>
-          <div class="f-line"></div>
-          <div class="f-dur">約13時間</div>
-        </div>
-        <div class="airport">
-          <div class="iata">CDG</div>
-          <div class="city">パリ</div>
-          <div class="ftime">17:50</div>
-          <div class="fnote">現地時間</div>
-        </div>
-      </div>
-      <div class="row"><span class="rl">📋 便名</span><span class="rv">AF275</span></div>
-      <div class="row"><span class="rl">💺 座席</span><span class="rv">24A・24B（エコノミークラス）</span></div>
-      <div class="row"><span class="rl">🎒 荷物</span><span class="rv">23kg × 1個/人（受託手荷物）</span></div>
-      <div class="row"><span class="rl">📞 予約番号</span><span class="rv">XXXXXX（要記入）</span></div>
-    </div>
-  </div>
-
-  <!-- Hotel -->
-  <div class="section">
-    <div class="sec-title">
-      <div class="sec-icon" style="background:var(--green-light)">🏨</div>
-      <span style="color:var(--green)">ホテル情報（全泊）</span>
-    </div>
-    <div class="card c-hotel">
-      <div class="card-title">Hôtel du Marais（オテル・デュ・マレ）</div>
-      <div class="card-sub">⭐⭐⭐⭐ マレ地区 • 10月1日〜5日（4泊）</div>
-      <div class="row"><span class="rl">📍 住所</span><span class="rv">3 Rue des Archives, 75004 Paris</span></div>
-      <div class="row"><span class="rl">🕐 C/I</span><span class="rv">15:00〜（前日までに連絡で早め可能な場合あり）</span></div>
-      <div class="row"><span class="rl">🕐 C/O</span><span class="rv">11:00</span></div>
-      <div class="row"><span class="rl">📞 電話</span><span class="rv">+33 1 42 78 XX XX</span></div>
-      <div class="row"><span class="rl">📋 予約番号</span><span class="rv">BK-2026-XXXXXX（要記入）</span></div>
-      <div class="row"><span class="rl">🚇 アクセス</span><span class="rv">メトロ11号線 Hôtel de Ville駅 徒歩3分</span></div>
-      <a href="https://maps.google.com/?q=3+Rue+des+Archives+75004+Paris" class="map-btn" target="_blank" rel="noopener">🗺️ Google マップで見る</a>
-    </div>
-  </div>
-
-  <!-- Schedule -->
-  <div class="section">
-    <div class="sec-title">
-      <div class="sec-icon" style="background:var(--purple-light)">📅</div>
-      <span style="color:var(--purple)">本日のスケジュール</span>
-    </div>
-    <div class="card c-schedule">
-      <div class="timeline">
-        <div class="tl-item">
-          <div class="tl-time">08:00</div>
-          <div class="tl-box">
-            <div class="tl-head">🏠 自宅出発</div>
-            <div class="tl-desc">成田空港（第1ターミナル）へ。余裕を持って出発！電車なら成田エクスプレス利用が便利</div>
-          </div>
-        </div>
-        <div class="tl-item">
-          <div class="tl-time">09:30</div>
-          <div class="tl-box">
-            <div class="tl-head">✈️ 成田空港着・搭乗手続き</div>
-            <div class="tl-desc">エールフランス専用カウンターでチェックイン。出国審査後は免税店でショッピングを楽しもう！</div>
-          </div>
-        </div>
-        <div class="tl-item">
-          <div class="tl-time">11:20</div>
-          <div class="tl-box">
-            <div class="tl-head">✈️ 成田出発</div>
-            <div class="tl-desc">AF275便 パリへ出発！機内食2回あり。日本との時差は−7時間（夏時間）</div>
-          </div>
-        </div>
-        <div class="tl-item">
-          <div class="tl-time">17:50</div>
-          <div class="tl-box">
-            <div class="tl-head">🛬 パリ・CDG空港到着</div>
-            <div class="tl-desc">ターミナル2F着。入国審査 → 荷物受け取り → CDG駅へ。スーツケース受け取りに30分前後かかることも</div>
-          </div>
-        </div>
-        <div class="tl-item">
-          <div class="tl-time">19:00</div>
-          <div class="tl-box">
-            <div class="tl-head">🚄 RER B でパリ市内へ</div>
-            <div class="tl-desc">CDG空港駅 → 北駅（Gare du Nord）約35分、€13.40/人。Navigo Visitカードを購入してもOK</div>
-          </div>
-        </div>
-        <div class="tl-item">
-          <div class="tl-time">20:00</div>
-          <div class="tl-box">
-            <div class="tl-head">🏨 ホテルにチェックイン</div>
-            <div class="tl-desc">荷物を置いてひとまず休憩。近くのブラッスリーでパリ最初の夕食を。長旅お疲れ様でした！</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Tips -->
-  <div class="section">
-    <div class="sec-title">
-      <div class="sec-icon" style="background:var(--gold-light)">💡</div>
-      <span style="color:var(--orange)">今日のポイント</span>
-    </div>
-    <div class="card c-tip">
-      <div class="tip-item"><span class="tip-ico">💶</span><span>空港での両替は割高。ホテル周辺のATMでクレカからキャッシングが手数料1〜2%程度でお得</span></div>
-      <div class="tip-item"><span class="tip-ico">📶</span><span>空港でプリペイドSIMを購入しよう。OrangeかSFRがおすすめ（€30〜で10GB程度）</span></div>
-      <div class="tip-item"><span class="tip-ico">🕐</span><span>10月26日〜夏時間が終わるため、旅行期間中の時差は日本−7時間で固定</span></div>
-      <div class="tip-item"><span class="tip-ico">🚇</span><span>メトロ1日券（Navigo Jour）€8.65で市内乗り放題。ゾーン1〜2対応</span></div>
-    </div>
-  </div>
-</div><!-- /day1 -->
-
-<!-- ─────────────────── DAY 2 ─────────────────── -->
+<!-- ═══ DAY 2 ═══ -->
 <div id="day2" class="pane">
-
   <div class="day-hd">
     <div class="day-circle"><span class="cn">2</span><span class="ct">DAY</span></div>
-    <div>
-      <h2>10月2日（金）エッフェル塔の日</h2>
-      <p>トロカデロ・セーヌ川クルーズ・モンマルトル</p>
+    <div><h2 class="editable">9月21日（月・祝）メルボルン到着①</h2><p class="editable">カフェ・アート・老舗アーケード散策</p></div>
+  </div>
+
+  <div class="section">
+    <div class="sec-title"><div class="sec-icon" style="background:var(--green)"></div><span style="color:var(--green)">ホテル（メルボルン 2泊）</span></div>
+    <div class="card c-hotel">
+      <div class="card-title editable">インターコンチネンタル メルボルン ザ リアルト by IHG</div>
+      <div class="card-sub editable">⭐⭐⭐⭐⭐ Lグレード • 9月21日〜23日（2泊）</div>
+      <div class="row"><span class="rl">📍 住所</span><span class="rv editable">495 Collins Street, Melbourne VIC 3000</span></div>
+      <div class="row"><span class="rl">🏛️ 特徴</span><span class="rv editable">19世紀ゴシック建築を改装。スリッパ・バスローブ完備の5つ星ラグジュアリー</span></div>
+      <div class="row"><span class="rl">🕐 C/I</span><span class="rv editable">15:00〜（当日は荷物を先に預ける）</span></div>
+      <div class="row"><span class="rl">🕐 C/O</span><span class="rv editable">11:00</span></div>
+      <div class="row"><span class="rl">📞 予約番号</span><span class="rv editable">JTB経由 XXXXXX（要記入）</span></div>
+      <a href="https://maps.google.com/?q=495+Collins+Street+Melbourne" class="map-btn" target="_blank" rel="noopener">🗺️ Google マップ</a>
     </div>
   </div>
 
-  <!-- Schedule -->
   <div class="section">
-    <div class="sec-title">
-      <div class="sec-icon" style="background:var(--purple-light)">📅</div>
-      <span style="color:var(--purple)">本日のスケジュール</span>
-    </div>
+    <div class="sec-title"><div class="sec-icon" style="background:var(--purple)"></div><span style="color:var(--purple)">本日のスケジュール</span></div>
     <div class="card c-schedule">
       <div class="timeline">
-        <div class="tl-item">
-          <div class="tl-time">08:30</div>
-          <div class="tl-box">
-            <div class="tl-head">☕ 近くのカフェで朝食</div>
-            <div class="tl-desc">パリのカフェでクロワッサン＆カフェ・オ・レを。フランス式朝食を楽しもう</div>
-          </div>
-        </div>
-        <div class="tl-item">
-          <div class="tl-time">09:30</div>
-          <div class="tl-box">
-            <div class="tl-head">🗼 エッフェル塔（La Tour Eiffel）</div>
-            <div class="tl-desc">事前予約済チケットで混雑前に入場。第2展望台か最上階へ。晴れた日のパリの眺めは最高！</div>
-          </div>
-        </div>
-        <div class="tl-item">
-          <div class="tl-time">12:00</div>
-          <div class="tl-box">
-            <div class="tl-head">🌿 シャン・ド・マルス公園（Champ de Mars）</div>
-            <div class="tl-desc">エッフェル塔を正面に眺めながらピクニックランチ。近くのマルシェでパンやチーズを調達しよう</div>
-          </div>
-        </div>
-        <div class="tl-item">
-          <div class="tl-time">14:00</div>
-          <div class="tl-box">
-            <div class="tl-head">🏛️ トロカデロ（Trocadéro）</div>
-            <div class="tl-desc">シャイヨー宮テラスからエッフェル塔を一望。2人の写真を撮るならここが最高のスポット！</div>
-          </div>
-        </div>
-        <div class="tl-item">
-          <div class="tl-time">16:00</div>
-          <div class="tl-box">
-            <div class="tl-head">🚢 セーヌ川クルーズ（Bateaux Mouches）</div>
-            <div class="tl-desc">アルマ橋付近から乗船。約70分でパリの名所を川から観光。夕暮れ時がロマンティック（€17/人）</div>
-          </div>
-        </div>
-        <div class="tl-item">
-          <div class="tl-time">19:00</div>
-          <div class="tl-box">
-            <div class="tl-head">🎨 モンマルトル（Montmartre）散策</div>
-            <div class="tl-desc">サクレ・クール寺院のステップから夜景を満喫！芸術家の街をふたりで散歩</div>
-          </div>
-        </div>
-        <div class="tl-item">
-          <div class="tl-time">20:30</div>
-          <div class="tl-box">
-            <div class="tl-head">🍽️ モンマルトルで夕食</div>
-            <div class="tl-desc">Rue Lepicの地元ビストロで本場フランス料理をどうぞ</div>
-          </div>
-        </div>
+        <div class="tl-item"><div class="tl-time editable">05:45</div><div class="tl-box"><div class="tl-head editable">🛬 メルボルン空港 第2ターミナル着</div><div class="tl-desc editable">入国審査（スマートゲート）を通過</div><div class="tl-links"><a href="https://maps.google.com/?q=Melbourne+Airport+Terminal+2" class="tl-map-btn" target="_blank" rel="noopener">🗺️ MAP</a><a href="https://www.melbourneairport.com.au/" class="tl-web-btn" target="_blank" rel="noopener">🌐 公式</a></div></div></div>
+        <div class="tl-item"><div class="tl-time editable">06:30</div><div class="tl-box"><div class="tl-head editable">🛂 税関・検疫</div><div class="tl-desc editable">食品を少しでも持っている場合は必ず申告レーン（YES）へ。申告すれば罰金なし</div><div class="tl-links"><button class="tl-info-btn" onclick="openSheet('mel-customs')">ℹ️ 入国手順</button></div></div></div>
+        <div class="tl-item"><div class="tl-time editable">07:00</div><div class="tl-box"><div class="tl-head editable">🚖 Uberで市内へ</div><div class="tl-desc editable">荷物があるためUberを手配（約30分、約$60〜70）。タクシーより格段に安くて便利</div><div class="tl-links"><button class="tl-info-btn" onclick="openSheet('uber-mel')">ℹ️ Uber乗り方</button></div></div></div>
+        <div class="tl-item"><div class="tl-time editable">07:45</div><div class="tl-box"><div class="tl-head editable">🏨 インターコンチネンタル到着・荷物預け</div><div class="tl-desc editable">チェックインは15時のため荷物をフロントに預け、身軽になって出発</div><div class="tl-links"><a href="https://maps.google.com/?q=495+Collins+Street+Melbourne" class="tl-map-btn" target="_blank" rel="noopener">🗺️ MAP</a><a href="https://www.ihg.com/intercontinental/hotels/gb/en/melbourne/melha/hoteldetail" class="tl-web-btn" target="_blank" rel="noopener">🌐 公式</a></div></div></div>
+        <div class="tl-item"><div class="tl-time editable">08:15</div><div class="tl-box"><div class="tl-head editable">☕ 朝食：Lune Croissanterie CBD</div><div class="tl-desc editable">徒歩10分。世界最高峰のクロワッサンとフラットホワイト（コーヒー）。早朝到着のこのタイミングなら大行列の前に入れる！</div><div class="tl-links"><a href="https://maps.google.com/?q=Lune+Croissanterie+CBD+Flinders+Lane+Melbourne" class="tl-map-btn" target="_blank" rel="noopener">🗺️ MAP</a><a href="https://www.lunecroissanterie.com/" class="tl-web-btn" target="_blank" rel="noopener">🌐 公式</a></div></div></div>
+        <div class="tl-item"><div class="tl-time editable">10:00</div><div class="tl-box"><div class="tl-head editable">🏛️ クラシック建築めぐり</div><div class="tl-desc editable">19世紀の面影を残す美しいアーケード「ブロック・アーケード」「ロイヤル・アーケード」を散策</div><div class="tl-links"><a href="https://maps.google.com/?q=Block+Arcade+282+Collins+Street+Melbourne" class="tl-map-btn" target="_blank" rel="noopener">🗺️ MAP</a><a href="https://www.theblockarcade.com.au/" class="tl-web-btn" target="_blank" rel="noopener">🌐 公式</a></div></div></div>
+        <div class="tl-item"><div class="tl-time editable">11:30</div><div class="tl-box"><div class="tl-head editable">🎨 アート＆カルチャー</div><div class="tl-desc editable">ウォールアートの路地裏「ホージア・レーン（Hosier Lane）」と「ビクトリア州立図書館」を見学</div><div class="tl-links"><a href="https://maps.google.com/?q=Hosier+Lane+Melbourne" class="tl-map-btn" target="_blank" rel="noopener">🗺️ MAP</a></div></div></div>
+        <div class="tl-item"><div class="tl-time editable">13:00</div><div class="tl-box"><div class="tl-head editable">🍝 ランチ：Il Solito Posto</div><div class="tl-desc editable">ホテル裏のグルメストリート「フリンダーズ・レーン（Flinders Lane）」。地下の落ち着いた空間で本格パスタ・リゾット・モクテルを</div><div class="tl-links"><a href="https://maps.google.com/?q=Il+Solito+Posto+113+Collins+Street+Melbourne" class="tl-map-btn" target="_blank" rel="noopener">🗺️ MAP</a><a href="https://ilsolitoposto.com.au/" class="tl-web-btn" target="_blank" rel="noopener">🌐 公式</a></div></div></div>
+        <div class="tl-item"><div class="tl-time editable">15:00</div><div class="tl-box"><div class="tl-head editable">🏨 ホテルチェックイン＆仮眠（最重要！）</div><div class="tl-desc editable">ここで欲張って観光を続けないこと。バスタブでリフレッシュし1〜2時間の仮眠を。明日以降の体力はここで決まる</div></div></div>
+        <div class="tl-item"><div class="tl-time editable">18:00</div><div class="tl-box"><div class="tl-head editable">🍽️ ディナー：Supernormal（要予約）</div><div class="tl-desc editable">フリンダーズ・レーンの大人気モダン・アジアン。スパイス系なし、名物「ロブスターロール」は絶品。街のAFLファイナルの熱気を楽しんで</div><div class="tl-links"><a href="https://maps.google.com/?q=Supernormal+180+Flinders+Lane+Melbourne" class="tl-map-btn" target="_blank" rel="noopener">🗺️ MAP</a><a href="https://supernormal.net.au/" class="tl-web-btn" target="_blank" rel="noopener">🌐 公式</a></div></div></div>
+        <div class="tl-item"><div class="tl-time editable">21:00</div><div class="tl-box"><div class="tl-head editable">🏨 ホテル帰着</div><div class="tl-desc editable">お疲れ様でした！長旅の最初の夜、ゆっくり休んでください</div></div></div>
       </div>
     </div>
   </div>
 
-  <!-- Spots -->
   <div class="section">
-    <div class="sec-title">
-      <div class="sec-icon" style="background:var(--purple-light)">🗺️</div>
-      <span style="color:var(--purple)">観光スポット</span>
-    </div>
-
+    <div class="sec-title"><div class="sec-icon" style="background:var(--purple)"></div><span style="color:var(--purple)">観光スポット</span></div>
     <div class="card c-spot">
-      <div class="card-title">エッフェル塔 La Tour Eiffel</div>
-      <div class="card-sub">パリの象徴的シンボル • 7区</div>
-      <div class="row"><span class="rl">🕐 営業時間</span><span class="rv">9:00〜23:45（9〜6月）</span></div>
-      <div class="row"><span class="rl">💶 料金</span><span class="rv">最上階€29.4 / 第2展望台€18.8（要事前予約）</span></div>
-      <div class="row"><span class="rl">🚇 アクセス</span><span class="rv">メトロ6号線 Bir-Hakeim駅 徒歩5分</span></div>
-      <div style="margin-top:8px"><span class="badge b-blue">要予約</span><span class="badge b-gold">絶景</span><span class="badge b-rose">カップル必見</span></div>
-      <a href="https://maps.google.com/?q=Tour+Eiffel+Paris" class="map-btn" target="_blank" rel="noopener">🗺️ マップ</a>
+      <div class="card-title editable">ホージア・レーン Hosier Lane</div>
+      <div class="card-sub editable">メルボルン屈指のウォールアート路地 • CBD</div>
+      <div class="row"><span class="rl">📍 住所</span><span class="rv editable">Hosier Lane, Melbourne VIC 3000</span></div>
+      <div class="row"><span class="rl">🕐 開放</span><span class="rv editable">終日（無料）</span></div>
+      <div style="margin-top:8px"><span class="badge b-green editable">無料</span><span class="badge b-purple editable">フォトスポット</span></div>
+      <a href="https://maps.google.com/?q=Hosier+Lane+Melbourne" class="map-btn" target="_blank" rel="noopener">🗺️ マップ</a>
     </div>
-
     <div class="card c-spot">
-      <div class="card-title">サクレ・クール寺院 Sacré-Cœur</div>
-      <div class="card-sub">モンマルトルの丘 • 18区</div>
-      <div class="row"><span class="rl">🕐 営業時間</span><span class="rv">6:00〜22:30（無休・無料）</span></div>
-      <div class="row"><span class="rl">💶 クーポール</span><span class="rv">€8（円蓋上れる）</span></div>
-      <div class="row"><span class="rl">🚇 アクセス</span><span class="rv">メトロ2号線 Anvers駅 or ケーブルカー</span></div>
-      <a href="https://maps.google.com/?q=Sacre+Coeur+Montmartre+Paris" class="map-btn" target="_blank" rel="noopener">🗺️ マップ</a>
+      <div class="card-title editable">ブロック・アーケード Block Arcade</div>
+      <div class="card-sub editable">19世紀の美しいアーケード • CBD</div>
+      <div class="row"><span class="rl">📍 住所</span><span class="rv editable">282 Collins Street, Melbourne VIC 3000</span></div>
+      <div class="row"><span class="rl">🕐 営業</span><span class="rv editable">月〜土 8:00〜18:00 / 日 10:00〜17:00</span></div>
+      <div style="margin-top:8px"><span class="badge b-gold editable">クラシック建築</span></div>
+      <a href="https://maps.google.com/?q=Block+Arcade+Melbourne" class="map-btn" target="_blank" rel="noopener">🗺️ マップ</a>
     </div>
   </div>
 
-  <!-- Restaurants -->
   <div class="section">
-    <div class="sec-title">
-      <div class="sec-icon" style="background:var(--orange-light)">🍽️</div>
-      <span style="color:var(--orange)">レストラン</span>
-    </div>
-
+    <div class="sec-title"><div class="sec-icon" style="background:var(--orange)"></div><span style="color:var(--orange)">レストラン</span></div>
     <div class="card c-restaurant">
-      <div class="card-title">Le Café de l'Homme</div>
-      <div class="card-sub">🗼 エッフェル塔正面ビュー • トロカデロ • 16区</div>
-      <div class="row"><span class="rl">📍 住所</span><span class="rv">17 Pl. du Trocadéro, 75016 Paris</span></div>
-      <div class="row"><span class="rl">💶 予算</span><span class="rv">€40〜65/人（ランチは€28〜）</span></div>
-      <div class="row"><span class="rl">⭐ おすすめ</span><span class="rv">エッフェル塔正面のテラス席。ランチタイムが比較的リーズナブル</span></div>
-      <div style="margin-top:8px"><span class="badge b-rose">ロマンティック</span><span class="badge b-orange">要予約</span></div>
+      <div class="card-title editable">Lune Croissanterie CBD</div>
+      <div class="card-sub editable">☕ 世界最高峰クロワッサン • フリンダーズ・レーン</div>
+      <div class="row"><span class="rl">📍 住所</span><span class="rv editable">Flinders Lane, Melbourne VIC 3000</span></div>
+      <div class="row"><span class="rl">💰 予算</span><span class="rv editable">$10〜20/人（朝食）</span></div>
+      <div class="row"><span class="rl">⭐ おすすめ</span><span class="rv editable">クロワッサン各種＋フラットホワイト。早朝到着日のみ空いている</span></div>
+      <div style="margin-top:8px"><span class="badge b-gold editable">早朝が狙い目</span></div>
     </div>
-
     <div class="card c-restaurant">
-      <div class="card-title">Le Relais de la Butte</div>
-      <div class="card-sub">🇫🇷 フレンチビストロ • モンマルトル • 18区</div>
-      <div class="row"><span class="rl">📍 住所</span><span class="rv">12 Rue Ravignan, 75018 Paris</span></div>
-      <div class="row"><span class="rl">🕐 営業時間</span><span class="rv">12:00〜23:00</span></div>
-      <div class="row"><span class="rl">💶 予算</span><span class="rv">€25〜38/人（コース）</span></div>
-      <div class="row"><span class="rl">⭐ おすすめ</span><span class="rv">鴨のコンフィ、ブルゴーニュワイン、テラス席あり</span></div>
-      <div style="margin-top:8px"><span class="badge b-orange">予約推奨</span><span class="badge b-gold">テラス席</span></div>
+      <div class="card-title editable">Il Solito Posto</div>
+      <div class="card-sub editable">🍝 本格イタリアン • フリンダーズ・レーン</div>
+      <div class="row"><span class="rl">📍 住所</span><span class="rv editable">113 Collins Street（地下）, Melbourne VIC 3000</span></div>
+      <div class="row"><span class="rl">💰 予算</span><span class="rv editable">$30〜50/人</span></div>
+      <div class="row"><span class="rl">⭐ おすすめ</span><span class="rv editable">スパイスなしの優しい味付けパスタ・リゾット、モクテルあり</span></div>
+      <div style="margin-top:8px"><span class="badge b-orange editable">アルコールなし対応◎</span></div>
+    </div>
+    <div class="card c-restaurant">
+      <div class="card-title editable">Supernormal</div>
+      <div class="card-sub editable">🍱 モダン・アジアン • フリンダーズ・レーン</div>
+      <div class="row"><span class="rl">📍 住所</span><span class="rv editable">180 Flinders Lane, Melbourne VIC 3000</span></div>
+      <div class="row"><span class="rl">💰 予算</span><span class="rv editable">$50〜80/人（要事前予約）</span></div>
+      <div class="row"><span class="rl">⭐ おすすめ</span><span class="rv editable">名物「ロブスターロール」。スパイス系なし、日本の食材を融合した洗練された料理</span></div>
+      <div style="margin-top:8px"><span class="badge b-red editable">要予約</span><span class="badge b-orange editable">アルコールなし対応◎</span></div>
     </div>
   </div>
+</div>
 
-  <!-- Tips -->
-  <div class="section">
-    <div class="sec-title">
-      <div class="sec-icon" style="background:var(--gold-light)">💡</div>
-      <span style="color:var(--orange)">今日のポイント</span>
-    </div>
-    <div class="card c-tip">
-      <div class="tip-item"><span class="tip-ico">✨</span><span>エッフェル塔は夜22時以降のライトアップが幻想的。毎時0分の5分間キラキラ点滅は必見！</span></div>
-      <div class="tip-item"><span class="tip-ico">👮</span><span>エッフェル塔周辺はスリが多い。貴重品は体の前側に。署名を求めてくる人は無視でOK</span></div>
-      <div class="tip-item"><span class="tip-ico">🎫</span><span>エッフェル塔チケットはオンライン事前予約必須。当日券は2〜3時間待ちになることも</span></div>
-      <div class="tip-item"><span class="tip-ico">📸</span><span>トロカデロからのエッフェル塔写真は朝イチか夕暮れ時が光が美しくておすすめ</span></div>
-    </div>
-  </div>
-</div><!-- /day2 -->
-
-<!-- ─────────────────── DAY 3 ─────────────────── -->
+<!-- ═══ DAY 3 ═══ -->
 <div id="day3" class="pane">
-
   <div class="day-hd">
     <div class="day-circle"><span class="cn">3</span><span class="ct">DAY</span></div>
-    <div>
-      <h2>10月3日（土）ルーヴルの日</h2>
-      <p>ルーヴル美術館・チュイルリー庭園・シャンゼリゼ</p>
-    </div>
+    <div><h2 class="editable">9月22日（火）メルボルン②</h2><p class="editable">北側エリア完全攻略・完全自由行動日</p></div>
   </div>
 
   <div class="section">
-    <div class="sec-title">
-      <div class="sec-icon" style="background:var(--purple-light)">📅</div>
-      <span style="color:var(--purple)">本日のスケジュール</span>
-    </div>
+    <div class="sec-title"><div class="sec-icon" style="background:var(--purple)"></div><span style="color:var(--purple)">本日のスケジュール</span></div>
     <div class="card c-schedule">
       <div class="timeline">
-        <div class="tl-item">
-          <div class="tl-time">09:00</div>
-          <div class="tl-box">
-            <div class="tl-head">🖼️ ルーヴル美術館（Musée du Louvre）</div>
-            <div class="tl-desc">開館直後が空いている！モナ・リザ、ミロのヴィーナス、サモトラケのニケを中心に半日かけてじっくり</div>
-          </div>
-        </div>
-        <div class="tl-item">
-          <div class="tl-time">12:30</div>
-          <div class="tl-box">
-            <div class="tl-head">🌿 チュイルリー庭園（Jardin des Tuileries）</div>
-            <div class="tl-desc">美術館を出てそのまま庭園へ。テラスカフェでランチ休憩。秋の紅葉の中を散歩しよう</div>
-          </div>
-        </div>
-        <div class="tl-item">
-          <div class="tl-time">14:00</div>
-          <div class="tl-box">
-            <div class="tl-head">🛍️ シャンゼリゼ通り（Champs-Élysées）</div>
-            <div class="tl-desc">ルイ・ヴィトン、ディオール、カルティエ本店が並ぶ世界最美の通りを散歩。お土産探しにも◎</div>
-          </div>
-        </div>
-        <div class="tl-item">
-          <div class="tl-time">16:30</div>
-          <div class="tl-box">
-            <div class="tl-head">🏛️ 凱旋門（Arc de Triomphe）</div>
-            <div class="tl-desc">屋上展望台からシャンゼリゼとエッフェル塔が見渡せる絶景夕景！地下道を使って安全にアクセス</div>
-          </div>
-        </div>
-        <div class="tl-item">
-          <div class="tl-time">18:30</div>
-          <div class="tl-box">
-            <div class="tl-head">🍽️ 凱旋門周辺でディナー</div>
-            <div class="tl-desc">8区・16区のシックなビストロでゆっくりディナー</div>
-          </div>
-        </div>
+        <div class="tl-item"><div class="tl-time editable">08:30</div><div class="tl-box"><div class="tl-head editable">☕ ホテル周辺の路地裏でコーヒーテイクアウト</div><div class="tl-desc editable">メルボルンのコーヒー文化を満喫。コリンズ・ストリート沿いのカフェが◎</div></div></div>
+        <div class="tl-item"><div class="tl-time editable">09:30</div><div class="tl-box"><div class="tl-head editable">🚃 無料トラムで北エリアへ</div><div class="tl-desc editable">ホテル前コリンズ・ストリートから「無料トラム（City Circle Tram）」に乗車。料金不要</div></div></div>
+        <div class="tl-item"><div class="tl-time editable">10:00</div><div class="tl-box"><div class="tl-head editable">🛒 クイーンビクトリアマーケット（火曜営業）</div><div class="tl-desc editable">活気あふれるローカル市場。名物のホット・ジャム・ドーナツをつまみ食い、オーガニック雑貨をチェック</div><div class="tl-links"><a href="https://maps.google.com/?q=Queen+Victoria+Market+Melbourne" class="tl-map-btn" target="_blank" rel="noopener">🗺️ MAP</a><a href="https://qvm.com.au/" class="tl-web-btn" target="_blank" rel="noopener">🌐 公式</a></div></div></div>
+        <div class="tl-item"><div class="tl-time editable">11:30</div><div class="tl-box"><div class="tl-head editable">🌳 カールトン庭園＆王立展示館（世界遺産）</div><div class="tl-desc editable">マーケットから東へ徒歩orトラムで移動。壮大なドーム建築と春の並木道をバックに2人で記念写真を</div><div class="tl-links"><a href="https://maps.google.com/?q=Carlton+Gardens+Melbourne" class="tl-map-btn" target="_blank" rel="noopener">🗺️ MAP</a><a href="https://museumsvictoria.com.au/reb/" class="tl-web-btn" target="_blank" rel="noopener">🌐 公式</a></div></div></div>
+        <div class="tl-item"><div class="tl-time editable">13:00</div><div class="tl-box"><div class="tl-head editable">🍽️ ランチ：フィッツロイ地区のカフェorCBDビストロ</div><div class="tl-desc editable">おしゃれなフィッツロイ地区のオープンエアカフェ、またはCBDに戻って洗練されたビストロで優雅にランチ</div></div></div>
+        <div class="tl-item"><div class="tl-time editable">15:00</div><div class="tl-box"><div class="tl-head editable">🏨 5つ星ホテルステイを満喫</div><div class="tl-desc editable">完全自由行動日の醍醐味。ホテルのラウンジ、プール、バスタブをフル活用してゆったりと至福の時間を</div></div></div>
+        <div class="tl-item"><div class="tl-time editable">18:00</div><div class="tl-box"><div class="tl-head editable">🥩 ディナー：フリンダーズ・レーンのステーキハウスorモダンフレンチ</div><div class="tl-desc editable">スパイスを一切使わない最高峰のディナーをゆっくり楽しむ</div></div></div>
+        <div class="tl-item"><div class="tl-time editable">21:00</div><div class="tl-box"><div class="tl-head editable">🏨 ホテル帰着</div><div class="tl-desc editable">明日は移動日。早めに就寝を</div></div></div>
       </div>
     </div>
   </div>
 
   <div class="section">
-    <div class="sec-title">
-      <div class="sec-icon" style="background:var(--purple-light)">🗺️</div>
-      <span style="color:var(--purple)">観光スポット</span>
-    </div>
-
+    <div class="sec-title"><div class="sec-icon" style="background:var(--purple)"></div><span style="color:var(--purple)">観光スポット</span></div>
     <div class="card c-spot">
-      <div class="card-title">ルーヴル美術館 Musée du Louvre</div>
-      <div class="card-sub">世界最大の美術館 • 1区</div>
-      <div class="row"><span class="rl">🕐 営業時間</span><span class="rv">9:00〜18:00（火曜休）/ 月・水・木は21:45まで</span></div>
-      <div class="row"><span class="rl">💶 料金</span><span class="rv">€22（オンライン事前購入推奨）</span></div>
-      <div class="row"><span class="rl">🚇 アクセス</span><span class="rv">メトロ1号線 Palais Royal-Musée du Louvre駅直結</span></div>
-      <div class="row"><span class="rl">⭐ 必見</span><span class="rv">モナ・リザ / ミロのヴィーナス / サモトラケのニケ</span></div>
-      <div style="margin-top:8px"><span class="badge b-blue">要予約</span><span class="badge b-purple">世界遺産</span></div>
-      <a href="https://maps.google.com/?q=Musee+du+Louvre+Paris" class="map-btn" target="_blank" rel="noopener">🗺️ マップ</a>
+      <div class="card-title editable">クイーンビクトリアマーケット Queen Victoria Market</div>
+      <div class="card-sub editable">メルボルン最大の市場 • 火曜営業</div>
+      <div class="row"><span class="rl">📍 住所</span><span class="rv editable">Queen St & Victoria St, Melbourne VIC 3000</span></div>
+      <div class="row"><span class="rl">🕐 営業</span><span class="rv editable">火曜 6:00〜14:00</span></div>
+      <div class="row"><span class="rl">⭐ 名物</span><span class="rv editable">ホット・ジャム・ドーナツ、新鮮フルーツ、オーガニック雑貨</span></div>
+      <div style="margin-top:8px"><span class="badge b-gold editable">ローカル体験</span><span class="badge b-green editable">無料入場</span></div>
+      <a href="https://maps.google.com/?q=Queen+Victoria+Market+Melbourne" class="map-btn" target="_blank" rel="noopener">🗺️ マップ</a>
     </div>
-
     <div class="card c-spot">
-      <div class="card-title">凱旋門 Arc de Triomphe</div>
-      <div class="card-sub">エトワール広場 • 8区</div>
-      <div class="row"><span class="rl">🕐 営業時間</span><span class="rv">10:00〜23:00（10〜3月は22:30まで）</span></div>
-      <div class="row"><span class="rl">💶 料金</span><span class="rv">€16（屋上展望台含む）</span></div>
-      <div class="row"><span class="rl">⚠️ 注意</span><span class="rv">車道は絶対に渡らない！地下道を利用すること</span></div>
-      <a href="https://maps.google.com/?q=Arc+de+Triomphe+Paris" class="map-btn" target="_blank" rel="noopener">🗺️ マップ</a>
+      <div class="card-title editable">カールトン庭園＆王立展示館 Carlton Gardens</div>
+      <div class="card-sub editable">ユネスコ世界遺産 • カールトン地区</div>
+      <div class="row"><span class="rl">🕐 開放</span><span class="rv editable">終日（庭園無料）</span></div>
+      <div class="row"><span class="rl">⭐ 見どころ</span><span class="rv editable">壮大なドーム建築と春の並木道。記念撮影に最高のロケーション</span></div>
+      <div style="margin-top:8px"><span class="badge b-purple editable">世界遺産</span><span class="badge b-rose editable">カップル必見</span></div>
+      <a href="https://maps.google.com/?q=Carlton+Gardens+Melbourne" class="map-btn" target="_blank" rel="noopener">🗺️ マップ</a>
     </div>
   </div>
 
   <div class="section">
-    <div class="sec-title">
-      <div class="sec-icon" style="background:var(--orange-light)">🍽️</div>
-      <span style="color:var(--orange)">レストラン</span>
-    </div>
-
-    <div class="card c-restaurant">
-      <div class="card-title">Café Marly</div>
-      <div class="card-sub">🖼️ ルーヴル内テラス • 1区</div>
-      <div class="row"><span class="rl">📍 住所</span><span class="rv">93 Rue de Rivoli, 75001 Paris</span></div>
-      <div class="row"><span class="rl">💶 予算</span><span class="rv">€20〜35/人（ランチ）</span></div>
-      <div class="row"><span class="rl">⭐ おすすめ</span><span class="rv">ルーヴルのガラスピラミッドを眺めながらランチ。ロケーションが最高</span></div>
-      <div style="margin-top:8px"><span class="badge b-purple">絶景ビュー</span><span class="badge b-orange">要予約</span></div>
-    </div>
-
-    <div class="card c-restaurant">
-      <div class="card-title">L'Ardoise</div>
-      <div class="card-sub">🇫🇷 正統ビストロ • コンコルド広場近く • 1区</div>
-      <div class="row"><span class="rl">📍 住所</span><span class="rv">28 Rue du Mont Thabor, 75001 Paris</span></div>
-      <div class="row"><span class="rl">💶 予算</span><span class="rv">€18〜30/人（2コースランチ€17〜）</span></div>
-      <div class="row"><span class="rl">⭐ おすすめ</span><span class="rv">オニオングラタンスープ、牛ほほ肉の赤ワイン煮込み</span></div>
-    </div>
-  </div>
-
-  <div class="section">
-    <div class="sec-title">
-      <div class="sec-icon" style="background:var(--gold-light)">💡</div>
-      <span style="color:var(--orange)">今日のポイント</span>
-    </div>
+    <div class="sec-title"><div class="sec-icon" style="background:var(--gold)"></div><span style="color:var(--orange)">今日のポイント</span></div>
     <div class="card c-tip">
-      <div class="tip-item"><span class="tip-ico">⏰</span><span>ルーヴルは広大すぎて全部は無理。事前に見たい作品をリストアップして動線を決めておこう（公式アプリが便利）</span></div>
-      <div class="tip-item"><span class="tip-ico">🎧</span><span>音声ガイド€6。日本語対応ガイドあり。主要作品の背景がわかって格段に楽しくなる</span></div>
-      <div class="tip-item"><span class="tip-ico">👟</span><span>シャンゼリゼは約2km。疲れたらメトロで移動も◎。とにかく歩きやすい靴で来ること！</span></div>
+      <div class="tip-item"><span class="tip-ico">🚃</span><span class="tip-text editable">市内中心部（CBD）の無料トラムゾーン内は料金不要。ゾーン外に出る場合はmykiカードが必要</span></div>
+      <div class="tip-item"><span class="tip-ico">🧥</span><span class="tip-text editable">9月のメルボルンは「1日で4シーズン」と言われるほど天気が変わりやすい。ウインドブレーカーを必ずバッグに</span></div>
+      <div class="tip-item"><span class="tip-ico">☕</span><span class="tip-text editable">フラットホワイトはメルボルン発祥。カフェラテより濃くて美味しい。ぜひ試して！</span></div>
     </div>
   </div>
-</div><!-- /day3 -->
+</div>
 
-<!-- ─────────────────── DAY 4 ─────────────────── -->
+<!-- ═══ DAY 4 ═══ -->
 <div id="day4" class="pane">
-
   <div class="day-hd">
     <div class="day-circle"><span class="cn">4</span><span class="ct">DAY</span></div>
-    <div>
-      <h2>10月4日（日）ヴェルサイユの日</h2>
-      <p>ヴェルサイユ宮殿 → マレ地区の夜</p>
+    <div><h2 class="editable">9月23日（水）メルボルン→シドニー移動</h2><p class="editable">国内線でシドニーへ・オペラハウス夜景</p></div>
+  </div>
+
+  <div class="section">
+    <div class="sec-title"><div class="sec-icon" style="background:var(--blue)"></div><span style="color:var(--blue)">国内線フライト</span></div>
+    <div class="card c-flight">
+      <div class="card-title editable">ヴァージン・オーストラリア（Virgin Australia）</div>
+      <div class="card-sub editable">メルボルン（MEL）→ シドニー（SYD）直行便</div>
+      <div class="flight-route">
+        <div class="airport"><div class="iata editable">MEL</div><div class="city editable">メルボルン</div><div class="ftime editable">16:00</div></div>
+        <div class="f-mid"><div class="f-plane">✈️</div><div class="f-line"></div><div class="f-dur editable">1時間25分</div></div>
+        <div class="airport"><div class="iata editable">SYD</div><div class="city editable">シドニー</div><div class="ftime editable">17:25</div></div>
+      </div>
+      <div class="row"><span class="rl">📋 便名</span><span class="rv editable">VA XXX（要確認）</span></div>
+      <div class="row"><span class="rl">💺 搭乗クラス</span><span class="rv editable">エコノミー</span></div>
+      <div class="row"><span class="rl">🧳 受託手荷物</span><span class="rv editable">Choice/Flexプランなら1人1個無料</span></div>
     </div>
   </div>
 
   <div class="section">
-    <div class="sec-title">
-      <div class="sec-icon" style="background:var(--purple-light)">📅</div>
-      <span style="color:var(--purple)">本日のスケジュール</span>
+    <div class="sec-title"><div class="sec-icon" style="background:var(--green)"></div><span style="color:var(--green)">ホテル（シドニー 3泊）</span></div>
+    <div class="card c-hotel">
+      <div class="card-title editable">リッジス ワールド スクエア Rydges World Square</div>
+      <div class="card-sub editable">⭐⭐⭐⭐½ Aグレード • 9月23日〜26日（3泊）</div>
+      <div class="row"><span class="rl">📍 住所</span><span class="rv editable">389 Pitt Street, Sydney NSW 2000</span></div>
+      <div class="row"><span class="rl">🛁 特徴</span><span class="rv editable">バスルームは「シャワーと浴槽が完全独立（セパレート）」で快適</span></div>
+      <div class="row"><span class="rl">🏪 直結</span><span class="rv editable">スーパーマーケット「Coles」と直結。水やTimTam等お土産もここで</span></div>
+      <div class="row"><span class="rl">🕐 C/I</span><span class="rv editable">15:00〜</span></div>
+      <div class="row"><span class="rl">🕐 C/O</span><span class="rv editable">11:00</span></div>
+      <div class="row"><span class="rl">📞 予約番号</span><span class="rv editable">JTB経由 XXXXXX（要記入）</span></div>
+      <a href="https://maps.google.com/?q=389+Pitt+Street+Sydney" class="map-btn" target="_blank" rel="noopener">🗺️ Google マップ</a>
     </div>
+  </div>
+
+  <div class="section">
+    <div class="sec-title"><div class="sec-icon" style="background:var(--purple)"></div><span style="color:var(--purple)">本日のスケジュール</span></div>
     <div class="card c-schedule">
       <div class="timeline">
-        <div class="tl-item">
-          <div class="tl-time">08:15</div>
-          <div class="tl-box">
-            <div class="tl-head">🚄 RER C でヴェルサイユへ</div>
-            <div class="tl-desc">サン・ミシェル・ノートルダム駅 → Versailles-Château-Rive Gauche駅（約40分、€6.05/人）</div>
-          </div>
-        </div>
-        <div class="tl-item">
-          <div class="tl-time">09:30</div>
-          <div class="tl-box">
-            <div class="tl-head">🏰 ヴェルサイユ宮殿（Château de Versailles）</div>
-            <div class="tl-desc">鏡の間は圧巻！王妃の居室、礼拝堂など2〜3時間でじっくり見学。混雑前の午前中に入場が鉄則</div>
-          </div>
-        </div>
-        <div class="tl-item">
-          <div class="tl-time">13:00</div>
-          <div class="tl-box">
-            <div class="tl-head">🌸 ヴェルサイユ庭園（Les jardins de Versailles）</div>
-            <div class="tl-desc">広大なフランス式整形庭園。電動カート（€9）orレンタサイクル（€8）がおすすめ。噴水ショーもあり</div>
-          </div>
-        </div>
-        <div class="tl-item">
-          <div class="tl-time">15:30</div>
-          <div class="tl-box">
-            <div class="tl-head">🚄 パリ市内へ帰還</div>
-            <div class="tl-desc">RER C でパリへ。マレ地区（Le Marais）に立ち寄り</div>
-          </div>
-        </div>
-        <div class="tl-item">
-          <div class="tl-time">17:00</div>
-          <div class="tl-box">
-            <div class="tl-head">🕍 マレ地区散策（Le Marais）</div>
-            <div class="tl-desc">ヴォージュ広場、ピカソ美術館外観、おしゃれなセレクトショップやギャラリーを散歩</div>
-          </div>
-        </div>
-        <div class="tl-item">
-          <div class="tl-time">19:30</div>
-          <div class="tl-box">
-            <div class="tl-head">🥙 マレ地区で夕食</div>
-            <div class="tl-desc">マレはユダヤ人街でもあり、名物ファラフェルをぜひ！Rue des Rosiers界隈へ</div>
-          </div>
-        </div>
+        <div class="tl-item"><div class="tl-time editable">08:30</div><div class="tl-box"><div class="tl-head editable">🧳 起床・のんびり準備</div><div class="tl-desc editable">出発は16:00なので焦らずゆっくり。最終パッキングを終えてから朝食へ</div></div></div>
+        <div class="tl-item"><div class="tl-time editable">09:00</div><div class="tl-box"><div class="tl-head editable">🛒 サウスメルボルンマーケット（水曜営業）</div><div class="tl-desc editable">QVより更にローカルでオシャレ。洗練されたデリ・新鮮フルーツ・雑貨。Uberで約10分（無料トラムゾーン外）</div><div class="tl-links"><a href="https://maps.google.com/?q=South+Melbourne+Market" class="tl-map-btn" target="_blank" rel="noopener">🗺️ MAP</a><a href="https://www.southmelbournemarket.com.au/" class="tl-web-btn" target="_blank" rel="noopener">🌐 公式</a></div></div></div>
+        <div class="tl-item"><div class="tl-time editable">11:00</div><div class="tl-box"><div class="tl-head editable">🏨 ホテルに戻りチェックアウト</div><div class="tl-desc editable">荷物をピックアップしてチェックアウト。Uberを呼ぶ前に少し休憩も◎</div></div></div>
+        <div class="tl-item"><div class="tl-time editable">11:30</div><div class="tl-box"><div class="tl-head editable">🍝 メルボルン最後のランチ！</div><div class="tl-desc editable">フリンダーズ・レーンのビストロ or カフェで締めくくり。シドニーではシーフード中心になるので、ここで肉料理やパスタを楽しんで</div></div></div>
+        <div class="tl-item"><div class="tl-time editable">13:30</div><div class="tl-box"><div class="tl-head editable">🚖 Uberでメルボルン空港へ</div><div class="tl-desc editable">空港まで約35〜40分。余裕をもって出発</div><div class="tl-links"><a href="https://maps.google.com/?q=Melbourne+Airport+Domestic+Terminal" class="tl-map-btn" target="_blank" rel="noopener">🗺️ MAP</a><a href="https://www.melbourneairport.com.au/" class="tl-web-btn" target="_blank" rel="noopener">🌐 公式</a></div></div></div>
+        <div class="tl-item"><div class="tl-time editable">14:15</div><div class="tl-box"><div class="tl-head editable">✈️ メルボルン空港着・国内線チェックイン</div><div class="tl-desc editable">ヴァージン・オーストラリアのカウンターでチェックイン。保安検査後はラウンジや売店でゆっくり過ごして</div><div class="tl-links"><button class="tl-info-btn" onclick="openSheet('va-checkin')">ℹ️ チェックイン手順</button></div></div></div>
+        <div class="tl-item"><div class="tl-time editable">16:00</div><div class="tl-box"><div class="tl-head editable">✈️ シドニーへ出発！</div><div class="tl-desc editable">ヴァージン・オーストラリア 直行便でシドニーへ。1時間25分のフライト</div></div></div>
+        <div class="tl-item"><div class="tl-time editable">17:25</div><div class="tl-box"><div class="tl-head editable">🛬 シドニー空港 国内線T2 着</div><div class="tl-desc editable">Uberで市内へ（約25〜30分、$50〜60）。エアポートリンク（電車）も利用可</div><div class="tl-links"><a href="https://maps.google.com/?q=Sydney+Airport+Domestic+Terminal+2" class="tl-map-btn" target="_blank" rel="noopener">🗺️ MAP</a><a href="https://www.sydneyairport.com.au/" class="tl-web-btn" target="_blank" rel="noopener">🌐 公式</a><button class="tl-info-btn" onclick="openSheet('syd-arrive')">ℹ️ アクセス比較</button></div></div></div>
+        <div class="tl-item"><div class="tl-time editable">18:15</div><div class="tl-box"><div class="tl-head editable">🏨 リッジス ワールド スクエア チェックイン</div><div class="tl-desc editable">荷物を置いてひと息。直結のColes（スーパー）で水とTimTam等を購入</div><div class="tl-links"><a href="https://maps.google.com/?q=Rydges+World+Square+389+Pitt+Street+Sydney" class="tl-map-btn" target="_blank" rel="noopener">🗺️ MAP</a><a href="https://www.rydges.com/accommodation/sydney-nsw/world-square/" class="tl-web-btn" target="_blank" rel="noopener">🌐 公式</a></div></div></div>
+        <div class="tl-item"><div class="tl-time editable">19:30</div><div class="tl-box"><div class="tl-head editable">🚃 ライトレールでダーリングハーバーへ</div><div class="tl-desc editable">クレジットカードタッチで乗車OK（ICカード不要）。ライトアップが始まる夜の時間帯に合わせてちょうどよい！</div><div class="tl-links"><a href="https://maps.google.com/?q=Darling+Harbour+Sydney" class="tl-map-btn" target="_blank" rel="noopener">🗺️ MAP</a></div></div></div>
+        <div class="tl-item"><div class="tl-time editable">20:00</div><div class="tl-box"><div class="tl-head editable">🦞 ディナー：Nick's Seafood Restaurant（要予約）</div><div class="tl-desc editable">ダーリングハーバーのウォーターフロント。港のライトアップを眺めながらシーフード・プラッター（生牡蠣・ロブスター・エビ）を。モクテルも充実</div><div class="tl-links"><a href="https://maps.google.com/?q=Nicks+Seafood+Restaurant+Cockle+Bay+Wharf+Sydney" class="tl-map-btn" target="_blank" rel="noopener">🗺️ MAP</a><a href="https://nicksseafood.com.au/" class="tl-web-btn" target="_blank" rel="noopener">🌐 公式</a></div></div></div>
+        <div class="tl-item"><div class="tl-time editable">21:30</div><div class="tl-box"><div class="tl-head editable">🌉 サーキュラー・キー — オペラハウス夜景</div><div class="tl-desc editable">ディナー後はライトアップされたオペラハウスとハーバーブリッジへ。シドニー初夜の感動を2人で</div><div class="tl-links"><a href="https://maps.google.com/?q=Circular+Quay+Sydney" class="tl-map-btn" target="_blank" rel="noopener">🗺️ MAP</a></div></div></div>
       </div>
     </div>
   </div>
 
   <div class="section">
-    <div class="sec-title">
-      <div class="sec-icon" style="background:var(--purple-light)">🗺️</div>
-      <span style="color:var(--purple)">観光スポット</span>
-    </div>
-
-    <div class="card c-spot">
-      <div class="card-title">ヴェルサイユ宮殿 Château de Versailles</div>
-      <div class="card-sub">フランス王室の宮殿 • ヴェルサイユ市</div>
-      <div class="row"><span class="rl">🕐 営業時間</span><span class="rv">9:00〜17:30（月曜休）</span></div>
-      <div class="row"><span class="rl">💶 料金</span><span class="rv">宮殿€21 / 宮殿+庭園€28（パスポートチケット）</span></div>
-      <div class="row"><span class="rl">🚄 アクセス</span><span class="rv">RER C Versailles-Château-Rive Gauche駅 徒歩10分</span></div>
-      <div class="row"><span class="rl">⭐ 必見</span><span class="rv">鏡の間（Galerie des Glaces）/ 庭園の噴水ショー（土日 €10）</span></div>
-      <div style="margin-top:8px"><span class="badge b-blue">事前予約必須</span><span class="badge b-purple">世界遺産</span></div>
-      <a href="https://maps.google.com/?q=Chateau+de+Versailles" class="map-btn" target="_blank" rel="noopener">🗺️ マップ</a>
-    </div>
-
-    <div class="card c-spot">
-      <div class="card-title">ヴォージュ広場 Place des Vosges</div>
-      <div class="card-sub">パリ最古の広場 • マレ地区 4区</div>
-      <div class="row"><span class="rl">🕐 開放時間</span><span class="rv">終日（無料）</span></div>
-      <div class="row"><span class="rl">⭐ 見どころ</span><span class="rv">赤レンガのアーケード / ヴィクトル・ユゴーの家（€0）</span></div>
-      <a href="https://maps.google.com/?q=Place+des+Vosges+Paris" class="map-btn" target="_blank" rel="noopener">🗺️ マップ</a>
-    </div>
-  </div>
-
-  <div class="section">
-    <div class="sec-title">
-      <div class="sec-icon" style="background:var(--orange-light)">🍽️</div>
-      <span style="color:var(--orange)">レストラン</span>
-    </div>
-
+    <div class="sec-title"><div class="sec-icon" style="background:var(--orange)"></div><span style="color:var(--orange)">レストラン</span></div>
     <div class="card c-restaurant">
-      <div class="card-title">L'As du Fallafel</div>
-      <div class="card-sub">🥙 ファラフェル専門店 • ユダヤ人街 • 4区</div>
-      <div class="row"><span class="rl">📍 住所</span><span class="rv">34 Rue des Rosiers, 75004 Paris</span></div>
-      <div class="row"><span class="rl">🕐 営業時間</span><span class="rv">11:00〜24:00（土曜のみ休 ※ユダヤ安息日）</span></div>
-      <div class="row"><span class="rl">💶 予算</span><span class="rv">€8〜12（テイクアウトも可）</span></div>
-      <div class="row"><span class="rl">⭐ おすすめ</span><span class="rv">スペシャルファラフェル（野菜たっぷり）</span></div>
-      <div style="margin-top:8px"><span class="badge b-green">地元の名店</span><span class="badge b-gold">行列覚悟</span></div>
-    </div>
-
-    <div class="card c-restaurant">
-      <div class="card-title">Breizh Café</div>
-      <div class="card-sub">🥞 ブルターニュ風そば粉クレープ • マレ地区</div>
-      <div class="row"><span class="rl">📍 住所</span><span class="rv">109 Rue Vieille du Temple, 75003 Paris</span></div>
-      <div class="row"><span class="rl">💶 予算</span><span class="rv">€15〜22/人</span></div>
-      <div class="row"><span class="rl">⭐ おすすめ</span><span class="rv">そば粉ガレット（ハム＆チーズ）、デザートクレープ</span></div>
-      <div style="margin-top:8px"><span class="badge b-rose">カジュアル</span><span class="badge b-orange">予約推奨</span></div>
+      <div class="card-title editable">Nick's Seafood Restaurant</div>
+      <div class="card-sub editable">🦞 最高峰シーフード • ダーリングハーバー</div>
+      <div class="row"><span class="rl">📍 住所</span><span class="rv editable">The Promenade, Cockle Bay Wharf, Sydney NSW 2000</span></div>
+      <div class="row"><span class="rl">💰 予算</span><span class="rv editable">$80〜150/人</span></div>
+      <div class="row"><span class="rl">⭐ おすすめ</span><span class="rv editable">シーフード・プラッター（生牡蠣・ロブスター・エビの盛り合わせ）。スパイスなし素材勝負</span></div>
+      <div style="margin-top:8px"><span class="badge b-red editable">要予約</span><span class="badge b-rose editable">ロマンティック夜景</span><span class="badge b-orange editable">アルコールなし対応◎</span></div>
     </div>
   </div>
+</div>
 
-  <div class="section">
-    <div class="sec-title">
-      <div class="sec-icon" style="background:var(--gold-light)">💡</div>
-      <span style="color:var(--orange)">今日のポイント</span>
-    </div>
-    <div class="card c-tip">
-      <div class="tip-item"><span class="tip-ico">⏰</span><span>ヴェルサイユは週末が大混雑。9時の開館と同時入場が鉄則！公式サイトで事前購入を</span></div>
-      <div class="tip-item"><span class="tip-ico">🎵</span><span>土日の庭園噴水ショー「Les Grandes Eaux Musicales」（€10追加）は圧巻。ぜひ見て！</span></div>
-      <div class="tip-item"><span class="tip-ico">👟</span><span>庭園は約100ヘクタール！電動カートかレンタサイクルを必ず活用しよう</span></div>
-    </div>
-  </div>
-</div><!-- /day4 -->
-
-<!-- ─────────────────── DAY 5 ─────────────────── -->
+<!-- ═══ DAY 5 ═══ -->
 <div id="day5" class="pane">
-
   <div class="day-hd">
     <div class="day-circle"><span class="cn">5</span><span class="ct">DAY</span></div>
-    <div>
-      <h2>10月5日（月）帰国日</h2>
-      <p>最後のパリ → 成田へ</p>
-    </div>
+    <div><h2 class="editable">9月24日（木）ブルーマウンテンズ＆動物園</h2><p class="editable">JTBオプショナルツアー参加日</p></div>
   </div>
 
   <div class="section">
-    <div class="sec-title">
-      <div class="sec-icon" style="background:var(--purple-light)">📅</div>
-      <span style="color:var(--purple)">本日のスケジュール</span>
-    </div>
+    <div class="warn-box">⚠️ <strong>ツアーコード：SYDODOAOPT87</strong>（JTBオプショナルツアー）<br>集合場所：<strong>ヒルトン シドニーのロビー</strong>（8時25分・5分前厳守）<br>ホテルから徒歩10分（約700m）。余裕をもって出発すること。</div>
+  </div>
+
+  <div class="section">
+    <div class="sec-title"><div class="sec-icon" style="background:var(--purple)"></div><span style="color:var(--purple)">本日のスケジュール</span></div>
     <div class="card c-schedule">
       <div class="timeline">
-        <div class="tl-item">
-          <div class="tl-time">08:00</div>
-          <div class="tl-box">
-            <div class="tl-head">🏨 ホテルチェックアウト</div>
-            <div class="tl-desc">荷物を預けて身軽に最後の散策へ（フロントで預かり可能か確認）。近くのカフェで最後の朝食を</div>
-          </div>
-        </div>
-        <div class="tl-item">
-          <div class="tl-time">09:00</div>
-          <div class="tl-box">
-            <div class="tl-head">🛍️ 最後のお買い物</div>
-            <div class="tl-desc">ギャラリー・ラファイエット（Galeries Lafayette）かボン・マルシェ（Le Bon Marché）でお土産を</div>
-          </div>
-        </div>
-        <div class="tl-item">
-          <div class="tl-time">11:00</div>
-          <div class="tl-box">
-            <div class="tl-head">🚄 CDG空港へ出発</div>
-            <div class="tl-desc">RER B でシャトレ・レ・アル駅orノートルダム駅からCDG空港へ（約35分）。フライト3時間前着が目安</div>
-          </div>
-        </div>
-        <div class="tl-item">
-          <div class="tl-time">12:00</div>
-          <div class="tl-box">
-            <div class="tl-head">✈️ CDG空港着・チェックイン</div>
-            <div class="tl-desc">税関でデタックス（免税）手続きを忘れずに！€100以上の購入品が対象</div>
-          </div>
-        </div>
-        <div class="tl-item">
-          <div class="tl-time">15:10</div>
-          <div class="tl-box">
-            <div class="tl-head">✈️ パリ出発 AF274</div>
-            <div class="tl-desc">素敵な旅の思い出と共に帰路へ。Bon voyage！</div>
-          </div>
-        </div>
-        <div class="tl-item">
-          <div class="tl-time">翌 10:00</div>
-          <div class="tl-box">
-            <div class="tl-head">🛬 成田空港着 → お帰りなさい！</div>
-            <div class="tl-desc">入国審査 → 荷物受け取り。素敵な旅でしたね！</div>
-          </div>
-        </div>
+        <div class="tl-item"><div class="tl-time editable">07:15</div><div class="tl-box"><div class="tl-head editable">🌅 起床</div><div class="tl-desc editable">早めに朝食を済ませてツアーに備える</div></div></div>
+        <div class="tl-item"><div class="tl-time editable">08:10</div><div class="tl-box"><div class="tl-head editable">🚶 ホテル出発</div><div class="tl-desc editable">ピット・ストリートを北へ徒歩10分（約700m）。集合の5分前には到着を</div></div></div>
+        <div class="tl-item"><div class="tl-time editable">08:25</div><div class="tl-box"><div class="tl-head editable">🏨 ヒルトン シドニー ロビー集合（5分前厳守！）</div><div class="tl-desc editable">JTBオプショナルツアー SYDODOAOPT87。日本語ガイドあり</div><div class="tl-links"><a href="https://maps.google.com/?q=Hilton+Sydney+488+George+Street" class="tl-map-btn" target="_blank" rel="noopener">🗺️ MAP</a><button class="tl-info-btn" onclick="openSheet('hilton-meeting')">ℹ️ 集合ルート</button></div></div></div>
+        <div class="tl-item"><div class="tl-time editable">08:30</div><div class="tl-box"><div class="tl-head editable">🚌 ツアー出発</div><div class="tl-desc editable">バスにてシドニー郊外へ。ガイドの解説を聞きながら移動</div></div></div>
+        <div class="tl-item"><div class="tl-time editable">09:15〜10:15</div><div class="tl-box"><div class="tl-head editable">🦘 フェザーデール動物園（Featherdale Wildlife Park）</div><div class="tl-desc editable">コンパクトで動物との距離が圧倒的に近い！コアラとの記念撮影、カンガルーへの餌やり体験</div><div class="tl-links"><a href="https://maps.google.com/?q=Featherdale+Wildlife+Park+Doonside+NSW" class="tl-map-btn" target="_blank" rel="noopener">🗺️ MAP</a><a href="https://www.featherdale.com.au/" class="tl-web-btn" target="_blank" rel="noopener">🌐 公式</a></div></div></div>
+        <div class="tl-item"><div class="tl-time editable">11:15〜11:45</div><div class="tl-box"><div class="tl-head editable">🏔️ カヒルズ ルックアウト</div><div class="tl-desc editable">断崖絶壁からジャミソン渓谷のパノラマビュー。プロ撮影データプレゼントあり</div></div></div>
+        <div class="tl-item"><div class="tl-time editable">12:10〜14:10</div><div class="tl-box"><div class="tl-head editable">🚡 シーニックワールド＋ランチ</div><div class="tl-desc editable">ランチバウチャーで昼食（スパイスを避けシンプルなピザやバーガーを推奨）。最大斜度52度のトロッコ列車やガラス底ロープウェイでユーカリの青い森を体験</div><div class="tl-links"><a href="https://maps.google.com/?q=Scenic+World+Katoomba+NSW" class="tl-map-btn" target="_blank" rel="noopener">🗺️ MAP</a><a href="https://www.scenicworld.com.au/" class="tl-web-btn" target="_blank" rel="noopener">🌐 公式</a></div></div></div>
+        <div class="tl-item"><div class="tl-time editable">14:20〜14:45</div><div class="tl-box"><div class="tl-head editable">🪨 エコーポイント展望台</div><div class="tl-desc editable">奇岩「スリーシスターズ」をはじめとするブルーマウンテンズの絶景を間近に鑑賞</div><div class="tl-links"><a href="https://maps.google.com/?q=Echo+Point+Lookout+Katoomba+NSW" class="tl-map-btn" target="_blank" rel="noopener">🗺️ MAP</a></div></div></div>
+        <div class="tl-item"><div class="tl-time editable">15:00〜15:45</div><div class="tl-box"><div class="tl-head editable">🏘️ ルーラの街 自由散策</div><div class="tl-desc editable">標高985m。可愛い街並みのルーラ・モール。キャンディーショップ、チョコレート店、ヴィンテージ雑貨屋、カフェでコーヒーブレイク</div><div class="tl-links"><a href="https://maps.google.com/?q=Leura+Mall+NSW+Blue+Mountains" class="tl-map-btn" target="_blank" rel="noopener">🗺️ MAP</a></div></div></div>
+        <div class="tl-item"><div class="tl-time editable">17:30頃</div><div class="tl-box"><div class="tl-head editable">🏨 ツアー終了・ホテル前で解散</div><div class="tl-desc editable">リッジス ワールド スクエアの目の前で降車（最高の移動効率！）</div></div></div>
+        <div class="tl-item"><div class="tl-time editable">19:00</div><div class="tl-box"><div class="tl-head editable">🍽️ ディナー：ホテル近くでシンプルに</div><div class="tl-desc editable">ツアーで疲れているため、ホテルから徒歩3分のステーキハウスまたはワールドスクエア周辺の上質なイタリアンで</div></div></div>
       </div>
     </div>
   </div>
 
   <div class="section">
-    <div class="sec-title">
-      <div class="sec-icon" style="background:var(--blue-light)">✈️</div>
-      <span style="color:var(--blue)">帰国フライト</span>
-    </div>
-    <div class="card c-flight">
-      <div class="card-title">エールフランス AF274</div>
-      <div class="card-sub">パリ・シャルル・ド・ゴール → 成田国際空港</div>
-      <div class="flight-route">
-        <div class="airport">
-          <div class="iata">CDG</div>
-          <div class="city">パリ</div>
-          <div class="ftime">15:10</div>
-        </div>
-        <div class="f-mid">
-          <div class="f-plane">✈️</div>
-          <div class="f-line"></div>
-          <div class="f-dur">約12時間</div>
-        </div>
-        <div class="airport">
-          <div class="iata">NRT</div>
-          <div class="city">成田</div>
-          <div class="ftime">10:00</div>
-          <div class="fnote">翌日 (+1)</div>
-        </div>
-      </div>
-      <div class="row"><span class="rl">📋 便名</span><span class="rv">AF274</span></div>
-      <div class="row"><span class="rl">💺 座席</span><span class="rv">24A・24B（エコノミークラス）</span></div>
-    </div>
-  </div>
-
-  <div class="section">
-    <div class="sec-title">
-      <div class="sec-icon" style="background:var(--orange-light)">🛍️</div>
-      <span style="color:var(--orange)">おすすめお土産リスト</span>
-    </div>
-    <div class="card c-restaurant">
-      <div class="card-title">パリで買いたいもの</div>
-      <div class="tip-item"><span class="tip-ico">🍫</span><span><strong>ラ・メゾン・デュ・ショコラ</strong> — 高級チョコレート。賞味期限2週間前後なので注意</span></div>
-      <div class="tip-item"><span class="tip-ico">🥐</span><span><strong>ピエール・エルメのマカロン</strong> — 世界一のマカロン。ラ・デュレも定番</span></div>
-      <div class="tip-item"><span class="tip-ico">🧴</span><span><strong>ロクシタン / ジョー・マローン</strong> — コスメ・バスグッズ。日本より安いことも</span></div>
-      <div class="tip-item"><span class="tip-ico">🍷</span><span><strong>ボルドー・ブルゴーニュワイン</strong> — スーパーで€10〜でも絶品が買える</span></div>
-      <div class="tip-item"><span class="tip-ico">🍯</span><span><strong>コンフィチュール（ジャム）</strong> — Bonne Mamanブランドが定番。賞味期限が長くお土産に最適</span></div>
-      <div class="tip-item"><span class="tip-ico">🎨</span><span><strong>エッフェル塔グッズ</strong> — 安く買うならRue de Rivoliの屋台へ。免税店は割高</span></div>
-    </div>
-  </div>
-
-  <div class="section">
-    <div class="sec-title">
-      <div class="sec-icon" style="background:var(--gold-light)">💡</div>
-      <span style="color:var(--orange)">今日のポイント</span>
-    </div>
+    <div class="sec-title"><div class="sec-icon" style="background:var(--gold)"></div><span style="color:var(--orange)">今日のポイント</span></div>
     <div class="card c-tip">
-      <div class="tip-item"><span class="tip-ico">🧾</span><span>デタックス（税金還付）：€100超の購入品が対象。空港の税関窓口でスタンプをもらうこと。電子申請ならBorderFreeアプリが便利</span></div>
-      <div class="tip-item"><span class="tip-ico">⏰</span><span>CDG空港は広大で移動に時間がかかる。国際線は出発3時間前には到着を</span></div>
-      <div class="tip-item"><span class="tip-ico">💶</span><span>余ったユーロは帰国後に日本で換金（レートは低め）。空港内より市内の銀行が少しお得</span></div>
+      <div class="tip-item"><span class="tip-ico">⏰</span><span class="tip-text editable">集合は8:25厳守！遅刻するとツアーに参加できない場合あり。アラームを複数セット</span></div>
+      <div class="tip-item"><span class="tip-ico">🧥</span><span class="tip-text editable">ルーラは標高985m。シドニー市内より5〜8℃低い。薄手のダウンかウインドブレーカー必須</span></div>
+      <div class="tip-item"><span class="tip-ico">🐨</span><span class="tip-text editable">コアラ抱っこはNSW州では禁止されているが、超近距離での撮影は可能。コアラは触れないが、カンガルーには餌やりができる</span></div>
     </div>
   </div>
-</div><!-- /day5 -->
+</div>
 
-<!-- ─────────────────── INFO ─────────────────── -->
-<div id="info" class="pane">
-
+<!-- ═══ DAY 6 ═══ -->
+<div id="day6" class="pane">
   <div class="day-hd">
-    <div class="day-circle" style="background:linear-gradient(135deg,var(--gold),#8a6010)">
-      <span style="font-size:24px;line-height:1">📋</span>
-    </div>
-    <div>
-      <h2>基本情報 &amp; 緊急連絡先</h2>
-      <p>旅先で役立つ情報まとめ</p>
-    </div>
+    <div class="day-circle"><span class="cn">6</span><span class="ct">DAY</span></div>
+    <div><h2 class="editable">9月25日（金）シドニー都市観光</h2><p class="editable">植物園・ロックス・QVB・最後の夜</p></div>
   </div>
 
-  <!-- Quick tiles -->
-  <div class="info-grid">
-    <div class="info-tile"><div class="ti">💶</div><div class="tlbl">通貨</div><div class="tval">ユーロ（EUR）</div></div>
-    <div class="info-tile"><div class="ti">💱</div><div class="tlbl">参考レート</div><div class="tval">1€ ≈ 165円</div></div>
-    <div class="info-tile"><div class="ti">🌡️</div><div class="tlbl">10月の気温</div><div class="tval">13〜18℃</div></div>
-    <div class="info-tile"><div class="ti">🕐</div><div class="tlbl">時差（日本）</div><div class="tval">−7時間</div></div>
-    <div class="info-tile"><div class="ti">🔌</div><div class="tlbl">コンセント</div><div class="tval">220V / Cタイプ</div></div>
-    <div class="info-tile"><div class="ti">📞</div><div class="tlbl">日本→フランス</div><div class="tval">010-33-番号</div></div>
-  </div>
-
-  <!-- Emergency -->
   <div class="section">
-    <div class="sec-title">
-      <div class="sec-icon" style="background:#ffebee">🆘</div>
-      <span style="color:#c62828">緊急連絡先</span>
-    </div>
-    <div class="emer-box">
-      <h3>🆘 緊急連絡先一覧</h3>
-      <div class="row"><span class="rl">🚔 警察</span><span class="rv"><strong>17</strong>（フランス国内）</span></div>
-      <div class="row"><span class="rl">🚑 救急</span><span class="rv"><strong>15</strong>（SAMU）</span></div>
-      <div class="row"><span class="rl">🚒 消防</span><span class="rv"><strong>18</strong></span></div>
-      <div class="row"><span class="rl">🌐 EU共通</span><span class="rv"><strong>112</strong>（どこからでも繋がる）</span></div>
-      <div class="row"><span class="rl">🇯🇵 日本大使館</span><span class="rv">+33-1-48-88-62-00（在仏日本大使館）</span></div>
-      <div class="row"><span class="rl">💳 VISA紛失</span><span class="rv">+1-800-847-2911（24時間フリーダイヤル）</span></div>
-    </div>
-  </div>
-
-  <!-- Budget -->
-  <div class="section">
-    <div class="sec-title">
-      <div class="sec-icon" style="background:var(--green-light)">💰</div>
-      <span style="color:var(--green)">旅行予算目安（2人合計）</span>
-    </div>
-    <div class="card c-hotel">
-      <div class="bud-row"><span class="bud-label">✈️ 航空券（往復・2人）</span><span class="bud-amount">¥180,000</span></div>
-      <div class="bud-row"><span class="bud-label">🏨 ホテル（4泊・2人）</span><span class="bud-amount">¥100,000</span></div>
-      <div class="bud-row"><span class="bud-label">🎫 観光入場料</span><span class="bud-amount">¥30,000</span></div>
-      <div class="bud-row"><span class="bud-label">🍽️ 食事（5日間）</span><span class="bud-amount">¥60,000</span></div>
-      <div class="bud-row"><span class="bud-label">🚇 現地交通費</span><span class="bud-amount">¥15,000</span></div>
-      <div class="bud-row"><span class="bud-label">🛍️ お土産・買い物</span><span class="bud-amount">¥50,000</span></div>
-      <div class="bud-row" style="border-top:2px solid var(--border);padding-top:12px">
-        <span style="font-weight:800;font-size:14px">合計目安</span>
-        <span class="bud-amount" style="color:var(--green);font-size:20px">¥435,000</span>
+    <div class="sec-title"><div class="sec-icon" style="background:var(--purple)"></div><span style="color:var(--purple)">本日のスケジュール</span></div>
+    <div class="card c-schedule">
+      <div class="timeline">
+        <div class="tl-item"><div class="tl-time editable">08:30</div><div class="tl-box"><div class="tl-head editable">☕ 朝食：The Grounds of the City</div><div class="tl-desc editable">ワールドスクエア近くのレトロでおしゃれなカフェ。シドニーのモーニングカルチャーを満喫</div><div class="tl-links"><a href="https://maps.google.com/?q=The+Grounds+of+the+City+Sydney" class="tl-map-btn" target="_blank" rel="noopener">🗺️ MAP</a><a href="https://thegrounds.com.au/" class="tl-web-btn" target="_blank" rel="noopener">🌐 公式</a></div></div></div>
+        <div class="tl-item"><div class="tl-time editable">10:00</div><div class="tl-box"><div class="tl-head editable">🌺 ロイヤルボタニカルガーデン → ミセス・マッコリーズ・ポイント</div><div class="tl-desc editable">広大な植物園を歩いて岬の先端へ。ここから見る「オペラハウスとハーバーブリッジが重なる景色」がシドニー最高のフォトスポット！</div><div class="tl-links"><a href="https://maps.google.com/?q=Royal+Botanic+Garden+Sydney" class="tl-map-btn" target="_blank" rel="noopener">🗺️ MAP</a><a href="https://www.rbgsyd.nsw.gov.au/" class="tl-web-btn" target="_blank" rel="noopener">🌐 公式</a></div></div></div>
+        <div class="tl-item"><div class="tl-time editable">11:30</div><div class="tl-box"><div class="tl-head editable">🧱 ロックス地区（The Rocks）散策</div><div class="tl-desc editable">古いレンガ造りの美しい街並み。金曜日は「ロックス・フライデー・マーケット」開催。多国籍な屋台で屋外ランチをつまみ食い</div><div class="tl-links"><a href="https://maps.google.com/?q=The+Rocks+Sydney" class="tl-map-btn" target="_blank" rel="noopener">🗺️ MAP</a><a href="https://www.therocks.com/" class="tl-web-btn" target="_blank" rel="noopener">🌐 公式</a></div></div></div>
+        <div class="tl-item"><div class="tl-time editable">13:00</div><div class="tl-box"><div class="tl-head editable">🍔 ランチ：The Glenmore Hotel ルーフトップ</div><div class="tl-desc editable">シドニー最古のパブ。港を見下ろしながらノンアルコールビールや絶品バーガー</div><div class="tl-links"><a href="https://maps.google.com/?q=The+Glenmore+Hotel+96+Cumberland+Street+The+Rocks+Sydney" class="tl-map-btn" target="_blank" rel="noopener">🗺️ MAP</a><a href="https://www.theglenmore.com.au/" class="tl-web-btn" target="_blank" rel="noopener">🌐 公式</a></div></div></div>
+        <div class="tl-item"><div class="tl-time editable">15:00</div><div class="tl-box"><div class="tl-head editable">🛍️ 本気のお土産ショッピング：QVB</div><div class="tl-desc editable">美しいビクトリア調建築「クイーンビクトリアビルディング」。紅茶専門店T2、Aesop等オーガニックコスメ、オーストラリア産お土産を本格まとめ買い</div><div class="tl-links"><a href="https://maps.google.com/?q=Queen+Victoria+Building+455+George+Street+Sydney" class="tl-map-btn" target="_blank" rel="noopener">🗺️ MAP</a><a href="https://www.qvb.com.au/" class="tl-web-btn" target="_blank" rel="noopener">🌐 公式</a></div></div></div>
+        <div class="tl-item"><div class="tl-time editable">17:00頃</div><div class="tl-box"><div class="tl-head editable">🏨 ホテルへ一時帰還</div><div class="tl-desc editable">購入した荷物をいったん部屋へ。手ぶらで夜の行動へ（神立地メリット！）</div></div></div>
+        <div class="tl-item"><div class="tl-time editable">18:30</div><div class="tl-box"><div class="tl-head editable">🎭 旅の締めくくり最高峰ディナー：Bennelong</div><div class="tl-desc editable">オペラハウス内の最高峰レストラン（またはサーキュラーキーのウォーターフロント）。モダンオーストラリアンで旅の集大成を</div><div class="tl-links"><a href="https://maps.google.com/?q=Bennelong+Restaurant+Sydney+Opera+House" class="tl-map-btn" target="_blank" rel="noopener">🗺️ MAP</a><a href="https://www.bennelong.com.au/" class="tl-web-btn" target="_blank" rel="noopener">🌐 公式</a></div></div></div>
+        <div class="tl-item"><div class="tl-time editable">22:00</div><div class="tl-box"><div class="tl-head editable">🧳 ホテルに戻り完璧にパッキング</div><div class="tl-desc editable">明日早朝出発のため、この夜に完全にスーツケースを仕上げること</div></div></div>
       </div>
     </div>
   </div>
 
-  <!-- Transport -->
   <div class="section">
-    <div class="sec-title">
-      <div class="sec-icon" style="background:var(--rose-light)">🚇</div>
-      <span style="color:var(--rose)">交通手段まとめ</span>
-    </div>
-    <div class="card c-transport">
-      <div class="card-title">パリの移動手段</div>
-      <div class="row"><span class="rl">🚇 メトロ1回</span><span class="rv">€2.15 / 10枚綴りカルネ€17.35</span></div>
-      <div class="row"><span class="rl">📅 1日乗り放題</span><span class="rv">Navigo Jour €8.65（ゾーン1-2対応）</span></div>
-      <div class="row"><span class="rl">🚄 RER B（空港線）</span><span class="rv">空港↔市内 €13.40/人</span></div>
-      <div class="row"><span class="rl">🚄 RER C（ヴェルサイユ）</span><span class="rv">€6.05/人（ゾーン4まで）</span></div>
-      <div class="row"><span class="rl">🚖 タクシー・Uber</span><span class="rv">空港↔市内 €55〜80程度</span></div>
-      <div class="row"><span class="rl">🚲 ヴェリブ</span><span class="rv">シェアサイクル €3.5/30分。短距離移動に便利</span></div>
-    </div>
-  </div>
-
-  <!-- Phrases -->
-  <div class="section">
-    <div class="sec-title">
-      <div class="sec-icon" style="background:var(--purple-light)">🗣️</div>
-      <span style="color:var(--purple)">使えるフランス語フレーズ</span>
+    <div class="sec-title"><div class="sec-icon" style="background:var(--purple)"></div><span style="color:var(--purple)">観光スポット</span></div>
+    <div class="card c-spot">
+      <div class="card-title editable">ミセス・マッコリーズ・ポイント Mrs Macquarie's Point</div>
+      <div class="card-sub editable">シドニー最高のフォトスポット • ロイヤルボタニカルガーデン内</div>
+      <div class="row"><span class="rl">⭐ 見どころ</span><span class="rv editable">オペラハウスとハーバーブリッジが重なる「シドニー最高の景色」。カップル記念写真に最適</span></div>
+      <div class="row"><span class="rl">🕐 開放</span><span class="rv editable">終日（無料）</span></div>
+      <div style="margin-top:8px"><span class="badge b-rose editable">カップル必見</span><span class="badge b-green editable">無料</span><span class="badge b-purple editable">絶景フォトスポット</span></div>
+      <a href="https://maps.google.com/?q=Mrs+Macquaries+Point+Sydney" class="map-btn" target="_blank" rel="noopener">🗺️ マップ</a>
     </div>
     <div class="card c-spot">
-      <table class="phrase-tbl">
-        <thead>
-          <tr><th>日本語</th><th>フランス語</th><th>読み方</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>こんにちは</td><td class="fr">Bonjour</td><td>ボンジュール</td></tr>
-          <tr><td>ありがとう</td><td class="fr">Merci beaucoup</td><td>メルシー・ボクー</td></tr>
-          <tr><td>すみません</td><td class="fr">Excusez-moi</td><td>エクスキュゼ・モワ</td></tr>
-          <tr><td>はい / いいえ</td><td class="fr">Oui / Non</td><td>ウィ / ノン</td></tr>
-          <tr><td>〜はどこですか？</td><td class="fr">Où est ~ ?</td><td>ウ・エ〜？</td></tr>
-          <tr><td>いくらですか？</td><td class="fr">C'est combien ?</td><td>セ・コンビアン？</td></tr>
-          <tr><td>メニューをください</td><td class="fr">La carte, s'il vous plaît</td><td>ラ・カルト・シルブプレ</td></tr>
-          <tr><td>美味しい！</td><td class="fr">C'est délicieux !</td><td>セ・デリシュー！</td></tr>
-          <tr><td>写真を撮っていいですか？</td><td class="fr">Je peux prendre une photo ?</td><td>ジュ・プ・プランドル・ユン・フォト？</td></tr>
-          <tr><td>助けてください！</td><td class="fr">Au secours !</td><td>オ・スクール！</td></tr>
-        </tbody>
-      </table>
+      <div class="card-title editable">クイーンビクトリアビルディング QVB</div>
+      <div class="card-sub editable">ビクトリア朝建築のショッピングモール • CBD</div>
+      <div class="row"><span class="rl">📍 住所</span><span class="rv editable">455 George Street, Sydney NSW 2000</span></div>
+      <div class="row"><span class="rl">🕐 営業</span><span class="rv editable">月〜土 9:00〜18:00 / 日 11:00〜17:00</span></div>
+      <div class="row"><span class="rl">⭐ おすすめ</span><span class="rv editable">T2（紅茶）、Aesop（コスメ）、オーストラリア産お土産全般</span></div>
+      <a href="https://maps.google.com/?q=Queen+Victoria+Building+Sydney" class="map-btn" target="_blank" rel="noopener">🗺️ マップ</a>
     </div>
   </div>
 
-  <!-- Packing -->
   <div class="section">
-    <div class="sec-title">
-      <div class="sec-icon" style="background:var(--gold-light)">🎒</div>
-      <span style="color:var(--orange)">持ち物チェックリスト</span>
+    <div class="sec-title"><div class="sec-icon" style="background:var(--orange)"></div><span style="color:var(--orange)">レストラン</span></div>
+    <div class="card c-restaurant">
+      <div class="card-title editable">Bennelong（ベネロング）</div>
+      <div class="card-sub editable">🎭 モダンオーストラリアン • オペラハウス内</div>
+      <div class="row"><span class="rl">📍 住所</span><span class="rv editable">Sydney Opera House, Bennelong Point, Sydney NSW 2000</span></div>
+      <div class="row"><span class="rl">💰 予算</span><span class="rv editable">$120〜200/人（要事前予約）</span></div>
+      <div class="row"><span class="rl">⭐ おすすめ</span><span class="rv editable">旅の締めくくりに相応しい芸術的なモダンオーストラリアン。スパイスなし対応可</span></div>
+      <div style="margin-top:8px"><span class="badge b-red editable">要予約</span><span class="badge b-rose editable">旅の集大成</span></div>
     </div>
+    <div class="card c-restaurant">
+      <div class="card-title editable">The Glenmore Hotel</div>
+      <div class="card-sub editable">🍺 ルーフトップバー • ロックス地区</div>
+      <div class="row"><span class="rl">📍 住所</span><span class="rv editable">96 Cumberland Street, The Rocks, Sydney NSW 2000</span></div>
+      <div class="row"><span class="rl">💰 予算</span><span class="rv editable">$30〜50/人（ランチ）</span></div>
+      <div class="row"><span class="rl">⭐ おすすめ</span><span class="rv editable">ルーフトップから港の眺め。ノンアルコールビール・絶品バーガー</span></div>
+      <div style="margin-top:8px"><span class="badge b-gold editable">絶景ルーフトップ</span><span class="badge b-orange editable">アルコールなし対応◎</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ DAY 7 ═══ -->
+<div id="day7" class="pane">
+  <div class="day-hd">
+    <div class="day-circle"><span class="cn">7</span><span class="ct">DAY</span></div>
+    <div><h2 class="editable">9月26日（土）帰国日</h2><p class="editable">シドニー発 → 羽田着</p></div>
+  </div>
+
+  <div class="section">
+    <div class="sec-title"><div class="sec-icon" style="background:var(--blue)"></div><span style="color:var(--blue)">帰国フライト</span></div>
+    <div class="card c-flight">
+      <div class="card-title editable">JAL JL52（JAL Sky Suite）</div>
+      <div class="card-sub editable">シドニー空港（第1ターミナル）→ 羽田空港（第3ターミナル）</div>
+      <div class="flight-route">
+        <div class="airport"><div class="iata editable">SYD</div><div class="city editable">シドニー</div><div class="ftime editable">08:55</div></div>
+        <div class="f-mid"><div class="f-plane">✈️</div><div class="f-line"></div><div class="f-dur editable">約9時間50分</div></div>
+        <div class="airport"><div class="iata editable">HND</div><div class="city editable">羽田</div><div class="ftime editable">17:45</div></div>
+      </div>
+      <div class="row"><span class="rl">📋 便名</span><span class="rv editable">JL52</span></div>
+      <div class="row"><span class="rl">💺 搭乗クラス</span><span class="rv editable">プレミアムエコノミー / JAL Sky Premium</span></div>
+      <div class="row"><span class="rl">🏢 ターミナル</span><span class="rv editable">SYD 第1ターミナル / HND 第3ターミナル</span></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="sec-title"><div class="sec-icon" style="background:var(--purple)"></div><span style="color:var(--purple)">本日のスケジュール</span></div>
+    <div class="card c-schedule">
+      <div class="timeline">
+        <div class="tl-item"><div class="tl-time editable">05:30</div><div class="tl-box"><div class="tl-head editable">⏰ 起床・最終チェック</div><div class="tl-desc editable">スーツケースの最終確認。パスポート・航空券・財布・スマホを必ず確認</div></div></div>
+        <div class="tl-item"><div class="tl-time editable">06:15</div><div class="tl-box"><div class="tl-head editable">🏨 ホテルチェックアウト・Uberで空港へ</div><div class="tl-desc editable">シドニー空港まで約20分。早朝は交通量が少なく移動がスムーズ</div></div></div>
+        <div class="tl-item"><div class="tl-time editable">06:45</div><div class="tl-box"><div class="tl-head editable">✈️ シドニー空港 第1ターミナル到着</div><div class="tl-desc editable">JALカウンターでチェックイン。高額な買い物をした場合は保安検査後にTRS（免税）手続きを忘れずに</div><div class="tl-links"><a href="https://maps.google.com/?q=Sydney+Airport+International+Terminal+1" class="tl-map-btn" target="_blank" rel="noopener">🗺️ MAP</a><a href="https://www.sydneyairport.com.au/" class="tl-web-btn" target="_blank" rel="noopener">🌐 公式</a><button class="tl-info-btn" onclick="openSheet('syd-checkin')">ℹ️ TRS手順</button></div></div></div>
+        <div class="tl-item"><div class="tl-time editable">08:55</div><div class="tl-box"><div class="tl-head editable">✈️ シドニー出発</div><div class="tl-desc editable">JAL便にて帰国。素敵な思い出と共に日本へ！</div></div></div>
+        <div class="tl-item"><div class="tl-time editable">17:45</div><div class="tl-box"><div class="tl-head editable">🛬 羽田空港 第3ターミナル着</div><div class="tl-desc editable">入国審査 → 「Visit Japan Web」で税関申告 → 荷物受け取り。お帰りなさい！お疲れ様でした！</div><div class="tl-links"><button class="tl-info-btn" onclick="openSheet('hnd-arrive')">ℹ️ 入国手順</button></div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="sec-title"><div class="sec-icon" style="background:var(--orange)"></div><span style="color:var(--orange)">おすすめお土産</span></div>
+    <div class="card c-restaurant">
+      <div class="card-title editable">オーストラリアで買いたいもの</div>
+      <div class="tip-item"><span class="tip-ico">🍫</span><span class="tip-text editable">TimTam（ティムタム） — Colesで大量購入が最安値。定番のオリジナルからフレーバー系まで</span></div>
+      <div class="tip-item"><span class="tip-ico">🍯</span><span class="tip-text editable">マヌカハニー — 品質保証のUMF認証マークつきを選ぶこと</span></div>
+      <div class="tip-item"><span class="tip-ico">🐑</span><span class="tip-text editable">UGGブーツ・ムートングッズ — 本場オーストラリア産。日本より格段に安い</span></div>
+      <div class="tip-item"><span class="tip-ico">🧴</span><span class="tip-text editable">Aesop（イソップ） — QVBやセントラル近くに店舗あり。ハンドクリームが人気</span></div>
+      <div class="tip-item"><span class="tip-ico">🍵</span><span class="tip-text editable">T2（ティーツー） — オーストラリア発の紅茶ブランド。QVBに大型店舗あり</span></div>
+      <div class="tip-item"><span class="tip-ico">🦘</span><span class="tip-text editable">カンガルーグッズ・ぬいぐるみ — 空港より市内（QVB等）の方が安くてバリエーション豊富</span></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="sec-title"><div class="sec-icon" style="background:var(--gold)"></div><span style="color:var(--orange)">今日のポイント</span></div>
     <div class="card c-tip">
-      <div class="tip-item"><span class="tip-ico">📘</span><span><strong>パスポート</strong>（有効期限：帰国後6ヶ月以上）</span></div>
-      <div class="tip-item"><span class="tip-ico">💳</span><span><strong>クレジットカード</strong>（VISA＆Mastercard両方。海外キャッシング用も）</span></div>
-      <div class="tip-item"><span class="tip-ico">🔌</span><span><strong>変換プラグ（Cタイプ）</strong>・スマホ充電器（220V対応確認を）</span></div>
-      <div class="tip-item"><span class="tip-ico">🧥</span><span><strong>薄手のジャケット＋重ね着</strong>（10月は朝晩10℃前後に冷えることも）</span></div>
-      <div class="tip-item"><span class="tip-ico">👟</span><span><strong>歩きやすいスニーカー</strong>（石畳にヒールや革靴は厳禁！）</span></div>
-      <div class="tip-item"><span class="tip-ico">☂️</span><span><strong>折りたたみ傘</strong>（10月のパリは雨が多い）</span></div>
-      <div class="tip-item"><span class="tip-ico">📱</span><span><strong>モバイルバッテリー</strong>（終日観光でスマホがすぐ切れる）</span></div>
-      <div class="tip-item"><span class="tip-ico">🔒</span><span><strong>ウエストポーチ（前掛け）</strong>（スリ対策に必須）</span></div>
-      <div class="tip-item"><span class="tip-ico">💊</span><span><strong>常備薬</strong>（胃薬・頭痛薬・整腸剤。現地調達は大変）</span></div>
-      <div class="tip-item"><span class="tip-ico">🧴</span><span><strong>日焼け止め</strong>（秋でも日差しが強い日あり）</span></div>
+      <div class="tip-item"><span class="tip-ico">🧾</span><span class="tip-text editable">TRS（Tourist Refund Scheme）：$300以上の購入品（同一店舗・同日）で消費税（10%）が還付される。保安検査後のTRSカウンターへ。TRSアプリで事前登録を</span></div>
+      <div class="tip-item"><span class="tip-ico">📱</span><span class="tip-text editable">帰国時は「Visit Japan Web」で税関申告を事前に。空港でのスムーズな通関に役立つ</span></div>
+      <div class="tip-item"><span class="tip-ico">💰</span><span class="tip-text editable">余った豪ドルはSYD空港内の両替所か、帰国後に日本の銀行で換金（空港より市中銀行がレートよい）</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ INFO ═══ -->
+<div id="info" class="pane">
+  <div class="day-hd">
+    <div class="day-circle" style="background:linear-gradient(135deg,#f57f17,#e65100)"><span style="font-size:22px;line-height:1">📋</span></div>
+    <div><h2 class="editable">基本情報 &amp; 緊急連絡先</h2><p class="editable">旅先で役立つ情報まとめ</p></div>
+  </div>
+
+  <div class="info-grid">
+    <div class="info-tile"><div class="ti">💰</div><div class="tlbl">通貨</div><div class="tval editable">豪ドル（AUD）</div></div>
+    <div class="info-tile"><div class="ti">💱</div><div class="tlbl">参考レート</div><div class="tval editable">1AUD ≈ 97円</div></div>
+    <div class="info-tile"><div class="ti">🌡️</div><div class="tlbl">9月の気温</div><div class="tval editable">13〜20℃（春）</div></div>
+    <div class="info-tile"><div class="ti">🕐</div><div class="tlbl">時差（日本）</div><div class="tval editable">+1時間（AEST）</div></div>
+    <div class="info-tile"><div class="ti">🔌</div><div class="tlbl">コンセント</div><div class="tval editable">230V / Iタイプ</div></div>
+    <div class="info-tile"><div class="ti">📞</div><div class="tlbl">日本→AU</div><div class="tval editable">010-61-番号</div></div>
+  </div>
+
+  <div class="section">
+    <div class="sec-title"><div class="sec-icon" style="background:var(--blue)"></div><span style="color:var(--blue)">AUD ⇄ 円 換算</span></div>
+    <div class="card c-flight">
+      <div class="conv-wrap">
+        <div class="conv-from"><div class="conv-label" id="conv-from-lbl">🇦🇺 AUD</div><input type="number" id="conv-input" class="conv-input" inputmode="decimal" placeholder="0" /></div>
+        <button class="conv-swap" onclick="swapConv()" title="切り替え">⇆</button>
+        <div class="conv-to"><div class="conv-label" id="conv-to-lbl">🇯🇵 円</div><div class="conv-result" id="conv-result">—</div></div>
+      </div>
+      <div class="conv-rate">レート: 1 AUD ≈ <span id="conv-rate-val">97</span> 円（上の参考レートに連動）</div>
     </div>
   </div>
 
-  <!-- Memo -->
   <div class="section">
-    <div class="memo">
-      <strong>✍️ パリを楽しむ心得</strong><br><br>
-      パリジャンにとって最初の一声「<strong>Bonjour !</strong>」はとても重要です。お店に入るときは必ず挨拶から始めましょう。英語が通じないことも多いですが、笑顔と少しのフランス語で、現地の人もきっと笑顔で返してくれます。<br><br>
-      カフェでゆっくりコーヒーを飲みながら街を眺める時間も、パリ旅行の醍醐味のひとつ。急がず、ふたりのペースで楽しんでください。<br><br>
-      <strong>Bon voyage ! 良い旅を！ 🗼</strong>
+    <div class="warn-box">
+      ⚠️ <strong>オーストラリア入国で必須の事前準備</strong><br>
+      ① <strong>ETA（電子渡航許可）</strong> — 出発前にスマホアプリから申請。なければ入国不可<br>
+      ② <strong>Uberアプリ</strong> — 日本でDL＆クレカ登録を済ませておく<br>
+      ③ <strong>Visit Japan Web</strong> — 帰国時の税関申告を事前登録でスムーズに
     </div>
   </div>
-</div><!-- /info -->
+
+  <div class="section">
+    <div class="sec-title"><div class="sec-icon" style="background:#c62828"></div><span style="color:#c62828">緊急連絡先</span></div>
+    <div class="emer-box">
+      <h3>🆘 緊急連絡先一覧</h3>
+      <div class="row"><span class="rl">🚔 警察・救急・消防</span><span class="rv editable"><strong>000</strong>（オーストラリア統合緊急番号）</span></div>
+      <div class="row"><span class="rl">🇯🇵 在シドニー日本領事館</span><span class="rv editable">+61-2-9250-1000</span></div>
+      <div class="row"><span class="rl">🇯🇵 在メルボルン日本領事館</span><span class="rv editable">+61-3-9639-3244</span></div>
+      <div class="row"><span class="rl">💳 VISA紛失</span><span class="rv editable">+1-800-847-2911（フリーダイヤル）</span></div>
+      <div class="row"><span class="rl">🏥 JAL国際線</span><span class="rv editable">0120-255-931（日本語サポート）</span></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="sec-title"><div class="sec-icon" style="background:var(--green)"></div><span style="color:var(--green)">旅行予算目安（2人合計）</span></div>
+    <div class="card c-hotel">
+      <div class="bud-row"><span class="bud-label editable">✈️ 航空券（往復・2人）</span><span class="bud-amount editable">要確認</span></div>
+      <div class="bud-row"><span class="bud-label editable">🏨 ホテル（5泊・2人）</span><span class="bud-amount editable">要確認（JTB手配中）</span></div>
+      <div class="bud-row"><span class="bud-label editable">🎫 ツアー（JTBオプショナル）</span><span class="bud-amount editable">SYDODOAOPT87 確認中</span></div>
+      <div class="bud-row"><span class="bud-label editable">🍽️ 食事（7日間）</span><span class="bud-amount editable">約¥120,000</span></div>
+      <div class="bud-row"><span class="bud-label editable">🚖 現地交通（Uber等）</span><span class="bud-amount editable">約¥30,000</span></div>
+      <div class="bud-row"><span class="bud-label editable">🛍️ お土産・買い物</span><span class="bud-amount editable">約¥50,000</span></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="sec-title"><div class="sec-icon" style="background:var(--rose)"></div><span style="color:var(--rose)">交通早見表</span></div>
+
+    <div class="card c-transport" style="margin-bottom:10px">
+      <div class="card-title">🏙️ Melbourne</div>
+      <div class="trans-grid">
+        <div class="trans-item">
+          <div class="trans-ico">🚃</div>
+          <div><div class="trans-name">無料トラム（City Circle Tram）<span class="trans-free">無料</span></div><div class="trans-note">CBD内のゾーンはすべて無料。乗り降り自由で何度でも使える。ゾーン外のみmykiカード必要</div></div>
+        </div>
+        <div class="trans-item">
+          <div class="trans-ico">🚖</div>
+          <div><div class="trans-name">Uber（市内・空港）</div><div class="trans-note">空港↔市内 約$60〜70・約30分。荷物がある時・CBD外への移動に最適</div></div>
+        </div>
+        <div class="trans-item">
+          <div class="trans-ico">✈️</div>
+          <div><div class="trans-name">空港アクセス</div><div class="trans-note">SkyBus（$22・直行バス）またはUber。スーツケースがある場合はUber推奨</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card c-transport">
+      <div class="card-title">🌉 Sydney</div>
+      <div class="trans-grid">
+        <div class="trans-item">
+          <div class="trans-ico">🚃</div>
+          <div><div class="trans-name">電車・ライトレール・バス</div><div class="trans-note">クレジットカード（タッチ決済）をかざすだけで乗車OK。Opalカード不要。$3〜5程度</div></div>
+        </div>
+        <div class="trans-item">
+          <div class="trans-ico">🚖</div>
+          <div><div class="trans-name">Uber</div><div class="trans-note">空港↔市内 約$40〜60・約25分。早朝・深夜・大荷物時に便利</div></div>
+        </div>
+        <div class="trans-item">
+          <div class="trans-ico">✈️</div>
+          <div><div class="trans-name">空港アクセス</div><div class="trans-note">Airport Link（電車 $19・約13分・頻発）またはUber。電車は市内直結で便利</div></div>
+        </div>
+        <div class="trans-item">
+          <div class="trans-ico">⛴️</div>
+          <div><div class="trans-name">フェリー</div><div class="trans-note">サーキュラーキー発着。クレカタッチで乗船。マンリービーチなどへのおすすめルート</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="sec-title"><div class="sec-icon" style="background:var(--gold)"></div><span style="color:var(--orange)">持ち物チェックリスト</span></div>
+    <div class="card c-tip" id="packing-card">
+      <div class="cl-progress"><span class="cl-progress-label"><strong id="cl-done">0</strong> / <span id="cl-total">8</span> 準備完了</span><div class="cl-bar"><div id="cl-fill" class="cl-fill" style="width:0%"></div></div></div>
+      <div class="tip-item cl-item"><span class="tip-ico">📘</span><span class="tip-text editable">パスポート（有効期限：帰国後6ヶ月以上）</span><span class="cl-check">✓</span></div>
+      <div class="tip-item cl-item"><span class="tip-ico">📱</span><span class="tip-text editable">ETA申請完了の確認（スマホのアプリで確認可）</span><span class="cl-check">✓</span></div>
+      <div class="tip-item cl-item"><span class="tip-ico">💳</span><span class="tip-text editable">クレジットカード（タッチ決済対応）— シドニーの電車・ライトレールに直接使用可能</span><span class="cl-check">✓</span></div>
+      <div class="tip-item cl-item"><span class="tip-ico">🔌</span><span class="tip-text editable">変換プラグ（Iタイプ・オーストラリア型）— 230V対応確認を</span><span class="cl-check">✓</span></div>
+      <div class="tip-item cl-item"><span class="tip-ico">🧥</span><span class="tip-text editable">ウインドブレーカー・ストール（必須！）— 9月は朝晩急に冷え込む。メルボルンは天気が特に変わりやすい</span><span class="cl-check">✓</span></div>
+      <div class="tip-item cl-item"><span class="tip-ico">👟</span><span class="tip-text editable">歩きやすいスニーカー（1日1万歩超は当たり前）</span><span class="cl-check">✓</span></div>
+      <div class="tip-item cl-item"><span class="tip-ico">🧴</span><span class="tip-text editable">日焼け止め（SPF50+推奨）— オーストラリアのUVは日本の数倍強い</span><span class="cl-check">✓</span></div>
+      <div class="tip-item cl-item"><span class="tip-ico">💊</span><span class="tip-text editable">常備薬（胃薬・頭痛薬・整腸剤・酔い止め）</span><span class="cl-check">✓</span></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="memo editable">🦘 旅の心得<br><br>9月のオーストラリアは南半球の「春の始まり」。日中は過ごしやすくても朝晩は10℃を下回ることも。レイヤリング（重ね着）を常に意識して。<br><br>メルボルンはコーヒーとアートの街、シドニーは海と建築の街。まったく違う顔を持つ2都市を、ふたりのペースで楽しんでください。<br><br>Have a great trip！ 🇦🇺</div>
+  </div>
+</div>
+
+<!-- ═══ MAP ═══ -->
+<div id="map" class="pane">
+  <div class="day-hd">
+    <div class="day-circle" style="background:linear-gradient(135deg,#0277bd,#0288d1)"><span style="font-size:22px;line-height:1">🗺️</span></div>
+    <div><h2>全スポット まとめ</h2><p>🗺️ Google マップ &nbsp;／&nbsp; 🌐 公式サイト</p></div>
+  </div>
+
+  <!-- MELBOURNE -->
+  <div class="map-city-hd">🏙️ Melbourne &nbsp;<span style="font-weight:400;opacity:.8;font-size:12px">DAY 2〜3 &nbsp;|&nbsp; 9月21日・22日</span></div>
+
+  <div class="map-item">
+    <span class="map-ico">🏨</span>
+    <div class="map-body">
+      <div class="map-name">IC メルボルン ザ リアルト</div>
+      <div class="map-en">InterContinental Melbourne The Rialto</div>
+      <div class="map-en">495 Collins Street, Melbourne VIC 3000</div>
+      <span class="map-day-tag">DAY 2・3 ホテル</span>
+    </div>
+    <div class="map-actions">
+      <a href="https://maps.google.com/?q=495+Collins+Street+Melbourne" class="map-go" target="_blank" rel="noopener">🗺️</a>
+      <a href="https://www.ihg.com/intercontinental/hotels/gb/en/melbourne/melha/hoteldetail" class="web-go" target="_blank" rel="noopener">🌐</a>
+    </div>
+  </div>
+
+  <div class="map-item">
+    <span class="map-ico">☕</span>
+    <div class="map-body">
+      <div class="map-name">Lune Croissanterie CBD</div>
+      <div class="map-en">Flinders Lane, Melbourne VIC 3000</div>
+      <span class="map-day-tag">DAY 2 朝食</span>
+    </div>
+    <div class="map-actions">
+      <a href="https://maps.google.com/?q=Lune+Croissanterie+CBD+Melbourne" class="map-go" target="_blank" rel="noopener">🗺️</a>
+      <a href="https://www.lunecroissanterie.com/" class="web-go" target="_blank" rel="noopener">🌐</a>
+    </div>
+  </div>
+
+  <div class="map-item">
+    <span class="map-ico">🎨</span>
+    <div class="map-body">
+      <div class="map-name">ホージア・レーン</div>
+      <div class="map-en">Hosier Lane, Melbourne VIC 3000</div>
+      <span class="map-day-tag">DAY 2 観光（無料）</span>
+    </div>
+    <div class="map-actions">
+      <a href="https://maps.google.com/?q=Hosier+Lane+Melbourne" class="map-go" target="_blank" rel="noopener">🗺️</a>
+    </div>
+  </div>
+
+  <div class="map-item">
+    <span class="map-ico">🏛️</span>
+    <div class="map-body">
+      <div class="map-name">ブロック・アーケード</div>
+      <div class="map-en">Block Arcade — 282 Collins Street, Melbourne</div>
+      <span class="map-day-tag">DAY 2 観光</span>
+    </div>
+    <div class="map-actions">
+      <a href="https://maps.google.com/?q=Block+Arcade+Melbourne" class="map-go" target="_blank" rel="noopener">🗺️</a>
+      <a href="https://www.theblockarcade.com.au/" class="web-go" target="_blank" rel="noopener">🌐</a>
+    </div>
+  </div>
+
+  <div class="map-item">
+    <span class="map-ico">🍝</span>
+    <div class="map-body">
+      <div class="map-name">Il Solito Posto</div>
+      <div class="map-en">113 Collins Street（地下）, Melbourne</div>
+      <span class="map-day-tag">DAY 2 ランチ</span>
+    </div>
+    <div class="map-actions">
+      <a href="https://maps.google.com/?q=Il+Solito+Posto+Melbourne" class="map-go" target="_blank" rel="noopener">🗺️</a>
+      <a href="https://ilsolitoposto.com.au/" class="web-go" target="_blank" rel="noopener">🌐</a>
+    </div>
+  </div>
+
+  <div class="map-item">
+    <span class="map-ico">🍱</span>
+    <div class="map-body">
+      <div class="map-name">Supernormal</div>
+      <div class="map-en">180 Flinders Lane, Melbourne VIC 3000</div>
+      <span class="map-day-tag">DAY 2 ディナー（要予約）</span>
+    </div>
+    <div class="map-actions">
+      <a href="https://maps.google.com/?q=Supernormal+180+Flinders+Lane+Melbourne" class="map-go" target="_blank" rel="noopener">🗺️</a>
+      <a href="https://supernormal.net.au/" class="web-go" target="_blank" rel="noopener">🌐</a>
+    </div>
+  </div>
+
+  <div class="map-item">
+    <span class="map-ico">🛒</span>
+    <div class="map-body">
+      <div class="map-name">クイーンビクトリアマーケット</div>
+      <div class="map-en">Queen Victoria Market — Queen St & Victoria St</div>
+      <span class="map-day-tag">DAY 3 観光（火曜営業）</span>
+    </div>
+    <div class="map-actions">
+      <a href="https://maps.google.com/?q=Queen+Victoria+Market+Melbourne" class="map-go" target="_blank" rel="noopener">🗺️</a>
+      <a href="https://qvm.com.au/" class="web-go" target="_blank" rel="noopener">🌐</a>
+    </div>
+  </div>
+
+  <div class="map-item">
+    <span class="map-ico">🌳</span>
+    <div class="map-body">
+      <div class="map-name">カールトン庭園・王立展示館</div>
+      <div class="map-en">Carlton Gardens, Carlton VIC 3053</div>
+      <span class="map-day-tag">DAY 3 観光（世界遺産）</span>
+    </div>
+    <div class="map-actions">
+      <a href="https://maps.google.com/?q=Carlton+Gardens+Melbourne" class="map-go" target="_blank" rel="noopener">🗺️</a>
+      <a href="https://museumsvictoria.com.au/reb/" class="web-go" target="_blank" rel="noopener">🌐</a>
+    </div>
+  </div>
+
+  <!-- SYDNEY -->
+  <div class="map-city-hd" style="margin-top:8px">🌉 Sydney &nbsp;<span style="font-weight:400;opacity:.8;font-size:12px">DAY 4〜7 &nbsp;|&nbsp; 9月23日〜26日</span></div>
+
+  <div class="map-item">
+    <span class="map-ico">🏨</span>
+    <div class="map-body">
+      <div class="map-name">リッジス ワールド スクエア</div>
+      <div class="map-en">Rydges World Square — 389 Pitt Street, Sydney</div>
+      <span class="map-day-tag">DAY 4〜6 ホテル</span>
+    </div>
+    <div class="map-actions">
+      <a href="https://maps.google.com/?q=389+Pitt+Street+Sydney" class="map-go" target="_blank" rel="noopener">🗺️</a>
+      <a href="https://www.rydges.com/accommodation/sydney-nsw/world-square/" class="web-go" target="_blank" rel="noopener">🌐</a>
+    </div>
+  </div>
+
+  <div class="map-item">
+    <span class="map-ico">🦞</span>
+    <div class="map-body">
+      <div class="map-name">Nick's Seafood Restaurant</div>
+      <div class="map-en">The Promenade, Cockle Bay Wharf, Sydney</div>
+      <span class="map-day-tag">DAY 4 ディナー（要予約）</span>
+    </div>
+    <div class="map-actions">
+      <a href="https://maps.google.com/?q=Nicks+Seafood+Restaurant+Cockle+Bay+Wharf+Sydney" class="map-go" target="_blank" rel="noopener">🗺️</a>
+      <a href="https://nicksseafood.com.au/" class="web-go" target="_blank" rel="noopener">🌐</a>
+    </div>
+  </div>
+
+  <div class="map-item">
+    <span class="map-ico">🏨</span>
+    <div class="map-body">
+      <div class="map-name">ヒルトン シドニー（ツアー集合場所）</div>
+      <div class="map-en">Hilton Sydney — 488 George Street, Sydney NSW 2000</div>
+      <span class="map-day-tag">DAY 5 集合 8:25（5分前厳守）</span>
+    </div>
+    <div class="map-actions">
+      <a href="https://maps.google.com/?q=Hilton+Sydney+488+George+Street" class="map-go" target="_blank" rel="noopener">🗺️</a>
+    </div>
+  </div>
+
+  <div class="map-item">
+    <span class="map-ico">🦘</span>
+    <div class="map-body">
+      <div class="map-name">フェザーデール動物園</div>
+      <div class="map-en">Featherdale Wildlife Park — 217 Kildare Rd, Doonside</div>
+      <span class="map-day-tag">DAY 5 ツアー</span>
+    </div>
+    <div class="map-actions">
+      <a href="https://maps.google.com/?q=Featherdale+Wildlife+Park+Doonside" class="map-go" target="_blank" rel="noopener">🗺️</a>
+      <a href="https://www.featherdale.com.au/" class="web-go" target="_blank" rel="noopener">🌐</a>
+    </div>
+  </div>
+
+  <div class="map-item">
+    <span class="map-ico">🚡</span>
+    <div class="map-body">
+      <div class="map-name">シーニックワールド</div>
+      <div class="map-en">Scenic World — Cliff Drive, Katoomba NSW 2780</div>
+      <span class="map-day-tag">DAY 5 ツアー</span>
+    </div>
+    <div class="map-actions">
+      <a href="https://maps.google.com/?q=Scenic+World+Katoomba" class="map-go" target="_blank" rel="noopener">🗺️</a>
+      <a href="https://www.scenicworld.com.au/" class="web-go" target="_blank" rel="noopener">🌐</a>
+    </div>
+  </div>
+
+  <div class="map-item">
+    <span class="map-ico">🪨</span>
+    <div class="map-body">
+      <div class="map-name">エコーポイント展望台</div>
+      <div class="map-en">Echo Point Lookout — Katoomba NSW 2780</div>
+      <span class="map-day-tag">DAY 5 ツアー</span>
+    </div>
+    <div class="map-actions">
+      <a href="https://maps.google.com/?q=Echo+Point+Lookout+Katoomba" class="map-go" target="_blank" rel="noopener">🗺️</a>
+    </div>
+  </div>
+
+  <div class="map-item">
+    <span class="map-ico">🏘️</span>
+    <div class="map-body">
+      <div class="map-name">ルーラ</div>
+      <div class="map-en">Leura Mall, Leura NSW 2780</div>
+      <span class="map-day-tag">DAY 5 ツアー</span>
+    </div>
+    <div class="map-actions">
+      <a href="https://maps.google.com/?q=Leura+Mall+NSW" class="map-go" target="_blank" rel="noopener">🗺️</a>
+    </div>
+  </div>
+
+  <div class="map-item">
+    <span class="map-ico">☕</span>
+    <div class="map-body">
+      <div class="map-name">The Grounds of the City</div>
+      <div class="map-en">500 George Street, Sydney NSW 2000</div>
+      <span class="map-day-tag">DAY 6 朝食</span>
+    </div>
+    <div class="map-actions">
+      <a href="https://maps.google.com/?q=The+Grounds+of+the+City+Sydney" class="map-go" target="_blank" rel="noopener">🗺️</a>
+      <a href="https://thegrounds.com.au/" class="web-go" target="_blank" rel="noopener">🌐</a>
+    </div>
+  </div>
+
+  <div class="map-item">
+    <span class="map-ico">🌺</span>
+    <div class="map-body">
+      <div class="map-name">ロイヤルボタニカルガーデン</div>
+      <div class="map-en">Royal Botanic Garden — Mrs Macquaries Rd, Sydney</div>
+      <span class="map-day-tag">DAY 6 観光（無料）</span>
+    </div>
+    <div class="map-actions">
+      <a href="https://maps.google.com/?q=Royal+Botanic+Garden+Sydney" class="map-go" target="_blank" rel="noopener">🗺️</a>
+      <a href="https://www.rbgsyd.nsw.gov.au/" class="web-go" target="_blank" rel="noopener">🌐</a>
+    </div>
+  </div>
+
+  <div class="map-item">
+    <span class="map-ico">📸</span>
+    <div class="map-body">
+      <div class="map-name">ミセス・マッコリーズ・ポイント</div>
+      <div class="map-en">Mrs Macquaries Point, Sydney NSW 2000</div>
+      <span class="map-day-tag">DAY 6 絶景フォト（無料）</span>
+    </div>
+    <div class="map-actions">
+      <a href="https://maps.google.com/?q=Mrs+Macquaries+Point+Sydney" class="map-go" target="_blank" rel="noopener">🗺️</a>
+    </div>
+  </div>
+
+  <div class="map-item">
+    <span class="map-ico">🧱</span>
+    <div class="map-body">
+      <div class="map-name">ロックス地区</div>
+      <div class="map-en">The Rocks, Sydney NSW 2000</div>
+      <span class="map-day-tag">DAY 6 観光</span>
+    </div>
+    <div class="map-actions">
+      <a href="https://maps.google.com/?q=The+Rocks+Sydney" class="map-go" target="_blank" rel="noopener">🗺️</a>
+      <a href="https://www.therocks.com/" class="web-go" target="_blank" rel="noopener">🌐</a>
+    </div>
+  </div>
+
+  <div class="map-item">
+    <span class="map-ico">🍺</span>
+    <div class="map-body">
+      <div class="map-name">The Glenmore Hotel</div>
+      <div class="map-en">96 Cumberland Street, The Rocks NSW 2000</div>
+      <span class="map-day-tag">DAY 6 ランチ</span>
+    </div>
+    <div class="map-actions">
+      <a href="https://maps.google.com/?q=The+Glenmore+Hotel+The+Rocks+Sydney" class="map-go" target="_blank" rel="noopener">🗺️</a>
+      <a href="https://www.theglenmore.com.au/" class="web-go" target="_blank" rel="noopener">🌐</a>
+    </div>
+  </div>
+
+  <div class="map-item">
+    <span class="map-ico">🛍️</span>
+    <div class="map-body">
+      <div class="map-name">クイーンビクトリアビルディング（QVB）</div>
+      <div class="map-en">455 George Street, Sydney NSW 2000</div>
+      <span class="map-day-tag">DAY 6 ショッピング</span>
+    </div>
+    <div class="map-actions">
+      <a href="https://maps.google.com/?q=Queen+Victoria+Building+Sydney" class="map-go" target="_blank" rel="noopener">🗺️</a>
+      <a href="https://www.qvb.com.au/" class="web-go" target="_blank" rel="noopener">🌐</a>
+    </div>
+  </div>
+
+  <div class="map-item">
+    <span class="map-ico">🎭</span>
+    <div class="map-body">
+      <div class="map-name">Bennelong</div>
+      <div class="map-en">Sydney Opera House, Bennelong Point, Sydney</div>
+      <span class="map-day-tag">DAY 6 ディナー（要予約）</span>
+    </div>
+    <div class="map-actions">
+      <a href="https://maps.google.com/?q=Bennelong+Sydney+Opera+House" class="map-go" target="_blank" rel="noopener">🗺️</a>
+      <a href="https://www.bennelong.com.au/" class="web-go" target="_blank" rel="noopener">🌐</a>
+    </div>
+  </div>
+
+  <div class="map-item">
+    <span class="map-ico">✈️</span>
+    <div class="map-body">
+      <div class="map-name">シドニー空港 第1ターミナル</div>
+      <div class="map-en">Sydney Airport T1 International, Mascot NSW 2020</div>
+      <span class="map-day-tag">DAY 7 出発</span>
+    </div>
+    <div class="map-actions">
+      <a href="https://maps.google.com/?q=Sydney+Airport+Terminal+1+International" class="map-go" target="_blank" rel="noopener">🗺️</a>
+      <a href="https://www.sydneyairport.com.au/" class="web-go" target="_blank" rel="noopener">🌐</a>
+    </div>
+  </div>
+
+</div>
 
 </main>
 
-<footer>
-  <p>🗼 パリ旅行しおり 2026 &nbsp;|&nbsp; ✈️ Bon voyage, deux amoureux !</p>
-</footer>
+<footer><p>🦘 オーストラリア旅行しおり 2026 &nbsp;|&nbsp; ✈️ Have a wonderful journey!</p></footer>
+
+<button id="edit-fab" onclick="toggleEdit()" title="編集モード">✏️</button>
+
+<div id="edit-bar">
+  <span class="eb-label">✏️ 編集モード中</span>
+  <button class="btn-reset"  onclick="resetData()">🔄 リセット</button>
+  <button class="btn-cancel" onclick="cancelEdit()">✕ キャンセル</button>
+  <button class="btn-save"   onclick="saveEdits()">💾 保存</button>
+</div>
+
+<div id="toast"></div>
 
 <script>
-  function show(id, idx) {
-    document.querySelectorAll('.pane').forEach(function(el) {
-      el.classList.remove('active');
-    });
-    document.querySelectorAll('.tab').forEach(function(el) {
-      el.classList.remove('active');
-      el.setAttribute('aria-selected', 'false');
-    });
-
-    document.getElementById(id).classList.add('active');
-
-    var tabs = document.querySelectorAll('.tab');
-    if (tabs[idx]) {
-      tabs[idx].classList.add('active');
-      tabs[idx].setAttribute('aria-selected', 'true');
-      tabs[idx].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-    }
-
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+// ─── Bottom Sheet ──────────────────────────────────────────────────────────
+var SHEET_DATA = {
+  'narita-checkin': {
+    title: '✈️ 成田空港 第2T チェックイン',
+    steps: [
+      '第2ターミナル出発ロビー（2F）の「JAL国際線チェックインカウンター」へ。中央エリアに大きな表示あり',
+      'パスポートと予約確認メール（QRコード）を係員に提示してチェックイン・荷物預け',
+      'Wi-Fiルーター等の受取がある場合は同フロアの受取カウンターへ立ち寄る',
+      '出国審査（パスポートコントロール）→ 保安検査の順で通過',
+      '保安検査後は制限エリア内で時間まで過ごす（搭乗開始30分前を目安にゲートへ）'
+    ],
+    tips: [
+      '💡 液体物（化粧水・飲料など）は100ml以下の容器に入れ、ジッパー付き透明袋1枚にまとめて荷物の取り出しやすい場所に',
+      '💡 PC・タブレットは保安検査でカバンから取り出す必要あり。あらかじめアクセスしやすい場所に',
+      '💡 機内に食品を持ち込む場合、オーストラリア入国カードの「食品あり（YES）」欄を記入'
+    ],
+    warns: []
+  },
+  'mel-flight': {
+    title: '🌙 機内での過ごし方（10時間05分）',
+    steps: [
+      '離陸後すぐにスマホ・時計をメルボルン時間（日本+1時間）に変更',
+      '機内食が提供されたら食べる。食後はすぐに歯を磨いて睡眠の準備を',
+      'アイマスク・耳栓・ネックピローを活用して、少なくとも5〜6時間の睡眠を確保',
+      '到着の1.5時間前ほどに起床し、朝食（軽食）を取る',
+      '着陸前にオーストラリア入国カード（機内で配布）を記入して準備完了'
+    ],
+    tips: [
+      '💡 シートはJAL Sky Wider（エコノミーでも快適な広め座席）。足元スペースは十分あり',
+      '💡 到着は翌朝05:45。丸1日観光するので機内睡眠が体力の鍵！',
+      '⚠️ 食品（スナック・果物など）を持ち込む場合は必ず入国カードに申告。申告すれば没収のみで罰金なし'
+    ],
+    warns: []
+  },
+  'mel-customs': {
+    title: '🛂 オーストラリア入国・検疫手順',
+    steps: [
+      '飛行機を降りたら「Arrivals（到着）」の表示に沿って入国審査エリアへ',
+      'スマートゲート（自動化ゲート）でパスポートをスキャン → 顔認証 → 通過',
+      'スマートゲート通過後、係官がスタンプを押す（パスポートを提示）',
+      '手荷物受取エリアへ移動してスーツケースを受け取る',
+      '税関・検疫カウンターへ。食品等がある場合は「DECLARE（申告）」レーンへ',
+      '申告レーンで入国カードを提示し、荷物のX線検査を受ける（申告すれば罰金なし）'
+    ],
+    tips: [
+      '💡 スマートゲートは日本のパスポートで問題なく使用可。操作は画面の指示通りでOK',
+      '💡 食品・植物・動物製品を少しでも持っている場合は迷わず申告レーンへ。正直に申告すれば没収のみ'
+    ],
+    warns: [
+      '⚠️ 申告漏れが発覚すると最高$510（約5万円）の罰金。「少量だから大丈夫」は通用しません',
+      '⚠️ フルーツ・生鮮食品・肉類・土付き物は特に厳しいチェックあり'
+    ]
+  },
+  'uber-mel': {
+    title: '🚖 メルボルン空港 Uber の乗り方',
+    steps: [
+      'ターミナル2を出て1F（到着フロア）の屋外エリアへ。「Rideshare」の案内板に従う',
+      'UberアプリでGPS位置を確認し、「Melbourne Airport T2 Rideshare」付近にピンを設定',
+      '車種・ナンバー・運転手名をアプリで確認してから乗車',
+      '目的地「インターコンチネンタル メルボルン – 495 Collins St」を確認して出発'
+    ],
+    tips: [
+      '💡 料金の目安：$60〜$75。タクシー（$90〜）より安く、深夜でも安定した料金',
+      '💡 支払いはアプリ内の登録クレジットカードで自動決済。現金不要・チップ不要',
+      '💡 荷物が多い場合は「UberX」ではなく「Uber XL」を選ぶと大型ワゴンが来る'
+    ],
+    warns: []
+  },
+  'va-checkin': {
+    title: '✈️ ヴァージン・オーストラリア チェックイン',
+    steps: [
+      'メルボルン空港 国内線ターミナル（T4）のヴァージン・オーストラリアカウンターへ',
+      'パスポート（または身分証明書）と予約確認書を提示してチェックイン',
+      '受託荷物を預ける（Choiceプランなら1人1個まで無料）',
+      '保安検査を通過してゲートエリアで待機（出発30分前を目安）'
+    ],
+    tips: [
+      '💡 オンラインチェックインはヴァージン公式アプリまたはWebから出発24時間前〜が可能。並ばずに済む',
+      '💡 国内線ターミナル（T4）は国際線ターミナル（T2）とは別建物。Uberで直接T4へ向かうよう運転手に伝えて',
+      '💡 機内持ち込みは7kg以内（1個）が目安'
+    ],
+    warns: []
+  },
+  'syd-arrive': {
+    title: '🛬 シドニー空港 → 市内へのアクセス',
+    steps: [
+      '国内線T2到着後、手荷物受取エリアでスーツケースを受け取る',
+      '【Uber の場合】T2出口を出て1Fの「Rideshare」表示エリアへ。アプリで「Sydney Domestic Airport T2」にピン',
+      '【電車の場合】T2地下のAirport Linkへ。タッチ決済かOpalカードでそのまま乗車可',
+      '目的地「Rydges World Square（389 Pitt St）」へ'
+    ],
+    tips: [
+      '💡 Uber：約25〜30分・$50〜65。スーツケース多数ならこちらが楽',
+      '💡 Airport Link（電車）：Central駅まで約13分・$19.44/人。荷物が少なければ電車が圧倒的に安い',
+      '💡 ホテルはCentral駅から徒歩5分。電車 + 徒歩が最もスムーズ'
+    ],
+    warns: []
+  },
+  'hilton-meeting': {
+    title: '🏨 ヒルトン シドニー 集合ルート',
+    steps: [
+      'リッジス ワールド スクエア（389 Pitt St）を出て北方向へPitt Stを直進',
+      '約700m（徒歩10分）でMarket Stとの交差点を通過し、さらに直進',
+      'George St手前のBatrack Stを左に曲がると「Hilton Sydney」（488 George St）が見える',
+      'ホテル正面玄関からロビーへ入り、JTBスタッフを探す（「SYDODOAOPT87」バウチャーを提示）'
+    ],
+    tips: [
+      '💡 ホテルを8:10に出発すれば集合の10分前（8:15）には着く計算',
+      '💡 Google マップで「Hilton Sydney」を検索して徒歩ナビを使うと迷わない'
+    ],
+    warns: [
+      '⚠️ 集合は8:25厳守！遅刻するとツアーバスは出発してしまい参加不可。アラームを複数セットすること'
+    ]
+  },
+  'syd-checkin': {
+    title: '✈️ シドニー空港 第1T チェックイン＆TRS',
+    steps: [
+      'シドニー空港 国際線第1ターミナル（T1）のJALカウンターへ（出発3時間前目安）',
+      'パスポートと予約確認書を提示してチェックイン・荷物預け',
+      'TRS（免税還付）対象がある場合：保安検査通過後のTRSカウンターへ',
+      'TRS：レシート（$300以上・同一店・同日購入）＋パスポート＋品物を提示 → GST10%が還付',
+      '出国審査 → 搭乗ゲートへ（早めに向かうと出国審査の混雑を避けられる）'
+    ],
+    tips: [
+      '💡 TRS事前登録：TRSアプリで購入品の情報を入力しておくとカウンターで素早く処理できる',
+      '💡 免税対象の品物はスーツケースに詰め込まずにすぐ取り出せる状態にしておくこと',
+      '💡 余った豪ドルは保安検査前の両替所で円に換金（空港より帰国後の市中銀行の方がレートよい場合も）'
+    ],
+    warns: [
+      '⚠️ TRSは保安検査通過後のみ手続き可能。検査前には申請できない'
+    ]
+  },
+  'hnd-arrive': {
+    title: '🛬 羽田空港 入国手続き',
+    steps: [
+      '飛行機を降りたら「入国審査（Arrivals）」の表示に沿って進む',
+      'スマホで「Visit Japan Web」アプリの税関申告QRコードを開いておく（機内で済ませると楽）',
+      '日本人は「日本国パスポート」レーンへ。指紋スキャン＋パスポート提示で入国審査',
+      '手荷物受取エリアでスーツケースを受け取る',
+      '税関検査エリアで「Visit Japan Web」の税関申告QRコードを係員端末にかざして完了'
+    ],
+    tips: [
+      '💡 Visit Japan Webは機内のWi-Fiを使ってQRコード取得まで完了できる。着陸前に済ませておくとスムーズ',
+      '💡 オーストラリアから帰国時に土産の食品を持っている場合、日本の税関でも申告が必要なケースあり',
+      '💡 第3ターミナルなのでリムジンバスや京急線で都内へ（羽田から都内は30〜40分）'
+    ],
+    warns: []
   }
+};
+
+function renderSheet(key) {
+  var d = SHEET_DATA[key];
+  if (!d) return '';
+  var html = '<div class="sheet-head">' + d.title + '</div>';
+  if (d.steps && d.steps.length) {
+    html += '<div class="sheet-section"><div class="sheet-section-label">📋 手順</div>';
+    d.steps.forEach(function(s, i) {
+      html += '<div class="sheet-step"><div class="sheet-step-num">' + (i + 1) + '</div><div class="sheet-step-text">' + s + '</div></div>';
+    });
+    html += '</div>';
+  }
+  if (d.tips && d.tips.length) {
+    html += '<div class="sheet-section"><div class="sheet-section-label">💡 ポイント</div>';
+    d.tips.forEach(function(t) { html += '<div class="sheet-tip">' + t + '</div>'; });
+    html += '</div>';
+  }
+  if (d.warns && d.warns.length) {
+    html += '<div class="sheet-section"><div class="sheet-section-label">⚠️ 注意</div>';
+    d.warns.forEach(function(w) { html += '<div class="sheet-warn">' + w + '</div>'; });
+    html += '</div>';
+  }
+  return html;
+}
+
+function openSheet(key) {
+  var content = renderSheet(key);
+  if (!content) return;
+  document.getElementById('sheet-body').innerHTML = content;
+  document.getElementById('sheet-overlay').classList.add('open');
+  document.getElementById('bottom-sheet').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeSheet() {
+  document.getElementById('sheet-overlay').classList.remove('open');
+  document.getElementById('bottom-sheet').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+var currentTabIdx = 0;
+
+function show(id, idx) {
+  var pane = document.getElementById(id);
+  var goLeft = idx < currentTabIdx;
+  document.querySelectorAll('.pane').forEach(function(el){ el.classList.remove('active','dir-left'); });
+  document.querySelectorAll('.tab').forEach(function(el){ el.classList.remove('active'); });
+  pane.classList.add('active');
+  if (goLeft) pane.classList.add('dir-left');
+  currentTabIdx = idx;
+  var tabs = document.querySelectorAll('.tab');
+  if (tabs[idx]) {
+    tabs[idx].classList.add('active');
+    tabs[idx].scrollIntoView({ behavior:'smooth', block:'nearest', inline:'center' });
+  }
+  if (!editing) window.scrollTo({ top:0, behavior:'smooth' });
+  initNowNext();
+}
+
+var editing = false;
+var backup  = [];
+
+function toggleEdit() { if (editing) cancelEdit(); else startEdit(); }
+
+function startEdit() {
+  editing = true;
+  backup = getState();
+  document.body.classList.add('edit-mode');
+  document.getElementById('edit-fab').textContent = '✕';
+  document.querySelectorAll('.editable').forEach(function(el){ el.contentEditable = 'true'; });
+  addEditControls();
+}
+
+function saveEdits() {
+  editing = false;
+  removeEditControls();
+  document.querySelectorAll('.editable').forEach(function(el){ el.contentEditable = 'false'; });
+  document.body.classList.remove('edit-mode');
+  document.getElementById('edit-fab').textContent = '✏️';
+  localStorage.setItem('itinerary_v2', JSON.stringify(getState()));
+  backup = [];
+  toast('保存しました ✓');
+}
+
+function cancelEdit() {
+  editing = false;
+  removeEditControls();
+  setState(backup);
+  document.querySelectorAll('.editable').forEach(function(el){ el.contentEditable = 'false'; });
+  document.body.classList.remove('edit-mode');
+  document.getElementById('edit-fab').textContent = '✏️';
+  backup = [];
+}
+
+function resetData() {
+  if (!confirm('すべての編集内容を初期状態に戻しますか？')) return;
+  localStorage.removeItem('itinerary_v2');
+  location.reload();
+}
+
+// State = innerHTML of each pane (preserves added/removed items)
+function getState() {
+  return Array.from(document.querySelectorAll('.pane')).map(function(p){ return p.innerHTML; });
+}
+
+function setState(data) {
+  var panes = document.querySelectorAll('.pane');
+  panes.forEach(function(pane, i){
+    if (data[i] !== undefined) pane.innerHTML = data[i];
+  });
+  applyChecklistState();
+  initDayHighlights();
+  initDayBanners();
+  initNowNext();
+}
+
+// ─── Edit controls (add / remove buttons) ─────────────────────────────────
+
+function addEditControls() {
+  // Timeline: × on each item, ＋ at bottom
+  document.querySelectorAll('.timeline').forEach(function(tl) {
+    tl.querySelectorAll('.tl-item').forEach(function(item) {
+      var box = item.querySelector('.tl-box');
+      if (box && !box.querySelector('.rm-item-btn')) {
+        box.prepend(makeRmBtn(function(){ item.remove(); }));
+      }
+    });
+    if (!tl.querySelector('.add-item-btn')) {
+      tl.appendChild(makeAddBtn('＋ スケジュール項目を追加', function(){ addTlItem(tl); }));
+    }
+  });
+  // Tip lists: × on each item, ＋ at bottom of each containing card/section
+  var tipContainers = new Set();
+  document.querySelectorAll('.tip-item').forEach(function(item) {
+    if (!item.querySelector('.rm-item-btn')) {
+      item.appendChild(makeRmBtn(function(){ item.remove(); }));
+    }
+    if (item.parentElement) tipContainers.add(item.parentElement);
+  });
+  tipContainers.forEach(function(container) {
+    if (!container.querySelector('.add-item-btn')) {
+      container.appendChild(makeAddBtn('＋ 項目を追加', function(){ addTipItem(container); }));
+    }
+  });
+}
+
+function removeEditControls() {
+  document.querySelectorAll('.rm-item-btn, .add-item-btn').forEach(function(el){ el.remove(); });
+}
+
+function makeRmBtn(onRemove) {
+  var btn = document.createElement('button');
+  btn.className = 'rm-item-btn';
+  btn.textContent = '× 削除';
+  btn.onclick = function(e){ e.preventDefault(); if (confirm('この項目を削除しますか？')) onRemove(); };
+  return btn;
+}
+
+function makeAddBtn(label, onClick) {
+  var btn = document.createElement('button');
+  btn.className = 'add-item-btn';
+  btn.textContent = label;
+  btn.onclick = onClick;
+  return btn;
+}
+
+function addTlItem(timeline) {
+  var item = document.createElement('div');
+  item.className = 'tl-item';
+  item.innerHTML =
+    '<div class="tl-time editable" contenteditable="true">時間</div>' +
+    '<div class="tl-box">' +
+      '<div class="tl-head editable" contenteditable="true">タイトル</div>' +
+      '<div class="tl-desc editable" contenteditable="true">詳細を入力...</div>' +
+    '</div>';
+  item.querySelector('.tl-box').prepend(makeRmBtn(function(){ item.remove(); }));
+  timeline.querySelector('.add-item-btn').before(item);
+  item.querySelector('.tl-time').focus();
+}
+
+function addTipItem(container) {
+  var item = document.createElement('div');
+  item.className = 'tip-item';
+  item.innerHTML = '<span class="tip-ico">📌</span><span class="tip-text editable" contenteditable="true">テキストを入力...</span>';
+  item.appendChild(makeRmBtn(function(){ item.remove(); }));
+  container.querySelector('.add-item-btn').before(item);
+  item.querySelector('.tip-text').focus();
+}
+
+// ─── Day Chips ─────────────────────────────────────────────────────────────
+function initNowNext() {
+  document.querySelectorAll('.tl-now-badge, .tl-next-badge').forEach(function(b){ b.remove(); });
+  document.querySelectorAll('.tl-item.tl-now, .tl-item.tl-next').forEach(function(it){ it.classList.remove('tl-now', 'tl-next'); });
+
+  var DAY_DATES = { day1:'2026-09-20', day2:'2026-09-21', day3:'2026-09-22', day4:'2026-09-23', day5:'2026-09-24', day6:'2026-09-25', day7:'2026-09-26' };
+  var now = new Date();
+
+  function addBadge(item, type) {
+    item.classList.add(type === 'now' ? 'tl-now' : 'tl-next');
+    var badge = document.createElement('span');
+    badge.className = type === 'now' ? 'tl-now-badge' : 'tl-next-badge';
+    badge.textContent = type === 'now' ? '● NOW' : '次はこれ';
+    var box = item.querySelector('.tl-box');
+    if (box) box.appendChild(badge);
+  }
+
+  Object.keys(DAY_DATES).forEach(function(dayId) {
+    var dateStr = DAY_DATES[dayId];
+    var dayStart = new Date(dateStr + 'T00:00:00');
+    var dayEnd   = new Date(dateStr + 'T23:59:59');
+    if (now < dayStart || now > dayEnd) return;
+    var pane = document.getElementById(dayId);
+    if (!pane) return;
+
+    var parsed = [];
+    pane.querySelectorAll('.tl-item').forEach(function(item) {
+      var timeEl = item.querySelector('.tl-time');
+      if (!timeEl) return;
+      var m = timeEl.textContent.match(/(\d{1,2}):(\d{2})/);
+      if (!m) return;
+      var t = new Date(dateStr + 'T' + ('0' + m[1]).slice(-2) + ':' + m[2] + ':00');
+      parsed.push({ item: item, time: t });
+    });
+    if (!parsed.length) return;
+
+    var nextIdx = -1;
+    for (var i = 0; i < parsed.length; i++) {
+      if (parsed[i].time >= now) { nextIdx = i; break; }
+    }
+    if (nextIdx === -1) {
+      addBadge(parsed[parsed.length - 1].item, 'now');
+    } else if (nextIdx === 0) {
+      addBadge(parsed[0].item, 'next');
+    } else {
+      addBadge(parsed[nextIdx - 1].item, 'now');
+      addBadge(parsed[nextIdx].item, 'next');
+    }
+  });
+}
+
+function initDayBanners() {
+  var conf = {
+    day1: { g: 'linear-gradient(148deg,#070d20 0%,#0d1e45 38%,#0a3060 72%,#0d2040 100%)', e: '✈️', d: 'DAY 1 — 9/20（日）', t: '成田出発 → 機中泊で南半球へ' },
+    day2: { g: 'linear-gradient(148deg,#18102e 0%,#2a1a50 32%,#6e3c18 65%,#c47820 100%)', e: '☕', d: 'DAY 2 — 9/21（月）', t: 'メルボルン到着・カフェ文化を満喫' },
+    day3: { g: 'linear-gradient(148deg,#501408 0%,#963010 38%,#ce5e22 68%,#e88c30 100%)', e: '🎨', d: 'DAY 3 — 9/22（火）', t: 'フィッツロイ・コリングウッド探索' },
+    day4: { g: 'linear-gradient(148deg,#011e38 0%,#014080 38%,#027ab8 68%,#10a8d4 100%)', e: '🌆', d: 'DAY 4 — 9/23（水）', t: 'メルボルン→シドニー・夜のオペラハウス' },
+    day5: { g: 'linear-gradient(148deg,#181830 0%,#283468 38%,#426090 65%,#7aacc8 100%)', e: '🏔️', d: 'DAY 5 — 9/24（木）', t: 'ブルーマウンテンズ・タロンガ動物園' },
+    day6: { g: 'linear-gradient(148deg,#6c1018 0%,#b42c1c 32%,#d86010 62%,#f0a820 100%)', e: '🎭', d: 'DAY 6 — 9/25（金）', t: 'シドニー観光・最後の夕暮れ' },
+    day7: { g: 'linear-gradient(148deg,#0a1220 0%,#182440 38%,#244e78 70%,#d89e28 100%)', e: '🌅', d: 'DAY 7 — 9/26（土）', t: 'シドニー発・羽田へ帰国' }
+  };
+  Object.keys(conf).forEach(function(id) {
+    var pane = document.getElementById(id);
+    if (!pane) return;
+    var old = pane.querySelector('.day-banner');
+    if (old) old.remove();
+    var c = conf[id];
+    var el = document.createElement('div');
+    el.className = 'day-banner';
+    el.style.background = c.g;
+    el.innerHTML =
+      '<div class="day-banner-emoji">' + c.e + '</div>' +
+      '<div class="day-banner-day">' + c.d + '</div>' +
+      '<div class="day-banner-label">' + c.t + '</div>';
+    pane.insertBefore(el, pane.firstChild);
+  });
+}
+
+function initDayHighlights() {
+  document.querySelectorAll('.day-chips').forEach(function(el){ el.remove(); });
+  ['day1','day2','day3','day4','day5','day6','day7'].forEach(function(dayId) {
+    var pane = document.getElementById(dayId);
+    if (!pane) return;
+    var items = pane.querySelectorAll('.tl-item');
+    if (items.length === 0) return;
+    var chips = document.createElement('div');
+    chips.className = 'day-chips';
+    items.forEach(function(item) {
+      var head = item.querySelector('.tl-head');
+      var time = item.querySelector('.tl-time');
+      if (!head || !time) return;
+      var label = head.textContent.trim().slice(0, 18) + (head.textContent.trim().length > 18 ? '…' : '');
+      var chip = document.createElement('span');
+      chip.className = 'day-chip';
+      chip.textContent = label;
+      chip.addEventListener('click', function() {
+        item.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        item.classList.remove('tl-flash');
+        void item.offsetWidth; // reflow to restart animation
+        item.classList.add('tl-flash');
+        setTimeout(function(){ item.classList.remove('tl-flash'); }, 950);
+      });
+      chips.appendChild(chip);
+    });
+    var dayHd = pane.querySelector('.day-hd');
+    if (dayHd) dayHd.after(chips);
+  });
+}
+
+// ─── Checklist ─────────────────────────────────────────────────────────────
+document.addEventListener('click', function(e) {
+  if (document.body.classList.contains('edit-mode')) return;
+  var item = e.target.closest ? e.target.closest('#packing-card .cl-item') : null;
+  if (!item) return;
+  item.classList.toggle('checked');
+  updateChecklistProgress();
+  saveChecklistState();
+});
+
+function updateChecklistProgress() {
+  var card = document.getElementById('packing-card');
+  if (!card) return;
+  var items = card.querySelectorAll('.cl-item');
+  var done  = card.querySelectorAll('.cl-item.checked').length;
+  var total = items.length;
+  var pct   = total ? Math.round(done / total * 100) : 0;
+  var dEl = document.getElementById('cl-done');
+  var tEl = document.getElementById('cl-total');
+  var fEl = document.getElementById('cl-fill');
+  if (dEl) dEl.textContent = done;
+  if (tEl) tEl.textContent = total;
+  if (fEl) fEl.style.width = pct + '%';
+}
+
+function saveChecklistState() {
+  var card = document.getElementById('packing-card');
+  if (!card) return;
+  var state = {};
+  card.querySelectorAll('.cl-item').forEach(function(item, i) { state[i] = item.classList.contains('checked'); });
+  localStorage.setItem('checklist_v1', JSON.stringify(state));
+}
+
+function applyChecklistState() {
+  var card = document.getElementById('packing-card');
+  if (!card) return;
+  var saved = {};
+  try { saved = JSON.parse(localStorage.getItem('checklist_v1') || '{}'); } catch(e) {}
+  card.querySelectorAll('.cl-item').forEach(function(item, i) {
+    if (saved[i]) item.classList.add('checked'); else item.classList.remove('checked');
+  });
+  updateChecklistProgress();
+}
+
+// ─── Converter ─────────────────────────────────────────────────────────────
+var convDir  = 'AUD_JPY';
+var convRate = 97;
+
+function swapConv() {
+  convDir = convDir === 'AUD_JPY' ? 'JPY_AUD' : 'AUD_JPY';
+  var fl = document.getElementById('conv-from-lbl');
+  var tl = document.getElementById('conv-to-lbl');
+  if (fl) fl.textContent = convDir === 'AUD_JPY' ? '🇦🇺 AUD' : '🇯🇵 円';
+  if (tl) tl.textContent = convDir === 'AUD_JPY' ? '🇯🇵 円'  : '🇦🇺 AUD';
+  calcConv();
+}
+
+function calcConv() {
+  var inp = document.getElementById('conv-input');
+  var res = document.getElementById('conv-result');
+  if (!inp || !res) return;
+  var val = parseFloat(inp.value);
+  if (isNaN(val) || val < 0) { res.textContent = '—'; return; }
+  if (convDir === 'AUD_JPY') {
+    res.textContent = '¥' + Math.round(val * convRate).toLocaleString('ja-JP');
+  } else {
+    res.textContent = 'A$' + (val / convRate).toFixed(2);
+  }
+}
+
+// ─── Countdown ─────────────────────────────────────────────────────────────
+function updateCountdown() {
+  var el = document.getElementById('cd-text');
+  if (!el) return;
+  var depart = new Date('2026-09-20T00:00:00');
+  var now = new Date();
+  now.setHours(0, 0, 0, 0);
+  var days = Math.round((depart - now) / 86400000);
+  if (days > 0) {
+    el.innerHTML = '<strong style="font-size:20px;color:#ffd54f;margin-right:4px">' + days + '</strong>日後に出発！';
+  } else if (days === 0) {
+    el.innerHTML = '🎉 今日出発！行ってらっしゃい！';
+  } else if (days >= -7) {
+    el.innerHTML = '✈️ 旅行中！楽しんで！';
+  } else {
+    var cd = document.getElementById('countdown');
+    if (cd) cd.style.display = 'none';
+  }
+}
+
+// ─── Toast ─────────────────────────────────────────────────────────────────
+function toast(msg) {
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(function(){ t.classList.remove('show'); }, 2200);
+}
+
+// ─── Init ──────────────────────────────────────────────────────────────────
+(function init() {
+  var saved = localStorage.getItem('itinerary_v2');
+  if (saved) { try { setState(JSON.parse(saved)); } catch(e) {} }
+  applyChecklistState();
+  initDayHighlights();
+  initDayBanners();
+  initNowNext();
+  setInterval(initNowNext, 60000);
+  updateCountdown();
+  // Converter: read rate from info tile
+  document.querySelectorAll('.info-tile').forEach(function(tile) {
+    var lbl = tile.querySelector('.tlbl');
+    if (lbl && lbl.textContent.includes('レート')) {
+      var tval = tile.querySelector('.tval');
+      if (tval) { var m = tval.textContent.match(/[\d.]+/); if (m) convRate = parseFloat(m[0]); }
+    }
+  });
+  var rv = document.getElementById('conv-rate-val');
+  if (rv) rv.textContent = convRate;
+  var ci = document.getElementById('conv-input');
+  if (ci) ci.addEventListener('input', calcConv);
+})();
 </script>
+
+<!-- BOTTOM SHEET -->
+<div class="sheet-overlay" id="sheet-overlay" onclick="closeSheet()"></div>
+<div class="bottom-sheet" id="bottom-sheet">
+  <div class="sheet-drag" onclick="closeSheet()"><div class="sheet-drag-bar"></div></div>
+  <div class="sheet-body" id="sheet-body"></div>
+  <button class="sheet-close" onclick="closeSheet()">✕ 閉じる</button>
+</div>
 </body>
 </html>
