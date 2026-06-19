@@ -1,0 +1,8 @@
+# Claude Code
+.claude/
+
+# 背景知識（個人資料）
+背景知識/
+
+# JTBレポート（個人情報含む可能性）
+JTB_Australia_Hotels_Report.txt
