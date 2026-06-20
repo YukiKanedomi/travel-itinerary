@@ -1466,14 +1466,14 @@ function autoSelectTab() {
 // x/y/order/move は今後の地図描画ステップで使用（STEP1では未使用）
 var SPOTS = [
   // MELBOURNE  （x:西→東 / y:北→南、order=訪問順、move=直前からの移動手段）
-  { area:'mel', icon:'🏨', name:'IC メルボルン ザ リアルト', en:['InterContinental Melbourne The Rialto','495 Collins Street, Melbourne VIC 3000'], day:'DAY 2・3 ホテル', map:'https://maps.google.com/?q=495+Collins+Street+Melbourne', web:'https://www.ihg.com/intercontinental/hotels/gb/en/melbourne/melha/hoteldetail', x:80, y:252, order:1, move:'start' },
-  { area:'mel', icon:'☕', name:'Lune Croissanterie CBD', en:['Flinders Lane, Melbourne VIC 3000'], day:'DAY 2 朝食', map:'https://maps.google.com/?q=Lune+Croissanterie+CBD+Melbourne', web:'https://www.lunecroissanterie.com/', x:210, y:254, order:2, move:'walk' },
-  { area:'mel', icon:'🎨', name:'ホージア・レーン', en:['Hosier Lane, Melbourne VIC 3000'], day:'DAY 2 観光（無料）', map:'https://maps.google.com/?q=Hosier+Lane+Melbourne', x:185, y:278, order:3, move:'walk' },
-  { area:'mel', icon:'🏛️', name:'ブロック・アーケード', en:['Block Arcade — 282 Collins Street, Melbourne'], day:'DAY 2 観光', map:'https://maps.google.com/?q=Block+Arcade+Melbourne', web:'https://www.theblockarcade.com.au/', x:158, y:248, order:4, move:'walk' },
-  { area:'mel', icon:'🍝', name:'Il Solito Posto', en:['113 Collins Street（地下）, Melbourne'], day:'DAY 2 ランチ', map:'https://maps.google.com/?q=Il+Solito+Posto+Melbourne', web:'https://ilsolitoposto.com.au/', x:258, y:246, order:5, move:'walk' },
-  { area:'mel', icon:'🍱', name:'Supernormal', en:['180 Flinders Lane, Melbourne VIC 3000'], day:'DAY 2 ディナー（要予約）', map:'https://maps.google.com/?q=Supernormal+180+Flinders+Lane+Melbourne', web:'https://supernormal.net.au/', x:222, y:272, order:6, move:'walk' },
-  { area:'mel', icon:'🛒', name:'クイーンビクトリアマーケット', en:['Queen Victoria Market — Queen St & Victoria St'], day:'DAY 3 観光（火曜営業）', map:'https://maps.google.com/?q=Queen+Victoria+Market+Melbourne', web:'https://qvm.com.au/', x:125, y:105, order:7, move:'tram' },
-  { area:'mel', icon:'🌳', name:'カールトン庭園・王立展示館', en:['Carlton Gardens, Carlton VIC 3053'], day:'DAY 3 観光（世界遺産）', map:'https://maps.google.com/?q=Carlton+Gardens+Melbourne', web:'https://museumsvictoria.com.au/reb/', x:250, y:95, order:8, move:'walk' },
+  { area:'mel', icon:'🏨', name:'IC メルボルン ザ リアルト', en:['InterContinental Melbourne The Rialto','495 Collins Street, Melbourne VIC 3000'], day:'DAY 2・3 ホテル', map:'https://maps.google.com/?q=495+Collins+Street+Melbourne', web:'https://www.ihg.com/intercontinental/hotels/gb/en/melbourne/melha/hoteldetail', x:90, y:246, order:1, move:'start' },
+  { area:'mel', icon:'☕', name:'Lune Croissanterie CBD', en:['Flinders Lane, Melbourne VIC 3000'], day:'DAY 2 朝食', map:'https://maps.google.com/?q=Lune+Croissanterie+CBD+Melbourne', web:'https://www.lunecroissanterie.com/', x:208, y:243, order:2, move:'walk' },
+  { area:'mel', icon:'🎨', name:'ホージア・レーン', en:['Hosier Lane, Melbourne VIC 3000'], day:'DAY 2 観光（無料）', map:'https://maps.google.com/?q=Hosier+Lane+Melbourne', x:192, y:283, order:3, move:'walk' },
+  { area:'mel', icon:'🏛️', name:'ブロック・アーケード', en:['Block Arcade — 282 Collins Street, Melbourne'], day:'DAY 2 観光', map:'https://maps.google.com/?q=Block+Arcade+Melbourne', web:'https://www.theblockarcade.com.au/', x:172, y:246, order:4, move:'walk' },
+  { area:'mel', icon:'🍝', name:'Il Solito Posto', en:['113 Collins Street（地下）, Melbourne'], day:'DAY 2 ランチ', map:'https://maps.google.com/?q=Il+Solito+Posto+Melbourne', web:'https://ilsolitoposto.com.au/', x:258, y:245, order:5, move:'walk' },
+  { area:'mel', icon:'🍱', name:'Supernormal', en:['180 Flinders Lane, Melbourne VIC 3000'], day:'DAY 2 ディナー（要予約）', map:'https://maps.google.com/?q=Supernormal+180+Flinders+Lane+Melbourne', web:'https://supernormal.net.au/', x:218, y:267, order:6, move:'walk' },
+  { area:'mel', icon:'🛒', name:'クイーンビクトリアマーケット', en:['Queen Victoria Market — Queen St & Victoria St'], day:'DAY 3 観光（火曜営業）', map:'https://maps.google.com/?q=Queen+Victoria+Market+Melbourne', web:'https://qvm.com.au/', x:139, y:91, order:7, move:'tram' },
+  { area:'mel', icon:'🌳', name:'カールトン庭園・王立展示館', en:['Carlton Gardens, Carlton VIC 3053'], day:'DAY 3 観光（世界遺産）', map:'https://maps.google.com/?q=Carlton+Gardens+Melbourne', web:'https://museumsvictoria.com.au/reb/', x:250, y:86, order:8, move:'walk' },
   // SYDNEY CBD  （viewBox 0 0 300 360、x:西→東 / y:北→南）
   { area:'syd', icon:'🏨', name:'リッジス ワールド スクエア', en:['Rydges World Square — 389 Pitt Street, Sydney'], day:'DAY 4〜6 ホテル', map:'https://maps.google.com/?q=389+Pitt+Street+Sydney', web:'https://www.rydges.com/accommodation/sydney-nsw/world-square/', x:150, y:230, order:1, move:'start' },
   { area:'syd', icon:'🦞', name:"Nick's Seafood Restaurant", en:['The Promenade, Cockle Bay Wharf, Sydney'], day:'DAY 4 ディナー（要予約）', map:'https://maps.google.com/?q=Nicks+Seafood+Restaurant+Cockle+Bay+Wharf+Sydney', web:'https://nicksseafood.com.au/', x:68, y:200, order:2, move:'walk' },
@@ -1498,42 +1498,59 @@ var AREA_BTN   = { mel:'🏙️ メルボルン', syd:'🌉 シドニー', blue:
 var currentArea = 'mel';
 
 // エリアごとの地図ジオメトリ（viewBox + 背景SVG）。ready:false は準備中（STEP3で追加）
+// メルボルンCBD（Hoddleグリッド）。参考実地図に基づく正確配置・北上。
+// 縦通り x: Spencer45 King78 William108 Queen135 Elizabeth162 Swanston192 Russell218 Exhibition245 Spring272
+// 横通り y: LaTrobe148 Lonsdale178 Bourke210 Collins245 FlindersLane270 FlindersSt290
 var MEL_BG =
-  // 公園（カールトン庭園）
-  '<rect class="mp-park" x="226" y="70" width="62" height="52" rx="6"/>' +
-  // ヤラ川
-  '<path class="mp-river" d="M0,302 C60,296 110,313 165,306 C220,300 270,298 300,308 L300,345 L0,345 Z"/>' +
-  // 主要ストリート（横）
-  '<line class="mp-street-main" x1="40" y1="250" x2="285" y2="250"/>' +
-  '<line class="mp-street-main" x1="40" y1="288" x2="285" y2="288"/>' +
-  // ストリート（横・細）
-  '<line class="mp-street" x1="40" y1="150" x2="285" y2="150"/>' +
-  '<line class="mp-street" x1="40" y1="185" x2="285" y2="185"/>' +
-  '<line class="mp-street" x1="40" y1="215" x2="285" y2="215"/>' +
-  '<line class="mp-street" x1="40" y1="272" x2="285" y2="272"/>' +
-  '<line class="mp-street" x1="115" y1="130" x2="285" y2="130"/>' +
-  // ストリート（縦・細）
-  '<line class="mp-street" x1="40"  y1="150" x2="40"  y2="290"/>' +
-  '<line class="mp-street" x1="70"  y1="150" x2="70"  y2="290"/>' +
-  '<line class="mp-street" x1="100" y1="150" x2="100" y2="290"/>' +
-  '<line class="mp-street" x1="128" y1="150" x2="128" y2="290"/>' +
-  '<line class="mp-street" x1="160" y1="150" x2="160" y2="290"/>' +
-  '<line class="mp-street" x1="195" y1="150" x2="195" y2="290"/>' +
-  '<line class="mp-street" x1="225" y1="150" x2="225" y2="290"/>' +
-  '<line class="mp-street" x1="255" y1="150" x2="255" y2="290"/>' +
-  '<line class="mp-street" x1="280" y1="150" x2="280" y2="290"/>' +
-  // 北側への接続路
-  '<line class="mp-street" x1="128" y1="130" x2="128" y2="100"/>' +
-  '<line class="mp-street" x1="250" y1="130" x2="250" y2="100"/>' +
+  // 公園・緑地
+  '<rect class="mp-park" x="222" y="58" width="64" height="56" rx="6"/>' +   // カールトン庭園(北東)
+  '<rect class="mp-park" x="54" y="124" width="42" height="24" rx="5"/>' +    // フラッグスタッフ庭園(西)
+  '<rect class="mp-park" x="252" y="198" width="40" height="66" rx="5"/>' +   // トレジャリー/フィッツロイ庭園(東)
+  // クイーンビクトリアマーケット(北西)の街区
+  '<rect x="118" y="76" width="42" height="30" rx="3" fill="#e7d7af" stroke="#cdb985" stroke-width="0.6"/>' +
+  // ヤラ川(南)＋サウスバンク
+  '<path class="mp-river" d="M0,300 C70,294 130,312 192,304 C242,298 276,300 300,306 L300,344 L0,344 Z"/>' +
+  // 主要ストリート
+  '<line class="mp-street-main" x1="45" y1="245" x2="272" y2="245"/>' +       // Collins
+  '<line class="mp-street-main" x1="45" y1="290" x2="272" y2="290"/>' +       // Flinders
+  '<line class="mp-street-main" x1="192" y1="120" x2="192" y2="298"/>' +      // Swanston
+  '<line class="mp-street-main" x1="162" y1="120" x2="162" y2="290"/>' +      // Elizabeth
+  // 横ストリート(細)
+  '<line class="mp-street" x1="45" y1="148" x2="272" y2="148"/>' +            // La Trobe
+  '<line class="mp-street" x1="45" y1="178" x2="272" y2="178"/>' +            // Lonsdale
+  '<line class="mp-street" x1="45" y1="210" x2="272" y2="210"/>' +            // Bourke
+  '<line class="mp-street" x1="45" y1="270" x2="272" y2="270"/>' +            // Flinders Lane
+  '<line class="mp-street" x1="45" y1="163" x2="272" y2="163" stroke-opacity="0.45"/>' +
+  '<line class="mp-street" x1="45" y1="194" x2="272" y2="194" stroke-opacity="0.45"/>' +
+  '<line class="mp-street" x1="45" y1="228" x2="272" y2="228" stroke-opacity="0.45"/>' +
+  // 縦ストリート(細)
+  '<line class="mp-street" x1="45"  y1="148" x2="45"  y2="290"/>' +
+  '<line class="mp-street" x1="78"  y1="148" x2="78"  y2="290"/>' +
+  '<line class="mp-street" x1="108" y1="148" x2="108" y2="290"/>' +
+  '<line class="mp-street" x1="135" y1="120" x2="135" y2="290"/>' +
+  '<line class="mp-street" x1="218" y1="148" x2="218" y2="290"/>' +
+  '<line class="mp-street" x1="245" y1="120" x2="245" y2="290"/>' +
+  '<line class="mp-street" x1="272" y1="148" x2="272" y2="290"/>' +
+  // Victoria St(北端)＋北側への接続
+  '<line class="mp-street" x1="100" y1="120" x2="286" y2="120"/>' +
+  // ランドマーク(目印)
+  '<rect x="172" y="290" width="28" height="9" rx="2" fill="#d9c8a0" stroke="#b8a575" stroke-width="0.5"/>' + // Flinders St駅
+  '<rect x="205" y="293" width="20" height="9" rx="1" fill="#cfc4ad"/>' +     // Federation Sq
   // ラベル
-  '<text class="mp-label" x="42" y="246">Collins St</text>' +
-  '<text class="mp-label" x="42" y="285">Flinders St</text>' +
-  '<text class="mp-label" x="117" y="126">Victoria St</text>' +
-  '<text class="mp-label" x="162" y="160" transform="rotate(90 162 160)">Elizabeth St</text>' +
-  '<text class="mp-label" x="197" y="160" transform="rotate(90 197 160)">Swanston St</text>' +
-  '<text class="mp-label-water" x="108" y="320">Yarra River</text>' +
-  '<text class="mp-label" x="228" y="64">Carlton Gardens</text>' +
-  '<text class="mp-label" x="96" y="92">QV Market</text>';
+  '<text class="mp-label" x="47" y="243">Collins St</text>' +
+  '<text class="mp-label" x="47" y="288">Flinders St</text>' +
+  '<text class="mp-label" x="47" y="176">Bourke St</text>' +
+  '<text class="mp-label" x="47" y="146">La Trobe St</text>' +
+  '<text class="mp-label" x="164" y="156" transform="rotate(90 164 156)">Elizabeth St</text>' +
+  '<text class="mp-label" x="194" y="156" transform="rotate(90 194 156)">Swanston St</text>' +
+  '<text class="mp-label" x="103" y="116">Victoria St</text>' +
+  '<text class="mp-label" x="206" y="52">Carlton Gdns</text>' +
+  '<text class="mp-label" x="120" y="72">QV Market</text>' +
+  '<text class="mp-label" x="54" y="121">Flagstaff</text>' +
+  '<text class="mp-label" x="250" y="194">Treasury</text>' +
+  '<text class="mp-label-water" x="118" y="322">Yarra River</text>' +
+  '<text class="mp-label" x="120" y="337">Southbank</text>' +
+  '<text class="mp-label" x="14" y="30" font-weight="700">N↑</text>';
 
 var SYD_BG =
   // 港（シドニーハーバー・上端）

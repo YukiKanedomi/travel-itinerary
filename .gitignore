@@ -6,3 +6,10 @@
 
 # JTBレポート（個人情報含む可能性）
 JTB_Australia_Hotels_Report.txt
+
+# 市販地図PDF（著作権：公開リポジトリに含めない）
+melbournestyle-map.pdf
+
+# 一時ファイル
+_*.png
+_*.js
