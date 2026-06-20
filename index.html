@@ -196,18 +196,18 @@
     .area-btn { flex: 1; padding: 9px 6px; border: 1.5px solid var(--border); background: #fff; color: var(--muted); border-radius: 10px; font-size: 12px; font-weight: 700; cursor: pointer; transition: all .15s; }
     .area-btn.active { background: var(--navy); color: #fff; border-color: var(--navy); }
     .area-btn:active { transform: scale(.96); }
-    #area-map-wrap { position: relative; background: #eef3ee; border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; margin-bottom: 10px; }
+    #area-map-wrap { position: relative; background: #e9e3d6; border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; margin-bottom: 10px; }
     #area-map { display: block; width: 100%; }
     #area-map svg { display: block; width: 100%; height: auto; touch-action: pan-y; }
     .map-hint { font-size: 10px; color: var(--muted); text-align: center; margin: -2px 0 10px; opacity: .8; }
-    .mp-street { stroke: #c9d2cb; stroke-width: 2; fill: none; }
-    .mp-street-main { stroke: #b3bdb5; stroke-width: 3.5; fill: none; }
-    .mp-river { fill: #a9d3e6; }
-    .mp-park { fill: #cde8c8; }
-    .mp-label { fill: #8a968c; font-size: 8px; font-weight: 600; font-family: sans-serif; }
+    .mp-street { stroke: #fbf9f4; stroke-width: 2.2; fill: none; stroke-linecap: round; }
+    .mp-street-main { stroke: #ffffff; stroke-width: 4.5; fill: none; stroke-linecap: round; }
+    .mp-river { fill: url(#mpWater); }
+    .mp-park { fill: url(#mpPark); }
+    .mp-label { fill: #7d756a; font-size: 8px; font-weight: 700; font-family: sans-serif; }
     .mp-label-water { fill: #5b95b0; font-size: 8.5px; font-style: italic; font-family: sans-serif; }
     .mp-pin { cursor: pointer; }
-    .mp-pin-bg { fill: #fff; stroke: var(--navy); stroke-width: 2; transition: stroke .15s; }
+    .mp-pin-bg { fill: #fff; stroke: var(--navy); stroke-width: 2; transition: stroke .15s; filter: drop-shadow(0 1px 1.5px rgba(0,0,0,.3)); }
     .mp-pin-emoji { font-size: 14px; text-anchor: middle; dominant-baseline: central; pointer-events: none; }
     .mp-pin-badge { fill: var(--navy); stroke: #fff; stroke-width: 1.4; pointer-events: none; }
     .mp-pin-num { fill: #fff; font-size: 8px; font-weight: 800; font-family: sans-serif; text-anchor: middle; dominant-baseline: central; pointer-events: none; }
@@ -1697,8 +1697,14 @@ function renderAreaMap() {
     ? '<image href="' + escapeAttr(geo.img) + '" x="0" y="0" width="' + vb[2] + '" height="' + vb[3] +
       '" preserveAspectRatio="xMidYMid slice"/>'
     : geo.bg;
+  var defs = '<defs>' +
+      '<linearGradient id="mpWater" x1="0" y1="0" x2="0" y2="1">' +
+        '<stop offset="0" stop-color="#c3e2ee"/><stop offset="1" stop-color="#a1cee0"/></linearGradient>' +
+      '<linearGradient id="mpPark" x1="0" y1="0" x2="0" y2="1">' +
+        '<stop offset="0" stop-color="#d7ecca"/><stop offset="1" stop-color="#bfdcb0"/></linearGradient>' +
+    '</defs>';
   host.innerHTML = '<svg viewBox="' + geo.viewBox + '" xmlns="http://www.w3.org/2000/svg">' +
-                   background + pins + '</svg>';
+                   defs + background + pins + '</svg>';
   host.querySelectorAll('.mp-pin').forEach(function(g){
     g.addEventListener('click', function(e){
       e.stopPropagation();
