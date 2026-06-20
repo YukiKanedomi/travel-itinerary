@@ -1580,8 +1580,11 @@ var BLUE_BG =
   '<text class="mp-label" x="74" y="58">Blue Mountains NP</text>' +
   '<text class="mp-label" x="78" y="220">Three Sisters</text>';
 
+// 各エリア: ready=表示可否, viewBox=座標系, bg=手描き模式図（フォールバック）,
+//   img=背景画像パス（assets/...）。img を設定すると bg より優先され画像背景になる。
+//   ※画像はジオメトリ不正確なAIイラストの場合、ピンの x/y を画像に合わせて要調整。
 var MAP_GEO = {
-  mel:  { ready:true, viewBox:'0 0 300 360', bg: MEL_BG },
+  mel:  { ready:true, viewBox:'0 0 300 360', bg: MEL_BG  /*, img:'assets/map-mel.png' */ },
   syd:  { ready:true, viewBox:'0 0 300 360', bg: SYD_BG },
   blue: { ready:true, viewBox:'0 0 300 240', bg: BLUE_BG }
 };
@@ -1664,8 +1667,14 @@ function renderAreaMap() {
     pins += '<g class="mp-pin" data-i="' + gi + '"><circle cx="' + s.x + '" cy="' + s.y +
             '" r="12"/><text x="' + s.x + '" y="' + s.y + '">' + s.order + '</text></g>';
   });
+  // 背景：画像（geo.img）があれば優先、なければ手描き模式図（geo.bg）にフォールバック
+  var vb = geo.viewBox.split(/\s+/);
+  var background = geo.img
+    ? '<image href="' + escapeAttr(geo.img) + '" x="0" y="0" width="' + vb[2] + '" height="' + vb[3] +
+      '" preserveAspectRatio="xMidYMid slice"/>'
+    : geo.bg;
   host.innerHTML = '<svg viewBox="' + geo.viewBox + '" xmlns="http://www.w3.org/2000/svg">' +
-                   geo.bg + routes + pins + '</svg>';
+                   background + routes + pins + '</svg>';
   host.querySelectorAll('.mp-pin').forEach(function(g){
     g.addEventListener('click', function(e){
       e.stopPropagation();
