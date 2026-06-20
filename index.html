@@ -1221,7 +1221,7 @@ function closeSheet() {
 
 var currentTabIdx = 0;
 
-function show(id, idx) {
+function show(id, idx, noScroll) {
   var pane = document.getElementById(id);
   var goLeft = idx < currentTabIdx;
   document.querySelectorAll('.pane').forEach(function(el){ el.classList.remove('active','dir-left'); });
@@ -1234,7 +1234,13 @@ function show(id, idx) {
     tabs[idx].classList.add('active');
     tabs[idx].scrollIntoView({ behavior:'smooth', block:'nearest', inline:'center' });
   }
-  window.scrollTo({ top:0, behavior:'smooth' });
+  // ヒーロー上端ではなく「タブバー＝コンテンツ先頭」までスクロール（初回ロードは除く）
+  if (!noScroll) {
+    var tw = document.querySelector('.tabs-wrap');
+    var top = 0, el = tw;
+    while (el) { top += el.offsetTop; el = el.offsetParent; }
+    window.scrollTo({ top: top, behavior:'smooth' });
+  }
   initNowNext();
 }
 
@@ -1474,12 +1480,12 @@ function autoSelectTab() {
   var n = new Date();
   var today = new Date(n.getFullYear(), n.getMonth(), n.getDate());
   if (today < TRIP_START) {
-    show('info', 7);
+    show('info', 7, true);
   } else if (today > TRIP_END) {
-    show('day7', 6);
+    show('day7', 6, true);
   } else {
     var idx = Math.round((today - TRIP_START) / 86400000);
-    show(DAY_PANES[idx], idx);
+    show(DAY_PANES[idx], idx, true);
   }
 }
 
