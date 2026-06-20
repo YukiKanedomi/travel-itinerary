@@ -191,6 +191,47 @@
     .web-go:hover { background: var(--green); color: #fff; }
     body.edit-mode .map-go, body.edit-mode .web-go { pointer-events: none; opacity: .4; }
 
+    /* SCHEMATIC MAP */
+    .area-switch { display: flex; gap: 6px; margin-bottom: 12px; }
+    .area-btn { flex: 1; padding: 9px 6px; border: 1.5px solid var(--border); background: #fff; color: var(--muted); border-radius: 10px; font-size: 12px; font-weight: 700; cursor: pointer; transition: all .15s; }
+    .area-btn.active { background: var(--navy); color: #fff; border-color: var(--navy); }
+    .area-btn:active { transform: scale(.96); }
+    #area-map-wrap { position: relative; background: #eef3ee; border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; margin-bottom: 10px; }
+    #area-map { display: block; width: 100%; }
+    #area-map svg { display: block; width: 100%; height: auto; }
+    .mp-street { stroke: #c9d2cb; stroke-width: 2; fill: none; }
+    .mp-street-main { stroke: #b3bdb5; stroke-width: 3.5; fill: none; }
+    .mp-river { fill: #a9d3e6; }
+    .mp-park { fill: #cde8c8; }
+    .mp-label { fill: #8a968c; font-size: 8px; font-weight: 600; font-family: sans-serif; }
+    .mp-label-water { fill: #5b95b0; font-size: 8.5px; font-style: italic; font-family: sans-serif; }
+    .mp-route { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+    .mp-route.walk { stroke: #8e6fb0; stroke-width: 2.4; stroke-dasharray: 1 5; }
+    .mp-route.tram { stroke: var(--blue); stroke-width: 2.6; }
+    .mp-route.car  { stroke: var(--orange); stroke-width: 2.6; }
+    .mp-pin { cursor: pointer; }
+    .mp-pin circle { fill: var(--navy); stroke: #fff; stroke-width: 2; transition: fill .15s; }
+    .mp-pin text { fill: #fff; font-size: 11px; font-weight: 800; font-family: sans-serif; text-anchor: middle; dominant-baseline: central; pointer-events: none; }
+    .mp-pin.sel circle { fill: var(--gold); }
+    .mp-pin:active circle { fill: var(--blue); }
+    .map-legend { display: flex; flex-wrap: wrap; gap: 12px; padding: 8px 4px 0; font-size: 11px; color: var(--muted); }
+    .map-legend span { display: inline-flex; align-items: center; gap: 5px; }
+    .lg-line { width: 18px; height: 0; border-top-width: 2.5px; border-top-style: solid; display: inline-block; }
+    .lg-walk { border-top-style: dotted; border-top-width: 3px; border-color: #8e6fb0; }
+    .lg-tram { border-color: var(--blue); }
+    .lg-car  { border-color: var(--orange); }
+    .map-popup { position: absolute; z-index: 5; background: #fff; border-radius: 12px; box-shadow: 0 6px 24px rgba(0,0,0,.22); padding: 12px 14px; width: 220px; max-width: 80%; border: 1px solid var(--border); }
+    .map-popup .mpop-close { position: absolute; top: 6px; right: 8px; border: none; background: none; font-size: 16px; color: var(--muted); cursor: pointer; line-height: 1; padding: 2px 4px; }
+    .map-popup .mpop-name { font-size: 14px; font-weight: 800; padding-right: 18px; line-height: 1.3; }
+    .map-popup .mpop-en { font-size: 10px; color: var(--muted); margin-top: 2px; }
+    .map-popup .mpop-day { display: inline-block; font-size: 9px; font-weight: 700; background: var(--blue-light); color: var(--blue); padding: 2px 8px; border-radius: 10px; margin-top: 7px; }
+    .map-popup .mpop-actions { display: flex; gap: 8px; margin-top: 10px; }
+    .map-popup .mpop-actions a { display: inline-flex; align-items: center; gap: 4px; text-decoration: none; padding: 6px 12px; border-radius: 9px; font-size: 12px; font-weight: 700; }
+    .mpop-map { background: var(--blue-light); color: var(--blue); }
+    .mpop-web { background: var(--green-light); color: var(--green); }
+    .map-list-toggle { width: 100%; padding: 11px; background: #fff; border: 1.5px solid var(--border); border-radius: 10px; font-size: 13px; font-weight: 700; color: var(--navy); cursor: pointer; transition: background .15s; margin-bottom: 10px; }
+    .map-list-toggle:active { transform: scale(.99); }
+
     /* EDIT MODE */
     body.edit-mode .editable { outline: 2px dashed #f9a825 !important; border-radius: 4px; background: #fffde7 !important; cursor: text; min-width: 20px; }
     body.edit-mode .editable:focus { outline: 2px solid var(--navy) !important; background: #fff !important; }
@@ -410,7 +451,6 @@
     <button class="tab" onclick="show('info',7)"><span class="dn" style="font-size:16px">📋</span><span class="dl">基本情報</span></button>
     <button class="tab" onclick="show('map',8)"><span class="dn" style="font-size:16px">🗺️</span><span class="dl">MAP</span></button>
   </div>
-  <div class="edit-banner">✏️ 編集モード中 — フィールドをタップして変更できます</div>
 </div>
 
 <main class="content">
@@ -966,324 +1006,26 @@
 <div id="map" class="pane">
   <div class="day-hd">
     <div class="day-circle" style="background:linear-gradient(135deg,#0277bd,#0288d1)"><span style="font-size:22px;line-height:1">🗺️</span></div>
-    <div><h2>全スポット まとめ</h2><p>🗺️ Google マップ &nbsp;／&nbsp; 🌐 公式サイト</p></div>
+    <div><h2>エリアマップ</h2><p>ピンをタップで詳細 &nbsp;／&nbsp; 順路を線で表示</p></div>
   </div>
 
-  <!-- MELBOURNE -->
-  <div class="map-city-hd">🏙️ Melbourne &nbsp;<span style="font-weight:400;opacity:.8;font-size:12px">DAY 2〜3 &nbsp;|&nbsp; 9月21日・22日</span></div>
+  <!-- エリア切り替えボタン（renderAreaSwitch で生成） -->
+  <div id="area-switch" class="area-switch"></div>
 
-  <div class="map-item">
-    <span class="map-ico">🏨</span>
-    <div class="map-body">
-      <div class="map-name">IC メルボルン ザ リアルト</div>
-      <div class="map-en">InterContinental Melbourne The Rialto</div>
-      <div class="map-en">495 Collins Street, Melbourne VIC 3000</div>
-      <span class="map-day-tag">DAY 2・3 ホテル</span>
-    </div>
-    <div class="map-actions">
-      <a href="https://maps.google.com/?q=495+Collins+Street+Melbourne" class="map-go" target="_blank" rel="noopener">🗺️</a>
-      <a href="https://www.ihg.com/intercontinental/hotels/gb/en/melbourne/melha/hoteldetail" class="web-go" target="_blank" rel="noopener">🌐</a>
-    </div>
+  <!-- スキーマティック地図（renderAreaMap で生成）＋ ポップアップ -->
+  <div id="area-map-wrap">
+    <div id="area-map"></div>
+    <div id="map-popup" class="map-popup" hidden></div>
   </div>
+  <div id="map-legend" class="map-legend"></div>
 
-  <div class="map-item">
-    <span class="map-ico">☕</span>
-    <div class="map-body">
-      <div class="map-name">Lune Croissanterie CBD</div>
-      <div class="map-en">Flinders Lane, Melbourne VIC 3000</div>
-      <span class="map-day-tag">DAY 2 朝食</span>
-    </div>
-    <div class="map-actions">
-      <a href="https://maps.google.com/?q=Lune+Croissanterie+CBD+Melbourne" class="map-go" target="_blank" rel="noopener">🗺️</a>
-      <a href="https://www.lunecroissanterie.com/" class="web-go" target="_blank" rel="noopener">🌐</a>
-    </div>
-  </div>
-
-  <div class="map-item">
-    <span class="map-ico">🎨</span>
-    <div class="map-body">
-      <div class="map-name">ホージア・レーン</div>
-      <div class="map-en">Hosier Lane, Melbourne VIC 3000</div>
-      <span class="map-day-tag">DAY 2 観光（無料）</span>
-    </div>
-    <div class="map-actions">
-      <a href="https://maps.google.com/?q=Hosier+Lane+Melbourne" class="map-go" target="_blank" rel="noopener">🗺️</a>
-    </div>
-  </div>
-
-  <div class="map-item">
-    <span class="map-ico">🏛️</span>
-    <div class="map-body">
-      <div class="map-name">ブロック・アーケード</div>
-      <div class="map-en">Block Arcade — 282 Collins Street, Melbourne</div>
-      <span class="map-day-tag">DAY 2 観光</span>
-    </div>
-    <div class="map-actions">
-      <a href="https://maps.google.com/?q=Block+Arcade+Melbourne" class="map-go" target="_blank" rel="noopener">🗺️</a>
-      <a href="https://www.theblockarcade.com.au/" class="web-go" target="_blank" rel="noopener">🌐</a>
-    </div>
-  </div>
-
-  <div class="map-item">
-    <span class="map-ico">🍝</span>
-    <div class="map-body">
-      <div class="map-name">Il Solito Posto</div>
-      <div class="map-en">113 Collins Street（地下）, Melbourne</div>
-      <span class="map-day-tag">DAY 2 ランチ</span>
-    </div>
-    <div class="map-actions">
-      <a href="https://maps.google.com/?q=Il+Solito+Posto+Melbourne" class="map-go" target="_blank" rel="noopener">🗺️</a>
-      <a href="https://ilsolitoposto.com.au/" class="web-go" target="_blank" rel="noopener">🌐</a>
-    </div>
-  </div>
-
-  <div class="map-item">
-    <span class="map-ico">🍱</span>
-    <div class="map-body">
-      <div class="map-name">Supernormal</div>
-      <div class="map-en">180 Flinders Lane, Melbourne VIC 3000</div>
-      <span class="map-day-tag">DAY 2 ディナー（要予約）</span>
-    </div>
-    <div class="map-actions">
-      <a href="https://maps.google.com/?q=Supernormal+180+Flinders+Lane+Melbourne" class="map-go" target="_blank" rel="noopener">🗺️</a>
-      <a href="https://supernormal.net.au/" class="web-go" target="_blank" rel="noopener">🌐</a>
-    </div>
-  </div>
-
-  <div class="map-item">
-    <span class="map-ico">🛒</span>
-    <div class="map-body">
-      <div class="map-name">クイーンビクトリアマーケット</div>
-      <div class="map-en">Queen Victoria Market — Queen St & Victoria St</div>
-      <span class="map-day-tag">DAY 3 観光（火曜営業）</span>
-    </div>
-    <div class="map-actions">
-      <a href="https://maps.google.com/?q=Queen+Victoria+Market+Melbourne" class="map-go" target="_blank" rel="noopener">🗺️</a>
-      <a href="https://qvm.com.au/" class="web-go" target="_blank" rel="noopener">🌐</a>
-    </div>
-  </div>
-
-  <div class="map-item">
-    <span class="map-ico">🌳</span>
-    <div class="map-body">
-      <div class="map-name">カールトン庭園・王立展示館</div>
-      <div class="map-en">Carlton Gardens, Carlton VIC 3053</div>
-      <span class="map-day-tag">DAY 3 観光（世界遺産）</span>
-    </div>
-    <div class="map-actions">
-      <a href="https://maps.google.com/?q=Carlton+Gardens+Melbourne" class="map-go" target="_blank" rel="noopener">🗺️</a>
-      <a href="https://museumsvictoria.com.au/reb/" class="web-go" target="_blank" rel="noopener">🌐</a>
-    </div>
-  </div>
-
-  <!-- SYDNEY -->
-  <div class="map-city-hd" style="margin-top:8px">🌉 Sydney &nbsp;<span style="font-weight:400;opacity:.8;font-size:12px">DAY 4〜7 &nbsp;|&nbsp; 9月23日〜26日</span></div>
-
-  <div class="map-item">
-    <span class="map-ico">🏨</span>
-    <div class="map-body">
-      <div class="map-name">リッジス ワールド スクエア</div>
-      <div class="map-en">Rydges World Square — 389 Pitt Street, Sydney</div>
-      <span class="map-day-tag">DAY 4〜6 ホテル</span>
-    </div>
-    <div class="map-actions">
-      <a href="https://maps.google.com/?q=389+Pitt+Street+Sydney" class="map-go" target="_blank" rel="noopener">🗺️</a>
-      <a href="https://www.rydges.com/accommodation/sydney-nsw/world-square/" class="web-go" target="_blank" rel="noopener">🌐</a>
-    </div>
-  </div>
-
-  <div class="map-item">
-    <span class="map-ico">🦞</span>
-    <div class="map-body">
-      <div class="map-name">Nick's Seafood Restaurant</div>
-      <div class="map-en">The Promenade, Cockle Bay Wharf, Sydney</div>
-      <span class="map-day-tag">DAY 4 ディナー（要予約）</span>
-    </div>
-    <div class="map-actions">
-      <a href="https://maps.google.com/?q=Nicks+Seafood+Restaurant+Cockle+Bay+Wharf+Sydney" class="map-go" target="_blank" rel="noopener">🗺️</a>
-      <a href="https://nicksseafood.com.au/" class="web-go" target="_blank" rel="noopener">🌐</a>
-    </div>
-  </div>
-
-  <div class="map-item">
-    <span class="map-ico">🏨</span>
-    <div class="map-body">
-      <div class="map-name">ヒルトン シドニー（ツアー集合場所）</div>
-      <div class="map-en">Hilton Sydney — 488 George Street, Sydney NSW 2000</div>
-      <span class="map-day-tag">DAY 5 集合 8:25（5分前厳守）</span>
-    </div>
-    <div class="map-actions">
-      <a href="https://maps.google.com/?q=Hilton+Sydney+488+George+Street" class="map-go" target="_blank" rel="noopener">🗺️</a>
-    </div>
-  </div>
-
-  <div class="map-item">
-    <span class="map-ico">🦘</span>
-    <div class="map-body">
-      <div class="map-name">フェザーデール動物園</div>
-      <div class="map-en">Featherdale Wildlife Park — 217 Kildare Rd, Doonside</div>
-      <span class="map-day-tag">DAY 5 ツアー</span>
-    </div>
-    <div class="map-actions">
-      <a href="https://maps.google.com/?q=Featherdale+Wildlife+Park+Doonside" class="map-go" target="_blank" rel="noopener">🗺️</a>
-      <a href="https://www.featherdale.com.au/" class="web-go" target="_blank" rel="noopener">🌐</a>
-    </div>
-  </div>
-
-  <div class="map-item">
-    <span class="map-ico">🚡</span>
-    <div class="map-body">
-      <div class="map-name">シーニックワールド</div>
-      <div class="map-en">Scenic World — Cliff Drive, Katoomba NSW 2780</div>
-      <span class="map-day-tag">DAY 5 ツアー</span>
-    </div>
-    <div class="map-actions">
-      <a href="https://maps.google.com/?q=Scenic+World+Katoomba" class="map-go" target="_blank" rel="noopener">🗺️</a>
-      <a href="https://www.scenicworld.com.au/" class="web-go" target="_blank" rel="noopener">🌐</a>
-    </div>
-  </div>
-
-  <div class="map-item">
-    <span class="map-ico">🪨</span>
-    <div class="map-body">
-      <div class="map-name">エコーポイント展望台</div>
-      <div class="map-en">Echo Point Lookout — Katoomba NSW 2780</div>
-      <span class="map-day-tag">DAY 5 ツアー</span>
-    </div>
-    <div class="map-actions">
-      <a href="https://maps.google.com/?q=Echo+Point+Lookout+Katoomba" class="map-go" target="_blank" rel="noopener">🗺️</a>
-    </div>
-  </div>
-
-  <div class="map-item">
-    <span class="map-ico">🏘️</span>
-    <div class="map-body">
-      <div class="map-name">ルーラ</div>
-      <div class="map-en">Leura Mall, Leura NSW 2780</div>
-      <span class="map-day-tag">DAY 5 ツアー</span>
-    </div>
-    <div class="map-actions">
-      <a href="https://maps.google.com/?q=Leura+Mall+NSW" class="map-go" target="_blank" rel="noopener">🗺️</a>
-    </div>
-  </div>
-
-  <div class="map-item">
-    <span class="map-ico">☕</span>
-    <div class="map-body">
-      <div class="map-name">The Grounds of the City</div>
-      <div class="map-en">500 George Street, Sydney NSW 2000</div>
-      <span class="map-day-tag">DAY 6 朝食</span>
-    </div>
-    <div class="map-actions">
-      <a href="https://maps.google.com/?q=The+Grounds+of+the+City+Sydney" class="map-go" target="_blank" rel="noopener">🗺️</a>
-      <a href="https://thegrounds.com.au/" class="web-go" target="_blank" rel="noopener">🌐</a>
-    </div>
-  </div>
-
-  <div class="map-item">
-    <span class="map-ico">🌺</span>
-    <div class="map-body">
-      <div class="map-name">ロイヤルボタニカルガーデン</div>
-      <div class="map-en">Royal Botanic Garden — Mrs Macquaries Rd, Sydney</div>
-      <span class="map-day-tag">DAY 6 観光（無料）</span>
-    </div>
-    <div class="map-actions">
-      <a href="https://maps.google.com/?q=Royal+Botanic+Garden+Sydney" class="map-go" target="_blank" rel="noopener">🗺️</a>
-      <a href="https://www.rbgsyd.nsw.gov.au/" class="web-go" target="_blank" rel="noopener">🌐</a>
-    </div>
-  </div>
-
-  <div class="map-item">
-    <span class="map-ico">📸</span>
-    <div class="map-body">
-      <div class="map-name">ミセス・マッコリーズ・ポイント</div>
-      <div class="map-en">Mrs Macquaries Point, Sydney NSW 2000</div>
-      <span class="map-day-tag">DAY 6 絶景フォト（無料）</span>
-    </div>
-    <div class="map-actions">
-      <a href="https://maps.google.com/?q=Mrs+Macquaries+Point+Sydney" class="map-go" target="_blank" rel="noopener">🗺️</a>
-    </div>
-  </div>
-
-  <div class="map-item">
-    <span class="map-ico">🧱</span>
-    <div class="map-body">
-      <div class="map-name">ロックス地区</div>
-      <div class="map-en">The Rocks, Sydney NSW 2000</div>
-      <span class="map-day-tag">DAY 6 観光</span>
-    </div>
-    <div class="map-actions">
-      <a href="https://maps.google.com/?q=The+Rocks+Sydney" class="map-go" target="_blank" rel="noopener">🗺️</a>
-      <a href="https://www.therocks.com/" class="web-go" target="_blank" rel="noopener">🌐</a>
-    </div>
-  </div>
-
-  <div class="map-item">
-    <span class="map-ico">🍺</span>
-    <div class="map-body">
-      <div class="map-name">The Glenmore Hotel</div>
-      <div class="map-en">96 Cumberland Street, The Rocks NSW 2000</div>
-      <span class="map-day-tag">DAY 6 ランチ</span>
-    </div>
-    <div class="map-actions">
-      <a href="https://maps.google.com/?q=The+Glenmore+Hotel+The+Rocks+Sydney" class="map-go" target="_blank" rel="noopener">🗺️</a>
-      <a href="https://www.theglenmore.com.au/" class="web-go" target="_blank" rel="noopener">🌐</a>
-    </div>
-  </div>
-
-  <div class="map-item">
-    <span class="map-ico">🛍️</span>
-    <div class="map-body">
-      <div class="map-name">クイーンビクトリアビルディング（QVB）</div>
-      <div class="map-en">455 George Street, Sydney NSW 2000</div>
-      <span class="map-day-tag">DAY 6 ショッピング</span>
-    </div>
-    <div class="map-actions">
-      <a href="https://maps.google.com/?q=Queen+Victoria+Building+Sydney" class="map-go" target="_blank" rel="noopener">🗺️</a>
-      <a href="https://www.qvb.com.au/" class="web-go" target="_blank" rel="noopener">🌐</a>
-    </div>
-  </div>
-
-  <div class="map-item">
-    <span class="map-ico">🎭</span>
-    <div class="map-body">
-      <div class="map-name">Bennelong</div>
-      <div class="map-en">Sydney Opera House, Bennelong Point, Sydney</div>
-      <span class="map-day-tag">DAY 6 ディナー（要予約）</span>
-    </div>
-    <div class="map-actions">
-      <a href="https://maps.google.com/?q=Bennelong+Sydney+Opera+House" class="map-go" target="_blank" rel="noopener">🗺️</a>
-      <a href="https://www.bennelong.com.au/" class="web-go" target="_blank" rel="noopener">🌐</a>
-    </div>
-  </div>
-
-  <div class="map-item">
-    <span class="map-ico">✈️</span>
-    <div class="map-body">
-      <div class="map-name">シドニー空港 第1ターミナル</div>
-      <div class="map-en">Sydney Airport T1 International, Mascot NSW 2020</div>
-      <span class="map-day-tag">DAY 7 出発</span>
-    </div>
-    <div class="map-actions">
-      <a href="https://maps.google.com/?q=Sydney+Airport+Terminal+1+International" class="map-go" target="_blank" rel="noopener">🗺️</a>
-      <a href="https://www.sydneyairport.com.au/" class="web-go" target="_blank" rel="noopener">🌐</a>
-    </div>
-  </div>
-
+  <!-- 折りたたみリスト（renderMapList で生成） -->
+  <button id="map-list-toggle" class="map-list-toggle" onclick="toggleMapList()">📋 一覧で見る</button>
+  <div id="map-list" hidden></div>
 </div>
-
 </main>
 
 <footer><p>🦘 オーストラリア旅行しおり 2026 &nbsp;|&nbsp; ✈️ Have a wonderful journey!</p></footer>
-
-<button id="edit-fab" onclick="toggleEdit()" title="編集モード">✏️</button>
-
-<div id="edit-bar">
-  <span class="eb-label">✏️ 編集モード中</span>
-  <button class="btn-reset"  onclick="resetData()">🔄 リセット</button>
-  <button class="btn-cancel" onclick="cancelEdit()">✕ キャンセル</button>
-  <button class="btn-save"   onclick="saveEdits()">💾 保存</button>
-</div>
 
 <div id="toast"></div>
 
@@ -1492,138 +1234,8 @@ function show(id, idx) {
     tabs[idx].classList.add('active');
     tabs[idx].scrollIntoView({ behavior:'smooth', block:'nearest', inline:'center' });
   }
-  if (!editing) window.scrollTo({ top:0, behavior:'smooth' });
+  window.scrollTo({ top:0, behavior:'smooth' });
   initNowNext();
-}
-
-var editing = false;
-var backup  = [];
-
-function toggleEdit() { if (editing) cancelEdit(); else startEdit(); }
-
-function startEdit() {
-  editing = true;
-  backup = getState();
-  document.body.classList.add('edit-mode');
-  document.getElementById('edit-fab').textContent = '✕';
-  document.querySelectorAll('.editable').forEach(function(el){ el.contentEditable = 'true'; });
-  addEditControls();
-}
-
-function saveEdits() {
-  editing = false;
-  removeEditControls();
-  document.querySelectorAll('.editable').forEach(function(el){ el.contentEditable = 'false'; });
-  document.body.classList.remove('edit-mode');
-  document.getElementById('edit-fab').textContent = '✏️';
-  localStorage.setItem('itinerary_v2', JSON.stringify(getState()));
-  backup = [];
-  toast('保存しました ✓');
-}
-
-function cancelEdit() {
-  editing = false;
-  removeEditControls();
-  setState(backup);
-  document.querySelectorAll('.editable').forEach(function(el){ el.contentEditable = 'false'; });
-  document.body.classList.remove('edit-mode');
-  document.getElementById('edit-fab').textContent = '✏️';
-  backup = [];
-}
-
-function resetData() {
-  if (!confirm('すべての編集内容を初期状態に戻しますか？')) return;
-  localStorage.removeItem('itinerary_v2');
-  location.reload();
-}
-
-// State = innerHTML of each pane (preserves added/removed items)
-function getState() {
-  return Array.from(document.querySelectorAll('.pane')).map(function(p){ return p.innerHTML; });
-}
-
-function setState(data) {
-  var panes = document.querySelectorAll('.pane');
-  panes.forEach(function(pane, i){
-    if (data[i] !== undefined) pane.innerHTML = data[i];
-  });
-  applyChecklistState();
-  initDayHighlights();
-  initDayBanners();
-  initNowNext();
-}
-
-// ─── Edit controls (add / remove buttons) ─────────────────────────────────
-
-function addEditControls() {
-  // Timeline: × on each item, ＋ at bottom
-  document.querySelectorAll('.timeline').forEach(function(tl) {
-    tl.querySelectorAll('.tl-item').forEach(function(item) {
-      var box = item.querySelector('.tl-box');
-      if (box && !box.querySelector('.rm-item-btn')) {
-        box.prepend(makeRmBtn(function(){ item.remove(); }));
-      }
-    });
-    if (!tl.querySelector('.add-item-btn')) {
-      tl.appendChild(makeAddBtn('＋ スケジュール項目を追加', function(){ addTlItem(tl); }));
-    }
-  });
-  // Tip lists: × on each item, ＋ at bottom of each containing card/section
-  var tipContainers = new Set();
-  document.querySelectorAll('.tip-item').forEach(function(item) {
-    if (!item.querySelector('.rm-item-btn')) {
-      item.appendChild(makeRmBtn(function(){ item.remove(); }));
-    }
-    if (item.parentElement) tipContainers.add(item.parentElement);
-  });
-  tipContainers.forEach(function(container) {
-    if (!container.querySelector('.add-item-btn')) {
-      container.appendChild(makeAddBtn('＋ 項目を追加', function(){ addTipItem(container); }));
-    }
-  });
-}
-
-function removeEditControls() {
-  document.querySelectorAll('.rm-item-btn, .add-item-btn').forEach(function(el){ el.remove(); });
-}
-
-function makeRmBtn(onRemove) {
-  var btn = document.createElement('button');
-  btn.className = 'rm-item-btn';
-  btn.textContent = '× 削除';
-  btn.onclick = function(e){ e.preventDefault(); if (confirm('この項目を削除しますか？')) onRemove(); };
-  return btn;
-}
-
-function makeAddBtn(label, onClick) {
-  var btn = document.createElement('button');
-  btn.className = 'add-item-btn';
-  btn.textContent = label;
-  btn.onclick = onClick;
-  return btn;
-}
-
-function addTlItem(timeline) {
-  var item = document.createElement('div');
-  item.className = 'tl-item';
-  item.innerHTML =
-    '<div class="tl-time editable" contenteditable="true">時間</div>' +
-    '<div class="tl-box">' +
-      '<div class="tl-head editable" contenteditable="true">タイトル</div>' +
-      '<div class="tl-desc editable" contenteditable="true">詳細を入力...</div>' +
-    '</div>';
-  item.querySelector('.tl-box').prepend(makeRmBtn(function(){ item.remove(); }));
-  timeline.querySelector('.add-item-btn').before(item);
-  item.querySelector('.tl-time').focus();
-}
-
-function addTipItem(container) {
-  var item = document.createElement('div');
-  item.className = 'tip-item';
-  item.innerHTML = '<span class="tip-text editable" contenteditable="true">テキストを入力...</span>';
-  item.appendChild(makeRmBtn(function(){ item.remove(); }));
-  container.querySelector('.add-item-btn').before(item);
-  item.querySelector('.tip-text').focus();
 }
 
 // ─── Day Chips ─────────────────────────────────────────────────────────────
@@ -1737,7 +1349,6 @@ function initDayHighlights() {
 
 // ─── Checklist ─────────────────────────────────────────────────────────────
 document.addEventListener('click', function(e) {
-  if (document.body.classList.contains('edit-mode')) return;
   var item = e.target.closest ? e.target.closest('#packing-card .cl-item') : null;
   if (!item) return;
   item.classList.toggle('checked');
@@ -1850,10 +1461,278 @@ function autoSelectTab() {
   }
 }
 
+// ─── Spots data (single source for map pins + list) ─────────────────────────
+// area: 'mel' | 'syd'  |  en: 住所/英名（複数行可・配列）  |  map/web: リンク（webは省略可）
+// x/y/order/move は今後の地図描画ステップで使用（STEP1では未使用）
+var SPOTS = [
+  // MELBOURNE  （x:西→東 / y:北→南、order=訪問順、move=直前からの移動手段）
+  { area:'mel', icon:'🏨', name:'IC メルボルン ザ リアルト', en:['InterContinental Melbourne The Rialto','495 Collins Street, Melbourne VIC 3000'], day:'DAY 2・3 ホテル', map:'https://maps.google.com/?q=495+Collins+Street+Melbourne', web:'https://www.ihg.com/intercontinental/hotels/gb/en/melbourne/melha/hoteldetail', x:80, y:252, order:1, move:'start' },
+  { area:'mel', icon:'☕', name:'Lune Croissanterie CBD', en:['Flinders Lane, Melbourne VIC 3000'], day:'DAY 2 朝食', map:'https://maps.google.com/?q=Lune+Croissanterie+CBD+Melbourne', web:'https://www.lunecroissanterie.com/', x:210, y:254, order:2, move:'walk' },
+  { area:'mel', icon:'🎨', name:'ホージア・レーン', en:['Hosier Lane, Melbourne VIC 3000'], day:'DAY 2 観光（無料）', map:'https://maps.google.com/?q=Hosier+Lane+Melbourne', x:185, y:278, order:3, move:'walk' },
+  { area:'mel', icon:'🏛️', name:'ブロック・アーケード', en:['Block Arcade — 282 Collins Street, Melbourne'], day:'DAY 2 観光', map:'https://maps.google.com/?q=Block+Arcade+Melbourne', web:'https://www.theblockarcade.com.au/', x:158, y:248, order:4, move:'walk' },
+  { area:'mel', icon:'🍝', name:'Il Solito Posto', en:['113 Collins Street（地下）, Melbourne'], day:'DAY 2 ランチ', map:'https://maps.google.com/?q=Il+Solito+Posto+Melbourne', web:'https://ilsolitoposto.com.au/', x:258, y:246, order:5, move:'walk' },
+  { area:'mel', icon:'🍱', name:'Supernormal', en:['180 Flinders Lane, Melbourne VIC 3000'], day:'DAY 2 ディナー（要予約）', map:'https://maps.google.com/?q=Supernormal+180+Flinders+Lane+Melbourne', web:'https://supernormal.net.au/', x:222, y:272, order:6, move:'walk' },
+  { area:'mel', icon:'🛒', name:'クイーンビクトリアマーケット', en:['Queen Victoria Market — Queen St & Victoria St'], day:'DAY 3 観光（火曜営業）', map:'https://maps.google.com/?q=Queen+Victoria+Market+Melbourne', web:'https://qvm.com.au/', x:125, y:105, order:7, move:'tram' },
+  { area:'mel', icon:'🌳', name:'カールトン庭園・王立展示館', en:['Carlton Gardens, Carlton VIC 3053'], day:'DAY 3 観光（世界遺産）', map:'https://maps.google.com/?q=Carlton+Gardens+Melbourne', web:'https://museumsvictoria.com.au/reb/', x:250, y:95, order:8, move:'walk' },
+  // SYDNEY CBD  （viewBox 0 0 300 360、x:西→東 / y:北→南）
+  { area:'syd', icon:'🏨', name:'リッジス ワールド スクエア', en:['Rydges World Square — 389 Pitt Street, Sydney'], day:'DAY 4〜6 ホテル', map:'https://maps.google.com/?q=389+Pitt+Street+Sydney', web:'https://www.rydges.com/accommodation/sydney-nsw/world-square/', x:150, y:230, order:1, move:'start' },
+  { area:'syd', icon:'🦞', name:"Nick's Seafood Restaurant", en:['The Promenade, Cockle Bay Wharf, Sydney'], day:'DAY 4 ディナー（要予約）', map:'https://maps.google.com/?q=Nicks+Seafood+Restaurant+Cockle+Bay+Wharf+Sydney', web:'https://nicksseafood.com.au/', x:68, y:200, order:2, move:'walk' },
+  { area:'syd', icon:'🏨', name:'ヒルトン シドニー（ツアー集合場所）', en:['Hilton Sydney — 488 George Street, Sydney NSW 2000'], day:'DAY 5 集合 8:25（5分前厳守）', map:'https://maps.google.com/?q=Hilton+Sydney+488+George+Street', x:128, y:193, order:3, move:'walk' },
+  { area:'syd', icon:'☕', name:'The Grounds of the City', en:['500 George Street, Sydney NSW 2000'], day:'DAY 6 朝食', map:'https://maps.google.com/?q=The+Grounds+of+the+City+Sydney', web:'https://thegrounds.com.au/', x:140, y:165, order:4, move:'walk' },
+  { area:'syd', icon:'🌺', name:'ロイヤルボタニカルガーデン', en:['Royal Botanic Garden — Mrs Macquaries Rd, Sydney'], day:'DAY 6 観光（無料）', map:'https://maps.google.com/?q=Royal+Botanic+Garden+Sydney', web:'https://www.rbgsyd.nsw.gov.au/', x:212, y:118, order:5, move:'walk' },
+  { area:'syd', icon:'📸', name:'ミセス・マッコリーズ・ポイント', en:['Mrs Macquaries Point, Sydney NSW 2000'], day:'DAY 6 絶景フォト（無料）', map:'https://maps.google.com/?q=Mrs+Macquaries+Point+Sydney', x:240, y:80, order:6, move:'walk' },
+  { area:'syd', icon:'🧱', name:'ロックス地区', en:['The Rocks, Sydney NSW 2000'], day:'DAY 6 観光', map:'https://maps.google.com/?q=The+Rocks+Sydney', web:'https://www.therocks.com/', x:130, y:72, order:7, move:'walk' },
+  { area:'syd', icon:'🍺', name:'The Glenmore Hotel', en:['96 Cumberland Street, The Rocks NSW 2000'], day:'DAY 6 ランチ', map:'https://maps.google.com/?q=The+Glenmore+Hotel+The+Rocks+Sydney', web:'https://www.theglenmore.com.au/', x:114, y:66, order:8, move:'walk' },
+  { area:'syd', icon:'🛍️', name:'クイーンビクトリアビルディング（QVB）', en:['455 George Street, Sydney NSW 2000'], day:'DAY 6 ショッピング', map:'https://maps.google.com/?q=Queen+Victoria+Building+Sydney', web:'https://www.qvb.com.au/', x:122, y:210, order:9, move:'walk' },
+  { area:'syd', icon:'🎭', name:'Bennelong', en:['Sydney Opera House, Bennelong Point, Sydney'], day:'DAY 6 ディナー（要予約）', map:'https://maps.google.com/?q=Bennelong+Sydney+Opera+House', web:'https://www.bennelong.com.au/', x:182, y:58, order:10, move:'walk' },
+  { area:'syd', icon:'✈️', name:'シドニー空港 第1ターミナル', en:['Sydney Airport T1 International, Mascot NSW 2020'], day:'DAY 7 出発', map:'https://maps.google.com/?q=Sydney+Airport+Terminal+1+International', web:'https://www.sydneyairport.com.au/', x:150, y:338, order:11, move:'tram' },
+  // BLUE MOUNTAINS  （DAY5 ツアー・バス移動。viewBox 0 0 300 240、東＝シドニー側）
+  { area:'blue', icon:'🦘', name:'フェザーデール動物園', en:['Featherdale Wildlife Park — 217 Kildare Rd, Doonside'], day:'DAY 5 ツアー', map:'https://maps.google.com/?q=Featherdale+Wildlife+Park+Doonside', web:'https://www.featherdale.com.au/', x:205, y:150, order:1, move:'car' },
+  { area:'blue', icon:'🚡', name:'シーニックワールド', en:['Scenic World — Cliff Drive, Katoomba NSW 2780'], day:'DAY 5 ツアー', map:'https://maps.google.com/?q=Scenic+World+Katoomba', web:'https://www.scenicworld.com.au/', x:66, y:156, order:2, move:'car' },
+  { area:'blue', icon:'🪨', name:'エコーポイント展望台', en:['Echo Point Lookout — Katoomba NSW 2780'], day:'DAY 5 ツアー', map:'https://maps.google.com/?q=Echo+Point+Lookout+Katoomba', x:82, y:176, order:3, move:'car' },
+  { area:'blue', icon:'🏘️', name:'ルーラ', en:['Leura Mall, Leura NSW 2780'], day:'DAY 5 ツアー', map:'https://maps.google.com/?q=Leura+Mall+NSW', x:122, y:160, order:4, move:'car' }
+];
+
+var AREA_ORDER = ['mel', 'syd', 'blue'];
+var AREA_BTN   = { mel:'🏙️ メルボルン', syd:'🌉 シドニー', blue:'⛰️ ブルマン' };
+var currentArea = 'mel';
+
+// エリアごとの地図ジオメトリ（viewBox + 背景SVG）。ready:false は準備中（STEP3で追加）
+var MEL_BG =
+  // 公園（カールトン庭園）
+  '<rect class="mp-park" x="226" y="70" width="62" height="52" rx="6"/>' +
+  // ヤラ川
+  '<path class="mp-river" d="M0,302 C60,296 110,313 165,306 C220,300 270,298 300,308 L300,345 L0,345 Z"/>' +
+  // 主要ストリート（横）
+  '<line class="mp-street-main" x1="40" y1="250" x2="285" y2="250"/>' +
+  '<line class="mp-street-main" x1="40" y1="288" x2="285" y2="288"/>' +
+  // ストリート（横・細）
+  '<line class="mp-street" x1="40" y1="150" x2="285" y2="150"/>' +
+  '<line class="mp-street" x1="40" y1="185" x2="285" y2="185"/>' +
+  '<line class="mp-street" x1="40" y1="215" x2="285" y2="215"/>' +
+  '<line class="mp-street" x1="40" y1="272" x2="285" y2="272"/>' +
+  '<line class="mp-street" x1="115" y1="130" x2="285" y2="130"/>' +
+  // ストリート（縦・細）
+  '<line class="mp-street" x1="40"  y1="150" x2="40"  y2="290"/>' +
+  '<line class="mp-street" x1="70"  y1="150" x2="70"  y2="290"/>' +
+  '<line class="mp-street" x1="100" y1="150" x2="100" y2="290"/>' +
+  '<line class="mp-street" x1="128" y1="150" x2="128" y2="290"/>' +
+  '<line class="mp-street" x1="160" y1="150" x2="160" y2="290"/>' +
+  '<line class="mp-street" x1="195" y1="150" x2="195" y2="290"/>' +
+  '<line class="mp-street" x1="225" y1="150" x2="225" y2="290"/>' +
+  '<line class="mp-street" x1="255" y1="150" x2="255" y2="290"/>' +
+  '<line class="mp-street" x1="280" y1="150" x2="280" y2="290"/>' +
+  // 北側への接続路
+  '<line class="mp-street" x1="128" y1="130" x2="128" y2="100"/>' +
+  '<line class="mp-street" x1="250" y1="130" x2="250" y2="100"/>' +
+  // ラベル
+  '<text class="mp-label" x="42" y="246">Collins St</text>' +
+  '<text class="mp-label" x="42" y="285">Flinders St</text>' +
+  '<text class="mp-label" x="117" y="126">Victoria St</text>' +
+  '<text class="mp-label" x="162" y="160" transform="rotate(90 162 160)">Elizabeth St</text>' +
+  '<text class="mp-label" x="197" y="160" transform="rotate(90 197 160)">Swanston St</text>' +
+  '<text class="mp-label-water" x="108" y="320">Yarra River</text>' +
+  '<text class="mp-label" x="228" y="64">Carlton Gardens</text>' +
+  '<text class="mp-label" x="96" y="92">QV Market</text>';
+
+var SYD_BG =
+  // 港（シドニーハーバー・上端）
+  '<path class="mp-river" d="M0,0 L300,0 L300,44 C255,54 215,42 182,48 C150,54 118,42 80,50 C50,56 20,48 0,52 Z"/>' +
+  // ダーリングハーバー（西の入り江）
+  '<path class="mp-river" d="M0,56 L60,60 C68,95 62,155 58,205 C40,210 18,207 0,209 Z"/>' +
+  // ファームコーブ（北東の入り江）
+  '<path class="mp-river" d="M268,60 C288,74 290,112 274,150 L300,150 L300,58 Z"/>' +
+  // 公園
+  '<rect class="mp-park" x="190" y="92" width="74" height="56" rx="6"/>' +
+  '<rect class="mp-park" x="198" y="158" width="40" height="58" rx="5"/>' +
+  // ストリート
+  '<line class="mp-street-main" x1="128" y1="48" x2="128" y2="248"/>' +
+  '<line class="mp-street" x1="155" y1="55" x2="155" y2="240"/>' +
+  '<line class="mp-street" x1="95"  y1="165" x2="192" y2="165"/>' +
+  '<line class="mp-street" x1="95"  y1="195" x2="192" y2="195"/>' +
+  '<line class="mp-street" x1="100" y1="225" x2="188" y2="225"/>' +
+  // 空港方面（南・破線）
+  '<line class="mp-street" x1="150" y1="248" x2="150" y2="322" stroke-dasharray="2 5"/>' +
+  // ラベル
+  '<text class="mp-label-water" x="146" y="28">Sydney Harbour</text>' +
+  '<text class="mp-label-water" x="8" y="118" transform="rotate(90 8 118)">Darling Hbr</text>' +
+  '<text class="mp-label" x="131" y="135">George St</text>' +
+  '<text class="mp-label" x="158" y="155">Pitt St</text>' +
+  '<text class="mp-label" x="198" y="122">Botanic Gdn</text>' +
+  '<text class="mp-label" x="202" y="192">Hyde Park</text>' +
+  '<text class="mp-label" x="96" y="58">The Rocks</text>' +
+  '<text class="mp-label" x="120" y="332">↓ 空港 (南へ約8km)</text>';
+
+var BLUE_BG =
+  // 山並み（西側）
+  '<path class="mp-park" d="M18,160 L52,98 L92,160 Z"/>' +
+  '<path class="mp-park" d="M62,160 L104,80 L150,160 Z"/>' +
+  '<path class="mp-park" d="M40,160 L78,116 L120,160 Z"/>' +
+  // グレートウェスタンハイウェイ（東西）
+  '<line class="mp-street-main" x1="20" y1="160" x2="288" y2="160"/>' +
+  // シドニーからの到着（東・破線）
+  '<line class="mp-route car" x1="288" y1="160" x2="205" y2="150" stroke-dasharray="2 5" opacity="0.45"/>' +
+  // ラベル
+  '<text class="mp-label" x="40" y="206">Katoomba</text>' +
+  '<text class="mp-label" x="110" y="182">Leura</text>' +
+  '<text class="mp-label" x="186" y="176">Doonside</text>' +
+  '<text class="mp-label" x="234" y="142">→ シドニー</text>' +
+  '<text class="mp-label" x="74" y="58">Blue Mountains NP</text>' +
+  '<text class="mp-label" x="78" y="220">Three Sisters</text>';
+
+var MAP_GEO = {
+  mel:  { ready:true, viewBox:'0 0 300 360', bg: MEL_BG },
+  syd:  { ready:true, viewBox:'0 0 300 360', bg: SYD_BG },
+  blue: { ready:true, viewBox:'0 0 300 240', bg: BLUE_BG }
+};
+
+function escapeAttr(s) { return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;'); }
+
+// ─── 折りたたみリスト（現在エリアのスポット） ───────────────────────────────
+function spotItemHTML(s) {
+  var enLines = s.en.map(function(e){ return '<div class="map-en">' + e + '</div>'; }).join('');
+  var actions = '<a href="' + escapeAttr(s.map) + '" class="map-go" target="_blank" rel="noopener">🗺️</a>';
+  if (s.web) actions += '<a href="' + escapeAttr(s.web) + '" class="web-go" target="_blank" rel="noopener">🌐</a>';
+  return '<div class="map-item">' +
+      '<span class="map-ico">' + s.icon + '</span>' +
+      '<div class="map-body">' +
+        '<div class="map-name">' + s.name + '</div>' +
+        enLines +
+        '<span class="map-day-tag">' + s.day + '</span>' +
+      '</div>' +
+      '<div class="map-actions">' + actions + '</div>' +
+    '</div>';
+}
+
+function renderMapList() {
+  var host = document.getElementById('map-list');
+  if (!host) return;
+  var html = '';
+  SPOTS.filter(function(s){ return s.area === currentArea; })
+       .forEach(function(s){ html += spotItemHTML(s); });
+  host.innerHTML = html;
+}
+
+function toggleMapList() {
+  var list = document.getElementById('map-list');
+  var btn  = document.getElementById('map-list-toggle');
+  if (!list) return;
+  var willShow = list.hidden;
+  list.hidden = !willShow;
+  if (btn) btn.textContent = willShow ? '📋 一覧を閉じる' : '📋 一覧で見る';
+}
+
+// ─── エリア切り替え ────────────────────────────────────────────────────────
+function renderAreaSwitch() {
+  var host = document.getElementById('area-switch');
+  if (!host) return;
+  host.innerHTML = AREA_ORDER.map(function(a) {
+    return '<button class="area-btn' + (a === currentArea ? ' active' : '') +
+           '" onclick="switchArea(\'' + a + '\')">' + AREA_BTN[a] + '</button>';
+  }).join('');
+}
+
+function switchArea(a) {
+  currentArea = a;
+  closeMapPopup();
+  renderAreaSwitch();
+  renderAreaMap();
+  renderMapList();
+}
+
+// ─── スキーマティック地図の描画 ─────────────────────────────────────────────
+function renderAreaMap() {
+  var host = document.getElementById('area-map');
+  if (!host) return;
+  var geo = MAP_GEO[currentArea];
+  if (!geo || !geo.ready) {
+    host.innerHTML = '<div style="padding:46px 16px;text-align:center;color:var(--muted);font-size:13px;line-height:1.7;">この エリアのマップは準備中です<br>下の「📋 一覧で見る」をご利用ください</div>';
+    renderLegend([]);
+    return;
+  }
+  var spots = SPOTS.filter(function(s){ return s.area === currentArea && s.x != null; })
+                   .sort(function(a,b){ return a.order - b.order; });
+  var routes = '';
+  for (var i = 1; i < spots.length; i++) {
+    var a = spots[i-1], b = spots[i];
+    routes += '<line class="mp-route ' + (b.move || 'walk') + '" x1="' + a.x + '" y1="' + a.y +
+              '" x2="' + b.x + '" y2="' + b.y + '"/>';
+  }
+  var pins = '';
+  spots.forEach(function(s){
+    var gi = SPOTS.indexOf(s);
+    pins += '<g class="mp-pin" data-i="' + gi + '"><circle cx="' + s.x + '" cy="' + s.y +
+            '" r="12"/><text x="' + s.x + '" y="' + s.y + '">' + s.order + '</text></g>';
+  });
+  host.innerHTML = '<svg viewBox="' + geo.viewBox + '" xmlns="http://www.w3.org/2000/svg">' +
+                   geo.bg + routes + pins + '</svg>';
+  host.querySelectorAll('.mp-pin').forEach(function(g){
+    g.addEventListener('click', function(e){
+      e.stopPropagation();
+      openMapPopup(parseInt(g.getAttribute('data-i'), 10), g);
+    });
+  });
+  renderLegend(spots);
+}
+
+function renderLegend(spots) {
+  var host = document.getElementById('map-legend');
+  if (!host) return;
+  var modes = {};
+  spots.forEach(function(s){ if (s.move && s.move !== 'start') modes[s.move] = 1; });
+  var L = { walk:'徒歩', tram:'電車・トラム', car:'車・バス' };
+  var html = '';
+  Object.keys(L).forEach(function(m){
+    if (modes[m]) html += '<span><i class="lg-line lg-' + m + '"></i>' + L[m] + '</span>';
+  });
+  host.innerHTML = html;
+}
+
+// ─── ピンのポップアップ ─────────────────────────────────────────────────────
+function openMapPopup(i, g) {
+  var s = SPOTS[i];
+  var pop = document.getElementById('map-popup');
+  var wrap = document.getElementById('area-map-wrap');
+  if (!s || !pop || !wrap) return;
+  var enLines = s.en.map(function(e){ return '<div class="mpop-en">' + e + '</div>'; }).join('');
+  var actions = '<a class="mpop-map" href="' + escapeAttr(s.map) + '" target="_blank" rel="noopener">🗺️ マップ</a>';
+  if (s.web) actions += '<a class="mpop-web" href="' + escapeAttr(s.web) + '" target="_blank" rel="noopener">🌐 公式</a>';
+  pop.innerHTML = '<button class="mpop-close" onclick="closeMapPopup()">×</button>' +
+    '<div class="mpop-name">' + s.icon + ' ' + s.name + '</div>' + enLines +
+    '<span class="mpop-day">' + s.day + '</span>' +
+    '<div class="mpop-actions">' + actions + '</div>';
+  pop.hidden = false;
+  document.querySelectorAll('.mp-pin.sel').forEach(function(p){ p.classList.remove('sel'); });
+  g.classList.add('sel');
+  var cr = g.querySelector('circle').getBoundingClientRect();
+  var wr = wrap.getBoundingClientRect();
+  var cx = cr.left - wr.left + cr.width / 2;
+  var pw = pop.offsetWidth, ph = pop.offsetHeight;
+  var left = Math.max(6, Math.min(cx - pw / 2, wr.width - pw - 6));
+  var top = (cr.top - wr.top) - ph - 12;
+  if (top < 6) top = (cr.bottom - wr.top) + 12;
+  pop.style.left = left + 'px';
+  pop.style.top = top + 'px';
+}
+
+function closeMapPopup() {
+  var pop = document.getElementById('map-popup');
+  if (pop) pop.hidden = true;
+  document.querySelectorAll('.mp-pin.sel').forEach(function(p){ p.classList.remove('sel'); });
+}
+
 // ─── Init ──────────────────────────────────────────────────────────────────
 (function init() {
-  var saved = localStorage.getItem('itinerary_v2');
-  if (saved) { try { setState(JSON.parse(saved)); } catch(e) {} }
+  renderAreaSwitch();
+  renderAreaMap();
+  renderMapList();
+  // 地図の外側タップでポップアップを閉じる
+  document.addEventListener('click', function(e) {
+    var pop = document.getElementById('map-popup');
+    if (!pop || pop.hidden) return;
+    if (e.target.closest && (e.target.closest('#map-popup') || e.target.closest('.mp-pin'))) return;
+    closeMapPopup();
+  });
   applyChecklistState();
   initDayHighlights();
   initDayBanners();
