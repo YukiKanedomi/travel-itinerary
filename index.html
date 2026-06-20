@@ -242,6 +242,13 @@
     .bk-item:last-child { border-bottom: none; }
     .bk-note { width: 100%; margin-top: 7px; padding: 6px 9px; border: 1px solid var(--border); border-radius: 8px; font-size: 12px; font-family: inherit; background: #fafafa; }
     .bk-note:focus { outline: none; border-color: var(--blue); background: #fff; }
+    .prep-info-card { background: #fff; border-radius: 12px; box-shadow: var(--shadow); padding: 12px 14px; margin-bottom: 9px; border-left: 3px solid var(--purple); }
+    .prep-info-card .pi-head { font-size: 13px; font-weight: 800; color: var(--purple); display: flex; align-items: center; gap: 8px; }
+    .prep-info-card .pi-icon { font-size: 18px; }
+    .prep-info-card .pi-body { font-size: 12px; color: var(--text); line-height: 1.6; margin-top: 6px; }
+    .prep-info-card .pi-body b { color: var(--rose); font-weight: 700; }
+    .cl-cat { font-size: 11px; font-weight: 800; color: var(--orange); margin: 12px 0 2px; padding-top: 8px; border-top: 1px solid #f0f0f0; }
+    .cl-cat:first-of-type { border-top: none; padding-top: 2px; }
     .mp-street { stroke: #fbf9f4; stroke-width: 2.2; fill: none; stroke-linecap: round; }
     .mp-street-main { stroke: #ffffff; stroke-width: 4.5; fill: none; stroke-linecap: round; }
     .mp-river { fill: url(#mpWater); }
@@ -1030,19 +1037,44 @@
   <!-- 予約・手配トラッカー（renderPrep で生成） -->
   <div id="prep-book" class="section"></div>
 
+  <!-- オーストラリア入国・現地の基礎知識（renderPrep で生成） -->
+  <div id="prep-info" class="section"></div>
+
   <!-- 持ち物チェックリスト（基本情報から移設） -->
   <div class="section">
     <div class="sec-title"><div class="sec-icon" style="background:var(--gold)"></div><span style="color:var(--orange)">持ち物チェックリスト</span></div>
     <div class="card c-tip" id="packing-card">
-      <div class="cl-progress"><span class="cl-progress-label"><strong id="cl-done">0</strong> / <span id="cl-total">8</span> 準備完了</span><div class="cl-bar"><div id="cl-fill" class="cl-fill" style="width:0%"></div></div></div>
+      <div class="cl-progress"><span class="cl-progress-label"><strong id="cl-done">0</strong> / <span id="cl-total">0</span> 準備完了</span><div class="cl-bar"><div id="cl-fill" class="cl-fill" style="width:0%"></div></div></div>
+      <div class="cl-cat">貴重品・書類</div>
       <div class="tip-item cl-item"><span class="tip-text">パスポート（有効期限：帰国後6ヶ月以上）</span><span class="cl-check">✓</span></div>
-      <div class="tip-item cl-item"><span class="tip-text">ETA申請完了の確認（スマホのアプリで確認可）</span><span class="cl-check">✓</span></div>
-      <div class="tip-item cl-item"><span class="tip-text">クレジットカード（タッチ決済対応）— シドニーの電車・ライトレールに直接使用可能</span><span class="cl-check">✓</span></div>
-      <div class="tip-item cl-item"><span class="tip-text">変換プラグ（Iタイプ・オーストラリア型）— 230V対応確認を</span><span class="cl-check">✓</span></div>
-      <div class="tip-item cl-item"><span class="tip-text">ウインドブレーカー・ストール（必須！）— 9月は朝晩急に冷え込む。メルボルンは天気が特に変わりやすい</span><span class="cl-check">✓</span></div>
-      <div class="tip-item cl-item"><span class="tip-text">歩きやすいスニーカー（1日1万歩超は当たり前）</span><span class="cl-check">✓</span></div>
-      <div class="tip-item cl-item"><span class="tip-text">日焼け止め（SPF50+推奨）— オーストラリアのUVは日本の数倍強い</span><span class="cl-check">✓</span></div>
-      <div class="tip-item cl-item"><span class="tip-text">常備薬（胃薬・頭痛薬・整腸剤・酔い止め）</span><span class="cl-check">✓</span></div>
+      <div class="tip-item cl-item"><span class="tip-text">ETA申請完了の確認（AustralianETAアプリ）</span><span class="cl-check">✓</span></div>
+      <div class="tip-item cl-item"><span class="tip-text">海外旅行保険の証券（紙＋スマホ）</span><span class="cl-check">✓</span></div>
+      <div class="tip-item cl-item"><span class="tip-text">クレジットカード（タッチ決済対応・複数枚）</span><span class="cl-check">✓</span></div>
+      <div class="tip-item cl-item"><span class="tip-text">現金（AUD 少額）＋予備</span><span class="cl-check">✓</span></div>
+      <div class="tip-item cl-item"><span class="tip-text">予約確認書（フライト・ホテル・ツアー）印刷＋スマホ保存</span><span class="cl-check">✓</span></div>
+      <div class="cl-cat">電子機器</div>
+      <div class="tip-item cl-item"><span class="tip-text">スマホ＋充電器（ケーブル）</span><span class="cl-check">✓</span></div>
+      <div class="tip-item cl-item"><span class="tip-text">モバイルバッテリー（機内は手荷物へ）</span><span class="cl-check">✓</span></div>
+      <div class="tip-item cl-item"><span class="tip-text">変換プラグ（Oタイプ／Iタイプ・230V対応）</span><span class="cl-check">✓</span></div>
+      <div class="tip-item cl-item"><span class="tip-text">eSIM／SIM（到着後に有効化）</span><span class="cl-check">✓</span></div>
+      <div class="tip-item cl-item"><span class="tip-text">カメラ（＋予備バッテリー・SDカード）</span><span class="cl-check">✓</span></div>
+      <div class="cl-cat">衣類（9月＝春・寒暖差大）</div>
+      <div class="tip-item cl-item"><span class="tip-text">ウインドブレーカー・ストール（朝晩の冷え対策）</span><span class="cl-check">✓</span></div>
+      <div class="tip-item cl-item"><span class="tip-text">ブルーマウンテンズ用の暖かい上着（DAY5）</span><span class="cl-check">✓</span></div>
+      <div class="tip-item cl-item"><span class="tip-text">歩きやすいスニーカー（1日1万歩超）</span><span class="cl-check">✓</span></div>
+      <div class="tip-item cl-item"><span class="tip-text">着替え（重ね着できるもの）</span><span class="cl-check">✓</span></div>
+      <div class="tip-item cl-item"><span class="tip-text">折りたたみ傘・軽い雨具（メルボルンは変わりやすい）</span><span class="cl-check">✓</span></div>
+      <div class="tip-item cl-item"><span class="tip-text">少しきれいめな服（Bennelongディナー用）</span><span class="cl-check">✓</span></div>
+      <div class="cl-cat">衛生・健康</div>
+      <div class="tip-item cl-item"><span class="tip-text">常備薬（胃腸薬・頭痛薬・整腸剤・酔い止め）</span><span class="cl-check">✓</span></div>
+      <div class="tip-item cl-item"><span class="tip-text">日焼け止め SPF50+（UVが非常に強い）</span><span class="cl-check">✓</span></div>
+      <div class="tip-item cl-item"><span class="tip-text">サングラス・帽子</span><span class="cl-check">✓</span></div>
+      <div class="tip-item cl-item"><span class="tip-text">リップ・保湿クリーム（乾燥対策）</span><span class="cl-check">✓</span></div>
+      <div class="tip-item cl-item"><span class="tip-text">歯ブラシ・洗面具・コンタクト予備</span><span class="cl-check">✓</span></div>
+      <div class="cl-cat">あると便利</div>
+      <div class="tip-item cl-item"><span class="tip-text">エコバッグ（レジ袋は有料／少ない）</span><span class="cl-check">✓</span></div>
+      <div class="tip-item cl-item"><span class="tip-text">機内用ネックピロー・アイマスク</span><span class="cl-check">✓</span></div>
+      <div class="tip-item cl-item"><span class="tip-text">ウェットティッシュ・常備のマスク</span><span class="cl-check">✓</span></div>
     </div>
   </div>
 </div>
@@ -2069,21 +2101,41 @@ function renderTimebars(){
 
 // ─── 準備タブ（出発前ToDo ＋ 予約・手配トラッカー） ──────────────────────────
 var PREP_TODO = [
-  { grp:'1ヶ月前まで', text:'ETA（電子渡航認証）を申請' },
-  { grp:'1ヶ月前まで', text:'海外旅行保険に加入' },
-  { grp:'1ヶ月前まで', text:'eSIM／SIMを手配' },
-  { grp:'1ヶ月前まで', text:'要予約レストランを予約（Supernormal・Nick’s・Bennelong）' },
-  { grp:'2週間前まで', text:'現地通貨(AUD)の準備・両替' },
-  { grp:'2週間前まで', text:'クレジットカードの海外利用・タッチ決済を確認' },
-  { grp:'2週間前まで', text:'変換プラグ（Iタイプ）を購入' },
-  { grp:'2週間前まで', text:'JTBツアー最終確認（DAY5 ヒルトン 8:25集合・5分前厳守）' },
-  { grp:'1週間前まで', text:'各予約確認書を印刷／スクショ保存' },
-  { grp:'1週間前まで', text:'パスポート有効期限を確認（帰国後6ヶ月以上）' },
-  { grp:'1週間前まで', text:'服装の準備（ブルーマウンテンズは防寒）' },
-  { grp:'前日〜当日',  text:'オンラインチェックイン' },
-  { grp:'前日〜当日',  text:'荷造り最終チェック（持ち物リスト）' },
-  { grp:'前日〜当日',  text:'検疫申告の確認（食品は必ずYES申告）' },
-  { grp:'前日〜当日',  text:'スマホ充電・モバイルバッテリー' }
+  // 2〜3ヶ月前
+  { grp:'2〜3ヶ月前', text:'パスポートの残存期間を確認（入国時に有効。推奨：滞在＋6ヶ月）' },
+  { grp:'2〜3ヶ月前', text:'航空券・ホテル・現地ツアーの予約を確定' },
+  { grp:'2〜3ヶ月前', text:'要予約レストランを予約（Supernormal・Nick’s・Bennelong）' },
+  { grp:'2〜3ヶ月前', text:'休暇・旅程・空港までの交通を調整' },
+  // 1ヶ月前
+  { grp:'1ヶ月前', text:'ETA（subclass 601）を AustralianETAアプリで申請（AUD$20・12ヶ月有効）' },
+  { grp:'1ヶ月前', text:'海外旅行保険に加入（クレカ付帯の補償・上限も確認）' },
+  { grp:'1ヶ月前', text:'eSIM／SIM／Wi-Fiルーターを手配' },
+  { grp:'1ヶ月前', text:'外務省「たびレジ」に登録（緊急時の情報配信）' },
+  { grp:'1ヶ月前', text:'タッチ決済対応のクレカを複数枚用意（VISA／Master推奨）' },
+  { grp:'1ヶ月前', text:'常備薬・処方薬を準備（処方薬は英文の説明があると安心）' },
+  // 2週間前
+  { grp:'2週間前', text:'現地通貨(AUD)を少額用意（基本はカード決済でOK）' },
+  { grp:'2週間前', text:'クレカの海外利用設定・利用枠・紛失時の連絡先を控える' },
+  { grp:'2週間前', text:'変換プラグ（Oタイプ／Iタイプ・230V対応）を用意' },
+  { grp:'2週間前', text:'ブルーマウンテンズ用の防寒着を準備（DAY5は冷える）' },
+  { grp:'2週間前', text:'JTBツアー最終確認（DAY5 ヒルトン 8:25集合・5分前厳守）' },
+  { grp:'2週間前', text:'スマホの海外設定（データローミングOFF・必要アプリDL）' },
+  // 1週間前
+  { grp:'1週間前', text:'各予約確認書を印刷＋スマホにオフライン保存' },
+  { grp:'1週間前', text:'パスポート・eチケットのコピー（紙＋クラウド）' },
+  { grp:'1週間前', text:'緊急連絡先メモ（保険・カード紛失窓口・日本国総領事館）' },
+  { grp:'1週間前', text:'天気の最終確認と服装の最終調整' },
+  { grp:'1週間前', text:'自宅の段取り（郵便・宅配の停止、ゴミ、戸締り）' },
+  // 前日
+  { grp:'前日', text:'オンラインチェックイン・座席を確認' },
+  { grp:'前日', text:'荷造り最終（液体は100ml以内・モバイルバッテリーは機内持込）' },
+  { grp:'前日', text:'検疫申告の準備（食品・薬・木製品は申告。迷ったら申告）' },
+  { grp:'前日', text:'スマホ・モバイルバッテリー・カメラを充電' },
+  { grp:'前日', text:'目覚まし・空港までの交通を最終確認' },
+  // 当日・道中
+  { grp:'当日・道中', text:'入国カード(Incoming Passenger Card)で食品等を必ず申告' },
+  { grp:'当日・道中', text:'機内ではこまめに水分補給・足を動かす（エコノミー症候群対策）' },
+  { grp:'当日・道中', text:'到着後 eSIM/SIMを有効化、時計を現地時間に（日本＋1時間）' }
 ];
 var PREP_BOOK = [
   { text:'✈️ 往路 JAL JL773（9/20 成田→メルボルン）' },
@@ -2094,7 +2146,20 @@ var PREP_BOOK = [
   { text:'⛰️ JTB ブルーマウンテンズ ツアー（9/24）' },
   { text:'🍽️ Supernormal ディナー（要予約）' },
   { text:'🍽️ Nick’s Seafood ディナー（要予約）' },
-  { text:'🍽️ Bennelong ディナー（要予約・服装注意）' }
+  { text:'🍽️ Bennelong ディナー（要予約・服装注意）' },
+  { text:'🛡️ 海外旅行保険' },
+  { text:'📱 eSIM／SIM／Wi-Fi' }
+];
+// オーストラリア入国・現地の基礎知識（チェック不要の情報カード）
+var PREP_INFO = [
+  { icon:'🛂', title:'ETA（電子渡航認証）', body:'観光は subclass 601。<b>AustralianETA アプリ</b>で申請（手数料 AUD$20）。発給は数分〜、12ヶ月有効・1回最大3ヶ月滞在。パスポートに電子的に紐付くので印刷不要。' },
+  { icon:'🌿', title:'検疫（バイオセキュリティ）※重要', body:'<b>食品・植物・動物製品・木製品は全て申告</b>。未申告で見つかると罰金 AUD$313〜最大6,260、悪質だとビザ取消・入国拒否も。日本のお菓子等も「申告」が安全。<b>迷ったら必ず YES で申告</b>。' },
+  { icon:'💸', title:'TRS（免税還付）', body:'同一店(同一ABN)で <b>合計AUD$300以上</b>・出発60日以内の購入が対象。GST(10%)が戻る。条件：タックスインボイス原本＋商品を手荷物で持参。<b>出発空港のTRSカウンターで出発30分前まで</b>。TRSアプリで事前入力→QRで時短。' },
+  { icon:'🚆', title:'市内交通', body:'<b>シドニー：Opalカード不要</b>。タッチ決済(クレカ/Apple Pay/Google Pay)で電車・バス・フェリー・ライトレールに乗れる。<b>メルボルン：2026年は鉄道のみタッチ対応</b>。トラム/バスは Myki カードが要る場合あり→現地で要確認。' },
+  { icon:'💳', title:'支払い・チップ', body:'カード社会で少額もタッチ決済が主流。現金は少しで十分。<b>チップは基本不要</b>（任意）。レストランは週末/祝日サーチャージがつくことも。' },
+  { icon:'🔌', title:'電源プラグ・電圧', body:'プラグは<b>Oタイプ（ハの字／Iタイプ）</b>、電圧 <b>230V・50Hz</b>。日本(100V)と違うので、機器の対応電圧(100-240V表記)を確認。非対応なら変圧器が必要。' },
+  { icon:'🚰', title:'水・気候', body:'<b>水道水は飲用可</b>。9月は南半球の春で朝晩冷える＆寒暖差大。<b>UVが非常に強い</b>ので日焼け止め・帽子・サングラスを。' },
+  { icon:'🆘', title:'緊急時', body:'緊急通報は <b>000</b>（警察・消防・救急 共通）。パスポート紛失・トラブルは<b>在シドニー日本国総領事館</b>へ。保険・カード会社の緊急窓口番号も控えておく。' }
 ];
 function prepGet(key){ try { return JSON.parse(localStorage.getItem(key) || '{}'); } catch(e){ return {}; } }
 function prepSet(key, obj){ localStorage.setItem(key, JSON.stringify(obj)); }
@@ -2130,6 +2195,15 @@ function renderPrep(){
     });
     bh += '</div>';
     bookHost.innerHTML = bh;
+  }
+  var infoHost = document.getElementById('prep-info');
+  if (infoHost) {
+    var ih = '<div class="sec-title"><div class="sec-icon" style="background:var(--purple)"></div><span style="color:var(--purple)">🇦🇺 入国・現地の基礎知識</span></div>';
+    PREP_INFO.forEach(function(p){
+      ih += '<div class="prep-info-card"><div class="pi-head"><span class="pi-icon">' + p.icon + '</span>' + p.title + '</div>' +
+            '<div class="pi-body">' + p.body + '</div></div>';
+    });
+    infoHost.innerHTML = ih;
   }
 }
 
