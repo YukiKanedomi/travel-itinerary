@@ -184,6 +184,8 @@
     .map-name { font-size: 13px; font-weight: 700; line-height: 1.3; }
     .map-en { font-size: 10px; color: var(--muted); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .map-day-tag { display: inline-block; font-size: 9px; font-weight: 700; background: var(--blue-light); color: var(--blue); padding: 2px 8px; border-radius: 10px; margin-top: 5px; }
+    .map-tip { font-size: 11px; color: #7a6020; background: var(--gold-light); border-radius: 8px; padding: 5px 8px; margin-top: 6px; line-height: 1.45; }
+    .map-leg { font-size: 11px; font-weight: 700; color: var(--muted); text-align: center; padding: 3px 0 7px; }
     .map-actions { display: flex; flex-direction: column; gap: 5px; flex-shrink: 0; }
     .map-go { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; background: var(--blue-light); color: var(--blue); border-radius: 10px; font-size: 18px; text-decoration: none; transition: background .15s; }
     .map-go:hover { background: var(--blue); color: #fff; }
@@ -200,6 +202,10 @@
     #area-map { display: block; width: 100%; }
     #area-map svg { display: block; width: 100%; height: auto; touch-action: pan-y; }
     .map-hint { font-size: 10px; color: var(--muted); text-align: center; margin: -2px 0 10px; opacity: .8; }
+    .day-weather { display: flex; align-items: center; gap: 11px; background: linear-gradient(135deg, #e3f2fd, #f3f8fc); border: 1px solid #d4e7f5; border-radius: 12px; padding: 10px 14px; margin-bottom: 18px; }
+    .day-weather .dw-icon { font-size: 22px; flex-shrink: 0; }
+    .day-weather .dw-temp { font-size: 13px; font-weight: 800; color: var(--navy); }
+    .day-weather .dw-note { font-size: 11px; color: var(--muted); margin-top: 2px; line-height: 1.4; }
     .mp-street { stroke: #fbf9f4; stroke-width: 2.2; fill: none; stroke-linecap: round; }
     .mp-street-main { stroke: #ffffff; stroke-width: 4.5; fill: none; stroke-linecap: round; }
     .mp-river { fill: url(#mpWater); }
@@ -218,6 +224,7 @@
     .map-popup .mpop-name { font-size: 14px; font-weight: 800; padding-right: 18px; line-height: 1.3; }
     .map-popup .mpop-en { font-size: 10px; color: var(--muted); margin-top: 2px; }
     .map-popup .mpop-day { display: inline-block; font-size: 9px; font-weight: 700; background: var(--blue-light); color: var(--blue); padding: 2px 8px; border-radius: 10px; margin-top: 7px; }
+    .map-popup .mpop-tip { font-size: 11px; color: #7a6020; background: var(--gold-light); border-radius: 8px; padding: 6px 9px; margin-top: 8px; line-height: 1.5; }
     .map-popup .mpop-actions { display: flex; gap: 8px; margin-top: 10px; }
     .map-popup .mpop-actions a { display: inline-flex; align-items: center; gap: 4px; text-decoration: none; padding: 6px 12px; border-radius: 9px; font-size: 12px; font-weight: 700; }
     .mpop-map { background: var(--blue-light); color: var(--blue); }
@@ -1231,6 +1238,28 @@ function show(id, idx) {
   initNowNext();
 }
 
+// ─── スワイプでタブ切り替え（地図タブはパン操作優先で除外） ──────────────────
+var TAB_PANES = ['day1','day2','day3','day4','day5','day6','day7','info','map'];
+(function setupSwipe(){
+  var main = document.querySelector('main.content');
+  if (!main) return;
+  var sx = 0, sy = 0, tracking = false;
+  main.addEventListener('touchstart', function(e){
+    if (currentTabIdx === 8) return;          // 地図タブ：ピンチ/ドラッグ優先
+    if (!e.touches || e.touches.length !== 1) return;
+    sx = e.touches[0].clientX; sy = e.touches[0].clientY; tracking = true;
+  }, { passive:true });
+  main.addEventListener('touchend', function(e){
+    if (!tracking) return; tracking = false;
+    var t = e.changedTouches[0];
+    var dx = t.clientX - sx, dy = t.clientY - sy;
+    if (Math.abs(dx) > 55 && Math.abs(dx) > Math.abs(dy) * 1.6) {
+      var ni = currentTabIdx + (dx < 0 ? 1 : -1);
+      if (ni >= 0 && ni < TAB_PANES.length) show(TAB_PANES[ni], ni);
+    }
+  }, { passive:true });
+})();
+
 // ─── Day Chips ─────────────────────────────────────────────────────────────
 function initNowNext() {
   document.querySelectorAll('.tl-now-badge, .tl-next-badge').forEach(function(b){ b.remove(); });
@@ -1459,31 +1488,31 @@ function autoSelectTab() {
 // x/y/order/move は今後の地図描画ステップで使用（STEP1では未使用）
 var SPOTS = [
   // MELBOURNE  （x:西→東 / y:北→南、order=訪問順、move=直前からの移動手段）
-  { area:'mel', icon:'🏨', name:'IC メルボルン ザ リアルト', en:['InterContinental Melbourne The Rialto','495 Collins Street, Melbourne VIC 3000'], day:'DAY 2・3 ホテル', map:'https://maps.google.com/?q=495+Collins+Street+Melbourne', web:'https://www.ihg.com/intercontinental/hotels/gb/en/melbourne/melha/hoteldetail', x:90, y:246, order:1, move:'start' },
-  { area:'mel', icon:'☕', name:'Lune Croissanterie CBD', en:['Flinders Lane, Melbourne VIC 3000'], day:'DAY 2 朝食', map:'https://maps.google.com/?q=Lune+Croissanterie+CBD+Melbourne', web:'https://www.lunecroissanterie.com/', x:208, y:243, order:2, move:'walk' },
-  { area:'mel', icon:'🎨', name:'ホージア・レーン', en:['Hosier Lane, Melbourne VIC 3000'], day:'DAY 2 観光（無料）', map:'https://maps.google.com/?q=Hosier+Lane+Melbourne', x:192, y:283, order:3, move:'walk' },
-  { area:'mel', icon:'🏛️', name:'ブロック・アーケード', en:['Block Arcade — 282 Collins Street, Melbourne'], day:'DAY 2 観光', map:'https://maps.google.com/?q=Block+Arcade+Melbourne', web:'https://www.theblockarcade.com.au/', x:172, y:246, order:4, move:'walk' },
-  { area:'mel', icon:'🍝', name:'Il Solito Posto', en:['113 Collins Street（地下）, Melbourne'], day:'DAY 2 ランチ', map:'https://maps.google.com/?q=Il+Solito+Posto+Melbourne', web:'https://ilsolitoposto.com.au/', x:258, y:245, order:5, move:'walk' },
-  { area:'mel', icon:'🍱', name:'Supernormal', en:['180 Flinders Lane, Melbourne VIC 3000'], day:'DAY 2 ディナー（要予約）', map:'https://maps.google.com/?q=Supernormal+180+Flinders+Lane+Melbourne', web:'https://supernormal.net.au/', x:218, y:267, order:6, move:'walk' },
-  { area:'mel', icon:'🛒', name:'クイーンビクトリアマーケット', en:['Queen Victoria Market — Queen St & Victoria St'], day:'DAY 3 観光（火曜営業）', map:'https://maps.google.com/?q=Queen+Victoria+Market+Melbourne', web:'https://qvm.com.au/', x:139, y:91, order:7, move:'tram' },
-  { area:'mel', icon:'🌳', name:'カールトン庭園・王立展示館', en:['Carlton Gardens, Carlton VIC 3053'], day:'DAY 3 観光（世界遺産）', map:'https://maps.google.com/?q=Carlton+Gardens+Melbourne', web:'https://museumsvictoria.com.au/reb/', x:250, y:86, order:8, move:'walk' },
+  { area:'mel', icon:'🏨', name:'IC メルボルン ザ リアルト', en:['InterContinental Melbourne The Rialto','495 Collins Street, Melbourne VIC 3000'], day:'DAY 2・3 ホテル', map:'https://maps.google.com/?q=495+Collins+Street+Melbourne', web:'https://www.ihg.com/intercontinental/hotels/gb/en/melbourne/melha/hoteldetail', x:90, y:246, order:1, move:'start', tip:'Collins St西端の歴史的建築ホテル。重厚なロビーが見どころ' },
+  { area:'mel', icon:'☕', name:'Lune Croissanterie CBD', en:['Flinders Lane, Melbourne VIC 3000'], day:'DAY 2 朝食', map:'https://maps.google.com/?q=Lune+Croissanterie+CBD+Melbourne', web:'https://www.lunecroissanterie.com/', x:208, y:243, order:2, move:'walk', legMin:10, tip:'世界一とも称されるクロワッサン。朝は行列、開店直後が狙い目' },
+  { area:'mel', icon:'🎨', name:'ホージア・レーン', en:['Hosier Lane, Melbourne VIC 3000'], day:'DAY 2 観光（無料）', map:'https://maps.google.com/?q=Hosier+Lane+Melbourne', x:192, y:283, order:3, move:'walk', legMin:5, tip:'ストリートアートの路地。写真映え抜群、絵柄は日々変化' },
+  { area:'mel', icon:'🏛️', name:'ブロック・アーケード', en:['Block Arcade — 282 Collins Street, Melbourne'], day:'DAY 2 観光', map:'https://maps.google.com/?q=Block+Arcade+Melbourne', web:'https://www.theblockarcade.com.au/', x:172, y:246, order:4, move:'walk', legMin:4, tip:'1890年代の優雅なアーケード。床のモザイクとHopetoun Tea Roomsが名物' },
+  { area:'mel', icon:'🍝', name:'Il Solito Posto', en:['113 Collins Street（地下）, Melbourne'], day:'DAY 2 ランチ', map:'https://maps.google.com/?q=Il+Solito+Posto+Melbourne', web:'https://ilsolitoposto.com.au/', x:258, y:245, order:5, move:'walk', legMin:9, tip:'Collins St東端の老舗イタリアン。地下の隠れ家的ビストロ' },
+  { area:'mel', icon:'🍱', name:'Supernormal', en:['180 Flinders Lane, Melbourne VIC 3000'], day:'DAY 2 ディナー（要予約）', map:'https://maps.google.com/?q=Supernormal+180+Flinders+Lane+Melbourne', web:'https://supernormal.net.au/', x:218, y:267, order:6, move:'walk', legMin:6, tip:'アジアンフュージョンの人気店。名物ロブスターロールは必食' },
+  { area:'mel', icon:'🛒', name:'クイーンビクトリアマーケット', en:['Queen Victoria Market — Queen St & Victoria St'], day:'DAY 3 観光（火曜営業）', map:'https://maps.google.com/?q=Queen+Victoria+Market+Melbourne', web:'https://qvm.com.au/', x:139, y:91, order:7, move:'tram', legMin:12, tip:'南半球最大級の market。グルメ・土産が揃う（月・水休み）' },
+  { area:'mel', icon:'🌳', name:'カールトン庭園・王立展示館', en:['Carlton Gardens, Carlton VIC 3053'], day:'DAY 3 観光（世界遺産）', map:'https://maps.google.com/?q=Carlton+Gardens+Melbourne', web:'https://museumsvictoria.com.au/reb/', x:250, y:86, order:8, move:'walk', legMin:13, tip:'世界遺産の王立展示館を擁する庭園。緑と歴史建築が美しい' },
   // SYDNEY CBD  （viewBox 0 0 300 400、x:西→東 / y:北→南）
-  { area:'syd', icon:'🏨', name:'リッジス ワールド スクエア', en:['Rydges World Square — 389 Pitt Street, Sydney'], day:'DAY 4〜6 ホテル', map:'https://maps.google.com/?q=389+Pitt+Street+Sydney', web:'https://www.rydges.com/accommodation/sydney-nsw/world-square/', x:152, y:212, order:1, move:'start' },
-  { area:'syd', icon:'🦞', name:"Nick's Seafood Restaurant", en:['The Promenade, Cockle Bay Wharf, Sydney'], day:'DAY 4 ディナー（要予約）', map:'https://maps.google.com/?q=Nicks+Seafood+Restaurant+Cockle+Bay+Wharf+Sydney', web:'https://nicksseafood.com.au/', x:88, y:178, order:2, move:'walk' },
-  { area:'syd', icon:'🏨', name:'ヒルトン シドニー（ツアー集合場所）', en:['Hilton Sydney — 488 George Street, Sydney NSW 2000'], day:'DAY 5 集合 8:25（5分前厳守）', map:'https://maps.google.com/?q=Hilton+Sydney+488+George+Street', x:150, y:166, order:3, move:'walk' },
-  { area:'syd', icon:'☕', name:'The Grounds of the City', en:['500 George Street, Sydney NSW 2000'], day:'DAY 6 朝食', map:'https://maps.google.com/?q=The+Grounds+of+the+City+Sydney', web:'https://thegrounds.com.au/', x:126, y:156, order:4, move:'walk' },
-  { area:'syd', icon:'🌺', name:'ロイヤルボタニカルガーデン', en:['Royal Botanic Garden — Mrs Macquaries Rd, Sydney'], day:'DAY 6 観光（無料）', map:'https://maps.google.com/?q=Royal+Botanic+Garden+Sydney', web:'https://www.rbgsyd.nsw.gov.au/', x:228, y:104, order:5, move:'walk' },
-  { area:'syd', icon:'📸', name:'ミセス・マッコリーズ・ポイント', en:['Mrs Macquaries Point, Sydney NSW 2000'], day:'DAY 6 絶景フォト（無料）', map:'https://maps.google.com/?q=Mrs+Macquaries+Point+Sydney', x:252, y:62, order:6, move:'walk' },
-  { area:'syd', icon:'🧱', name:'ロックス地区', en:['The Rocks, Sydney NSW 2000'], day:'DAY 6 観光', map:'https://maps.google.com/?q=The+Rocks+Sydney', web:'https://www.therocks.com/', x:122, y:76, order:7, move:'walk' },
-  { area:'syd', icon:'🍺', name:'The Glenmore Hotel', en:['96 Cumberland Street, The Rocks NSW 2000'], day:'DAY 6 ランチ', map:'https://maps.google.com/?q=The+Glenmore+Hotel+The+Rocks+Sydney', web:'https://www.theglenmore.com.au/', x:100, y:58, order:8, move:'walk' },
-  { area:'syd', icon:'🛍️', name:'クイーンビクトリアビルディング（QVB）', en:['455 George Street, Sydney NSW 2000'], day:'DAY 6 ショッピング', map:'https://maps.google.com/?q=Queen+Victoria+Building+Sydney', web:'https://www.qvb.com.au/', x:124, y:182, order:9, move:'walk' },
-  { area:'syd', icon:'🎭', name:'Bennelong', en:['Sydney Opera House, Bennelong Point, Sydney'], day:'DAY 6 ディナー（要予約）', map:'https://maps.google.com/?q=Bennelong+Sydney+Opera+House', web:'https://www.bennelong.com.au/', x:188, y:54, order:10, move:'walk' },
-  { area:'syd', icon:'✈️', name:'シドニー空港 第1ターミナル', en:['Sydney Airport T1 International, Mascot NSW 2020'], day:'DAY 7 出発', map:'https://maps.google.com/?q=Sydney+Airport+Terminal+1+International', web:'https://www.sydneyairport.com.au/', x:150, y:372, order:11, move:'tram' },
+  { area:'syd', icon:'🏨', name:'リッジス ワールド スクエア', en:['Rydges World Square — 389 Pitt Street, Sydney'], day:'DAY 4〜6 ホテル', map:'https://maps.google.com/?q=389+Pitt+Street+Sydney', web:'https://www.rydges.com/accommodation/sydney-nsw/world-square/', x:152, y:212, order:1, move:'start', tip:'CBD中心の好立地。観光・買い物の拠点に便利' },
+  { area:'syd', icon:'🦞', name:"Nick's Seafood Restaurant", en:['The Promenade, Cockle Bay Wharf, Sydney'], day:'DAY 4 ディナー（要予約）', map:'https://maps.google.com/?q=Nicks+Seafood+Restaurant+Cockle+Bay+Wharf+Sydney', web:'https://nicksseafood.com.au/', x:88, y:178, order:2, move:'walk', legMin:12, tip:'ダーリングハーバーの人気シーフード。水辺の夜景が最高' },
+  { area:'syd', icon:'🏨', name:'ヒルトン シドニー（ツアー集合場所）', en:['Hilton Sydney — 488 George Street, Sydney NSW 2000'], day:'DAY 5 集合 8:25（5分前厳守）', map:'https://maps.google.com/?q=Hilton+Sydney+488+George+Street', x:150, y:166, order:3, move:'walk', legMin:9, tip:'DAY5ブルマンツアーの集合場所。8:25集合・5分前厳守！' },
+  { area:'syd', icon:'☕', name:'The Grounds of the City', en:['500 George Street, Sydney NSW 2000'], day:'DAY 6 朝食', map:'https://maps.google.com/?q=The+Grounds+of+the+City+Sydney', web:'https://thegrounds.com.au/', x:126, y:156, order:4, move:'walk', legMin:2, tip:'緑あふれる人気カフェ。朝食やブランチにおすすめ' },
+  { area:'syd', icon:'🌺', name:'ロイヤルボタニカルガーデン', en:['Royal Botanic Garden — Mrs Macquaries Rd, Sydney'], day:'DAY 6 観光（無料）', map:'https://maps.google.com/?q=Royal+Botanic+Garden+Sydney', web:'https://www.rbgsyd.nsw.gov.au/', x:228, y:104, order:5, move:'walk', legMin:15, tip:'湾沿いの広大な植物園。入園無料、散策が気持ちいい' },
+  { area:'syd', icon:'📸', name:'ミセス・マッコリーズ・ポイント', en:['Mrs Macquaries Point, Sydney NSW 2000'], day:'DAY 6 絶景フォト（無料）', map:'https://maps.google.com/?q=Mrs+Macquaries+Point+Sydney', x:252, y:62, order:6, move:'walk', legMin:10, tip:'オペラハウス＋ハーバーブリッジを一望できる定番フォトスポット' },
+  { area:'syd', icon:'🧱', name:'ロックス地区', en:['The Rocks, Sydney NSW 2000'], day:'DAY 6 観光', map:'https://maps.google.com/?q=The+Rocks+Sydney', web:'https://www.therocks.com/', x:122, y:76, order:7, move:'walk', legMin:22, tip:'石畳の歴史地区。週末はマーケット、パブやギャラリーも' },
+  { area:'syd', icon:'🍺', name:'The Glenmore Hotel', en:['96 Cumberland Street, The Rocks NSW 2000'], day:'DAY 6 ランチ', map:'https://maps.google.com/?q=The+Glenmore+Hotel+The+Rocks+Sydney', web:'https://www.theglenmore.com.au/', x:100, y:58, order:8, move:'walk', legMin:3, tip:'ルーフトップからオペラハウス＆橋が見えるパブ。ランチに最適' },
+  { area:'syd', icon:'🛍️', name:'クイーンビクトリアビルディング（QVB）', en:['455 George Street, Sydney NSW 2000'], day:'DAY 6 ショッピング', map:'https://maps.google.com/?q=Queen+Victoria+Building+Sydney', web:'https://www.qvb.com.au/', x:124, y:182, order:9, move:'walk', legMin:16, tip:'壮麗な歴史的ショッピングアーケード。ステンドグラスと大時計' },
+  { area:'syd', icon:'🎭', name:'Bennelong', en:['Sydney Opera House, Bennelong Point, Sydney'], day:'DAY 6 ディナー（要予約）', map:'https://maps.google.com/?q=Bennelong+Sydney+Opera+House', web:'https://www.bennelong.com.au/', x:188, y:54, order:10, move:'walk', legMin:16, tip:'オペラハウス内の名店。建築美の中でディナー。要予約・服装に注意' },
+  { area:'syd', icon:'✈️', name:'シドニー空港 第1ターミナル', en:['Sydney Airport T1 International, Mascot NSW 2020'], day:'DAY 7 出発', map:'https://maps.google.com/?q=Sydney+Airport+Terminal+1+International', web:'https://www.sydneyairport.com.au/', x:150, y:372, order:11, move:'tram', legMin:20, tip:'T1国際線。市内から電車 Airport Link で約15分' },
   // BLUE MOUNTAINS  （DAY5 ツアー・バス移動。viewBox 0 0 300 240、東＝シドニー側）
-  { area:'blue', icon:'🦘', name:'フェザーデール動物園', en:['Featherdale Wildlife Park — 217 Kildare Rd, Doonside'], day:'DAY 5 ツアー', map:'https://maps.google.com/?q=Featherdale+Wildlife+Park+Doonside', web:'https://www.featherdale.com.au/', x:205, y:150, order:1, move:'car' },
-  { area:'blue', icon:'🚡', name:'シーニックワールド', en:['Scenic World — Cliff Drive, Katoomba NSW 2780'], day:'DAY 5 ツアー', map:'https://maps.google.com/?q=Scenic+World+Katoomba', web:'https://www.scenicworld.com.au/', x:66, y:156, order:2, move:'car' },
-  { area:'blue', icon:'⛰️', name:'エコーポイント展望台', en:['Echo Point Lookout — Katoomba NSW 2780'], day:'DAY 5 ツアー', map:'https://maps.google.com/?q=Echo+Point+Lookout+Katoomba', x:82, y:176, order:3, move:'car' },
-  { area:'blue', icon:'🏘️', name:'ルーラ', en:['Leura Mall, Leura NSW 2780'], day:'DAY 5 ツアー', map:'https://maps.google.com/?q=Leura+Mall+NSW', x:122, y:160, order:4, move:'car' }
+  { area:'blue', icon:'🦘', name:'フェザーデール動物園', en:['Featherdale Wildlife Park — 217 Kildare Rd, Doonside'], day:'DAY 5 ツアー', map:'https://maps.google.com/?q=Featherdale+Wildlife+Park+Doonside', web:'https://www.featherdale.com.au/', x:205, y:150, order:1, move:'car', tip:'コアラやカンガルーと触れ合える動物園。ツアー序盤の定番' },
+  { area:'blue', icon:'🚡', name:'シーニックワールド', en:['Scenic World — Cliff Drive, Katoomba NSW 2780'], day:'DAY 5 ツアー', map:'https://maps.google.com/?q=Scenic+World+Katoomba', web:'https://www.scenicworld.com.au/', x:66, y:156, order:2, move:'car', legMin:70, tip:'世界一急勾配のトロッコ列車と渓谷の絶景。ロープウェイも' },
+  { area:'blue', icon:'⛰️', name:'エコーポイント展望台', en:['Echo Point Lookout — Katoomba NSW 2780'], day:'DAY 5 ツアー', map:'https://maps.google.com/?q=Echo+Point+Lookout+Katoomba', x:82, y:176, order:3, move:'car', legMin:8, tip:'スリーシスターズを望む大展望台。ブルマン随一の景観' },
+  { area:'blue', icon:'🏘️', name:'ルーラ', en:['Leura Mall, Leura NSW 2780'], day:'DAY 5 ツアー', map:'https://maps.google.com/?q=Leura+Mall+NSW', x:122, y:160, order:4, move:'car', legMin:10, tip:'可愛い山あいの街。カフェと雑貨店が並ぶ。散策に' }
 ];
 
 var AREA_ORDER = ['mel', 'syd', 'blue'];
@@ -1627,8 +1656,17 @@ var MAP_GEO = {
 function escapeAttr(s) { return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;'); }
 
 // ─── 折りたたみリスト（現在エリアのスポット） ───────────────────────────────
+var MOVE_LABEL = { walk:'🚶 徒歩', tram:'🚆 電車', car:'🚌 バス' };
+
+function legHTML(s) {
+  if (!s.legMin) return '';
+  var lbl = MOVE_LABEL[s.move] || '🚶 徒歩';
+  return '<div class="map-leg">↓ ' + lbl + ' 約' + s.legMin + '分</div>';
+}
+
 function spotItemHTML(s) {
   var enLines = s.en.map(function(e){ return '<div class="map-en">' + e + '</div>'; }).join('');
+  var tip = s.tip ? '<div class="map-tip">💡 ' + s.tip + '</div>' : '';
   var actions = '<a href="' + escapeAttr(s.map) + '" class="map-go" target="_blank" rel="noopener">🗺️</a>';
   if (s.web) actions += '<a href="' + escapeAttr(s.web) + '" class="web-go" target="_blank" rel="noopener">🌐</a>';
   return '<div class="map-item">' +
@@ -1637,6 +1675,7 @@ function spotItemHTML(s) {
         '<div class="map-name">' + s.name + '</div>' +
         enLines +
         '<span class="map-day-tag">' + s.day + '</span>' +
+        tip +
       '</div>' +
       '<div class="map-actions">' + actions + '</div>' +
     '</div>';
@@ -1645,9 +1684,10 @@ function spotItemHTML(s) {
 function renderMapList() {
   var host = document.getElementById('map-list');
   if (!host) return;
+  var spots = SPOTS.filter(function(s){ return s.area === currentArea; })
+                   .sort(function(a,b){ return (a.order||0) - (b.order||0); });
   var html = '';
-  SPOTS.filter(function(s){ return s.area === currentArea; })
-       .forEach(function(s){ html += spotItemHTML(s); });
+  spots.forEach(function(s){ html += legHTML(s) + spotItemHTML(s); });
   host.innerHTML = html;
 }
 
@@ -1836,9 +1876,10 @@ function openMapPopup(i, g) {
   var enLines = s.en.map(function(e){ return '<div class="mpop-en">' + e + '</div>'; }).join('');
   var actions = '<a class="mpop-map" href="' + escapeAttr(s.map) + '" target="_blank" rel="noopener">🗺️ マップ</a>';
   if (s.web) actions += '<a class="mpop-web" href="' + escapeAttr(s.web) + '" target="_blank" rel="noopener">🌐 公式</a>';
+  var tip = s.tip ? '<div class="mpop-tip">💡 ' + s.tip + '</div>' : '';
   pop.innerHTML = '<button class="mpop-close" onclick="closeMapPopup()">×</button>' +
     '<div class="mpop-name">' + s.icon + ' ' + s.name + '</div>' + enLines +
-    '<span class="mpop-day">' + s.day + '</span>' +
+    '<span class="mpop-day">' + s.day + '</span>' + tip +
     '<div class="mpop-actions">' + actions + '</div>';
   pop.hidden = false;
   document.querySelectorAll('.mp-pin.sel').forEach(function(p){ p.classList.remove('sel'); });
@@ -1860,11 +1901,38 @@ function closeMapPopup() {
   document.querySelectorAll('.mp-pin.sel').forEach(function(p){ p.classList.remove('sel'); });
 }
 
+// ─── 日別の服装・気温ガイド（9月下旬の目安） ────────────────────────────────
+var DAY_WEATHER = {
+  day1: { icon:'✈️', temp:'日本 20℃前後',          note:'移動日。機内は冷えるので羽織りを' },
+  day2: { icon:'🌤', temp:'メルボルン 最高18/最低9℃', note:'天気が変わりやすい。羽織り＆折りたたみ傘が安心' },
+  day3: { icon:'🌤', temp:'メルボルン 最高18/最低9℃', note:'朝晩は冷える。重ね着で調整を' },
+  day4: { icon:'✈️', temp:'シドニー 最高21/最低12℃',  note:'移動日。日中は過ごしやすい陽気' },
+  day5: { icon:'⛰️', temp:'ブルーマウンテンズ 最高14/最低5℃', note:'山は寒い！しっかり防寒（手袋・厚手の上着）' },
+  day6: { icon:'🌞', temp:'シドニー 最高21/最低13℃',  note:'散策日和。日差し対策（帽子・日焼け止め）も' },
+  day7: { icon:'✈️', temp:'シドニー 最高21/最低13℃',  note:'帰国日。朝は冷えるので一枚羽織って' }
+};
+function renderDayWeather() {
+  Object.keys(DAY_WEATHER).forEach(function(id) {
+    var pane = document.getElementById(id);
+    if (!pane || pane.querySelector('.day-weather')) return;
+    var w = DAY_WEATHER[id];
+    var div = document.createElement('div');
+    div.className = 'day-weather';
+    div.innerHTML = '<span class="dw-icon">' + w.icon + '</span>' +
+      '<div class="dw-body"><div class="dw-temp">' + w.temp + '</div>' +
+      '<div class="dw-note">' + w.note + '</div></div>';
+    var hd = pane.querySelector('.day-hd');
+    if (hd && hd.nextSibling) pane.insertBefore(div, hd.nextSibling);
+    else pane.insertBefore(div, pane.firstChild);
+  });
+}
+
 // ─── Init ──────────────────────────────────────────────────────────────────
 (function init() {
   renderAreaSwitch();
   renderAreaMap();
   renderMapList();
+  renderDayWeather();
   // 地図の外側タップでポップアップを閉じる
   document.addEventListener('click', function(e) {
     var pop = document.getElementById('map-popup');
