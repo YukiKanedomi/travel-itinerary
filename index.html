@@ -206,6 +206,42 @@
     .day-weather .dw-icon { font-size: 22px; flex-shrink: 0; }
     .day-weather .dw-temp { font-size: 13px; font-weight: 800; color: var(--navy); }
     .day-weather .dw-note { font-size: 11px; color: var(--muted); margin-top: 2px; line-height: 1.4; }
+
+    /* OVERVIEW (俯瞰ビュー) */
+    .ov-card { display: flex; align-items: center; gap: 12px; width: 100%; text-align: left; background: #fff; border: none; border-radius: 14px; box-shadow: var(--shadow); padding: 13px 14px; margin-bottom: 9px; cursor: pointer; transition: transform .15s, box-shadow .2s; }
+    .ov-card:hover { transform: translateY(-2px); box-shadow: 0 6px 22px rgba(0,0,0,.1); }
+    .ov-card:active { transform: scale(.99); }
+    .ov-day { flex-shrink: 0; width: 38px; height: 38px; border-radius: 50%; background: linear-gradient(135deg, var(--navy), var(--blue)); color: #fff; font-size: 18px; font-weight: 900; display: flex; align-items: center; justify-content: center; }
+    .ov-body { flex: 1; min-width: 0; }
+    .ov-top { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+    .ov-date { font-size: 11px; color: var(--muted); font-weight: 700; }
+    .ov-temp { font-size: 10px; color: var(--blue); font-weight: 700; white-space: nowrap; }
+    .ov-theme { font-size: 14px; font-weight: 800; margin-top: 1px; }
+    .ov-desc { font-size: 11px; color: var(--muted); margin-top: 2px; line-height: 1.4; }
+    .ov-arrow { flex-shrink: 0; font-size: 22px; color: var(--border); font-weight: 700; }
+
+    /* TIMEBAR (1日の流れ) */
+    .timebar { background: #fff; border-radius: 12px; box-shadow: var(--shadow); padding: 11px 16px 9px; margin-bottom: 18px; }
+    .tb-head { font-size: 11px; font-weight: 800; color: var(--navy); margin-bottom: 12px; }
+    .tb-cnt { font-weight: 700; color: var(--muted); margin-left: 4px; }
+    .tb-track { position: relative; height: 4px; background: var(--border); border-radius: 3px; margin: 0 4px; }
+    .tb-dot { position: absolute; top: 50%; width: 9px; height: 9px; border-radius: 50%; background: var(--navy); border: 1.5px solid #fff; transform: translate(-50%, -50%); box-shadow: 0 1px 2px rgba(0,0,0,.2); }
+    .tb-axis { display: flex; justify-content: space-between; font-size: 9px; color: var(--muted); margin-top: 6px; padding: 0 2px; }
+
+    /* PREP (準備タブ) */
+    .prep-gh { font-size: 11px; font-weight: 800; color: var(--blue); margin: 12px 2px 6px; }
+    .prep-card { padding: 4px 14px; }
+    .prep-item { position: relative; display: flex; align-items: center; gap: 10px; padding: 9px 36px 9px 0; font-size: 13px; line-height: 1.5; border-bottom: 1px solid #f4f4f4; cursor: pointer; transition: opacity .2s; }
+    .prep-item:last-child { border-bottom: none; }
+    .prep-item .prep-text { flex: 1; }
+    .prep-item.checked { opacity: .5; }
+    .prep-item.checked .prep-text { text-decoration: line-through; }
+    .prep-check { position: absolute; right: 0; top: 50%; transform: translateY(-50%); width: 24px; height: 24px; border-radius: 50%; border: 2px solid var(--border); background: #fff; display: flex; align-items: center; justify-content: center; font-size: 12px; color: transparent; transition: all .18s; flex-shrink: 0; }
+    .prep-item.checked .prep-check { background: var(--green); border-color: var(--green); color: #fff; }
+    .bk-item { padding: 9px 0; border-bottom: 1px solid #f4f4f4; }
+    .bk-item:last-child { border-bottom: none; }
+    .bk-note { width: 100%; margin-top: 7px; padding: 6px 9px; border: 1px solid var(--border); border-radius: 8px; font-size: 12px; font-family: inherit; background: #fafafa; }
+    .bk-note:focus { outline: none; border-color: var(--blue); background: #fff; }
     .mp-street { stroke: #fbf9f4; stroke-width: 2.2; fill: none; stroke-linecap: round; }
     .mp-street-main { stroke: #ffffff; stroke-width: 4.5; fill: none; stroke-linecap: round; }
     .mp-river { fill: url(#mpWater); }
@@ -438,25 +474,19 @@
   </svg>
 </header>
 
-<!-- TABS -->
+<!-- TABS（renderTabs で生成） -->
 <div class="tabs-wrap">
-  <div class="tabs" role="tablist">
-    <button class="tab active" onclick="show('day1',0)"><span class="dn">1</span><span class="dl">出発日</span></button>
-    <button class="tab" onclick="show('day2',1)"><span class="dn">2</span><span class="dl">MEL①</span></button>
-    <button class="tab" onclick="show('day3',2)"><span class="dn">3</span><span class="dl">MEL②</span></button>
-    <button class="tab" onclick="show('day4',3)"><span class="dn">4</span><span class="dl">移動日</span></button>
-    <button class="tab" onclick="show('day5',4)"><span class="dn">5</span><span class="dl">ブルーM</span></button>
-    <button class="tab" onclick="show('day6',5)"><span class="dn">6</span><span class="dl">SYD</span></button>
-    <button class="tab" onclick="show('day7',6)"><span class="dn">7</span><span class="dl">帰国日</span></button>
-    <button class="tab" onclick="show('info',7)"><span class="dn" style="font-size:16px">📋</span><span class="dl">基本情報</span></button>
-    <button class="tab" onclick="show('map',8)"><span class="dn" style="font-size:16px">🗺️</span><span class="dl">MAP</span></button>
-  </div>
+  <div class="tabs" id="tabs" role="tablist"></div>
 </div>
 
 <main class="content">
 
+<!-- 概要（旅程まるごと俯瞰：renderOverview で生成） -->
+<div id="overview" class="pane active"></div>
+
+
 <!-- ═══ DAY 1 ═══ -->
-<div id="day1" class="pane active">
+<div id="day1" class="pane">
   <div class="day-hd">
     <div class="day-circle"><span class="cn">1</span><span class="ct">DAY</span></div>
     <div><h2 class="editable">9月20日（日）日本出発</h2><p class="editable">成田発 → メルボルン行き（機中泊）</p></div>
@@ -983,22 +1013,37 @@
   </div>
 
   <div class="section">
+    <div class="memo editable">🦘 旅の心得<br><br>9月のオーストラリアは南半球の「春の始まり」。日中は過ごしやすくても朝晩は10℃を下回ることも。レイヤリング（重ね着）を常に意識して。<br><br>メルボルンはコーヒーとアートの街、シドニーは海と建築の街。まったく違う顔を持つ2都市を、ふたりのペースで楽しんでください。<br><br>Have a great trip！ 🇦🇺</div>
+  </div>
+</div>
+
+<!-- ═══ 準備 ═══ -->
+<div id="prep" class="pane">
+  <div class="day-hd">
+    <div class="day-circle" style="background:linear-gradient(135deg,#e65100,#f9a825)"><span style="font-size:20px;line-height:1">🎒</span></div>
+    <div><h2>出発前の準備</h2><p>ToDo・予約状況・持ち物を一括チェック</p></div>
+  </div>
+
+  <!-- 出発前ToDo（renderPrep で生成） -->
+  <div id="prep-todo" class="section"></div>
+
+  <!-- 予約・手配トラッカー（renderPrep で生成） -->
+  <div id="prep-book" class="section"></div>
+
+  <!-- 持ち物チェックリスト（基本情報から移設） -->
+  <div class="section">
     <div class="sec-title"><div class="sec-icon" style="background:var(--gold)"></div><span style="color:var(--orange)">持ち物チェックリスト</span></div>
     <div class="card c-tip" id="packing-card">
       <div class="cl-progress"><span class="cl-progress-label"><strong id="cl-done">0</strong> / <span id="cl-total">8</span> 準備完了</span><div class="cl-bar"><div id="cl-fill" class="cl-fill" style="width:0%"></div></div></div>
-      <div class="tip-item cl-item"><span class="tip-text editable">パスポート（有効期限：帰国後6ヶ月以上）</span><span class="cl-check">✓</span></div>
-      <div class="tip-item cl-item"><span class="tip-text editable">ETA申請完了の確認（スマホのアプリで確認可）</span><span class="cl-check">✓</span></div>
-      <div class="tip-item cl-item"><span class="tip-text editable">クレジットカード（タッチ決済対応）— シドニーの電車・ライトレールに直接使用可能</span><span class="cl-check">✓</span></div>
-      <div class="tip-item cl-item"><span class="tip-text editable">変換プラグ（Iタイプ・オーストラリア型）— 230V対応確認を</span><span class="cl-check">✓</span></div>
-      <div class="tip-item cl-item"><span class="tip-text editable">ウインドブレーカー・ストール（必須！）— 9月は朝晩急に冷え込む。メルボルンは天気が特に変わりやすい</span><span class="cl-check">✓</span></div>
-      <div class="tip-item cl-item"><span class="tip-text editable">歩きやすいスニーカー（1日1万歩超は当たり前）</span><span class="cl-check">✓</span></div>
-      <div class="tip-item cl-item"><span class="tip-text editable">日焼け止め（SPF50+推奨）— オーストラリアのUVは日本の数倍強い</span><span class="cl-check">✓</span></div>
-      <div class="tip-item cl-item"><span class="tip-text editable">常備薬（胃薬・頭痛薬・整腸剤・酔い止め）</span><span class="cl-check">✓</span></div>
+      <div class="tip-item cl-item"><span class="tip-text">パスポート（有効期限：帰国後6ヶ月以上）</span><span class="cl-check">✓</span></div>
+      <div class="tip-item cl-item"><span class="tip-text">ETA申請完了の確認（スマホのアプリで確認可）</span><span class="cl-check">✓</span></div>
+      <div class="tip-item cl-item"><span class="tip-text">クレジットカード（タッチ決済対応）— シドニーの電車・ライトレールに直接使用可能</span><span class="cl-check">✓</span></div>
+      <div class="tip-item cl-item"><span class="tip-text">変換プラグ（Iタイプ・オーストラリア型）— 230V対応確認を</span><span class="cl-check">✓</span></div>
+      <div class="tip-item cl-item"><span class="tip-text">ウインドブレーカー・ストール（必須！）— 9月は朝晩急に冷え込む。メルボルンは天気が特に変わりやすい</span><span class="cl-check">✓</span></div>
+      <div class="tip-item cl-item"><span class="tip-text">歩きやすいスニーカー（1日1万歩超は当たり前）</span><span class="cl-check">✓</span></div>
+      <div class="tip-item cl-item"><span class="tip-text">日焼け止め（SPF50+推奨）— オーストラリアのUVは日本の数倍強い</span><span class="cl-check">✓</span></div>
+      <div class="tip-item cl-item"><span class="tip-text">常備薬（胃薬・頭痛薬・整腸剤・酔い止め）</span><span class="cl-check">✓</span></div>
     </div>
-  </div>
-
-  <div class="section">
-    <div class="memo editable">🦘 旅の心得<br><br>9月のオーストラリアは南半球の「春の始まり」。日中は過ごしやすくても朝晩は10℃を下回ることも。レイヤリング（重ね着）を常に意識して。<br><br>メルボルンはコーヒーとアートの街、シドニーは海と建築の街。まったく違う顔を持つ2都市を、ふたりのペースで楽しんでください。<br><br>Have a great trip！ 🇦🇺</div>
   </div>
 </div>
 
@@ -1244,14 +1289,39 @@ function show(id, idx, noScroll) {
   initNowNext();
 }
 
+// ─── タブ定義（順序＝表示順。ここに足すだけでタブ追加できる） ──────────────────
+var TABS = [
+  { id:'overview', dn:'🗓️', dl:'概要',   icon:true },
+  { id:'day1', dn:'1', dl:'出発日' },
+  { id:'day2', dn:'2', dl:'MEL①' },
+  { id:'day3', dn:'3', dl:'MEL②' },
+  { id:'day4', dn:'4', dl:'移動日' },
+  { id:'day5', dn:'5', dl:'ブルーM' },
+  { id:'day6', dn:'6', dl:'SYD' },
+  { id:'day7', dn:'7', dl:'帰国日' },
+  { id:'prep', dn:'🎒', dl:'準備',   icon:true },
+  { id:'info', dn:'📋', dl:'基本情報', icon:true },
+  { id:'map',  dn:'🗺️', dl:'MAP',    icon:true }
+];
+function tabIndex(id){ for (var i=0;i<TABS.length;i++){ if (TABS[i].id===id) return i; } return 0; }
+function renderTabs(){
+  var host = document.getElementById('tabs');
+  if (!host) return;
+  host.innerHTML = TABS.map(function(t, i){
+    var dn = t.icon ? '<span class="dn" style="font-size:16px">' + t.dn + '</span>'
+                    : '<span class="dn">' + t.dn + '</span>';
+    return '<button class="tab" onclick="show(\'' + t.id + '\',' + i + ')">' + dn +
+           '<span class="dl">' + t.dl + '</span></button>';
+  }).join('');
+}
+
 // ─── スワイプでタブ切り替え（地図タブはパン操作優先で除外） ──────────────────
-var TAB_PANES = ['day1','day2','day3','day4','day5','day6','day7','info','map'];
 (function setupSwipe(){
   var main = document.querySelector('main.content');
   if (!main) return;
   var sx = 0, sy = 0, tracking = false;
   main.addEventListener('touchstart', function(e){
-    if (currentTabIdx === 8) return;          // 地図タブ：ピンチ/ドラッグ優先
+    if (TABS[currentTabIdx] && TABS[currentTabIdx].id === 'map') return;  // 地図：ピンチ/ドラッグ優先
     if (!e.touches || e.touches.length !== 1) return;
     sx = e.touches[0].clientX; sy = e.touches[0].clientY; tracking = true;
   }, { passive:true });
@@ -1261,7 +1331,7 @@ var TAB_PANES = ['day1','day2','day3','day4','day5','day6','day7','info','map'];
     var dx = t.clientX - sx, dy = t.clientY - sy;
     if (Math.abs(dx) > 55 && Math.abs(dx) > Math.abs(dy) * 1.6) {
       var ni = currentTabIdx + (dx < 0 ? 1 : -1);
-      if (ni >= 0 && ni < TAB_PANES.length) show(TAB_PANES[ni], ni);
+      if (ni >= 0 && ni < TABS.length) show(TABS[ni].id, ni);
     }
   }, { passive:true });
 })();
@@ -1480,12 +1550,13 @@ function autoSelectTab() {
   var n = new Date();
   var today = new Date(n.getFullYear(), n.getMonth(), n.getDate());
   if (today < TRIP_START) {
-    show('info', 7, true);
+    show('overview', tabIndex('overview'), true);   // 出発前は俯瞰ビュー（計画段階）
   } else if (today > TRIP_END) {
-    show('day7', 6, true);
+    show('day7', tabIndex('day7'), true);
   } else {
-    var idx = Math.round((today - TRIP_START) / 86400000);
-    show(DAY_PANES[idx], idx, true);
+    var d = Math.round((today - TRIP_START) / 86400000);
+    var id = DAY_PANES[d];
+    show(id, tabIndex(id), true);
   }
 }
 
@@ -1933,12 +2004,164 @@ function renderDayWeather() {
   });
 }
 
+function makeEl(html){ var d = document.createElement('div'); d.innerHTML = html; return d.firstChild; }
+
+// ─── 旅程まるごと俯瞰ビュー ─────────────────────────────────────────────────
+var DAY_OVERVIEW = {
+  day1: { date:'9/20 (日)', theme:'✈️ 日本出発',          desc:'成田 18:40 → メルボルン（機中泊）' },
+  day2: { date:'9/21 (月)', theme:'🍴 メルボルン食べ歩き', desc:'Lune・ホージアレーン・ブロックアーケード・Supernormal' },
+  day3: { date:'9/22 (火)', theme:'🏛️ メルボルン文化',     desc:'QVマーケット・カールトン庭園（世界遺産）' },
+  day4: { date:'9/23 (水)', theme:'✈️ シドニーへ移動',      desc:'メルボルン→シドニー／ダーリングハーバーで夕食' },
+  day5: { date:'9/24 (木)', theme:'⛰️ 大自然＆動物',        desc:'ブルーマウンテンズ日帰りツアー（8:25集合）' },
+  day6: { date:'9/25 (金)', theme:'🌆 シドニー満喫',        desc:'植物園・ロックス・オペラハウスでディナー' },
+  day7: { date:'9/26 (土)', theme:'🛫 帰国',                desc:'シドニー空港から帰国の途へ' }
+};
+function renderOverview(){
+  var host = document.getElementById('overview');
+  if (!host) return;
+  var html = '<div class="day-hd"><div class="day-circle" style="background:linear-gradient(135deg,var(--gold),#f9a825)"><span style="font-size:20px;line-height:1">🗓️</span></div>' +
+    '<div><h2>旅程まるごと</h2><p>5泊7日・メルボルン→シドニー／カードでその日へ</p></div></div>';
+  ['day1','day2','day3','day4','day5','day6','day7'].forEach(function(id){
+    var o = DAY_OVERVIEW[id]; if (!o) return;
+    var w = DAY_WEATHER[id];
+    var idx = tabIndex(id), n = id.replace('day','');
+    html += '<button class="ov-card" onclick="show(\'' + id + '\',' + idx + ')">' +
+      '<span class="ov-day">' + n + '</span>' +
+      '<div class="ov-body">' +
+        '<div class="ov-top"><span class="ov-date">' + o.date + '</span>' +
+          (w ? '<span class="ov-temp">' + w.icon + ' ' + w.temp + '</span>' : '') + '</div>' +
+        '<div class="ov-theme">' + o.theme + '</div>' +
+        '<div class="ov-desc">' + o.desc + '</div>' +
+      '</div><span class="ov-arrow">›</span></button>';
+  });
+  host.innerHTML = html;
+}
+
+// ─── 1日のタイムバー（スケジュールの時間帯を可視化） ─────────────────────────
+function tbFmt(mins){ return Math.floor(mins/60) + ':' + ('0' + (mins%60)).slice(-2); }
+function renderTimebars(){
+  ['day1','day2','day3','day4','day5','day6','day7'].forEach(function(id){
+    var pane = document.getElementById(id);
+    if (!pane || pane.querySelector('.timebar')) return;
+    var items = [];
+    pane.querySelectorAll('.tl-item').forEach(function(it){
+      var te = it.querySelector('.tl-time'); if (!te) return;
+      var m = te.textContent.match(/(\d{1,2}):(\d{2})/); if (!m) return;
+      items.push(+m[1]*60 + +m[2]);
+    });
+    if (items.length < 2) return;
+    var start = Math.floor(Math.min.apply(null, items) / 60) * 60;
+    var end   = Math.ceil(Math.max.apply(null, items) / 60) * 60;
+    var span  = (end - start) || 60;
+    var dots = items.map(function(mn){
+      return '<span class="tb-dot" style="left:' + ((mn-start)/span*100) + '%"></span>';
+    }).join('');
+    var bar = '<div class="timebar">' +
+      '<div class="tb-head">⏱ この日の流れ <span class="tb-cnt">' + items.length + '件</span></div>' +
+      '<div class="tb-track">' + dots + '</div>' +
+      '<div class="tb-axis"><span>' + tbFmt(start) + '</span><span>' + tbFmt(end) + '</span></div></div>';
+    var anchor = pane.querySelector('.day-weather') || pane.querySelector('.day-hd');
+    var node = makeEl(bar);
+    if (anchor && anchor.nextSibling) pane.insertBefore(node, anchor.nextSibling);
+    else pane.insertBefore(node, pane.firstChild);
+  });
+}
+
+// ─── 準備タブ（出発前ToDo ＋ 予約・手配トラッカー） ──────────────────────────
+var PREP_TODO = [
+  { grp:'1ヶ月前まで', text:'ETA（電子渡航認証）を申請' },
+  { grp:'1ヶ月前まで', text:'海外旅行保険に加入' },
+  { grp:'1ヶ月前まで', text:'eSIM／SIMを手配' },
+  { grp:'1ヶ月前まで', text:'要予約レストランを予約（Supernormal・Nick’s・Bennelong）' },
+  { grp:'2週間前まで', text:'現地通貨(AUD)の準備・両替' },
+  { grp:'2週間前まで', text:'クレジットカードの海外利用・タッチ決済を確認' },
+  { grp:'2週間前まで', text:'変換プラグ（Iタイプ）を購入' },
+  { grp:'2週間前まで', text:'JTBツアー最終確認（DAY5 ヒルトン 8:25集合・5分前厳守）' },
+  { grp:'1週間前まで', text:'各予約確認書を印刷／スクショ保存' },
+  { grp:'1週間前まで', text:'パスポート有効期限を確認（帰国後6ヶ月以上）' },
+  { grp:'1週間前まで', text:'服装の準備（ブルーマウンテンズは防寒）' },
+  { grp:'前日〜当日',  text:'オンラインチェックイン' },
+  { grp:'前日〜当日',  text:'荷造り最終チェック（持ち物リスト）' },
+  { grp:'前日〜当日',  text:'検疫申告の確認（食品は必ずYES申告）' },
+  { grp:'前日〜当日',  text:'スマホ充電・モバイルバッテリー' }
+];
+var PREP_BOOK = [
+  { text:'✈️ 往路 JAL JL773（9/20 成田→メルボルン）' },
+  { text:'✈️ 国内線 メルボルン→シドニー（9/23）' },
+  { text:'✈️ 復路フライト（9/26 シドニー→）' },
+  { text:'🏨 IC メルボルン ザ リアルト（9/21–23・2泊）' },
+  { text:'🏨 リッジス ワールドスクエア（9/23–26・3泊）' },
+  { text:'⛰️ JTB ブルーマウンテンズ ツアー（9/24）' },
+  { text:'🍽️ Supernormal ディナー（要予約）' },
+  { text:'🍽️ Nick’s Seafood ディナー（要予約）' },
+  { text:'🍽️ Bennelong ディナー（要予約・服装注意）' }
+];
+function prepGet(key){ try { return JSON.parse(localStorage.getItem(key) || '{}'); } catch(e){ return {}; } }
+function prepSet(key, obj){ localStorage.setItem(key, JSON.stringify(obj)); }
+
+function renderPrep(){
+  var todoHost = document.getElementById('prep-todo');
+  var bookHost = document.getElementById('prep-book');
+  if (todoHost) {
+    var done = prepGet('prep_todo_v1');
+    var groups = [];
+    PREP_TODO.forEach(function(t){ if (groups.indexOf(t.grp) < 0) groups.push(t.grp); });
+    var html = '<div class="sec-title"><div class="sec-icon" style="background:var(--blue)"></div><span style="color:var(--blue)">出発前 ToDo</span></div>';
+    groups.forEach(function(g){
+      html += '<div class="prep-gh">' + g + '</div><div class="card c-tip prep-card">';
+      PREP_TODO.forEach(function(t, i){
+        if (t.grp !== g) return;
+        html += '<div class="prep-item' + (done[i] ? ' checked' : '') + '" data-k="' + i + '">' +
+                '<span class="prep-text">' + t.text + '</span><span class="prep-check">✓</span></div>';
+      });
+      html += '</div>';
+    });
+    todoHost.innerHTML = html;
+  }
+  if (bookHost) {
+    var bdone = prepGet('prep_book_v1'), bnote = prepGet('prep_booknote_v1');
+    var bh = '<div class="sec-title"><div class="sec-icon" style="background:var(--green)"></div><span style="color:var(--green)">予約・手配トラッカー</span></div><div class="card c-hotel prep-card">';
+    PREP_BOOK.forEach(function(b, i){
+      bh += '<div class="bk-item">' +
+        '<div class="bk-row"><div class="prep-item' + (bdone[i] ? ' checked' : '') + '" data-bk="' + i + '">' +
+          '<span class="prep-text">' + b.text + '</span><span class="prep-check">✓</span></div></div>' +
+        '<input class="bk-note" data-note="' + i + '" placeholder="予約番号・メモ" value="' + escapeAttr(bnote[i] || '') + '">' +
+      '</div>';
+    });
+    bh += '</div>';
+    bookHost.innerHTML = bh;
+  }
+}
+
+document.addEventListener('click', function(e){
+  var t = e.target.closest ? e.target.closest('#prep-todo .prep-item, #prep-book .prep-item') : null;
+  if (!t) return;
+  if (t.hasAttribute('data-k')) {
+    var d = prepGet('prep_todo_v1'); var k = t.getAttribute('data-k');
+    d[k] = !d[k]; prepSet('prep_todo_v1', d); t.classList.toggle('checked', !!d[k]);
+  } else if (t.hasAttribute('data-bk')) {
+    var b = prepGet('prep_book_v1'); var k2 = t.getAttribute('data-bk');
+    b[k2] = !b[k2]; prepSet('prep_book_v1', b); t.classList.toggle('checked', !!b[k2]);
+  }
+});
+document.addEventListener('input', function(e){
+  var inp = e.target;
+  if (inp && inp.classList && inp.classList.contains('bk-note')) {
+    var n = prepGet('prep_booknote_v1'); n[inp.getAttribute('data-note')] = inp.value;
+    prepSet('prep_booknote_v1', n);
+  }
+});
+
 // ─── Init ──────────────────────────────────────────────────────────────────
 (function init() {
+  renderTabs();
+  renderOverview();
+  renderPrep();
   renderAreaSwitch();
   renderAreaMap();
   renderMapList();
   renderDayWeather();
+  renderTimebars();
   // 地図の外側タップでポップアップを閉じる
   document.addEventListener('click', function(e) {
     var pop = document.getElementById('map-popup');
