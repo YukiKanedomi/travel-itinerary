@@ -1,16 +1,10 @@
 # Claude Code
 .claude/
 
-# 背景知識（個人資料）
-背景知識/
-
-# JTBレポート（個人情報含む可能性）
-JTB_Australia_Hotels_Report.txt
-
-# 参考地図（著作権：公開リポジトリに含めない）
-melbournestyle-map.pdf
-no1_city.gif
+# 参考資料（個人情報・著作物を含む：公開リポジトリに入れない）
+参考資料/
 *.gif
+*.pdf
 
 # 一時ファイル
 _*.png
