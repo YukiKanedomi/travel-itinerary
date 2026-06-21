@@ -15,3 +15,10 @@ no1_city.gif
 # 一時ファイル
 _*.png
 _*.js
+
+# スライド生成（ビルド成果物・依存）
+node_modules/
+package.json
+package-lock.json
+slides_build/
+*.pptx

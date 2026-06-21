@@ -348,7 +348,16 @@
     .conv-result { font-size: 22px; font-weight: 800; color: var(--green); min-height: 33px; display: flex; align-items: center; }
     .conv-swap { background: var(--navy); color: #fff; border: none; border-radius: 50%; width: 38px; height: 38px; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; align-self: center; transition: transform .3s, background .2s; }
     .conv-swap:hover { transform: rotate(180deg); background: var(--blue); }
-    .conv-rate { font-size: 11px; color: var(--muted); text-align: center; }
+    .conv-rate { font-size: 11px; color: var(--muted); text-align: center; display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; }
+    .conv-rate b { font-weight: 800; color: var(--navy); }
+    .fx-status { font-size: 10px; font-weight: 700; padding: 2px 9px; border-radius: 10px; background: #eef0f3; color: var(--muted); white-space: nowrap; }
+    .fx-status.live { background: #e3f5e9; color: #1b8a4b; }
+    .fx-status.cache { background: #fff3df; color: #b9770a; }
+    .fx-status.ref { background: #eef0f3; color: var(--muted); }
+    .fx-refresh { background: none; border: 1px solid #d7dbe0; border-radius: 50%; width: 24px; height: 24px; cursor: pointer; font-size: 12px; line-height: 1; padding: 0; color: var(--muted); display: inline-flex; align-items: center; justify-content: center; }
+    .fx-refresh:active { transform: scale(.88); }
+    .fx-refresh.spin { animation: fxspin .8s linear infinite; }
+    @keyframes fxspin { to { transform: rotate(360deg); } }
     body.edit-mode .conv-input { pointer-events: none; }
     body.edit-mode .conv-swap { pointer-events: none; opacity: .5; }
 
@@ -923,7 +932,7 @@
 
   <div class="info-grid">
     <div class="info-tile"><div class="ti">💰</div><div class="tlbl">通貨</div><div class="tval editable">豪ドル（AUD）</div></div>
-    <div class="info-tile"><div class="ti">💱</div><div class="tlbl">参考レート</div><div class="tval editable">1AUD ≈ 97円</div></div>
+    <div class="info-tile"><div class="ti">💱</div><div class="tlbl">参考レート</div><div class="tval" id="fx-tile-val">1AUD ≈ 97円</div></div>
     <div class="info-tile"><div class="ti">🌡️</div><div class="tlbl">9月の気温</div><div class="tval editable">13〜20℃（春）</div></div>
     <div class="info-tile"><div class="ti">🕐</div><div class="tlbl">時差（日本）</div><div class="tval editable">+1時間（AEST）</div></div>
     <div class="info-tile"><div class="ti">🔌</div><div class="tlbl">コンセント</div><div class="tval editable">230V / Iタイプ</div></div>
@@ -938,7 +947,11 @@
         <button class="conv-swap" onclick="swapConv()" title="切り替え">⇆</button>
         <div class="conv-to"><div class="conv-label" id="conv-to-lbl">🇯🇵 円</div><div class="conv-result" id="conv-result">—</div></div>
       </div>
-      <div class="conv-rate">レート: 1 AUD ≈ <span id="conv-rate-val">97</span> 円（上の参考レートに連動）</div>
+      <div class="conv-rate">
+        <span>1 AUD ≈ <b id="conv-rate-val">97</b> 円</span>
+        <span id="fx-status" class="fx-status ref">参考値</span>
+        <button type="button" class="fx-refresh" id="fx-refresh" onclick="refreshFx()" title="レートを最新に更新">🔄</button>
+      </div>
     </div>
   </div>
 
@@ -1524,6 +1537,71 @@ function applyChecklistState() {
 var convDir  = 'AUD_JPY';
 var convRate = 97;
 
+// ─── 為替レート（自動取得＋キャッシュ＋フォールバック） ──────────────────────
+var FX_KEY     = 'fx_rate_v1';   // localStorage: { rate, ts }
+var FX_DEFAULT = 97;             // 未取得時のフォールバック（参考値）
+var FX_API     = 'https://open.er-api.com/v6/latest/AUD';  // APIキー不要・CORS可
+
+function fxRound(r) { return Math.round(r * 10) / 10; }
+function fxFmtTime(ts) {
+  var d = new Date(ts);
+  return (d.getMonth() + 1) + '/' + d.getDate() + ' ' +
+         ('0' + d.getHours()).slice(-2) + ':' + ('0' + d.getMinutes()).slice(-2);
+}
+
+// state: 'live'（今オンライン取得） / 'cache'（前回保存値） / 'ref'（既定の参考値）
+function fxRender(rate, ts, state) {
+  convRate = rate;
+  var rv = document.getElementById('conv-rate-val');
+  if (rv) rv.textContent = fxRound(rate);
+  var tile = document.getElementById('fx-tile-val');
+  if (tile) tile.textContent = '1AUD ≈ ' + fxRound(rate) + '円';
+  var st = document.getElementById('fx-status');
+  if (st) {
+    st.className = 'fx-status ' + (state === 'live' ? 'live' : state === 'cache' ? 'cache' : 'ref');
+    if (state === 'live')       st.textContent = '🟢ライブ ' + fxFmtTime(ts);
+    else if (state === 'cache') st.textContent = '📶前回値 ' + fxFmtTime(ts);
+    else                        st.textContent = '参考値';
+  }
+  calcConv();
+}
+
+function fxLoadCache() {
+  try {
+    var o = JSON.parse(localStorage.getItem(FX_KEY));
+    if (o && o.rate > 0) return o;
+  } catch (_) {}
+  return null;
+}
+
+function fxFetch(manual) {
+  var btn = document.getElementById('fx-refresh');
+  if (btn) btn.classList.add('spin');
+  fetch(FX_API, { cache: 'no-store' })
+    .then(function (r) { return r.json(); })
+    .then(function (d) {
+      var rate = d && d.rates && d.rates.JPY;
+      if (!rate || rate <= 0) throw new Error('no JPY rate');
+      var ts = Date.now();
+      try { localStorage.setItem(FX_KEY, JSON.stringify({ rate: rate, ts: ts })); } catch (_) {}
+      fxRender(rate, ts, 'live');
+      if (manual) toast('レートを更新しました');
+    })
+    .catch(function () {
+      if (manual) toast('オフラインのため更新できませんでした');
+    })
+    .then(function () { if (btn) btn.classList.remove('spin'); });
+}
+
+function refreshFx() { fxFetch(true); }
+
+function initFx() {
+  var c = fxLoadCache();
+  if (c) fxRender(c.rate, c.ts, 'cache');   // まずキャッシュ（無ければ参考値）を即表示
+  else   fxRender(FX_DEFAULT, null, 'ref');
+  fxFetch(false);                            // 裏でオンライン最新を取得
+}
+
 function swapConv() {
   convDir = convDir === 'AUD_JPY' ? 'JPY_AUD' : 'AUD_JPY';
   var fl = document.getElementById('conv-from-lbl');
@@ -1928,6 +2006,17 @@ function setupMapZoom(svg, viewBox) {
   }, { passive:false });
   svg.addEventListener('dblclick', function(e){ e.preventDefault(); reset(); closeMapPopup(); });
 
+  // iOS Safari はピンチでページ全体を拡大する（viewport の maximum-scale も
+  // touch-action のピンチ抑止も無視する仕様）。地図SVG上だけ gesture イベントと
+  // 2本指 touchmove を抑止し、ピンチは必ず地図ズームだけに閉じ込める。
+  // （1本指の縦スクロールは touch-action:pan-y で従来どおり可能）
+  ['gesturestart','gesturechange','gestureend'].forEach(function(ev){
+    svg.addEventListener(ev, function(e){ e.preventDefault(); }, { passive:false });
+  });
+  svg.addEventListener('touchmove', function(e){
+    if (e.touches && e.touches.length >= 2) e.preventDefault();
+  }, { passive:false });
+
   svg.addEventListener('pointerdown', function(e){
     pointers[e.pointerId] = { x:e.clientX, y:e.clientY };
     moved = false;
@@ -2250,16 +2339,8 @@ document.addEventListener('input', function(e){
   setInterval(initNowNext, 60000);
   updateCountdown();
   autoSelectTab();
-  // Converter: read rate from info tile
-  document.querySelectorAll('.info-tile').forEach(function(tile) {
-    var lbl = tile.querySelector('.tlbl');
-    if (lbl && lbl.textContent.includes('レート')) {
-      var tval = tile.querySelector('.tval');
-      if (tval) { var m = tval.textContent.match(/[\d.]+/); if (m) convRate = parseFloat(m[0]); }
-    }
-  });
-  var rv = document.getElementById('conv-rate-val');
-  if (rv) rv.textContent = convRate;
+  // Converter: 為替レート（キャッシュ即表示→裏でオンライン最新を取得）
+  initFx();
   var ci = document.getElementById('conv-input');
   if (ci) ci.addEventListener('input', calcConv);
 })();
