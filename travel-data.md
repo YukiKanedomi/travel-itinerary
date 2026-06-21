@@ -141,7 +141,7 @@ MAP: https://maps.google.com/?q=Block+Arcade+282+Collins+Street+Melbourne
 公式: https://www.theblockarcade.com.au/
 
 #### 11:30 アート＆カルチャー
-説明: ウォールアートの路地裏「ホージア・レーン（Hosier Lane）」と「ビクトリア州立図書館」を見学
+説明: ウォールアートの路地裏「ホージア・レーン（Hosier Lane）」を見学。日々変わる壁画を2人で（ビクトリア州立図書館はDAY3で訪問）
 MAP: https://maps.google.com/?q=Hosier+Lane+Melbourne
 
 #### 13:00 ランチ：Il Solito Posto
@@ -152,10 +152,10 @@ MAP: https://maps.google.com/?q=Il+Solito+Posto+113+Collins+Street+Melbourne
 #### 15:00 ホテルチェックイン＆仮眠（最重要！）
 説明: ここで欲張って観光を続けないこと。バスタブでリフレッシュし1〜2時間の仮眠を。明日以降の体力はここで決まる
 
-#### 18:00 ディナー：Supernormal（要予約）
-説明: フリンダーズ・レーンの大人気モダン・アジアン。スパイス系なし、名物「ロブスターロール」は絶品。街のAFLファイナルの熱気を楽しんで
-MAP: https://maps.google.com/?q=Supernormal+180+Flinders+Lane+Melbourne
-公式: https://supernormal.net.au/
+#### 18:00 ディナー：Chin Chin（予約不可・気軽）
+説明: フリンダーズ・レーンの大人気モダンタイ。予約不可の行列制だが回転は早い。カレーや肉料理が中心で辛さも調整可。活気ある雰囲気でカジュアルに
+MAP: https://maps.google.com/?q=Chin+Chin+Flinders+Lane+Melbourne
+公式: https://chinchin.melbourne/
 
 #### 21:00 ホテル帰着
 説明: お疲れ様でした！長旅の最初の夜、ゆっくり休んでください
@@ -192,12 +192,12 @@ MAP: https://maps.google.com/?q=Block+Arcade+Melbourne
 おすすめ: スパイスなしの優しい味付けパスタ・リゾット、モクテルあり
 バッジ: アルコールなし対応◎
 
-#### Supernormal
-副題: モダン・アジアン・フリンダーズ・レーン
-住所: 180 Flinders Lane, Melbourne VIC 3000
-予算: $50〜80/人（要事前予約）
-おすすめ: 名物「ロブスターロール」。スパイス系なし、日本の食材を融合した洗練された料理
-バッジ: 要予約, アルコールなし対応◎
+#### Chin Chin
+副題: モダンタイ・フリンダーズ・レーン
+住所: 125 Flinders Lane, Melbourne VIC 3000
+予算: $30〜50/人
+おすすめ: カレー・肉料理・麺が中心で辛さ調整可。予約不可の行列制だが回転が早い。活気ある人気店
+バッジ: 予約不要, 気軽, 活気
 
 ---
 
@@ -222,14 +222,21 @@ MAP: https://maps.google.com/?q=Queen+Victoria+Market+Melbourne
 MAP: https://maps.google.com/?q=Carlton+Gardens+Melbourne
 公式: https://museumsvictoria.com.au/reb/
 
+#### 12:30 ビクトリア州立図書館
+説明: 無料トラムでCBDへ戻る途中に立ち寄り。荘厳なドーム閲覧室「ラ・トローブ・リーディングルーム」は圧巻（入場無料）。上階のギャラリーから見下ろす眺めも必見
+MAP: https://maps.google.com/?q=State+Library+Victoria+Melbourne
+公式: https://www.slv.vic.gov.au/
+
 #### 13:00 ランチ：フィッツロイ地区のカフェorCBDビストロ
 説明: おしゃれなフィッツロイ地区のオープンエアカフェ、またはCBDに戻って洗練されたビストロで優雅にランチ
 
 #### 15:00 5つ星ホテルステイを満喫
 説明: 完全自由行動日の醍醐味。ホテルのラウンジ、プール、バスタブをフル活用してゆったりと至福の時間を
 
-#### 18:00 ディナー：フリンダーズ・レーンのステーキハウスorモダンフレンチ
-説明: スパイスを一切使わない最高峰のディナーをゆっくり楽しむ
+#### 18:00 ディナー：Cumulus Inc.（カジュアル・モダンオージー）
+説明: フリンダーズ・レーンの肩肘張らない人気モダンオーストラリアン。ウォークイン可（早めの時間が狙い目）。肉・野菜料理が充実しスパイス控えめ
+MAP: https://maps.google.com/?q=Cumulus+Inc+45+Flinders+Lane+Melbourne
+公式: https://www.cumulusinc.com.au/
 
 #### 21:00 ホテル帰着
 説明: 明日は移動日。早めに就寝を
@@ -252,6 +259,15 @@ MAP: https://maps.google.com/?q=Queen+Victoria+Market+Melbourne
 バッジ: 世界遺産, カップル必見
 MAP: https://maps.google.com/?q=Carlton+Gardens+Melbourne
 公式: https://museumsvictoria.com.au/reb/
+
+#### ビクトリア州立図書館 State Library Victoria
+副題: 荘厳なドーム閲覧室・入場無料
+住所: 328 Swanston Street, Melbourne VIC 3000
+営業: 月〜木 10:00〜18:00 / 金〜日 10:00〜17:00（季節変動あり）
+見どころ: ラ・トローブ・リーディングルームのドーム天井。上階ギャラリーから見下ろす眺め
+バッジ: 無料, 建築美, フォトスポット
+MAP: https://maps.google.com/?q=State+Library+Victoria+Melbourne
+公式: https://www.slv.vic.gov.au/
 
 ### ポイント
 - 市内中心部（CBD）の無料トラムゾーン内は料金不要。ゾーン外に出る場合はmykiカードが必要
@@ -277,7 +293,7 @@ MAP: https://maps.google.com/?q=South+Melbourne+Market
 説明: 荷物を受け取ってチェックアウト。荷物はUberのトランクへ
 
 #### 11:30 メルボルン最後のランチ（腕の見せ所！）
-説明: フリンダーズ・レーンのカフェかビストロでメルボルングルメを締めくくり。旅の後半はシドニーのシーフードが中心になるので、ここで肉料理やパスタを楽しんで
+説明: フリンダーズ・レーンのカフェかビストロでメルボルングルメを締めくくり。肉料理やパスタなど、メルボルンらしい一皿を2人で
 
 #### 13:30 Uberでメルボルン空港へ
 説明: 空港まで約35〜40分。余裕をもって出発
@@ -304,10 +320,10 @@ MAP: https://maps.google.com/?q=Rydges+World+Square+389+Pitt+Street+Sydney
 説明: クレジットカードタッチで乗車OK。夜景が映える時間帯にダーリングハーバーへ直行
 MAP: https://maps.google.com/?q=Darling+Harbour+Sydney
 
-#### 20:00 ディナー：Nick's Seafood Restaurant（要予約）
-説明: ダーリングハーバーのウォーターフロント。港のライトアップを眺めながらシーフード・プラッター（生牡蠣・ロブスター・エビ）を。モクテルも充実
-MAP: https://maps.google.com/?q=Nicks+Seafood+Restaurant+Cockle+Bay+Wharf+Sydney
-公式: https://nicksseafood.com.au/
+#### 20:00 ディナー：Ume Burger（Darling Square・気軽）
+説明: ダーリングハーバー〜ダーリングスクエアの和風グルメバーガー。ホテルからも近くカジュアル。到着夜は気軽に。貝・シーフードなしでも大満足
+MAP: https://maps.google.com/?q=Ume+Burger+Darling+Square+Sydney
+公式: https://umeburger.com/
 
 #### 21:30 サーキュラー・キーへ移動・夜景散策
 説明: ディナー後はライトアップされたオペラハウスとハーバーブリッジへ。シドニー初夜の感動を2人で
@@ -315,12 +331,12 @@ MAP: https://maps.google.com/?q=Circular+Quay+Sydney
 
 ### レストラン
 
-#### Nick's Seafood Restaurant
-副題: 最高峰シーフード・ダーリングハーバー
-住所: The Promenade, Cockle Bay Wharf, Sydney NSW 2000
-予算: $80〜150/人
-おすすめ: シーフード・プラッター（生牡蠣・ロブスター・エビの盛り合わせ）。スパイスなし素材勝負
-バッジ: 要予約, ロマンティック夜景, アルコールなし対応◎
+#### Ume Burger（ウメバーガー）
+副題: 和風グルメバーガー・Darling Square
+住所: Shop 1, 35 Tumbalong Blvd, Darling Square, Haymarket NSW 2000
+予算: $15〜25/人
+おすすめ: 和風テイストのグルメバーガー＆ポテト。気軽でスピーディー。貝・シーフードなしでOK
+バッジ: 予約不要, 気軽, ホテル近く
 
 ---
 
@@ -413,10 +429,10 @@ MAP: https://maps.google.com/?q=Queen+Victoria+Building+455+George+Street+Sydney
 #### 17:00頃 ホテルへ一時帰還
 説明: 購入した荷物をいったん部屋へ。手ぶらで夜の行動へ（神立地メリット！）
 
-#### 18:30 旅の締めくくり最高峰ディナー：Bennelong
-説明: オペラハウス内の最高峰レストラン（またはサーキュラーキーのウォーターフロント）。モダンオーストラリアンで旅の集大成を
-MAP: https://maps.google.com/?q=Bennelong+Restaurant+Sydney+Opera+House
-公式: https://www.bennelong.com.au/
+#### 18:30 旅の締めくくりディナー：Opera Bar（オペラハウス前・絶景）
+説明: オペラハウスの真下、ハーバーブリッジを望む絶景テラス。予約不要でカジュアルに楽しめる。ピザやバーガー等の軽食＋モクテルで最後の夜に乾杯
+MAP: https://maps.google.com/?q=Opera+Bar+Sydney
+公式: https://operabar.com.au/
 
 #### 22:00 ホテルに戻り完璧にパッキング
 説明: 明日早朝出発のため、この夜に完全にスーツケースを仕上げること
@@ -440,14 +456,14 @@ MAP: https://maps.google.com/?q=Queen+Victoria+Building+Sydney
 
 ### レストラン
 
-#### Bennelong（ベネロング）
-副題: モダンオーストラリアン・オペラハウス内
-住所: Sydney Opera House, Bennelong Point, Sydney NSW 2000
-予算: $120〜200/人（要事前予約）
-おすすめ: 旅の締めくくりに相応しい芸術的なモダンオーストラリアン。スパイスなし対応可
-バッジ: 要予約, 旅の集大成
-MAP: https://maps.google.com/?q=Bennelong+Restaurant+Sydney+Opera+House
-公式: https://www.bennelong.com.au/
+#### Opera Bar（オペラ・バー）
+副題: 絶景テラスバー・オペラハウス直下
+住所: Lower Concourse, Sydney Opera House, Bennelong Point, Sydney NSW 2000
+予算: $30〜50/人
+おすすめ: オペラハウス＆ハーバーブリッジの絶景。予約不要・カジュアル。ピザ/バーガー等の軽食とモクテル
+バッジ: 予約不要, 絶景, カジュアル
+MAP: https://maps.google.com/?q=Opera+Bar+Sydney
+公式: https://operabar.com.au/
 
 #### The Glenmore Hotel
 副題: ルーフトップバー・ロックス地区
