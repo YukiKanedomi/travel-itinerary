@@ -366,6 +366,14 @@
     .th-name { font-size: 15px; font-weight: 800; color: var(--navy); margin-top: 2px; line-height: 1.3; }
     .th-addr { font-size: 14px; color: #333; margin-top: 2px; user-select: all; -webkit-user-select: all; }
     .th-note { font-size: 11px; color: var(--muted); margin-top: 6px; }
+    .remind-row { display: flex; align-items: center; gap: 10px; padding: 9px 4px; border-bottom: 1px solid #eef0f3; text-decoration: none; color: var(--navy); }
+    .remind-row:last-child { border-bottom: none; }
+    .rm-date { flex-shrink: 0; width: 42px; font-size: 12px; font-weight: 800; color: #1a73e8; text-align: center; }
+    .rm-main { flex: 1; min-width: 0; }
+    .rm-title { display: block; font-size: 13px; font-weight: 700; line-height: 1.4; }
+    .rm-note { display: block; font-size: 11px; color: var(--muted); margin-top: 1px; }
+    .rm-add { flex-shrink: 0; font-size: 12px; font-weight: 800; color: #1a73e8; border: 1px solid #cfe0fb; border-radius: 14px; padding: 3px 9px; white-space: nowrap; }
+    .remind-row:active { opacity: .6; }
 
     /* CONVERTER */
     .conv-wrap { display: flex; align-items: stretch; gap: 10px; margin: 14px 0 10px; }
@@ -1162,6 +1170,9 @@
     <div class="day-circle" style="background:linear-gradient(135deg,#e65100,#f9a825)"><span style="font-size:20px;line-height:1">🎒</span></div>
     <div><h2>出発前の準備</h2><p>ToDo・予約状況・持ち物を一括チェック</p></div>
   </div>
+
+  <!-- 出発前リマインダー（Googleカレンダー・renderRemind で生成） -->
+  <div id="prep-remind" class="section"></div>
 
   <!-- 出発前ToDo（renderPrep で生成） -->
   <div id="prep-todo" class="section"></div>
@@ -2379,6 +2390,37 @@ var PREP_INFO = [
 function prepGet(key){ try { return JSON.parse(localStorage.getItem(key) || '{}'); } catch(e){ return {}; } }
 function prepSet(key, obj){ localStorage.setItem(key, JSON.stringify(obj)); }
 
+// 出発前リマインダー（Googleカレンダー登録リンクを生成）
+var PREP_REMIND = [
+  { date:'20260801', title:'ETA申請（豪州 電子渡航許可）', note:'AustralianETAアプリで申請。ICパスポート＋クレカ。約A$20。' },
+  { date:'20260801', title:'パスポート残存確認＆JTBへ旅券情報を連絡', note:'残存6ヶ月以上を確認（出発時点）。' },
+  { date:'20260801', title:'海外旅行保険を確認・加入', note:'クレカ付帯の有無と補償範囲もチェック。' },
+  { date:'20260913', title:'MyJTBで最終日程表・eチケット・ホテル予約確認書を入手', note:'出発7日前目安。MyJTB／コンタクトボードから。' },
+  { date:'20260913', title:'eSIM購入・設定', note:'日本で準備し、到着後に有効化。' },
+  { date:'20260913', title:'クレカ2枚 海外利用ON＋少額AUD用意', note:'ブランド違いで。支払いは現地通貨(AUD)で（DCC回避）。' },
+  { date:'20260913', title:'外務省たびレジ登録', note:'https://www.ezairyu.mofa.go.jp/tabireg/' },
+  { date:'20260918', title:'荷造り・持ち物最終チェック', note:'変換プラグ(Type I)・防水上着・常用薬を忘れずに。' },
+  { date:'20260919', title:'JALオンラインチェックイン＋目覚まし・空港交通の確認', note:'出発24時間前から可能。' },
+  { date:'20260920', title:'【出発当日】パスポート/ETA/予約確認・検疫申告(食品YES)を再確認', note:'NRT 18:40発（JL773）。' }
+];
+function rmNextDay(s){ var dt=new Date(+s.slice(0,4),+s.slice(4,6)-1,+s.slice(6,8)+1); return ''+dt.getFullYear()+('0'+(dt.getMonth()+1)).slice(-2)+('0'+dt.getDate()).slice(-2); }
+function rmFmt(s){ return (+s.slice(4,6))+'/'+(+s.slice(6,8)); }
+function gcalUrl(title,date,details){
+  return 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=' + encodeURIComponent(title)
+       + '&dates=' + date + '/' + rmNextDay(date) + '&details=' + encodeURIComponent(details||'');
+}
+function renderRemind(){
+  var host=document.getElementById('prep-remind'); if(!host) return;
+  var h='<div class="sec-title"><div class="sec-icon" style="background:var(--blue)"></div><span style="color:var(--blue)">📅 出発前リマインダー（Googleカレンダー登録）</span></div>';
+  h+='<div class="card c-tip prep-card"><div style="font-size:11.5px;color:var(--muted);margin-bottom:4px">項目をタップ → Googleカレンダーに予定が追加されます（日時は目安・追加後に変更可）。</div>';
+  PREP_REMIND.forEach(function(r){
+    h+='<a class="remind-row" href="'+gcalUrl(r.title,r.date,r.note)+'" target="_blank" rel="noopener">'+
+       '<span class="rm-date">'+rmFmt(r.date)+'</span>'+
+       '<span class="rm-main"><span class="rm-title">'+r.title+'</span>'+(r.note?'<span class="rm-note">'+r.note+'</span>':'')+'</span>'+
+       '<span class="rm-add">＋📅</span></a>';
+  });
+  h+='</div>'; host.innerHTML=h;
+}
 function renderPrep(){
   var todoHost = document.getElementById('prep-todo');
   var bookHost = document.getElementById('prep-book');
@@ -2446,6 +2488,7 @@ document.addEventListener('input', function(e){
   renderTabs();
   renderOverview();
   renderPrep();
+  renderRemind();
   renderAreaSwitch();
   renderAreaMap();
   renderMapList();
