@@ -361,6 +361,11 @@
     .link-row:last-child { border-bottom: none; }
     .link-row .lr-note { display: block; font-weight: 400; font-size: 11px; color: var(--muted); margin-top: 2px; }
     .link-row:active { opacity: .55; }
+    .taxi-hotel { background: #fff; border: 1px solid #f0d9d9; border-radius: 8px; padding: 9px 12px; margin: 8px 0; }
+    .th-label { font-size: 10px; font-weight: 800; color: #c62828; letter-spacing: 1px; }
+    .th-name { font-size: 15px; font-weight: 800; color: var(--navy); margin-top: 2px; line-height: 1.3; }
+    .th-addr { font-size: 14px; color: #333; margin-top: 2px; user-select: all; -webkit-user-select: all; }
+    .th-note { font-size: 11px; color: var(--muted); margin-top: 6px; }
 
     /* CONVERTER */
     .conv-wrap { display: flex; align-items: stretch; gap: 10px; margin: 14px 0 10px; }
@@ -1004,11 +1009,25 @@
     <div class="sec-title"><div class="sec-icon" style="background:#c62828"></div><span style="color:#c62828">緊急連絡先</span></div>
     <div class="emer-box">
       <h3>🆘 緊急連絡先一覧</h3>
-      <div class="row"><span class="rl">🚔 警察・救急・消防</span><span class="rv editable"><strong>000</strong>（オーストラリア統合緊急番号）</span></div>
+      <div class="row"><span class="rl">🚔 警察・救急・消防</span><span class="rv editable"><strong>000</strong>（豪州統合緊急番号）</span></div>
       <div class="row"><span class="rl">🇯🇵 在シドニー日本領事館</span><span class="rv editable">+61-2-9250-1000</span></div>
       <div class="row"><span class="rl">🇯🇵 在メルボルン日本領事館</span><span class="rv editable">+61-3-9639-3244</span></div>
       <div class="row"><span class="rl">💳 VISA紛失</span><span class="rv editable">+1-800-847-2911（フリーダイヤル）</span></div>
       <div class="row"><span class="rl">🏥 JAL国際線</span><span class="rv editable">0120-255-931（日本語サポート）</span></div>
+    </div>
+    <div class="emer-box" style="margin-top:10px">
+      <h3>🚕 タクシー/Uberで見せる：宿泊先（英語）</h3>
+      <div class="taxi-hotel">
+        <div class="th-label">MELBOURNE ・ 9/21–23</div>
+        <div class="th-name">InterContinental Melbourne The Rialto</div>
+        <div class="th-addr">495 Collins Street, Melbourne VIC 3000</div>
+      </div>
+      <div class="taxi-hotel">
+        <div class="th-label">SYDNEY ・ 9/23–26</div>
+        <div class="th-name">Rydges World Square</div>
+        <div class="th-addr">389 Pitt Street, Sydney NSW 2000</div>
+      </div>
+      <div class="th-note">迷ったら運転手にこの住所を見せればホテルへ戻れます（長押しでコピー可）。</div>
     </div>
   </div>
 
