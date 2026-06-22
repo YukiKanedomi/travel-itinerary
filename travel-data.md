@@ -39,9 +39,10 @@
 到着時刻: 17:25
 フライト時間: 1時間25分（直行便）
 航空会社: ヴァージン・オーストラリア（Virgin Australia）
-便名: VA XXX（要確認）
+便名: VA859（手配完了）
 搭乗クラス: エコノミー
-参考価格: ¥27,252（2名合計）
+座席: 2名隣同士（指定確定）
+参考価格: ¥36,880（2名合計・運賃＋空港税）
 受託手荷物: Choice/Flexプランなら1人1個無料
 
 ### 帰路（DAY 7）
@@ -67,8 +68,9 @@
 チェックイン: 9月21日（月）15:00〜（当日は荷物を先に預ける）
 チェックアウト: 9月23日（水）11:00
 住所: 495 Collins Street, Melbourne VIC 3000
+部屋: クラシックルーム（キングベッド1台）／朝食なし
 特徴: 19世紀ゴシック建築を改装。スリッパ・バスローブ完備の5つ星ラグジュアリー
-予約番号: JTB経由 XXXXXX（要記入）
+予約番号: 控えは非公開メモ（参考資料/JTB予約控え.md）に保管
 MAP: https://maps.google.com/?q=495+Collins+Street+Melbourne
 公式: https://www.ihg.com/intercontinental/hotels/gb/en/melbourne/melha/hoteldetail
 
@@ -78,9 +80,10 @@ MAP: https://maps.google.com/?q=495+Collins+Street+Melbourne
 チェックイン: 9月23日（水）15:00〜
 チェックアウト: 9月26日（土）11:00
 住所: 389 Pitt Street, Sydney NSW 2000
+部屋: エグゼクティブルーム（キングベッド1台）／朝食付き
 特徴: バスルームは「シャワーと浴槽が完全独立（セパレート）」で快適
 直結: スーパーマーケット「Coles」と直結。水やTimTam等お土産もここで
-予約番号: JTB経由 XXXXXX（要記入）
+予約番号: 控えは非公開メモ（参考資料/JTB予約控え.md）に保管
 MAP: https://maps.google.com/?q=389+Pitt+Street+Sydney
 公式: https://www.rydges.com/accommodation/sydney-nsw/world-square/
 
@@ -343,9 +346,9 @@ MAP: https://maps.google.com/?q=Circular+Quay+Sydney
 ## ===== DAY 5 — 9月24日（木）ブルーマウンテンズ＆動物園 =====
 副題: JTBオプショナルツアー参加日
 JTBツアーコード: SYDODOAOPT87
-集合場所: ヒルトン シドニーのロビー
-集合時刻: 08:25（5分前厳守）
-補足: ホテルから徒歩10分（約700m）。余裕をもって出発すること。
+集合場所: ヒルトン シドニーのロビー（488 George St, Sydney）
+集合時刻: 08:25（出発08:30の5分前厳守）
+補足: 正面入って右手・フロント近くのソファーで待機。日本語ガイドが看板を持って案内。Rydges World Squareから徒歩約10分（700m）。余裕をもって出発すること。
 
 ### スケジュール
 
