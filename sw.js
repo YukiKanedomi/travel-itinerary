@@ -5,7 +5,7 @@
  *  - 外部(API/地図など)は介入せず通常どおりネットワークへ
  * 内容を更新したら CACHE のバージョン名を上げると確実に更新される。
  */
-const CACHE = 'tabi-shiori-v1';
+const CACHE = 'tabi-shiori-v2';
 const ASSETS = [
   './',
   './index.html',

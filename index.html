@@ -478,7 +478,8 @@
     .day-circle .cn { font-family:var(--font-latin); font-weight:700; }
     /* 欧文・数字＝Space Grotesk のエディトリアル・アクセント */
     .iata { font-family:var(--font-latin); font-weight:700; color:var(--ink); letter-spacing:.02em; }
-    .ftime, .tl-time { font-family:var(--font-latin); }
+    .ftime { font-family:var(--font-latin); }
+    .tl-time { font-size:12px; font-weight:800; }
     /* 概要カード */
     .ov-card { background:var(--paper); border:1px solid var(--border); box-shadow:0 1px 2px rgba(20,50,74,.05); border-radius:var(--radius); }
     .ov-card:hover { transform:none; box-shadow:0 3px 12px rgba(20,50,74,.08); }
@@ -521,11 +522,10 @@
     .skyline { display:none; }
     .photo-credit { position:absolute; right:8px; bottom:6px; z-index:1; font-family:var(--font-latin); font-size:9.5px; letter-spacing:.02em; color:rgba(255,255,255,.6); }
     /* ===== DAYバナー（各日の写真ヘッダー） ===== */
-    .day-banner { margin:-20px -14px 18px; min-height:172px; background-position:center; background-size:cover; background-repeat:no-repeat; display:flex; flex-direction:column; justify-content:flex-end; }
-    .db-inner { padding:0 16px 14px; color:#fff; }
-    .db-no { font-family:var(--font-latin); font-weight:600; letter-spacing:.2em; font-size:13px; color:#F0C79A; }
-    .db-title { font-family:var(--font-mincho); font-size:21px; font-weight:700; margin-top:3px; line-height:1.3; text-shadow:0 1px 10px rgba(0,0,0,.45); }
-    .db-sub { font-size:11.5px; color:#e6dcc9; margin-top:4px; }
+    .day-banner { height:auto; min-height:160px; margin:-20px -14px 18px; border-radius:0; padding:0 16px 14px; background-position:center; background-size:cover; background-repeat:no-repeat; display:flex; flex-direction:column; justify-content:flex-end; }
+    .day-banner::before { display:none; }
+    .day-banner-day { font-family:var(--font-latin); font-size:12px; font-weight:600; letter-spacing:.16em; color:#F0C79A; }
+    .day-banner-label { font-family:var(--font-mincho); font-size:20px; font-weight:700; line-height:1.32; text-shadow:0 1px 10px rgba(0,0,0,.45); }
     /* 絵文字→ラインアイコン */
     .ei { display:inline-flex; width:1em; height:1em; vertical-align:-0.14em; }
     .ei svg { width:100%; height:100%; stroke:currentColor; fill:none; stroke-width:1.9; stroke-linecap:round; stroke-linejoin:round; }
@@ -1674,13 +1674,13 @@ function initNowNext() {
 
 function initDayBanners() {
   var conf = {
-    day1: { g: 'linear-gradient(148deg,#070d20 0%,#0d1e45 38%,#0a3060 72%,#0d2040 100%)', e: '✈️', d: 'DAY 1 — 9/20（日）', t: '成田出発 → 機中泊で南半球へ' },
-    day2: { g: 'linear-gradient(148deg,#18102e 0%,#2a1a50 32%,#6e3c18 65%,#c47820 100%)', e: '☕', d: 'DAY 2 — 9/21（月）', t: 'メルボルン到着・カフェ文化を満喫' },
-    day3: { g: 'linear-gradient(148deg,#501408 0%,#963010 38%,#ce5e22 68%,#e88c30 100%)', e: '🎨', d: 'DAY 3 — 9/22（火）', t: 'フィッツロイ・コリングウッド探索' },
-    day4: { g: 'linear-gradient(148deg,#011e38 0%,#014080 38%,#027ab8 68%,#10a8d4 100%)', e: '🌆', d: 'DAY 4 — 9/23（水）', t: 'メルボルン→シドニー・夜のオペラハウス' },
-    day5: { g: 'linear-gradient(148deg,#181830 0%,#283468 38%,#426090 65%,#7aacc8 100%)', e: '🏔️', d: 'DAY 5 — 9/24（木）', t: 'ブルーマウンテンズ・タロンガ動物園' },
-    day6: { g: 'linear-gradient(148deg,#6c1018 0%,#b42c1c 32%,#d86010 62%,#f0a820 100%)', e: '🎭', d: 'DAY 6 — 9/25（金）', t: 'シドニー観光・最後の夕暮れ' },
-    day7: { g: 'linear-gradient(148deg,#0a1220 0%,#182440 38%,#244e78 70%,#d89e28 100%)', e: '🌅', d: 'DAY 7 — 9/26（土）', t: 'シドニー発・羽田へ帰国' }
+    day1: { p:'assets/day1.jpg', d:'DAY 1 — 9/20（日）', t:'成田出発 → 機中泊で南半球へ' },
+    day2: { p:'assets/day2.jpg', d:'DAY 2 — 9/21（月）', t:'メルボルン到着・カフェ文化を満喫' },
+    day3: { p:'assets/day3.jpg', d:'DAY 3 — 9/22（火）', t:'フィッツロイ・コリングウッド探索' },
+    day4: { p:'assets/day4.jpg', d:'DAY 4 — 9/23（水）', t:'メルボルン→シドニー・夜のオペラハウス' },
+    day5: { p:'assets/day5.jpg', d:'DAY 5 — 9/24（木）', t:'ブルーマウンテンズ・タロンガ動物園' },
+    day6: { p:'assets/day6.jpg', d:'DAY 6 — 9/25（金）', t:'シドニー観光・最後の夕暮れ' },
+    day7: { p:'assets/day7.jpg', d:'DAY 7 — 9/26（土）', t:'シドニー発・羽田へ帰国' }
   };
   Object.keys(conf).forEach(function(id) {
     var pane = document.getElementById(id);
@@ -1690,12 +1690,13 @@ function initDayBanners() {
     var c = conf[id];
     var el = document.createElement('div');
     el.className = 'day-banner';
-    el.style.background = c.g;
+    el.style.backgroundImage = "linear-gradient(to top, rgba(13,28,42,.92), rgba(13,28,42,.3) 58%, rgba(13,28,42,.1)), url('" + c.p + "')";
     el.innerHTML =
-      '<div class="day-banner-emoji">' + c.e + '</div>' +
       '<div class="day-banner-day">' + c.d + '</div>' +
       '<div class="day-banner-label">' + c.t + '</div>';
     pane.insertBefore(el, pane.firstChild);
+    var hd = pane.querySelector('.day-hd');
+    if (hd) hd.style.display = 'none';
   });
 }
 
@@ -2424,22 +2425,7 @@ function iconize(root){
     p.replaceChild(frag,node);
   });
 }
-// 各DAYの写真バナー（テーマ別の実写ヘッダー）
-var DAY_PHOTO = { day1:'assets/day1.jpg', day2:'assets/day2.jpg', day3:'assets/day3.jpg', day4:'assets/day4.jpg', day5:'assets/day5.jpg', day6:'assets/day6.jpg', day7:'assets/day7.jpg' };
-function renderDayBanners(){
-  ['day1','day2','day3','day4','day5','day6','day7'].forEach(function(id){
-    var pane=document.getElementById(id); if(!pane||pane.querySelector('.day-banner')) return;
-    var hd=pane.querySelector('.day-hd');
-    var h2=hd?hd.querySelector('h2'):null, pp=hd?hd.querySelector('p'):null;
-    var title=h2?h2.textContent:'', sub=pp?pp.textContent:'';
-    var b=document.createElement('div');
-    b.className='day-banner';
-    b.style.backgroundImage="linear-gradient(to top, rgba(13,28,42,.92), rgba(13,28,42,.3) 60%, rgba(13,28,42,.08)), url('"+DAY_PHOTO[id]+"')";
-    b.innerHTML='<div class="db-inner"><div class="db-no">DAY '+id.replace('day','')+'</div><div class="db-title">'+title+'</div>'+(sub?'<div class="db-sub">'+sub+'</div>':'')+'</div>';
-    pane.insertBefore(b, pane.firstChild);
-    if(hd) hd.style.display='none';
-  });
-}
+// （DAY写真バナーは initDayBanners() に統合済み）
 function renderDayWeather() {
   Object.keys(DAY_WEATHER).forEach(function(id) {
     var pane = document.getElementById(id);
@@ -2682,7 +2668,6 @@ document.addEventListener('input', function(e){
   renderAreaSwitch();
   renderAreaMap();
   renderMapList();
-  renderDayBanners();
   renderDayWeather();
   renderTimebars();
   // 地図の外側タップでポップアップを閉じる
