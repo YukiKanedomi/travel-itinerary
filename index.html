@@ -533,6 +533,14 @@
     .ei svg { width:100%; height:100%; stroke:currentColor; fill:none; stroke-width:1.9; stroke-linecap:round; stroke-linejoin:round; }
     .rl .ei { color:var(--euc); }
     .cl-cat .ei, .lcat .ei, .sec-title .ei { color:var(--euc); }
+    /* 営業時間バッジ */
+    .map-hours { margin-top:5px; display:flex; align-items:center; gap:7px; flex-wrap:wrap; }
+    .oh { font-size:10px; font-weight:800; padding:1px 8px; border-radius:9px; white-space:nowrap; }
+    .oh-open { background:#e3f5e9; color:#1b8a4b; }
+    .oh-soon { background:#fff3df; color:#b9770a; }
+    .oh-closed { background:#f1e4e4; color:#a23b3b; }
+    .oh-txt { font-size:10.5px; color:var(--muted); }
+    .map-hours-note { font-size:10.5px; color:var(--muted); margin-bottom:8px; }
   </style>
 </head>
 <body>
@@ -2095,6 +2103,44 @@ function legHTML(s) {
   return '<div class="map-leg">↓ ' + lbl + ' 約' + s.legMin + '分</div>';
 }
 
+// 営業時間（曜日 0=日〜6=土 / 'all':共通 / '24h':終日 / 値なし=休み）※目安
+var SPOT_HOURS = {
+  'クイーンビクトリアマーケット': { 2:'6:00-15:00', 4:'6:00-15:00', 5:'6:00-17:00', 6:'6:00-15:00', 0:'9:00-16:00', note:'月・水は定休' },
+  'ビクトリア州立図書館': { all:'10:00-18:00' },
+  'ブロック・アーケード': { 1:'9:00-18:00',2:'9:00-18:00',3:'9:00-18:00',4:'9:00-18:00',5:'9:00-18:00',6:'9:00-17:00',0:'10:00-17:00' },
+  'Lune Croissanterie CBD': { all:'7:30-15:00' },
+  'Chin Chin': { all:'11:00-23:00' },
+  'Il Solito Posto': { 1:'12:00-22:00',2:'12:00-22:00',3:'12:00-22:00',4:'12:00-22:00',5:'12:00-22:00',6:'17:30-22:00', note:'日曜休のことあり' },
+  'カールトン庭園・王立展示館': { all:'24h', note:'庭園は終日（館内見学は別）' },
+  'ホージア・レーン': { all:'24h' },
+  'The Grounds of the City': { all:'7:00-16:00' },
+  'ロイヤルボタニカルガーデン': { all:'7:00-18:30', note:'門は季節で変動' },
+  'ミセス・マッコリーズ・ポイント': { all:'24h' },
+  'ロックス地区': { all:'24h', note:'各店舗の時間は別' },
+  'The Glenmore Hotel': { all:'11:00-24:00' },
+  'クイーンビクトリアビルディング（QVB）': { 1:'9:00-18:00',2:'9:00-18:00',3:'9:00-18:00',4:'9:00-21:00',5:'9:00-18:00',6:'9:00-18:00',0:'11:00-17:00' },
+  'Opera Bar': { all:'11:00-24:00' },
+  'Ume Burger': { all:'11:00-21:00' },
+  'フェザーデール動物園': { all:'9:00-16:00' },
+  'シーニックワールド': { all:'9:00-17:00' },
+  'エコーポイント展望台': { all:'24h' }
+};
+function hmMin(s){ var p=s.split(':'); return parseInt(p[0],10)*60+parseInt(p[1],10); }
+function auNow(){
+  var p={}; new Intl.DateTimeFormat('en-US',{timeZone:'Australia/Sydney',weekday:'short',hour:'2-digit',minute:'2-digit',hour12:false}).formatToParts(new Date()).forEach(function(x){p[x.type]=x.value;});
+  var wm={Sun:0,Mon:1,Tue:2,Wed:3,Thu:4,Fri:5,Sat:6}; var hh=parseInt(p.hour,10); if(hh>=24)hh-=24;
+  return { day:wm[p.weekday], min:hh*60+parseInt(p.minute,10) };
+}
+function openStatus(name){
+  var h=SPOT_HOURS[name]; if(!h) return '';
+  var now=auNow(); var today=(h.all!==undefined)?h.all:h[now.day]; var cls,badge,txt='';
+  if(today===undefined||today===null){ cls='closed'; badge='本日休み'; }
+  else if(today==='24h'){ cls='open'; badge='終日開放'; }
+  else { var m=today.split('-'),o=hmMin(m[0]),c=hmMin(m[1]); txt=today;
+    if(now.min>=o&&now.min<c){ cls=(c-now.min<=30)?'soon':'open'; badge=(c-now.min<=30)?'まもなく閉店':'営業中'; }
+    else { cls='closed'; badge='時間外'; } }
+  return '<div class="map-hours"><span class="oh oh-'+cls+'">'+badge+'</span>'+(txt?'<span class="oh-txt">'+txt+'</span>':'')+(h.note?'<span class="oh-txt">'+h.note+'</span>':'')+'</div>';
+}
 function spotItemHTML(s) {
   var enLines = s.en.map(function(e){ return '<div class="map-en">' + e + '</div>'; }).join('');
   var tip = s.tip ? '<div class="map-tip">💡 ' + s.tip + '</div>' : '';
@@ -2106,6 +2152,7 @@ function spotItemHTML(s) {
         '<div class="map-name">' + s.name + '</div>' +
         enLines +
         '<span class="map-day-tag">' + s.day + '</span>' +
+        openStatus(s.name) +
         tip +
       '</div>' +
       '<div class="map-actions">' + actions + '</div>' +
@@ -2117,7 +2164,7 @@ function renderMapList() {
   if (!host) return;
   var spots = SPOTS.filter(function(s){ return s.area === currentArea; })
                    .sort(function(a,b){ return (a.order||0) - (b.order||0); });
-  var html = '';
+  var html = '<div class="map-hours-note">⏰ 営業時間は目安（現地時間で自動判定）。最新は公式で確認を</div>';
   spots.forEach(function(s){ html += legHTML(s) + spotItemHTML(s); });
   host.innerHTML = html;
 }
