@@ -204,6 +204,15 @@
     .map-day-tag { display: inline-block; font-size: 9px; font-weight: 700; background: var(--blue-light); color: var(--blue); padding: 2px 8px; border-radius: 10px; margin-top: 5px; }
     .map-tip { font-size: 11px; color: #7a6020; background: var(--gold-light); border-radius: 8px; padding: 5px 8px; margin-top: 6px; line-height: 1.45; }
     .map-leg { font-size: 11px; font-weight: 700; color: var(--muted); text-align: center; padding: 3px 0 7px; }
+    /* 寄り道候補（気が向けば寄る） */
+    .picks-block { margin-top: 16px; border: 1px solid var(--line, #e6dcc6); border-radius: 14px; background: var(--paper, #fbf6ec); overflow: hidden; }
+    .picks-block > summary { list-style: none; cursor: pointer; padding: 13px 16px; font-size: 14px; font-weight: 800; color: var(--navy, #14324a); display: flex; align-items: center; gap: 6px; }
+    .picks-block > summary::-webkit-details-marker { display: none; }
+    .picks-block > summary::after { content: '▾'; margin-left: auto; font-size: 12px; opacity: .55; transition: transform .2s; }
+    .picks-block[open] > summary::after { transform: rotate(180deg); }
+    .picks-note { font-size: 11px; color: var(--muted); padding: 0 16px 10px; line-height: 1.5; }
+    .picks-block .pick-genre { font-size: 12px; font-weight: 800; color: var(--euc, #3e7c76); padding: 8px 16px 6px; letter-spacing: .02em; }
+    .picks-block .map-item { margin: 0 12px 8px; }
     .map-actions { display: flex; flex-direction: column; gap: 5px; flex-shrink: 0; }
     .map-go { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; background: var(--blue-light); color: var(--blue); border-radius: 10px; font-size: 18px; text-decoration: none; transition: background .15s; }
     .map-go:hover { background: var(--blue); color: #fff; }
@@ -2159,6 +2168,71 @@ function spotItemHTML(s) {
     '</div>';
 }
 
+// ─── 寄り道候補（予定はガチガチにせず、気が向けば寄る場所） ──────────────────
+// days: どのDAYタブに出すか（DAY5はツアー固定のため候補なし）
+// genre: 'sight'観光 / 'cafe'カフェ・スイーツ / 'food'食事・軽食 / 'view'絶景・自然
+var PICK_GENRES = [
+  { key:'sight', label:'観光・街歩き',    icon:'🏛️' },
+  { key:'cafe',  label:'カフェ・スイーツ', icon:'☕' },
+  { key:'food',  label:'食事・軽食',      icon:'🍽️' },
+  { key:'view',  label:'絶景・自然',      icon:'🌅' }
+];
+var PICKS = [
+  // ── メルボルン（DAY2・3）──
+  { area:'mel', days:[2,3], genre:'sight', icon:'🖼️', name:'NGV（ビクトリア国立美術館）', addr:'180 St Kilda Rd, Southbank', map:'https://maps.google.com/?q=National+Gallery+of+Victoria', web:'https://www.ngv.vic.gov.au/', tip:'入場無料の大型美術館。雨天や時間調整に最適' },
+  { area:'mel', days:[2,3], genre:'view',  icon:'🐧', name:'セント・キルダ桟橋', addr:'St Kilda Pier, St Kilda', map:'https://maps.google.com/?q=St+Kilda+Pier+Melbourne', tip:'夕暮れに野生のリトルペンギン。隣にレトロ遊園地ルナパーク' },
+  { area:'mel', days:[2,3], genre:'view',  icon:'🏖️', name:'ブライトンのバスボックス', addr:'Brighton Bathing Boxes', map:'https://maps.google.com/?q=Brighton+Bathing+Boxes', tip:'カラフルな海の家の写真スポット。晴れた午前の順光が綺麗' },
+  { area:'mel', days:[2,3], genre:'food',  icon:'🥘', name:'Cumulus Inc.', addr:'45 Flinders Lane, Melbourne', map:'https://maps.google.com/?q=Cumulus+Inc+Melbourne', web:'https://www.cumulusinc.com.au/', tip:'朝〜夜まで使えるモダンオージー。肉・野菜料理も充実' },
+  { area:'mel', days:[2,3], genre:'food',  icon:'🥟', name:'HuTong Dumpling Bar', addr:'14-16 Market Lane, Melbourne', map:'https://maps.google.com/?q=HuTong+Dumpling+Bar+Melbourne', tip:'チャイナタウンの小籠包の名店。サクッと点心' },
+  { area:'mel', days:[2,3], genre:'food',  icon:'🍜', name:'Udon Yasan', addr:'Melbourne CBD', map:"https://maps.google.com/?q=Udon+Yasan+Melbourne", tip:'セルフ式の讃岐うどん。トッピング自由で手頃・早い' },
+  { area:'mel', days:[2,3], genre:'food',  icon:'🍟', name:'Lord of the Fries', addr:'Melbourne CBD', map:"https://maps.google.com/?q=Lord+of+the+Fries+Melbourne", tip:'100%プラントベースのバーガー＆フライ。小腹に' },
+  { area:'mel', days:[2,3], genre:'food',  icon:'🥖', name:"Roll'd", addr:'Melbourne CBD', map:"https://maps.google.com/?q=Roll'd+Melbourne+CBD", tip:'ベトナム系チェーン。バインミーやフォーを気軽に' },
+  { area:'mel', days:[2,3], genre:'cafe',  icon:'☕', name:'Patricia Coffee Brewers', addr:'Cnr Little Bourke & Little William St', map:'https://maps.google.com/?q=Patricia+Coffee+Brewers+Melbourne', tip:'立ち飲みの伝説的エスプレッソバー' },
+  { area:'mel', days:[2,3], genre:'cafe',  icon:'🍰', name:'Brunetti', addr:'Melbourne CBD', map:'https://maps.google.com/?q=Brunetti+Melbourne', tip:'賑やかなイタリアンカフェ。ケーキ＆コーヒーで休憩' },
+  { area:'mel', days:[2,3], genre:'cafe',  icon:'🍳', name:'The Hardware Société', addr:'Hardware Lane, Melbourne', map:'https://maps.google.com/?q=The+Hardware+Societe+Melbourne', tip:'人気のブランチカフェ' },
+  { area:'mel', days:[2,3], genre:'cafe',  icon:'🌿', name:'Degraves Street（路地カフェ街）', addr:'Degraves St, Melbourne', map:'https://maps.google.com/?q=Degraves+Street+Melbourne', tip:'トースティやコーヒーをカジュアルに' },
+  // ── シドニー（DAY4・6・7）──
+  { area:'syd', days:[4,6,7], genre:'view',  icon:'⛴️', name:'マンリー行きフェリー', addr:'Circular Quay 発', map:'https://maps.google.com/?q=Circular+Quay+Ferry+Wharf+Sydney', tip:'乗船自体が絶景。タッチ決済OK。往復するだけでも価値あり' },
+  { area:'syd', days:[4,6,7], genre:'view',  icon:'🏖️', name:'ボンダイ→ブロンテ海岸ウォーク', addr:'Bondi Beach, Sydney', map:'https://maps.google.com/?q=Bondi+Beach+Sydney', tip:'約2.5kmの絶景遊歩道。午前スタートで半日' },
+  { area:'syd', days:[4,6,7], genre:'view',  icon:'🌅', name:'ワトソンズベイ＆The Gap', addr:'Watsons Bay, Sydney', map:'https://maps.google.com/?q=The+Gap+Watsons+Bay+Sydney', tip:'フェリーで行ける断崖の絶景。夕日が見事' },
+  { area:'syd', days:[4,6,7], genre:'sight', icon:'🌳', name:'バランガルー・リザーブ', addr:'Barangaroo Reserve, Sydney', map:'https://maps.google.com/?q=Barangaroo+Reserve+Sydney', tip:'ロックス隣の新しい水辺エリア。散歩に' },
+  { area:'syd', days:[4,6,7], genre:'sight', icon:'🎭', name:'オペラハウス内部ガイドツアー', addr:'Sydney Opera House', map:'https://maps.google.com/?q=Sydney+Opera+House', web:'https://www.sydneyoperahouse.com/visit-us/tours-and-experiences', tip:'内部の建築美も見学できる。要事前予約' },
+  { area:'syd', days:[4,6,7], genre:'food',  icon:'🍜', name:'Chat Thai（ヘイマーケット）', addr:'Haymarket, Sydney', map:'https://maps.google.com/?q=Chat+Thai+Haymarket+Sydney', tip:'賑わうタイ料理の定番。肉・麺料理が豊富' },
+  { area:'syd', days:[4,6,7], genre:'food',  icon:'🥧', name:"Harry's Cafe de Wheels", addr:'Woolloomooloo, Sydney', map:'https://maps.google.com/?q=Harrys+Cafe+de+Wheels+Woolloomooloo', tip:'名物ミートパイの屋台。手軽なオージー飯' },
+  { area:'syd', days:[4,6,7], genre:'food',  icon:'🥞', name:'Pancakes on the Rocks', addr:'The Rocks, Sydney', map:'https://maps.google.com/?q=Pancakes+on+the+Rocks+Sydney', tip:'甘い／食事系パンケーキ。入りやすい' },
+  { area:'syd', days:[4,6,7], genre:'food',  icon:'🍢', name:'Spice Alley（Chippendale）', addr:'Chippendale, Sydney', map:'https://maps.google.com/?q=Spice+Alley+Chippendale', tip:'屋台風アジアンフードの横丁。気軽に食べ歩き' },
+  { area:'syd', days:[4,6,7], genre:'food',  icon:'🥟', name:'チャイナタウン（Dixon St）', addr:'Dixon St, Haymarket', map:'https://maps.google.com/?q=Dixon+Street+Chinatown+Sydney', tip:'餃子・麺・BBQ。手頃で早い' },
+  { area:'syd', days:[4,6,7], genre:'cafe',  icon:'🥐', name:'Bourke Street Bakery', addr:'Surry Hills 他', map:'https://maps.google.com/?q=Bourke+Street+Bakery+Sydney', tip:'シドニー定番ベーカリー。ソーセージロールや焼き菓子' },
+  { area:'syd', days:[4,6,7], genre:'cafe',  icon:'🍨', name:'Gelato Messina', addr:'Sydney 各所', map:'https://maps.google.com/?q=Gelato+Messina+Sydney', tip:'行列必至の人気ジェラート。食後のデザートに' },
+  { area:'syd', days:[4,6,7], genre:'cafe',  icon:'☕', name:'Single O（Surry Hills）', addr:'Surry Hills, Sydney', map:'https://maps.google.com/?q=Single+O+Surry+Hills', tip:'シドニーを代表するスペシャルティコーヒー' },
+  { area:'syd', days:[4,6,7], genre:'cafe',  icon:'🌿', name:'The Grounds of Alexandria', addr:'Alexandria（Green Square駅近）', map:'https://maps.google.com/?q=The+Grounds+of+Alexandria+Sydney', web:'https://thegrounds.com.au/', tip:'廃倉庫を改装した庭園カフェの名店。CBDから15分ほど' },
+  { area:'syd', days:[4,6,7], genre:'cafe',  icon:'🥑', name:'Three Blue Ducks（Bronte）', addr:'Bronte, Sydney', map:'https://maps.google.com/?q=Three+Blue+Ducks+Bronte+Sydney', tip:'人気ブランチカフェ。ボンダイ→ブロンテ海岸ウォークの締めに' }
+];
+
+function pickItemHTML(p) {
+  var actions = '<a href="' + escapeAttr(p.map) + '" class="map-go" target="_blank" rel="noopener">🗺️</a>';
+  if (p.web) actions += '<a href="' + escapeAttr(p.web) + '" class="web-go" target="_blank" rel="noopener">🌐</a>';
+  return '<div class="map-item">' +
+      '<span class="map-ico">' + p.icon + '</span>' +
+      '<div class="map-body">' +
+        '<div class="map-name">' + p.name + '</div>' +
+        (p.addr ? '<div class="map-en">' + p.addr + '</div>' : '') +
+        (p.tip ? '<div class="map-tip">💡 ' + p.tip + '</div>' : '') +
+      '</div>' +
+      '<div class="map-actions">' + actions + '</div>' +
+    '</div>';
+}
+function picksHTML(list) {
+  var html = '';
+  PICK_GENRES.forEach(function(g){
+    var items = list.filter(function(p){ return p.genre === g.key; });
+    if (!items.length) return;
+    html += '<div class="pick-genre">' + g.icon + ' ' + g.label + '</div>';
+    items.forEach(function(p){ html += pickItemHTML(p); });
+  });
+  return html;
+}
+
 function renderMapList() {
   var host = document.getElementById('map-list');
   if (!host) return;
@@ -2166,7 +2240,32 @@ function renderMapList() {
                    .sort(function(a,b){ return (a.order||0) - (b.order||0); });
   var html = '<div class="map-hours-note">⏰ 営業時間は目安（現地時間で自動判定）。最新は公式で確認を</div>';
   spots.forEach(function(s){ html += legHTML(s) + spotItemHTML(s); });
+  var picks = PICKS.filter(function(p){ return p.area === currentArea; });
+  if (picks.length) {
+    html += '<details class="picks-block">' +
+      '<summary>💛 気が向いたら寄りたい候補（' + picks.length + '件）</summary>' +
+      '<div class="picks-note">確定の予定ではありません。前後の自由時間に気が向けばどうぞ。</div>' +
+      picksHTML(picks) + '</details>';
+  }
   host.innerHTML = html;
+}
+
+// 各DAYタブ末尾に「この近くで気が向けば寄りたい候補」を挿入
+function initDayPicks() {
+  for (var d = 1; d <= 7; d++) {
+    var pane = document.getElementById('day' + d);
+    if (!pane) continue;
+    var old = pane.querySelector('.day-picks');
+    if (old) old.remove();
+    var list = PICKS.filter(function(p){ return p.days && p.days.indexOf(d) >= 0; });
+    if (!list.length) continue;
+    var box = document.createElement('details');
+    box.className = 'picks-block day-picks';
+    box.innerHTML = '<summary>💛 この辺で気が向いたら寄りたい（' + list.length + '件）</summary>' +
+      '<div class="picks-note">確定の予定ではありません。自由時間の参考に。</div>' +
+      picksHTML(list);
+    pane.appendChild(box);
+  }
 }
 
 function toggleMapList() {
@@ -2729,6 +2828,7 @@ document.addEventListener('input', function(e){
   applyChecklistState();
   initDayHighlights();
   initDayBanners();
+  initDayPicks();
   initNowNext();
   setInterval(initNowNext, 60000);
   updateCountdown();
