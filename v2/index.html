@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#F3EDE2">
+<title>旅の手帳 — オーストラリアの七日間</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ============ 手帳デザインシステム（案A: 旅の手帳） ============ */
+:root {
+  --paper:#F3EDE2; --paper-hi:#FDFBF6; --paper-dim:#E9E0CE;
+  --ink:#3F3A33; --ink-soft:#5E564A; --ink-faint:#7A6F5E;
+  --line:rgba(120,100,75,.22); --edge:#D8CDB8;
+  --red:#C7402D; --blue:#4A6FA5; --tape:#E8C458; --green:#5B7F4E;
+  --mono:"IBM Plex Mono",monospace;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { -webkit-text-size-adjust:100%; }
+body {
+  font-family:"Zen Kaku Gothic New","Hiragino Kaku Gothic ProN",sans-serif;
+  color:var(--ink); line-height:1.7; letter-spacing:.02em;
+  background:
+    radial-gradient(ellipse 1200px 800px at 20% -10%, rgba(255,255,255,.5), transparent 60%),
+    radial-gradient(ellipse 900px 700px at 110% 110%, rgba(190,172,140,.18), transparent 55%),
+    repeating-linear-gradient(93deg, rgba(160,140,110,.035) 0 2px, transparent 2px 5px),
+    repeating-linear-gradient(2deg, rgba(120,100,80,.025) 0 1px, transparent 1px 4px),
+    var(--paper);
+  padding-bottom:calc(64px + env(safe-area-inset-bottom));
+  max-width:560px; margin:0 auto;
+}
+.mono { font-family:var(--mono); }
+
+/* 綴じ穴 */
+.holes { position:fixed; left:calc(50% - 280px + 6px); top:0; bottom:0; width:8px;
+  display:flex; flex-direction:column; justify-content:space-around; z-index:1; pointer-events:none; }
+@media (max-width:560px){ .holes { left:6px; } }
+.holes i { width:7px; height:7px; border-radius:50%; background:var(--paper-dim);
+  box-shadow:inset 0 1px 1.5px rgba(80,65,45,.4); }
+
+.pane { display:none; padding:0 0 8px; }
+.pane.on { display:block; }
+
+/* ── ページ見出し（日付欄） ── */
+.page-head { padding:20px 18px 10px 26px; border-bottom:2.5px solid var(--ink); position:relative; }
+.ph-row { display:flex; align-items:baseline; gap:10px; }
+.ph-day { font-size:42px; font-weight:900; line-height:1; letter-spacing:-.01em; }
+.ph-day small { font-size:15px; font-weight:700; letter-spacing:.08em; }
+.ph-date { font-size:13px; color:var(--ink-faint); font-weight:500; }
+.ph-date .mono { font-size:15px; font-weight:600; color:var(--ink); }
+.ph-title { font-size:16.5px; font-weight:700; margin-top:2px; }
+.ph-wx { position:absolute; right:18px; top:20px; text-align:right; font-size:10.5px;
+  color:var(--ink-faint); line-height:1.55; max-width:150px; word-break:auto-phrase; }
+.ph-wx .t { font-family:var(--mono); font-size:13px; font-weight:600; color:var(--ink); white-space:nowrap; }
+
+/* ── チケット半券 ── */
+.stub-wrap { padding:16px 18px 4px 26px; position:relative; }
+.stub { background:var(--paper-hi); border:1px solid var(--edge); border-radius:6px;
+  box-shadow:0 2px 6px rgba(90,75,50,.16), 0 1px 2px rgba(90,75,50,.12);
+  transform:rotate(-1.2deg); position:relative; display:flex; }
+.stub.alt { transform:rotate(.8deg); }
+.stub-main { flex:1; padding:12px 12px 10px 14px; min-width:0; }
+.stub-kicker { font-size:9px; letter-spacing:.2em; color:var(--red); font-weight:700; }
+.stub-name { font-size:14px; font-weight:900; line-height:1.4; margin:2px 0 4px; }
+.stub-meta { font-size:10px; color:var(--ink-faint); line-height:1.6; }
+.stub-meta b { color:var(--ink); font-weight:700; }
+.stub-cut { width:76px; border-left:2px dashed #C9BCA2; padding:10px 6px; flex-shrink:0;
+  display:flex; flex-direction:column; justify-content:center; align-items:center; gap:3px; }
+.stub-cut .big { font-family:var(--mono); font-size:20px; font-weight:600; line-height:1; }
+.stub-cut .lbl { font-size:8.5px; letter-spacing:.14em; color:var(--ink-faint); }
+.barcode { margin-top:5px; width:52px; height:15px;
+  background:repeating-linear-gradient(90deg,var(--ink) 0 1.5px,transparent 1.5px 3px,var(--ink) 3px 5.5px,transparent 5.5px 7px); }
+.stub::before,.stub::after { content:""; position:absolute; right:68px; width:12px; height:12px;
+  border-radius:50%; background:var(--paper); border:1px solid var(--edge); }
+.stub::before { top:-7px; } .stub::after { bottom:-7px; }
+.tape { position:absolute; left:50%; top:7px; transform:translateX(-58%) rotate(2.5deg);
+  width:92px; height:21px; z-index:2; opacity:.88; box-shadow:0 1px 2px rgba(90,75,50,.18);
+  background:repeating-linear-gradient(45deg, rgba(232,196,88,.85) 0 8px, rgba(226,186,70,.85) 8px 16px); }
+.tape.b { background:repeating-linear-gradient(45deg, rgba(74,111,165,.5) 0 8px, rgba(74,111,165,.42) 8px 16px); }
+
+/* ── 帳面（確定スケジュールの台帳） ── */
+.ledger { margin:14px 18px 0 26px; position:relative; }
+.ledger-title { font-size:10.5px; letter-spacing:.2em; font-weight:700; color:var(--ink-faint); margin-bottom:4px; }
+.lrow { display:flex; gap:12px; padding:9px 2px 8px; border-bottom:1px solid var(--line); }
+.lrow:last-child { border-bottom:none; }
+.lrow .t { font-family:var(--mono); font-size:13px; font-weight:600; width:48px; flex-shrink:0; padding-top:1px; }
+.lrow .body { flex:1; min-width:0; }
+.lrow .h { font-size:13.5px; font-weight:700; line-height:1.45; }
+.lrow .d { font-size:11px; color:var(--ink-faint); line-height:1.6; margin-top:1px; }
+.ledger.ruled::before { content:""; position:absolute; left:58px; top:18px; bottom:6px; width:1px; background:rgba(199,64,45,.5); }
+.stamp { display:inline-block; margin-left:6px; padding:1px 7px 0; border:2px solid var(--red);
+  border-radius:3px; color:var(--red); font-size:9.5px; font-weight:900; letter-spacing:.12em;
+  transform:rotate(-3deg) translateY(-1px); }
+.lrow.now-line { background:linear-gradient(90deg, rgba(232,196,88,.28), transparent 80%); margin:0 -8px; padding-left:10px; padding-right:8px; border-radius:4px; }
+
+/* ── 写真スクラップ ── */
+.scrap-wrap { padding:16px 18px 0 26px; }
+.scrap { background:#fff; padding:7px 7px 22px; transform:rotate(1.4deg); position:relative;
+  box-shadow:0 3px 8px rgba(90,75,50,.2); }
+.scrap img { width:100%; height:120px; object-fit:cover; display:block; filter:saturate(.92) contrast(.98); }
+.scrap .cap { position:absolute; bottom:4px; left:10px; font-size:10px; color:var(--ink-faint); letter-spacing:.06em; }
+.scrap .tape { top:-8px; right:22px; left:auto; transform:rotate(-40deg); width:68px; height:19px; }
+
+/* ── 赤ペンメモ ── */
+.memo { margin:14px 18px 0 26px; font-size:11.5px; color:var(--ink-soft); line-height:1.8; }
+.memo .lead { color:var(--blue); font-weight:700; }
+.memo u { text-decoration:underline wavy rgba(199,64,45,.55) 1.5px; text-underline-offset:3px; }
+
+/* ── 付箋（寄り道候補） ── */
+.picks { margin:18px 18px 0 26px; }
+.picks-title { font-size:10.5px; letter-spacing:.2em; font-weight:700; color:var(--ink-faint); }
+.picks-note { font-size:10px; color:var(--ink-faint); margin:2px 0 10px; }
+.fusen-grid { display:flex; flex-wrap:wrap; gap:10px; }
+.fusen { width:calc(50% - 5px); padding:9px 10px 10px; position:relative; text-decoration:none; display:block;
+  color:var(--ink); box-shadow:0 2px 5px rgba(90,75,50,.16); }
+.fusen:nth-child(3n)   { transform:rotate(-1.3deg); }
+.fusen:nth-child(3n+1) { transform:rotate(.9deg); }
+.fusen:nth-child(3n+2) { transform:rotate(-.5deg); }
+.fusen::before { content:""; position:absolute; top:0; left:0; right:0; height:16px;
+  background:rgba(255,255,255,.28); }
+.g-cafe  { background:#F2E3B6; } .g-food { background:#F0D4C2; }
+.g-sight { background:#D9E3C8; } .g-view { background:#CFDDE4; }
+.fusen .tag { font-size:8.5px; font-weight:900; letter-spacing:.18em; color:rgba(63,58,51,.55); }
+.fusen .nm { font-size:12px; font-weight:700; line-height:1.4; margin:1px 0 2px; }
+.fusen .tp { font-size:10px; color:var(--ink-soft); line-height:1.55; }
+.fusen .go { position:absolute; right:8px; top:7px; font-family:var(--mono); font-size:9px;
+  color:rgba(63,58,51,.5); letter-spacing:.05em; }
+
+/* ── 目次（旅程インデックス） ── */
+.toc-head { padding:22px 18px 12px 26px; border-bottom:2.5px solid var(--ink); }
+.toc-eyebrow { font-size:9.5px; letter-spacing:.3em; color:var(--red); font-weight:700; }
+.toc-h1 { font-size:23px; font-weight:900; line-height:1.4; margin-top:2px; }
+.toc-range { font-family:var(--mono); font-size:11px; color:var(--ink-faint); margin-top:2px; }
+.toc-list { margin:6px 18px 0 26px; }
+.trow-idx { display:flex; gap:12px; align-items:baseline; width:100%; text-align:left;
+  background:none; border:none; border-bottom:1px solid var(--line); padding:13px 2px 12px;
+  font-family:inherit; color:var(--ink); cursor:pointer; }
+.trow-idx .n { font-family:var(--mono); font-size:16px; font-weight:600; width:30px; flex-shrink:0; }
+.trow-idx .b { flex:1; min-width:0; }
+.trow-idx .dt { font-size:10.5px; color:var(--ink-faint); font-weight:500; }
+.trow-idx .dt .mono { font-weight:600; color:var(--ink-soft); }
+.trow-idx .tt { font-size:14px; font-weight:700; line-height:1.5; }
+.trow-idx .arw { font-family:var(--mono); color:var(--ink-faint); font-size:13px; }
+.back { display:inline-block; margin:14px 0 0 26px; background:none; border:none; font-family:inherit;
+  font-size:11.5px; font-weight:700; color:var(--blue); cursor:pointer; padding:4px 8px 4px 0; }
+
+/* ── 「いま」ページ（旅行前） ── */
+.now-head { padding:22px 18px 14px 26px; border-bottom:2.5px solid var(--ink); position:relative; }
+.now-eyebrow { font-size:9.5px; letter-spacing:.3em; color:var(--red); font-weight:700; }
+.count { display:flex; align-items:baseline; gap:8px; margin-top:4px; }
+.count .num { font-family:var(--mono); font-size:56px; font-weight:600; line-height:1; letter-spacing:-.02em; }
+.count .unit { font-size:14px; font-weight:700; }
+.count-sub { font-size:11px; color:var(--ink-faint); margin-top:4px; }
+.ribbon { position:absolute; right:26px; top:-2px; width:22px; height:64px; background:var(--red);
+  clip-path:polygon(0 0, 100% 0, 100% 100%, 50% 84%, 0 100%); opacity:.85; }
+
+/* ── 移植中スタブ ── */
+.stub-page { margin:26px 18px 0 26px; border:1.5px dashed var(--edge); border-radius:8px;
+  padding:26px 18px; text-align:center; background:rgba(253,251,246,.5); }
+.stub-page .t1 { font-size:14px; font-weight:900; }
+.stub-page .t2 { font-size:11px; color:var(--ink-faint); margin-top:6px; line-height:1.8; }
+.stub-page a { color:var(--blue); font-weight:700; }
+
+/* ── 下部ナビ（手帳のインデックスタブ） ── */
+.idx { position:fixed; bottom:0; left:50%; transform:translateX(-50%); width:100%; max-width:560px;
+  display:flex; gap:2px; padding:0 10px env(safe-area-inset-bottom); z-index:10; }
+.idx button { flex:1; text-align:center; padding:10px 0 12px; font-family:inherit; cursor:pointer;
+  font-size:10.5px; font-weight:700; letter-spacing:.06em;
+  color:var(--ink-faint); background:var(--paper-dim); border:1px solid var(--edge); border-bottom:none;
+  border-radius:7px 7px 0 0; box-shadow:0 -1px 3px rgba(90,75,50,.08); }
+.idx button.on { background:var(--paper-hi); color:var(--ink); padding-top:8px; margin-top:-3px; border-color:#C9BCA2; }
+</style>
+</head>
+<body>
+<div class="holes"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+
+<main>
+  <section id="pane-now"  class="pane"></section>
+  <section id="pane-toc"  class="pane"></section>
+  <section id="pane-map"  class="pane"></section>
+  <section id="pane-prep" class="pane"></section>
+  <section id="pane-info" class="pane"></section>
+</main>
+
+<nav class="idx" id="idx"></nav>
+
+<script src="trip.js"></script>
+<script>
+/* ============ 旅の手帳 v2 — シェル ============ */
+var NAV = [
+  { id:'toc',  label:'旅程' },
+  { id:'now',  label:'いま' },
+  { id:'map',  label:'地図' },
+  { id:'prep', label:'準備' },
+  { id:'info', label:'情報' }
+];
+var current = 'now';
+
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;'); }
+
+/* ---- 部品 ---- */
+function stubHTML(v, alt, tapeCls) {
+  return '<div class="stub-wrap"><div class="tape' + (tapeCls?' '+tapeCls:'') + '"></div>' +
+    '<div class="stub' + (alt?' alt':'') + '">' +
+      '<div class="stub-main">' +
+        '<div class="stub-kicker">' + v.kicker + '</div>' +
+        '<div class="stub-name">' + v.name + '</div>' +
+        '<div class="stub-meta">' + v.meta + '</div>' +
+      '</div>' +
+      '<div class="stub-cut"><div class="lbl">' + v.cut.label + '</div>' +
+        '<div class="big">' + v.cut.big + '</div><div class="lbl">' + v.cut.sub + '</div>' +
+        '<div class="barcode"></div></div>' +
+    '</div></div>';
+}
+function ledgerHTML(rows, title, nowIdx) {
+  var h = '<div class="ledger ruled">' + (title ? '<div class="ledger-title">— ' + title + ' —</div>' : '');
+  rows.forEach(function(r, i){
+    h += '<div class="lrow' + (i===nowIdx?' now-line':'') + '"><div class="t">' + r.t + '</div><div class="body">' +
+      '<div class="h">' + r.h + (r.hard ? '<span class="stamp">時間厳守</span>' : '') + '</div>' +
+      (r.d ? '<div class="d">' + r.d + '</div>' : '') + '</div></div>';
+  });
+  return h + '</div>';
+}
+function picksHTML(keys) {
+  if (!keys || !keys.length) return '';
+  var h = '<div class="picks"><div class="picks-title">— 寄り道の付箋 —</div>' +
+    '<div class="picks-note">確定の予定ではありません。前後の空き時間に、気が向いたら。</div><div class="fusen-grid">';
+  keys.forEach(function(k){
+    var p = PICKS[k]; if (!p) return;
+    var g = GENRE[p.g];
+    h += '<a class="fusen ' + g.cls + '" href="' + p.map + '" target="_blank" rel="noopener">' +
+      '<span class="tag">' + g.label + '</span><span class="go">MAP</span>' +
+      '<div class="nm">' + p.name + '</div><div class="tp">' + p.tip + '</div></a>';
+  });
+  return h + '</div></div>';
+}
+function dayPageHTML(day, withBack) {
+  var h = withBack ? '<button class="back" onclick="renderToc()">‹ 旅程の目次へ</button>' : '';
+  h += '<div class="page-head">' +
+    '<div class="ph-wx"><span class="t">' + day.wx.t + '</span><br>' + day.wx.note + '</div>' +
+    '<div class="ph-row"><div class="ph-day">' + day.n + '<small>日目</small></div>' +
+    '<div class="ph-date"><span class="mono">' + day.date + '</span> ' + day.wd + '曜日</div></div>' +
+    '<div class="ph-title">' + day.title + '</div></div>';
+  if (day.voucher) h += stubHTML(day.voucher, false, '');
+  h += ledgerHTML(day.sched, 'きょうの流れ', dayNowIndex(day));
+  if (day.photo) h += '<div class="scrap-wrap"><div class="scrap"><div class="tape b"></div>' +
+    '<img src="' + day.photo + '" alt="" loading="lazy"><div class="cap">' + day.cap + '</div></div></div>';
+  if (day.memo) h += '<div class="memo"><span class="lead">メモ｜</span>' + day.memo + '</div>';
+  h += picksHTML(day.picks);
+  return h;
+}
+
+/* ---- 現地時間（豪東部）で「今の行」を判定 ---- */
+function auParts() {
+  try {
+    var p = {};
+    new Intl.DateTimeFormat('en-US',{timeZone:'Australia/Sydney',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false})
+      .formatToParts(new Date()).forEach(function(x){ p[x.type]=x.value; });
+    var hh = parseInt(p.hour,10); if (hh>=24) hh-=24;
+    return { ymd:p.year+'-'+p.month+'-'+p.day, min:hh*60+parseInt(p.minute,10) };
+  } catch(e){ return null; }
+}
+function tripDayToday() { /* 旅行中なら該当DAY、旅行外なら null */
+  var au = auParts(); if (!au) return null;
+  var d0 = ['2026-09-20','2026-09-21','2026-09-22','2026-09-23','2026-09-24','2026-09-25','2026-09-26'];
+  var i = d0.indexOf(au.ymd);
+  return i >= 0 ? TRIP.days[i] : null;
+}
+function dayNowIndex(day) {
+  var today = tripDayToday(); if (!today || today.n !== day.n) return -1;
+  var au = auParts(); var idx = -1;
+  day.sched.forEach(function(r, i){
+    var m = /^(\d{1,2}):(\d{2})$/.exec(r.t);
+    if (m && parseInt(m[1],10)*60+parseInt(m[2],10) <= au.min) idx = i;
+  });
+  return idx;
+}
+
+/* ---- 各ページ ---- */
+function renderNow() {
+  var host = document.getElementById('pane-now');
+  var today = tripDayToday();
+  if (today) { host.innerHTML = dayPageHTML(today, false); return; }
+  var days = Math.ceil((new Date(TRIP.depart) - new Date()) / 86400000);
+  var h = '<div class="now-head"><div class="ribbon"></div>' +
+    '<div class="now-eyebrow">' + TRIP.title + '</div>';
+  if (days >= 0) {
+    h += '<div class="count"><span class="num">' + days + '</span><span class="unit">日</span></div>' +
+      '<div class="count-sub">出発まで — ' + TRIP.range + '</div>';
+  } else {
+    h += '<div class="count"><span class="unit" style="font-size:20px">旅はおしまい。おかえりなさい！</span></div>';
+  }
+  h += '</div>';
+  h += stubHTML(TRIP.flights[0], false, '');
+  var rows = PREP_SOON.map(function(p){ return { t:'☐', h:p.h, d:p.d }; });
+  h += ledgerHTML(rows, 'そろそろやること', -1);
+  h += '<div class="memo"><span class="lead">メモ｜</span>詳しい持ち物と予約の控えは<u>準備タブ</u>に。旅程は左下の「旅程」から。</div>';
+  host.innerHTML = h;
+}
+function renderToc() {
+  var host = document.getElementById('pane-toc');
+  var h = '<div class="toc-head"><div class="toc-eyebrow">ITINERARY</div>' +
+    '<div class="toc-h1">' + TRIP.title + '</div>' +
+    '<div class="toc-range mono">' + TRIP.range + '</div></div>' +
+    '<div class="toc-list">';
+  TRIP.days.forEach(function(d){
+    h += '<button class="trow-idx" onclick="openDay(' + d.n + ')">' +
+      '<span class="n">0' + d.n + '</span><span class="b">' +
+      '<span class="dt"><span class="mono">' + d.date + '</span> ' + d.wd + '曜日</span>' +
+      '<div class="tt">' + d.title + '</div></span><span class="arw">›</span></button>';
+  });
+  h += '</div>';
+  /* フライト＆ホテルの半券・カード */
+  h += '<div class="ledger" style="margin-top:22px"><div class="ledger-title">— 動かせないもの（予約済み） —</div></div>';
+  h += stubHTML(TRIP.flights[0], false, '') + stubHTML(TRIP.flights[1], true, 'b') + stubHTML(TRIP.flights[2], false, '');
+  TRIP.hotels.forEach(function(ht, i){
+    h += '<div class="stub-wrap"><div class="stub' + (i%2?' alt':'') + '">' +
+      '<div class="stub-main"><div class="stub-kicker">HOTEL — ' + (i===0?'MELBOURNE':'SYDNEY') + '</div>' +
+      '<div class="stub-name">' + ht.jp + '</div>' +
+      '<div class="stub-meta"><b>' + ht.addr + '</b><br>' + ht.stay + '<br>' + ht.note + '<br>TEL ' + ht.tel + '</div></div>' +
+      '<div class="stub-cut"><div class="lbl">STAY</div><div class="big">' + (i===0?'2':'3') + '泊</div><div class="barcode"></div></div>' +
+      '</div></div>';
+  });
+  host.innerHTML = h;
+}
+function openDay(n) {
+  var day = TRIP.days[n-1];
+  document.getElementById('pane-toc').innerHTML = dayPageHTML(day, true);
+  window.scrollTo(0, 0);
+}
+function renderStub(id, name, detail) {
+  document.getElementById(id).innerHTML =
+    '<div class="toc-head"><div class="toc-eyebrow">' + name.en + '</div>' +
+    '<div class="toc-h1">' + name.jp + '</div></div>' +
+    '<div class="stub-page"><div class="t1">この見開きは製本中です</div>' +
+    '<div class="t2">' + detail + '<br>それまでは<a href="../index.html">現行のしおり</a>をご利用ください。</div></div>';
+}
+
+/* ---- ナビ ---- */
+function show(id) {
+  current = id;
+  NAV.forEach(function(n){
+    document.getElementById('pane-' + n.id).classList.toggle('on', n.id === id);
+  });
+  renderIdx();
+  window.scrollTo(0, 0);
+}
+function renderIdx() {
+  document.getElementById('idx').innerHTML = NAV.map(function(n){
+    return '<button class="' + (n.id===current?'on':'') + '" onclick="show(\'' + n.id + '\')">' + n.label + '</button>';
+  }).join('');
+}
+
+/* ---- init ---- */
+(function(){
+  function safe(f){ try{ f(); }catch(e){ if(window.console) console.warn(e); } }
+  safe(renderNow);
+  safe(renderToc);
+  safe(function(){ renderStub('pane-map',  { en:'AREA MAPS', jp:'地図' }, 'エリアマップ・スポット一覧・営業時間表示を移植予定。'); });
+  safe(function(){ renderStub('pane-prep', { en:'PREPARATION', jp:'準備' }, '出発前ToDo・予約トラッカー・持ち物チェックリストを移植予定。'); });
+  safe(function(){ renderStub('pane-info', { en:'REFERENCE', jp:'情報' }, '緊急連絡先・為替換算・交通ガイド・参考リンクを移植予定。'); });
+  safe(renderIdx);
+  /* ディープリンク: #toc / #map / #prep / #info / #day1〜#day7 */
+  safe(function(){
+    var m = /^#day([1-7])$/.exec(location.hash);
+    if (m) { show('toc'); openDay(parseInt(m[1],10)); return; }
+    var id = location.hash.replace('#','');
+    show(NAV.some(function(n){ return n.id === id; }) ? id : 'now');
+  });
+})();
+</script>
+</body>
+</html>
