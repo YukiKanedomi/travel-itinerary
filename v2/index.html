@@ -172,6 +172,7 @@ body {
   border-radius:7px 7px 0 0; box-shadow:0 -1px 3px rgba(90,75,50,.08); }
 .idx button.on { background:var(--paper-hi); color:var(--ink); padding-top:8px; margin-top:-3px; border-color:#C9BCA2; }
 </style>
+<link rel="stylesheet" href="pages.css">
 </head>
 <body>
 <div class="holes"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
@@ -185,8 +186,12 @@ body {
 </main>
 
 <nav class="idx" id="idx"></nav>
+<div id="toast"></div>
 
 <script src="trip.js"></script>
+<script src="map.js"></script>
+<script src="prep.js"></script>
+<script src="info.js"></script>
 <script>
 /* ============ 旅の手帳 v2 — シェル ============ */
 var NAV = [
@@ -358,9 +363,9 @@ function renderIdx() {
   function safe(f){ try{ f(); }catch(e){ if(window.console) console.warn(e); } }
   safe(renderNow);
   safe(renderToc);
-  safe(function(){ renderStub('pane-map',  { en:'AREA MAPS', jp:'地図' }, 'エリアマップ・スポット一覧・営業時間表示を移植予定。'); });
-  safe(function(){ renderStub('pane-prep', { en:'PREPARATION', jp:'準備' }, '出発前ToDo・予約トラッカー・持ち物チェックリストを移植予定。'); });
-  safe(function(){ renderStub('pane-info', { en:'REFERENCE', jp:'情報' }, '緊急連絡先・為替換算・交通ガイド・参考リンクを移植予定。'); });
+  safe(renderMapPage);
+  safe(renderPrepPage);
+  safe(renderInfoPage);
   safe(renderIdx);
   /* ディープリンク: #toc / #map / #prep / #info / #day1〜#day7 */
   safe(function(){
