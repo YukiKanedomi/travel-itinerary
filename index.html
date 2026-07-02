@@ -181,6 +181,8 @@
 
     .emer-box { background: #fff5f5; border: 1px solid #ffcdd2; border-radius: var(--radius); padding: 16px; margin-bottom: 10px; }
     .emer-box h3 { color: #c62828; font-size: 14px; font-weight: 800; margin-bottom: 12px; }
+    .emer-input { width: 100%; border: 1px dashed #e0a3a3; border-radius: 8px; background: #fff; padding: 6px 8px; font-size: 12px; color: var(--ink); font-family: inherit; }
+    .emer-input::placeholder { color: #c9a0a0; font-size: 11px; }
 
     .bud-row { display: flex; justify-content: space-between; align-items: center; padding: 9px 0; font-size: 13px; border-bottom: 1px solid #f0f0f0; }
     .bud-row:last-child { border-bottom: none; }
@@ -1137,6 +1139,10 @@
       <div class="row"><span class="rl">🇯🇵 在メルボルン日本領事館</span><span class="rv editable">+61-3-9639-3244</span></div>
       <div class="row"><span class="rl">💳 VISA紛失</span><span class="rv editable">+1-800-847-2911（フリーダイヤル）</span></div>
       <div class="row"><span class="rl">🏥 JAL国際線</span><span class="rv editable">0120-255-931（日本語サポート）</span></div>
+      <div class="row"><span class="rl">🏨 IC メルボルン</span><span class="rv">+61 3 8627 1400（フロント24h）</span></div>
+      <div class="row"><span class="rl">🏨 リッジスWS シドニー</span><span class="rv">+61 2 8268 1888（フロント24h）</span></div>
+      <div class="row"><span class="rl">🚌 JTB当日連絡先</span><span class="rv"><input class="emer-input" id="emer-jtb" placeholder="最終日程表の現地緊急番号をここにメモ"></span></div>
+      <div class="row"><span class="rl">🛡️ 海外旅行保険</span><span class="rv"><input class="emer-input" id="emer-ins" placeholder="保険会社の緊急窓口をここにメモ"></span></div>
     </div>
     <div class="emer-box" style="margin-top:10px">
       <h3>🚕 タクシー/Uberで見せる：宿泊先（英語）</h3>
@@ -1447,14 +1453,14 @@ var SHEET_DATA = {
   'va-checkin': {
     title: '✈️ ヴァージン・オーストラリア チェックイン',
     steps: [
-      'メルボルン空港 国内線ターミナル（T4）のヴァージン・オーストラリアカウンターへ',
+      'メルボルン空港 国内線ターミナル（T3・ヴァージン専用）のカウンターへ',
       'パスポート（または身分証明書）と予約確認書を提示してチェックイン',
       '受託荷物を預ける（Choiceプランなら1人1個まで無料）',
       '保安検査を通過してゲートエリアで待機（出発30分前を目安）'
     ],
     tips: [
       '💡 オンラインチェックインはヴァージン公式アプリまたはWebから出発24時間前〜が可能。並ばずに済む',
-      '💡 国内線ターミナル（T4）は国際線ターミナル（T2）とは別建物。Uberで直接T4へ向かうよう運転手に伝えて',
+      '💡 ヴァージンの国内線はT3発（T4はJetstar等なので注意）。Uberの運転手には「T3, Virgin Australia」と伝えて',
       '💡 機内持ち込みは7kg以内（1個）が目安'
     ],
     warns: []
@@ -1470,20 +1476,20 @@ var SHEET_DATA = {
     tips: [
       '💡 Uber：約25〜30分・$50〜65。スーツケース多数ならこちらが楽',
       '💡 Airport Link（電車）：Central駅まで約13分・$19.44/人。荷物が少なければ電車が圧倒的に安い',
-      '💡 ホテルはCentral駅から徒歩5分。電車 + 徒歩が最もスムーズ'
+      '💡 ホテルはCentral駅から徒歩10分ほど（約900m）。スーツケースがあるならUberが楽'
     ],
     warns: []
   },
   'hilton-meeting': {
     title: '🏨 ヒルトン シドニー 集合ルート',
     steps: [
-      'リッジス ワールド スクエア（389 Pitt St）を出て北方向へPitt Stを直進',
-      '約700m（徒歩10分）でMarket Stとの交差点を通過し、さらに直進',
-      'George St手前のBatrack Stを左に曲がると「Hilton Sydney」（488 George St）が見える',
-      'ホテル正面玄関からロビーへ入り、JTBスタッフを探す（「SYDODOAOPT87」バウチャーを提示）'
+      'リッジス ワールド スクエア（389 Pitt St）を出て北方向へPitt Stを直進（約600m）',
+      'Park St（ハイドパーク方面から延びる大通り）を左折し、1ブロック先のGeorge Stへ',
+      'George Stを右折してすぐ右手が「Hilton Sydney」（488 George St・QVBの斜向かい）',
+      '正面入って右手・フロント近くのソファーで待機。日本語ガイドが看板を持って案内（「SYDODOAOPT87」バウチャー提示）'
     ],
     tips: [
-      '💡 ホテルを8:10に出発すれば集合の10分前（8:15）には着く計算',
+      '💡 徒歩約10分。8:10発なら8:20頃着＝集合8:25の5分前。不安なら8:05に出発を',
       '💡 Google マップで「Hilton Sydney」を検索して徒歩ナビを使うと迷わない'
     ],
     warns: [
@@ -1493,7 +1499,7 @@ var SHEET_DATA = {
   'syd-checkin': {
     title: '✈️ シドニー空港 第1T チェックイン＆TRS',
     steps: [
-      'シドニー空港 国際線第1ターミナル（T1）のJALカウンターへ（出発3時間前目安）',
+      'シドニー空港 国際線第1ターミナル（T1）のJALカウンターへ（計画は6:45着＝出発2時間10分前。朝は混むのでテキパキと。TRS利用なら余裕を持って）',
       'パスポートと予約確認書を提示してチェックイン・荷物預け',
       'TRS（免税還付）対象がある場合：保安検査通過後のTRSカウンターへ',
       'TRS：レシート（$300以上・同一店・同日購入）＋パスポート＋品物を提示 → GST10%が還付',
@@ -1695,9 +1701,9 @@ function initDayBanners() {
   var conf = {
     day1: { p:'assets/day1.jpg', d:'DAY 1 — 9/20（日）', t:'成田出発 → 機中泊で南半球へ' },
     day2: { p:'assets/day2.jpg', d:'DAY 2 — 9/21（月）', t:'メルボルン到着・カフェ文化を満喫' },
-    day3: { p:'assets/day3.jpg', d:'DAY 3 — 9/22（火）', t:'フィッツロイ・コリングウッド探索' },
+    day3: { p:'assets/day3.jpg', d:'DAY 3 — 9/22（火）', t:'マーケット・世界遺産庭園・図書館' },
     day4: { p:'assets/day4.jpg', d:'DAY 4 — 9/23（水）', t:'メルボルン→シドニー・夜のオペラハウス' },
-    day5: { p:'assets/day5.jpg', d:'DAY 5 — 9/24（木）', t:'ブルーマウンテンズ・タロンガ動物園' },
+    day5: { p:'assets/day5.jpg', d:'DAY 5 — 9/24（木）', t:'ブルーマウンテンズ＆フェザーデール動物園' },
     day6: { p:'assets/day6.jpg', d:'DAY 6 — 9/25（金）', t:'シドニー観光・最後の夕暮れ' },
     day7: { p:'assets/day7.jpg', d:'DAY 7 — 9/26（土）', t:'シドニー発・羽田へ帰国' }
   };
@@ -2141,14 +2147,16 @@ function auNow(){
   return { day:wm[p.weekday], min:hh*60+parseInt(p.minute,10) };
 }
 function openStatus(name){
-  var h=SPOT_HOURS[name]; if(!h) return '';
-  var now=auNow(); var today=(h.all!==undefined)?h.all:h[now.day]; var cls,badge,txt='';
-  if(today===undefined||today===null){ cls='closed'; badge='本日休み'; }
-  else if(today==='24h'){ cls='open'; badge='終日開放'; }
-  else { var m=today.split('-'),o=hmMin(m[0]),c=hmMin(m[1]); txt=today;
-    if(now.min>=o&&now.min<c){ cls=(c-now.min<=30)?'soon':'open'; badge=(c-now.min<=30)?'まもなく閉店':'営業中'; }
-    else { cls='closed'; badge='時間外'; } }
-  return '<div class="map-hours"><span class="oh oh-'+cls+'">'+badge+'</span>'+(txt?'<span class="oh-txt">'+txt+'</span>':'')+(h.note?'<span class="oh-txt">'+h.note+'</span>':'')+'</div>';
+  try {
+    var h=SPOT_HOURS[name]; if(!h) return '';
+    var now=auNow(); var today=(h.all!==undefined)?h.all:h[now.day]; var cls,badge,txt='';
+    if(today===undefined||today===null){ cls='closed'; badge='本日休み'; }
+    else if(today==='24h'){ cls='open'; badge='終日開放'; }
+    else { var m=today.split('-'),o=hmMin(m[0]),c=hmMin(m[1]); txt=today;
+      if(now.min>=o&&now.min<c){ cls=(c-now.min<=30)?'soon':'open'; badge=(c-now.min<=30)?'まもなく閉店':'営業中'; }
+      else { cls='closed'; badge='時間外'; } }
+    return '<div class="map-hours"><span class="oh oh-'+cls+'">'+badge+'</span>'+(txt?'<span class="oh-txt">'+txt+'</span>':'')+(h.note?'<span class="oh-txt">'+h.note+'</span>':'')+'</div>';
+  } catch(e) { return ''; } // 環境依存(Intl等)で失敗してもバッジが消えるだけにする
 }
 function spotItemHTML(s) {
   var enLines = s.en.map(function(e){ return '<div class="map-en">' + e + '</div>'; }).join('');
@@ -2808,36 +2816,55 @@ document.addEventListener('input', function(e){
 });
 
 // ─── Init ──────────────────────────────────────────────────────────────────
-(function init() {
-  renderTabs();
-  renderOverview();
-  renderPrep();
-  renderRemind();
-  renderAreaSwitch();
-  renderAreaMap();
-  renderMapList();
-  renderDayWeather();
-  renderTimebars();
-  // 地図の外側タップでポップアップを閉じる
-  document.addEventListener('click', function(e) {
-    var pop = document.getElementById('map-popup');
-    if (!pop || pop.hidden) return;
-    if (e.target.closest && (e.target.closest('#map-popup') || e.target.closest('.mp-pin'))) return;
-    closeMapPopup();
+// 緊急連絡先のメモ欄（JTB当日連絡先・保険窓口）を localStorage に保存
+function initEmerNotes() {
+  ['emer-jtb', 'emer-ins'].forEach(function(id) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    try { el.value = localStorage.getItem('emer_note_' + id) || ''; } catch (e) {}
+    el.addEventListener('input', function() {
+      try { localStorage.setItem('emer_note_' + id, el.value); } catch (e) {}
+    });
   });
-  applyChecklistState();
-  initDayHighlights();
-  initDayBanners();
-  initDayPicks();
-  initNowNext();
-  setInterval(initNowNext, 60000);
-  updateCountdown();
-  autoSelectTab();
+}
+
+(function init() {
+  // 各初期化を隔離：1つが例外を出しても他の機能は生かす（旅行中の「白い画面」を防ぐ）
+  function safe(fn) { try { fn(); } catch (e) { if (window.console && console.warn) console.warn('init step failed:', e); } }
+  safe(renderTabs);
+  safe(renderOverview);
+  safe(renderPrep);
+  safe(renderRemind);
+  safe(renderAreaSwitch);
+  safe(renderAreaMap);
+  safe(renderMapList);
+  safe(renderDayWeather);
+  safe(renderTimebars);
+  // 地図の外側タップでポップアップを閉じる
+  safe(function() {
+    document.addEventListener('click', function(e) {
+      var pop = document.getElementById('map-popup');
+      if (!pop || pop.hidden) return;
+      if (e.target.closest && (e.target.closest('#map-popup') || e.target.closest('.mp-pin'))) return;
+      closeMapPopup();
+    });
+  });
+  safe(applyChecklistState);
+  safe(initDayHighlights);
+  safe(initDayBanners);
+  safe(initDayPicks);
+  safe(initEmerNotes);
+  safe(initNowNext);
+  safe(function() { setInterval(function() { safe(initNowNext); }, 60000); });
+  safe(updateCountdown);
+  safe(autoSelectTab);
   // Converter: 為替レート（キャッシュ即表示→裏でオンライン最新を取得）
-  initFx();
-  var ci = document.getElementById('conv-input');
-  if (ci) ci.addEventListener('input', calcConv);
-  iconize(document.body);
+  safe(initFx);
+  safe(function() {
+    var ci = document.getElementById('conv-input');
+    if (ci) ci.addEventListener('input', calcConv);
+  });
+  safe(function() { iconize(document.body); });
 })();
 </script>
 
