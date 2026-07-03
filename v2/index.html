@@ -4,6 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#F3EDE2">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="旅の手帳">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="../assets/app-icon-180.png">
 <title>旅の手帳 — オーストラリアの七日間</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -373,6 +378,12 @@ function renderIdx() {
     if (m) { show('toc'); openDay(parseInt(m[1],10)); return; }
     var id = location.hash.replace('#','');
     show(NAV.some(function(n){ return n.id === id; }) ? id : 'now');
+  });
+  /* オフライン対応（Service Worker）。file:// での確認時は登録しない */
+  safe(function(){
+    if ('serviceWorker' in navigator && location.protocol !== 'file:') {
+      navigator.serviceWorker.register('sw.js');
+    }
   });
 })();
 </script>
