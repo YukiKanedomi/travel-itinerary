@@ -5,7 +5,7 @@
  * - 為替API・Googleマップ等の外部は介入しない
  * 更新時は CACHE のバージョンを上げる。
  */
-const CACHE = 'tabi-techo-v1';
+const CACHE = 'tabi-techo-v2';
 const ASSETS = [
   './',
   './index.html',

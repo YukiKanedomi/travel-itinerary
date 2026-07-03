@@ -88,12 +88,37 @@ body {
 /* ── 帳面（確定スケジュールの台帳） ── */
 .ledger { margin:14px 18px 0 26px; position:relative; }
 .ledger-title { font-size:10.5px; letter-spacing:.2em; font-weight:700; color:var(--ink-faint); margin-bottom:4px; }
-.lrow { display:flex; gap:12px; padding:9px 2px 8px; border-bottom:1px solid var(--line); }
+.lrow { padding:9px 2px 8px; border-bottom:1px solid var(--line); }
 .lrow:last-child { border-bottom:none; }
+.lmain { display:flex; gap:12px; }
+.lrow.x .lmain { cursor:pointer; }
 .lrow .t { font-family:var(--mono); font-size:13px; font-weight:600; width:48px; flex-shrink:0; padding-top:1px; }
 .lrow .body { flex:1; min-width:0; }
 .lrow .h { font-size:13.5px; font-weight:700; line-height:1.45; }
 .lrow .d { font-size:11px; color:var(--ink-faint); line-height:1.6; margin-top:1px; }
+/* 展開式（手順・補足・リンク） */
+.chev { align-self:center; flex-shrink:0; padding-left:6px; font-size:10px; color:var(--ink-faint);
+  transition:transform .2s; }
+.lrow.open .chev { transform:rotate(180deg); }
+.lmore { display:none; margin:9px 0 3px 60px; padding-left:10px; border-left:2px solid var(--paper-dim); }
+.lrow.open .lmore { display:block; }
+.lstep { display:flex; gap:8px; font-size:11px; color:var(--ink-soft); line-height:1.7; padding:2px 0; }
+.lstep .n { font-family:var(--mono); font-size:10px; color:var(--red); flex-shrink:0; padding-top:3px; width:12px; }
+.ltip { font-size:10.5px; color:var(--ink-soft); line-height:1.65; padding:3px 0 2px; }
+.ltip.warn { color:var(--red); font-weight:700; }
+.lbtns { display:flex; gap:8px; margin:9px 0 4px; }
+.lbtn { flex:1; max-width:150px; text-align:center; text-decoration:none; font-size:11px; font-weight:700;
+  padding:8px 0; border-radius:6px; border:1.5px solid var(--ink); color:var(--ink); background:var(--paper-hi); }
+.lbtn.web { border-color:var(--green); color:var(--green); }
+/* 日送りナビ */
+.pager { display:flex; gap:10px; margin:22px 18px 0 26px; }
+.pager button { flex:1; font-family:inherit; cursor:pointer; text-align:left; padding:10px 12px;
+  background:var(--paper-hi); border:1px solid var(--edge); border-radius:8px; color:var(--ink);
+  box-shadow:0 1px 3px rgba(90,75,50,.1); }
+.pager button.nx { text-align:right; }
+.pager .pl { display:block; font-family:var(--mono); font-size:9.5px; color:var(--ink-faint); letter-spacing:.1em; }
+.pager .pt2 { display:block; font-size:11.5px; font-weight:700; line-height:1.4; margin-top:1px; }
+.pager .sp { flex:1; }
 .ledger.ruled::before { content:""; position:absolute; left:58px; top:18px; bottom:6px; width:1px; background:rgba(199,64,45,.5); }
 .stamp { display:inline-block; margin-left:6px; padding:1px 7px 0; border:2px solid var(--red);
   border-radius:3px; color:var(--red); font-size:9.5px; font-weight:900; letter-spacing:.12em;
@@ -224,12 +249,35 @@ function stubHTML(v, alt, tapeCls) {
         '<div class="barcode"></div></div>' +
     '</div></div>';
 }
+function rowExtras(r) {
+  if (!r.steps && !r.tips && !r.map && !r.web) return '';
+  var m = '<div class="lmore">';
+  (r.steps || []).forEach(function(s, i){
+    m += '<div class="lstep"><span class="n">' + (i+1) + '</span><span>' + s + '</span></div>';
+  });
+  (r.tips || []).forEach(function(tp){
+    var warn = tp.indexOf('注意｜') === 0;
+    m += '<div class="ltip' + (warn ? ' warn' : '') + '">' + (warn ? tp : '・' + tp) + '</div>';
+  });
+  if (r.map || r.web) {
+    m += '<div class="lbtns">';
+    if (r.map) m += '<a class="lbtn" href="' + r.map + '" target="_blank" rel="noopener">Google マップ</a>';
+    if (r.web) m += '<a class="lbtn web" href="' + r.web + '" target="_blank" rel="noopener">公式サイト</a>';
+    m += '</div>';
+  }
+  return m + '</div>';
+}
+function toggleLrow(el) { el.classList.toggle('open'); }
 function ledgerHTML(rows, title, nowIdx) {
   var h = '<div class="ledger ruled">' + (title ? '<div class="ledger-title">— ' + title + ' —</div>' : '');
   rows.forEach(function(r, i){
-    h += '<div class="lrow' + (i===nowIdx?' now-line':'') + '"><div class="t">' + r.t + '</div><div class="body">' +
+    var extras = rowExtras(r);
+    h += '<div class="lrow' + (extras ? ' x' : '') + (i===nowIdx?' now-line':'') + '">' +
+      '<div class="lmain"' + (extras ? ' onclick="toggleLrow(this.parentNode)"' : '') + '>' +
+      '<div class="t">' + r.t + '</div><div class="body">' +
       '<div class="h">' + r.h + (r.hard ? '<span class="stamp">時間厳守</span>' : '') + '</div>' +
-      (r.d ? '<div class="d">' + r.d + '</div>' : '') + '</div></div>';
+      (r.d ? '<div class="d">' + r.d + '</div>' : '') + '</div>' +
+      (extras ? '<span class="chev">▼</span>' : '') + '</div>' + extras + '</div>';
   });
   return h + '</div>';
 }
@@ -259,8 +307,15 @@ function dayPageHTML(day, withBack) {
     '<img src="' + day.photo + '" alt="" loading="lazy"><div class="cap">' + day.cap + '</div></div></div>';
   if (day.memo) h += '<div class="memo"><span class="lead">メモ｜</span>' + day.memo + '</div>';
   h += picksHTML(day.picks);
+  /* 日送りナビ（前の日・次の日） */
+  var prev = TRIP.days[day.n - 2], next = TRIP.days[day.n];
+  h += '<div class="pager">' +
+    (prev ? '<button onclick="gotoDay(' + prev.n + ')"><span class="pl">‹ DAY ' + prev.n + '</span><span class="pt2">' + prev.title + '</span></button>' : '<span class="sp"></span>') +
+    (next ? '<button class="nx" onclick="gotoDay(' + next.n + ')"><span class="pl">DAY ' + next.n + ' ›</span><span class="pt2">' + next.title + '</span></button>' : '<span class="sp"></span>') +
+    '</div>';
   return h;
 }
+function gotoDay(n) { show('toc'); openDay(n); }
 
 /* ---- 現地時間（豪東部）で「今の行」を判定 ---- */
 function auParts() {
