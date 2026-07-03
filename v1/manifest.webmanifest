@@ -1,0 +1,17 @@
+{
+  "name": "オーストラリア旅行しおり 2026",
+  "short_name": "旅のしおり",
+  "description": "夫婦のオーストラリア旅行（メルボルン→シドニー 2026年9月）のしおり",
+  "lang": "ja",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#01579b",
+  "theme_color": "#01579b",
+  "icons": [
+    { "src": "../assets/app-icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "../assets/app-icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "../assets/app-icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

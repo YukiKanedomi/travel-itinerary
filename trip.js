@@ -45,7 +45,7 @@ var TRIP = {
   days: [
     { n:1, date:'9/20', wd:'日', title:'成田を発って、南半球へ',
       wx:{ t:'日本 20°C前後', note:'機内は冷える。羽織りを' },
-      photo:'../assets/day1.jpg', cap:'いってきます — NRT 18:40発',
+      photo:'assets/day1.jpg', cap:'いってきます — NRT 18:40発',
       voucher:null,
       sched:[
         { t:'15:30', h:'成田空港 第2ターミナル着', d:'JALカウンターでチェックイン・荷物預け・Wi-Fi受取',
@@ -77,7 +77,7 @@ var TRIP = {
 
     { n:2, date:'9/21', wd:'月', title:'メルボルン到着、カフェの街へ',
       wx:{ t:'メルボルン 9–18°C', note:'天気が変わりやすい。羽織り＋折りたたみ傘' },
-      photo:'../assets/day2.jpg', cap:'Hosier Lane — 日々変わる壁画の路地',
+      photo:'assets/day2.jpg', cap:'Hosier Lane — 日々変わる壁画の路地',
       voucher:null,
       sched:[
         { t:'5:45', h:'メルボルン空港 T2着・入国／検疫', d:'スマートゲート → 荷物受取 → 食品があれば申告レーン（YES）へ',
@@ -121,7 +121,7 @@ var TRIP = {
 
     { n:3, date:'9/22', wd:'火', title:'マーケットと世界遺産と図書館',
       wx:{ t:'メルボルン 9–18°C', note:'朝晩冷える。重ね着で調整' },
-      photo:'../assets/day3.jpg', cap:'State Library Victoria — ドームの閲覧室',
+      photo:'assets/day3.jpg', cap:'State Library Victoria — ドームの閲覧室',
       voucher:null,
       sched:[
         { t:'8:30', h:'路地裏カフェでコーヒー', d:'Collins St沿いをぶらぶら。テイクアウトで街歩き' },
@@ -143,7 +143,7 @@ var TRIP = {
 
     { n:4, date:'9/23', wd:'水', title:'メルボルンの朝、シドニーの夜',
       wx:{ t:'シドニー 12–21°C', note:'日中は過ごしやすい陽気' },
-      photo:'../assets/day4.jpg', cap:'Darling Harbour — シドニー最初の夜',
+      photo:'assets/day4.jpg', cap:'Darling Harbour — シドニー最初の夜',
       voucher:null,
       sched:[
         { t:'9:00', h:'サウスメルボルンマーケット', d:'QVよりローカルでおしゃれ。デリと雑貨（水曜営業）。Uberで約10分',
@@ -187,7 +187,7 @@ var TRIP = {
 
     { n:5, date:'9/24', wd:'木', title:'ブルーマウンテンズと動物たちの日',
       wx:{ t:'カトゥーンバ 5–14°C', note:'山は市内より5〜8°C低い。しっかり防寒' },
-      photo:'../assets/day5.jpg', cap:'Three Sisters, Blue Mountains',
+      photo:'assets/day5.jpg', cap:'Three Sisters, Blue Mountains',
       voucher:{ kicker:'JTB DAY TOUR — VOUCHER', name:'世界遺産ブルーマウンテンズ＆動物園（日本語ガイド）',
         meta:'集合 <b>Hilton Sydney ロビー</b>（488 George St）<br>正面入って右手・フロント近くのソファーで待機',
         cut:{ label:'MEET', big:'8:25', sub:'AM SHARP' } },
@@ -222,7 +222,7 @@ var TRIP = {
 
     { n:6, date:'9/25', wd:'金', title:'ハーバーの街を歩き尽くす最終日',
       wx:{ t:'シドニー 13–21°C', note:'散策日和。帽子と日焼け止めを' },
-      photo:'../assets/day6.jpg', cap:'The Rocks — 金曜はマーケットの日',
+      photo:'assets/day6.jpg', cap:'The Rocks — 金曜はマーケットの日',
       voucher:null,
       sched:[
         { t:'8:30', h:'朝食 — The Grounds of the City', d:'レトロで緑あふれる人気カフェ',
@@ -245,7 +245,7 @@ var TRIP = {
 
     { n:7, date:'9/26', wd:'土', title:'南十字星に手を振って、帰国',
       wx:{ t:'シドニー 13–21°C', note:'朝は冷える。一枚羽織って' },
-      photo:'../assets/day7.jpg', cap:'また来るね、オーストラリア',
+      photo:'assets/day7.jpg', cap:'また来るね、オーストラリア',
       voucher:null,
       sched:[
         { t:'5:30', h:'起床・最終チェック', d:'パスポート・財布・スマホ・充電器。忘れ物は枕元とバスルーム' },
