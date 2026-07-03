@@ -78,6 +78,7 @@ var TRIP = {
     { n:2, date:'9/21', wd:'月', title:'メルボルン到着、カフェの街へ',
       wx:{ t:'メルボルン 9–18°C', note:'天気が変わりやすい。羽織り＋折りたたみ傘' },
       photo:'assets/day2.jpg', cap:'Hosier Lane — 日々変わる壁画の路地',
+      photo2:'assets/scrap-laneway.jpg', cap2:'路地のカフェ文化——この街の日常へ',
       voucher:null,
       sched:[
         { t:'5:45', h:'メルボルン空港 T2着・入国／検疫', d:'スマートゲート → 荷物受取 → 食品があれば申告レーン（YES）へ',
@@ -122,6 +123,7 @@ var TRIP = {
     { n:3, date:'9/22', wd:'火', title:'マーケットと世界遺産と図書館',
       wx:{ t:'メルボルン 9–18°C', note:'朝晩冷える。重ね着で調整' },
       photo:'assets/day3.jpg', cap:'State Library Victoria — ドームの閲覧室',
+      photo2:'assets/scrap-qvm.jpg', cap2:'Queen Victoria Market — 1878年から続く市場',
       voucher:null,
       sched:[
         { t:'8:30', h:'路地裏カフェでコーヒー', d:'Collins St沿いをぶらぶら。テイクアウトで街歩き' },
@@ -188,6 +190,7 @@ var TRIP = {
     { n:5, date:'9/24', wd:'木', title:'ブルーマウンテンズと動物たちの日',
       wx:{ t:'カトゥーンバ 5–14°C', note:'山は市内より5〜8°C低い。しっかり防寒' },
       photo:'assets/day5.jpg', cap:'Three Sisters, Blue Mountains',
+      photo2:'assets/scrap-koala.jpg', cap2:'ユーカリの木の上の住人に、会いに行く',
       voucher:{ kicker:'JTB DAY TOUR — VOUCHER', name:'世界遺産ブルーマウンテンズ＆動物園（日本語ガイド）',
         meta:'集合 <b>Hilton Sydney ロビー</b>（488 George St）<br>正面入って右手・フロント近くのソファーで待機',
         cut:{ label:'MEET', big:'8:25', sub:'AM SHARP' } },
@@ -223,6 +226,7 @@ var TRIP = {
     { n:6, date:'9/25', wd:'金', title:'ハーバーの街を歩き尽くす最終日',
       wx:{ t:'シドニー 13–21°C', note:'散策日和。帽子と日焼け止めを' },
       photo:'assets/day6.jpg', cap:'The Rocks — 金曜はマーケットの日',
+      photo2:'assets/scrap-opera.jpg', cap2:'Sydney Opera House — 最後の夜の舞台',
       voucher:null,
       sched:[
         { t:'8:30', h:'朝食 — The Grounds of the City', d:'レトロで緑あふれる人気カフェ',

@@ -8,7 +8,7 @@
  * 旧世代（tabi-shiori-v* / tabi-techo-v*）は一度だけ掃除する。
  * /v1/ のアーカイブ（tabi-shiori-arch-*）には触れない。
  */
-const CACHE = 'tabi-techo-root-v1';
+const CACHE = 'tabi-techo-root-v2';
 const ASSETS = [
   './',
   './index.html',
@@ -20,6 +20,8 @@ const ASSETS = [
   './manifest.webmanifest',
   './assets/day1.jpg', './assets/day2.jpg', './assets/day3.jpg', './assets/day4.jpg',
   './assets/day5.jpg', './assets/day6.jpg', './assets/day7.jpg',
+  './assets/scrap-laneway.jpg', './assets/scrap-qvm.jpg', './assets/scrap-koala.jpg', './assets/scrap-opera.jpg',
+  './assets/hero-sydney.jpg',
   './assets/app-icon-180.png', './assets/app-icon-192.png', './assets/app-icon-512.png'
 ];
 

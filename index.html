@@ -127,11 +127,16 @@ body {
 
 /* ── 写真スクラップ ── */
 .scrap-wrap { padding:16px 18px 0 26px; }
-.scrap { background:#fff; padding:7px 7px 22px; transform:rotate(1.4deg); position:relative;
-  box-shadow:0 3px 8px rgba(90,75,50,.2); }
-.scrap img { width:100%; height:120px; object-fit:cover; display:block; filter:saturate(.92) contrast(.98); }
-.scrap .cap { position:absolute; bottom:4px; left:10px; font-size:10px; color:var(--ink-faint); letter-spacing:.06em; }
+.scrap { background:linear-gradient(180deg, #fff, #FBFAF6); padding:7px 7px 22px; transform:rotate(1.4deg); position:relative;
+  box-shadow:0 1px 2px rgba(90,75,50,.14), 0 5px 12px -3px rgba(90,75,50,.3); }
+.scrap.l { transform:rotate(-1.1deg); }
+.scrap img { width:100%; height:120px; object-fit:cover; display:block;
+  filter:saturate(.92) contrast(.98); border:1px solid rgba(90,75,50,.12); }
+.scrap.tall img { height:150px; }
+.scrap .cap { position:absolute; bottom:4px; left:10px; right:10px; font-size:10px; color:var(--ink-faint);
+  letter-spacing:.06em; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 .scrap .tape { top:-8px; right:22px; left:auto; transform:rotate(-40deg); width:68px; height:19px; }
+.scrap.l .tape { right:auto; left:20px; transform:rotate(38deg); }
 
 /* ── 赤ペンメモ ── */
 .memo { margin:14px 18px 0 26px; font-size:11.5px; color:var(--ink-soft); line-height:1.8; }
@@ -142,20 +147,34 @@ body {
 .picks { margin:18px 18px 0 26px; }
 .picks-title { font-size:10.5px; letter-spacing:.2em; font-weight:700; color:var(--ink-faint); }
 .picks-note { font-size:10px; color:var(--ink-faint); margin:2px 0 10px; }
-.fusen-grid { display:flex; flex-wrap:wrap; gap:10px; }
-.fusen { width:calc(50% - 5px); padding:9px 10px 10px; position:relative; text-decoration:none; display:block;
-  color:var(--ink); box-shadow:0 2px 5px rgba(90,75,50,.16); }
-.fusen:nth-child(3n)   { transform:rotate(-1.3deg); }
-.fusen:nth-child(3n+1) { transform:rotate(.9deg); }
-.fusen:nth-child(3n+2) { transform:rotate(-.5deg); }
-.fusen::before { content:""; position:absolute; top:0; left:0; right:0; height:16px;
-  background:rgba(255,255,255,.28); }
-.g-cafe  { background:#F2E3B6; } .g-food { background:#F0D4C2; }
-.g-sight { background:#D9E3C8; } .g-view { background:#CFDDE4; }
+.fusen-grid { display:flex; flex-wrap:wrap; gap:11px; }
+.fusen { width:calc(50% - 6px); padding:13px 10px 14px; position:relative; text-decoration:none; display:block;
+  color:var(--ink); --f:#F0E3B2;
+  /* 紙の付箋：上端の糊しろ（濃い帯）＋繊維＋下に向かってわずかに明るく */
+  background:
+    linear-gradient(180deg, rgba(120,95,55,.13) 0, rgba(120,95,55,.07) 9px, rgba(120,95,55,0) 20px),
+    linear-gradient(180deg, rgba(255,255,255,0) 55%, rgba(255,255,255,.22) 100%),
+    repeating-linear-gradient(94deg, rgba(110,90,55,.028) 0 2px, transparent 2px 5px),
+    var(--f);
+  box-shadow:
+    0 1px 1.5px rgba(90,75,50,.18),
+    0 7px 9px -7px rgba(90,75,50,.5);
+  border-radius:1px 1px 2px 1px;
+}
+/* 右下のめくれ */
+.fusen::after { content:""; position:absolute; right:0; bottom:0; width:24px; height:24px;
+  background:linear-gradient(315deg, var(--paper) 0 5px, rgba(90,75,50,.22) 6px, rgba(255,255,255,.5) 11px, rgba(255,255,255,0) 20px);
+  border-radius:0 0 2px 0; }
+.fusen:nth-child(3n)   { transform:rotate(-1.4deg); }
+.fusen:nth-child(3n+1) { transform:rotate(1deg); }
+.fusen:nth-child(3n+2) { transform:rotate(-.6deg); }
+.fusen:nth-child(even) { margin-top:5px; }
+.g-cafe  { --f:#F0E0A6; } .g-food { --f:#EFD2BB; }
+.g-sight { --f:#D5E0BE; } .g-view { --f:#C8D9E2; }
 .fusen .tag { font-size:8.5px; font-weight:900; letter-spacing:.18em; color:rgba(63,58,51,.55); }
 .fusen .nm { font-size:12px; font-weight:700; line-height:1.4; margin:1px 0 2px; }
 .fusen .tp { font-size:10px; color:var(--ink-soft); line-height:1.55; }
-.fusen .go { position:absolute; right:8px; top:7px; font-family:var(--mono); font-size:9px;
+.fusen .go { position:absolute; right:9px; top:12px; font-family:var(--mono); font-size:9px;
   color:rgba(63,58,51,.5); letter-spacing:.05em; }
 
 /* ── 目次（旅程インデックス） ── */
@@ -164,10 +183,14 @@ body {
 .toc-h1 { font-size:23px; font-weight:900; line-height:1.4; margin-top:2px; }
 .toc-range { font-family:var(--mono); font-size:11px; color:var(--ink-faint); margin-top:2px; }
 .toc-list { margin:6px 18px 0 26px; }
-.trow-idx { display:flex; gap:12px; align-items:baseline; width:100%; text-align:left;
-  background:none; border:none; border-bottom:1px solid var(--line); padding:13px 2px 12px;
+.trow-idx { display:flex; gap:12px; align-items:center; width:100%; text-align:left;
+  background:none; border:none; border-bottom:1px solid var(--line); padding:11px 2px 10px;
   font-family:inherit; color:var(--ink); cursor:pointer; }
-.trow-idx .n { font-family:var(--mono); font-size:16px; font-weight:600; width:30px; flex-shrink:0; }
+.trow-idx .ph { width:48px; height:48px; object-fit:cover; flex-shrink:0;
+  border:3px solid #fff; box-shadow:0 1px 4px rgba(90,75,50,.28); transform:rotate(-2.2deg);
+  filter:saturate(.92); }
+.trow-idx:nth-child(even) .ph { transform:rotate(1.8deg); }
+.trow-idx .n { font-family:var(--mono); font-size:15px; font-weight:600; width:26px; flex-shrink:0; }
 .trow-idx .b { flex:1; min-width:0; }
 .trow-idx .dt { font-size:10.5px; color:var(--ink-faint); font-weight:500; }
 .trow-idx .dt .mono { font-weight:600; color:var(--ink-soft); }
@@ -302,8 +325,15 @@ function dayPageHTML(day, withBack) {
     '<div class="ph-date"><span class="mono">' + day.date + '</span> ' + day.wd + '曜日</div></div>' +
     '<div class="ph-title">' + day.title + '</div></div>';
   if (day.voucher) h += stubHTML(day.voucher, false, '');
+  /* 扉写真（誌面の始まり）：2枚目があればそれを、なければメイン写真を上に */
+  var opening = day.photo2
+    ? { p:day.photo2, c:day.cap2 }
+    : (day.photo ? { p:day.photo, c:day.cap } : null);
+  if (opening) h += '<div class="scrap-wrap"><div class="scrap tall"><div class="tape b"></div>' +
+    '<img src="' + opening.p + '" alt="" loading="lazy"><div class="cap">' + opening.c + '</div></div></div>';
   h += ledgerHTML(day.sched, 'きょうの流れ', dayNowIndex(day));
-  if (day.photo) h += '<div class="scrap-wrap"><div class="scrap"><div class="tape b"></div>' +
+  /* 2枚目がある日は、メイン写真を締めに */
+  if (day.photo2 && day.photo) h += '<div class="scrap-wrap"><div class="scrap l"><div class="tape"></div>' +
     '<img src="' + day.photo + '" alt="" loading="lazy"><div class="cap">' + day.cap + '</div></div></div>';
   if (day.memo) h += '<div class="memo"><span class="lead">メモ｜</span>' + day.memo + '</div>';
   h += picksHTML(day.picks);
@@ -359,6 +389,9 @@ function renderNow() {
   }
   h += '</div>';
   h += stubHTML(TRIP.flights[0], false, '');
+  h += '<div class="scrap-wrap"><div class="scrap l tall"><div class="tape"></div>' +
+    '<img src="assets/hero-sydney.jpg" alt="" loading="lazy">' +
+    '<div class="cap">SYDNEY — もうすぐ、この景色に会える</div></div></div>';
   var rows = PREP_SOON.map(function(p){ return { t:'☐', h:p.h, d:p.d }; });
   h += ledgerHTML(rows, 'そろそろやること', -1);
   h += '<div class="memo"><span class="lead">メモ｜</span>詳しい持ち物と予約の控えは<u>準備タブ</u>に。旅程は左下の「旅程」から。</div>';
@@ -372,6 +405,7 @@ function renderToc() {
     '<div class="toc-list">';
   TRIP.days.forEach(function(d){
     h += '<button class="trow-idx" onclick="openDay(' + d.n + ')">' +
+      '<img class="ph" src="' + (d.photo2 || d.photo) + '" alt="" loading="lazy">' +
       '<span class="n">0' + d.n + '</span><span class="b">' +
       '<span class="dt"><span class="mono">' + d.date + '</span> ' + d.wd + '曜日</span>' +
       '<div class="tt">' + d.title + '</div></span><span class="arw">›</span></button>';
