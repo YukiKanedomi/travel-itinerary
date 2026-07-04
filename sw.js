@@ -8,7 +8,7 @@
  * 旧世代（tabi-shiori-v* / tabi-techo-v*）は一度だけ掃除する。
  * /v1/ のアーカイブ（tabi-shiori-arch-*）には触れない。
  */
-const CACHE = 'tabi-techo-root-v2';
+const CACHE = 'tabi-techo-root-v3';
 const ASSETS = [
   './',
   './index.html',

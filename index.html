@@ -33,7 +33,7 @@ body {
     repeating-linear-gradient(93deg, rgba(160,140,110,.035) 0 2px, transparent 2px 5px),
     repeating-linear-gradient(2deg, rgba(120,100,80,.025) 0 1px, transparent 1px 4px),
     var(--paper);
-  padding-bottom:calc(64px + env(safe-area-inset-bottom));
+  padding-bottom:calc(80px + env(safe-area-inset-bottom));
   max-width:560px; margin:0 auto;
 }
 .mono { font-family:var(--mono); }
@@ -217,13 +217,21 @@ body {
 .stub-page a { color:var(--blue); font-weight:700; }
 
 /* ── 下部ナビ（手帳のインデックスタブ） ── */
+/* 手帳の小口（ページ束の断面）を下地に、その上にインデックスタブの耳が乗る */
 .idx { position:fixed; bottom:0; left:50%; transform:translateX(-50%); width:100%; max-width:560px;
-  display:flex; gap:2px; padding:0 10px env(safe-area-inset-bottom); z-index:10; }
-.idx button { flex:1; text-align:center; padding:10px 0 12px; font-family:inherit; cursor:pointer;
+  display:flex; align-items:flex-end; gap:3px; z-index:10;
+  padding:7px 10px calc(7px + env(safe-area-inset-bottom));
+  background:
+    linear-gradient(180deg, rgba(120,100,75,.06) 0, rgba(120,100,75,0) 8px),
+    var(--paper);
+  border-top:1.5px solid var(--edge);
+  box-shadow:0 -5px 16px rgba(90,75,50,.16); }
+.idx button { flex:1; text-align:center; padding:9px 0 10px; font-family:inherit; cursor:pointer;
   font-size:10.5px; font-weight:700; letter-spacing:.06em;
-  color:var(--ink-faint); background:var(--paper-dim); border:1px solid var(--edge); border-bottom:none;
-  border-radius:7px 7px 0 0; box-shadow:0 -1px 3px rgba(90,75,50,.08); }
-.idx button.on { background:var(--paper-hi); color:var(--ink); padding-top:8px; margin-top:-3px; border-color:#C9BCA2; }
+  color:var(--ink-faint); background:var(--paper-dim); border:1px solid var(--edge);
+  border-radius:8px 8px 3px 3px; box-shadow:0 1px 2px rgba(90,75,50,.1); }
+.idx button.on { background:var(--paper-hi); color:var(--ink); padding:13px 0 13px; border-color:#C9BCA2;
+  box-shadow:0 2px 6px rgba(90,75,50,.18); }
 </style>
 <link rel="stylesheet" href="pages.css">
 </head>
