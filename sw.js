@@ -8,7 +8,7 @@
  * 旧世代（tabi-shiori-v* / tabi-techo-v*）は一度だけ掃除する。
  * /v1/ のアーカイブ（tabi-shiori-arch-*）には触れない。
  */
-const CACHE = 'tabi-techo-root-v3';
+const CACHE = 'tabi-techo-root-v4';
 const ASSETS = [
   './',
   './index.html',
@@ -17,6 +17,8 @@ const ASSETS = [
   './map.js',
   './prep.js',
   './info.js',
+  './news.js',
+  './articles.json',
   './manifest.webmanifest',
   './assets/day1.jpg', './assets/day2.jpg', './assets/day3.jpg', './assets/day4.jpg',
   './assets/day5.jpg', './assets/day6.jpg', './assets/day7.jpg',
@@ -56,7 +58,8 @@ self.addEventListener('fetch', function (e) {
 
   var isNav = req.mode === 'navigate' ||
               url.pathname.endsWith('/') ||
-              url.pathname.endsWith('index.html');
+              url.pathname.endsWith('index.html') ||
+              url.pathname.endsWith('articles.json'); // 朝刊は network-first（毎朝更新されるため）
 
   if (isNav) {
     e.respondWith(

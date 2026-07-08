@@ -9,6 +9,7 @@
 # 一時ファイル
 _*.png
 _*.js
+scripts/auto-press.log
 
 # スライド生成（ビルド成果物・依存）
 node_modules/

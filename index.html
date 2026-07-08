@@ -12,7 +12,7 @@
 <title>旅の手帳 — オーストラリアの七日間</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=Zen+Old+Mincho:wght@700;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 /* ============ 手帳デザインシステム（案A: 旅の手帳） ============ */
 :root {
@@ -241,6 +241,7 @@ body {
 <main>
   <section id="pane-now"  class="pane"></section>
   <section id="pane-toc"  class="pane"></section>
+  <section id="pane-news" class="pane"></section>
   <section id="pane-map"  class="pane"></section>
   <section id="pane-prep" class="pane"></section>
   <section id="pane-info" class="pane"></section>
@@ -253,11 +254,13 @@ body {
 <script src="map.js"></script>
 <script src="prep.js"></script>
 <script src="info.js"></script>
+<script src="news.js"></script>
 <script>
 /* ============ 旅の手帳 v2 — シェル ============ */
 var NAV = [
   { id:'toc',  label:'旅程' },
   { id:'now',  label:'いま' },
+  { id:'news', label:'雑誌' },
   { id:'map',  label:'地図' },
   { id:'prep', label:'準備' },
   { id:'info', label:'情報' }
@@ -396,6 +399,7 @@ function renderNow() {
     h += '<div class="count"><span class="unit" style="font-size:20px">旅はおしまい。おかえりなさい！</span></div>';
   }
   h += '</div>';
+  h += '<div id="now-press"></div>';
   h += stubHTML(TRIP.flights[0], false, '');
   h += '<div class="scrap-wrap"><div class="scrap l tall"><div class="tape"></div>' +
     '<img src="assets/hero-sydney.jpg" alt="" loading="lazy">' +
@@ -468,6 +472,7 @@ function renderIdx() {
   safe(renderMapPage);
   safe(renderPrepPage);
   safe(renderInfoPage);
+  safe(initNews);
   safe(renderIdx);
   /* ディープリンク: #toc / #map / #prep / #info / #day1〜#day7 */
   safe(function(){
