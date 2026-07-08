@@ -3,21 +3,24 @@
  * - Google Fonts は初回オンライン閲覧時にキャッシュ→以後オフラインでも同じ書体
  * - ナビゲーションは network-first（オンライン時は常に最新）
  * - 為替API・Googleマップ等の外部は介入しない
- * 更新時は CACHE のバージョンを上げる。
+ * 更新時は CACHE のバージョンを上げ、index.html の ?v= と下の V も同じ番号に揃える。
+ * （index.html は network-first なので、新HTMLが新しい ?v= 付きURLを参照すれば
+ *   旧SWのキャッシュにヒットせず、CSS/JSだけ古い「ちぐはぐ表示」が起きない）
  * キャッシュ名の運用: このSWは 'tabi-techo-root-*' を管理し、
  * 旧世代（tabi-shiori-v* / tabi-techo-v*）は一度だけ掃除する。
  * /v1/ のアーカイブ（tabi-shiori-arch-*）には触れない。
  */
-const CACHE = 'tabi-techo-root-v4';
+const CACHE = 'tabi-techo-root-v5';
+const V = '5'; // index.html の ?v= と揃える
 const ASSETS = [
   './',
   './index.html',
-  './pages.css',
-  './trip.js',
-  './map.js',
-  './prep.js',
-  './info.js',
-  './news.js',
+  './pages.css?v=' + V,
+  './trip.js?v=' + V,
+  './map.js?v=' + V,
+  './prep.js?v=' + V,
+  './info.js?v=' + V,
+  './news.js?v=' + V,
   './articles.json',
   './manifest.webmanifest',
   './assets/day1.jpg', './assets/day2.jpg', './assets/day3.jpg', './assets/day4.jpg',

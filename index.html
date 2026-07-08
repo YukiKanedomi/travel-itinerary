@@ -24,6 +24,7 @@
 }
 * { margin:0; padding:0; box-sizing:border-box; }
 html { -webkit-text-size-adjust:100%; }
+img { max-width:100%; height:auto; } /* pages.css 不達時でも写真がはみ出さない保険 */
 body {
   font-family:"Zen Kaku Gothic New","Hiragino Kaku Gothic ProN",sans-serif;
   color:var(--ink); line-height:1.7; letter-spacing:.02em;
@@ -233,7 +234,7 @@ body {
 .idx button.on { background:var(--paper-hi); color:var(--ink); padding:13px 0 13px; border-color:#C9BCA2;
   box-shadow:0 2px 6px rgba(90,75,50,.18); }
 </style>
-<link rel="stylesheet" href="pages.css">
+<!-- ?v= はキャッシュずれ対策。sw.js の CACHE と一緒に上げる --><link rel="stylesheet" href="pages.css?v=5">
 </head>
 <body>
 <div class="holes"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
@@ -250,11 +251,11 @@ body {
 <nav class="idx" id="idx"></nav>
 <div id="toast"></div>
 
-<script src="trip.js"></script>
-<script src="map.js"></script>
-<script src="prep.js"></script>
-<script src="info.js"></script>
-<script src="news.js"></script>
+<script src="trip.js?v=5"></script>
+<script src="map.js?v=5"></script>
+<script src="prep.js?v=5"></script>
+<script src="info.js?v=5"></script>
+<script src="news.js?v=5"></script>
 <script>
 /* ============ 旅の手帳 v2 — シェル ============ */
 var NAV = [

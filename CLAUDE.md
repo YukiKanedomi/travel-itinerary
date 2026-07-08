@@ -34,7 +34,7 @@
 1. ユーザーが `travel-data.md`（または直接指示）で内容変更を依頼
 2. Claude が `trip.js`（旅程・付箋）や `map.js`（スポット・営業時間）を編集
 3. `node validate.mjs` で検証（曜日照合・時刻昇順・付箋キー・営業時間書式・DAY5厳守）
-4. `sw.js` の CACHE バージョンを上げる（資産はcache-firstのため必須）
+4. **CSS/JSを変えたら3点セットでバージョンを上げる**: `sw.js` の CACHE と `V`、`index.html` のCSS/JS参照の `?v=` を同じ番号に揃える（資産はcache-firstのため。`?v=` を忘れると旧SW稼働中の端末で「新HTML＋旧CSS」のちぐはぐ表示が起きる）。trip.js等のデータのみの変更でも同様
 5. headless Chrome でレンダリング確認 → ユーザー確認 → 明示指示があったら push
 
 ※ push は必ずユーザーの明示指示を待つ。デザインプレビューはGoogleドライブ（Claude成果物/travel-itinerary/デザイン比較/）にも保存。
