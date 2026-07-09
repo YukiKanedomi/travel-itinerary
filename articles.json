@@ -3,7 +3,7 @@
     "paper": "南十字星",
     "en": "THE SOUTHERN CROSS",
     "sub": "まいにち届く、旅のミニマガジン",
-    "currentNo": 2
+    "currentNo": 3
   },
   "issues": [
     {
@@ -126,6 +126,87 @@
         }
       ],
       "memo": "シドニーのタップ決済ワザはDAY4〜6の市内移動でまるごと使えます。貝アレルギーのフレーズは、ロックスやサーキュラー・キー周辺で食事をする日にこそ効いてくるはず。カードは忘れず、貝は聞いてから。"
+    },
+    {
+      "no": 3,
+      "date": "2026-07-10",
+      "wd": "金",
+      "theme": "発掘・体験",
+      "title": "淵に立つ日、庭に迷う日——地上285mと、地図にない庭",
+      "lead": "メルボルンでは、床までガラス張りの箱に乗って地上285メートルの淵に立ってみる。シドニーでは、地図にも案内看板にも載らない水辺の庭でひっそり迷ってみる。今日の発掘号は「食べない」寄り道をふたつ、正反対の高さと静けさから探しました。",
+      "photos": [
+        {
+          "src": "assets/press/3-1.jpg",
+          "cap": "ユーレカタワー88階からの眺め。The Edgeはこの景色の中へさらに3メートル張り出す",
+          "credit": "Indrajit Das / CC BY-SA 4.0 (Wikimedia)"
+        },
+        {
+          "src": "assets/press/3-2.jpg",
+          "cap": "Wendy's Secret Garden。地図にも案内看板にも載らない、ラベンダー・ベイの庭",
+          "credit": "Sardaka / CC BY-SA 3.0 (Wikimedia)"
+        }
+      ],
+      "body": [
+        {
+          "h": null,
+          "p": "水曜号は「食べる」寄り道を掘ったので、金曜号は打って変わって「食べない」寄り道を掘ってみる。テーマはずばり高さと静けさ——メルボルンでは空の上へ、シドニーでは緑の底へ。どちらもいまの旅程にはまだ載っていないけれど、知っているだけで旅の選択肢がぐっと増える場所を、2都市からひとつずつ発掘した。"
+        },
+        {
+          "h": "地上285メートル、ガラス一枚の淵",
+          "p": "インターコンチネンタルから川を渡って徒歩15〜20分、サウスバンクにそびえるユーレカタワーの88階に「メルボルン・スカイデッキ」はある。地上285メートル、南半球でもトップクラスの高さから街を見下ろせる展望台だが、本当の名物は追加料金で乗れる「The Edge（エッジ）」だ。床も壁も天井もガラス張りの箱が、建物の外へゆっくり3メートル張り出していく仕掛けで、動き出した瞬間はガラスが曇っていて足元が見えないが、完全に張り出しきると透明になり、靴の下にいきなり285メートルの街並みが広がる。<b>高いところが平気な人には一生モノの数分間</b>だ。乗っている間はスタッフがプロ仕様の写真も撮ってくれるらしい。大人$29（The Edgeは別料金・要確認）、営業時間は季節で変動するため訪問前に公式サイトのチェックを。人気なのは日没前後で、9月のメルボルンなら17時台後半が狙い目になりそうだ。DAY3の15時からの自由時間を少し前倒しし、18時のCumulus Inc.のディナー前に寄り道する、というのが現実的なプランだろう。"
+        },
+        {
+          "h": "地図にない庭、迷うための庭",
+          "p": "シドニー側の発掘は、地図にもほとんど載らない「Wendy's Secret Garden（ウェンディーズ・シークレット・ガーデン）」。ラベンダー・ベイという入江のほとりに、オーストラリアを代表する画家のひとりブレット・ホワイトリーの妻ウェンディ・ホワイトリーが、1992年に夫を亡くしたあと独りで開墾しはじめた庭だ。放置されていた鉄道用地を30年以上かけて手入れし続け、いまは曲がりくねった小径とブロンズの胸像、彫刻の施された木のベンチが茂みの中に隠れている。地元の人が散歩やひと息つく場所として今も通う、生きた庭だ。入場無料・時間制限なしだが、街灯がないので日中の訪問がおすすめ。行き方はサーキュラー・キーからミルソンズ・ポイント行きのフェリーに乗り、ルナパークの脇を抜けて線路沿いを歩くこと5〜10分。<b>タップ決済のカードはフェリーでもそのまま使える</b>（DAY2号で紹介した仕組みと同じだ）。あえて案内看板を出していないのは、この静けさを守るためだという。DAY6の10時、ロイヤル・ボタニック・ガーデンの代わりにこちらを選ぶ、という手もある。"
+        },
+        {
+          "h": null,
+          "p": "どちらも旅程を崩さない「もしも」の候補だ。エッジで高さに挑むか、庭でひっそり迷うか——気分で選べるのも、付箋の付箋たるゆえんだと思う。"
+        }
+      ],
+      "spots": [
+        {
+          "name": "Eureka Skydeck 88 / The Edge",
+          "area": "メルボルン",
+          "g": "view",
+          "tip": "地上285mの展望台。The Edgeは張り出すガラスの箱（別料金）。日没前後が人気",
+          "map": "https://maps.google.com/?q=Eureka+Skydeck+7+Riverside+Quay+Southbank+Melbourne"
+        },
+        {
+          "name": "Wendy's Secret Garden",
+          "area": "シドニー",
+          "g": "sight",
+          "tip": "地図にない無料の庭。Circular QuayからMilsons Point行きフェリーで徒歩5〜10分",
+          "map": "https://maps.google.com/?q=Wendy%27s+Secret+Garden+Lavender+Bay+Sydney"
+        }
+      ],
+      "sources": [
+        {
+          "t": "Melbourne Skydeck 公式サイト",
+          "u": "https://www.melbourneskydeck.com.au/"
+        },
+        {
+          "t": "Melbourne Skydeck – 料金案内（Melbourne City Card）",
+          "u": "https://melbournecitycard.com/attraction/eureka-skydeck/"
+        },
+        {
+          "t": "Eureka Skydeck Melbourne – Edge Thrills, Sunset Views & Tickets Guide",
+          "u": "https://discovermelbourne.au/attractions/eureka-skydeck/"
+        },
+        {
+          "t": "Location – Wendy's Secret Garden",
+          "u": "https://www.wendyssecretgarden.org.au/location/"
+        },
+        {
+          "t": "Frequently Asked Questions – Wendy's Secret Garden",
+          "u": "https://www.wendyssecretgarden.org.au/frequently-asked-questions/"
+        },
+        {
+          "t": "The heartbreaking and beautiful story behind Wendy Whiteley's Secret Garden（Time Out Sydney）",
+          "u": "https://www.timeout.com/sydney/things-to-do/wendys-secret-garden"
+        }
+      ],
+      "memo": "気に入ったら「Eureka SkydeckをDAY3の寄り道に追加して」の一言でOKです。ちなみに編集部イチ推しは庭のほう——高いところは少し苦手なので、The Edgeは同行者に譲ります。両方行けたら、それはもう欲張りな一日です。"
     }
   ]
 }
