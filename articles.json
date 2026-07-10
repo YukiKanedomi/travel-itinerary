@@ -3,7 +3,7 @@
     "paper": "南十字星",
     "en": "THE SOUTHERN CROSS",
     "sub": "まいにち届く、旅のミニマガジン",
-    "currentNo": 3
+    "currentNo": 4
   },
   "issues": [
     {
@@ -207,6 +207,88 @@
         }
       ],
       "memo": "気に入ったら「Eureka SkydeckをDAY3の寄り道に追加して」の一言でOKです。ちなみに編集部イチ推しは庭のほう——高いところは少し苦手なので、The Edgeは同行者に譲ります。両方行けたら、それはもう欲張りな一日です。"
+    },
+    {
+      "no": 4,
+      "date": "2026-07-11",
+      "wd": "土",
+      "theme": "実用・買い物",
+      "title": "レシートは、宝物になる——免税1/11のからくりと、本物の土産",
+      "lead": "土曜号は「実用・買い物」。免税は仕組みを知れば拍子抜けするほどシンプルだし、お土産は「ここでしか買えない」ものを選ぶと帰ってからの満足度が違う。9月の空模様と、道を渡るときの小さなルールもあわせてお届けします。DAY6の本気の土産探しと、DAY7の空港カウンターに効く回です。",
+      "photos": [
+        {
+          "src": "assets/press/4-1.jpg",
+          "cap": "Queen Victoria Building の内部。DAY6の「本気の土産探し」の舞台",
+          "credit": "Kgbo / CC BY-SA 4.0 (Wikimedia)"
+        },
+        {
+          "src": "assets/press/4-2.jpg",
+          "cap": "The Strand Arcade。QVBのすぐ近く、オパール専門店が集まる1892年築のアーケード",
+          "credit": "Chris Olszewski / CC BY-SA 4.0 (Wikimedia)"
+        }
+      ],
+      "body": [
+        {
+          "h": null,
+          "p": "実用号の第2弾は「買い物」がテーマ。旅の後半、財布にはオーストラリアドルの現金よりレシートが増えてくる頃だろう。免税の条件は数字さえ押さえれば迷わないし、お土産も「なんとなく」より「これはここでしか」を選ぶほうが、帰国後に手に取るたび嬉しくなる。加えて9月の気候の傾向と、歩行者としての小さな心得も仕込んでおきたい。"
+        },
+        {
+          "h": "免税は「1/11」で覚える",
+          "p": "オーストラリアの免税制度TRS（Tourist Refund Scheme）は、数字で覚えると迷わない。条件は「同じ店（同じABN番号）で合計$300以上」「購入から60日以内」の2つだけ。還付額はヨーロッパの民間業者のような割高な手数料が引かれず、<b>支払った金額の1/11がそのまま戻ってくる</b>——これは価格に含まれる消費税分そのものだからだ。手続きはDAY7の朝、保安検査を通過したあとのTRSカウンターで。レシート（同じ店で$300分）とパスポート、そして品物本体を提示する。$1000以上の買い物はレシートに自分の名前（パスポート表記）が入っているか要確認。ワインや香水、チョコレートなど消耗品は未開封でないと対象外になるので、DAY6の夜に開けてしまわないよう注意したい。TRSアプリで事前に情報を入力しておくと、QRコード提示だけで済んで時短になる。"
+        },
+        {
+          "h": "本物を、掘り出す",
+          "p": "せっかくなら、旅程にまだ載っていない「本物」も掘り出しておきたい。ひとつはアボリジナルアート。本物を選ぶなら、美術館のミュージアムショップや正規のギャラリーで、真正性の証明（Certificate of Authenticity）が付くものを。ふたつめはオーストラリアの国石オパール。QVBから歩いてすぐの「The Strand Arcade」は1892年築の優雅なアーケードで、良質なオパール専門店が集まる。DAY6の15時、QVBでの本気買いの前後に寄り道できる距離だ。みっつめはカンガルーレザー製品。軽くて丈夫、独特の風合いのある財布やベルトは日常使いできる土産として持ちが良い。どれも<b>「Australian Made」のタグが付いているか</b>を確認すると、より安心して選べる。紅茶やAesopは旅程ですでに予定済みなので、この3つで「買い物リスト」に厚みを足しておこう。"
+        },
+        {
+          "h": "9月の空模様と、小さなルール",
+          "p": "旅の支度に効くのが天気の傾向だ。9月のメルボルンは日中8〜16℃、シドニーは12〜20℃前後で、どちらも月10日ほど雨の日がある「春の入口」の気候。旅程の各日の天気メモ通り、<b>薄手のダウンかウインドブレーカーを1枚バッグに入れておく</b>のが正解のようだ。あわせて覚えておきたいのが2つの安全習慣。ひとつは日差し。オーストラリアの紫外線は曇りの日でも強く、特に10時〜15時は要注意なので日焼け止めはこまめに塗り直したい。もうひとつは横断歩道。歩行者から20m以内にゼブラ横断歩道があれば、そこを渡るのがルールとされている。イヤホンとスマホをしまい、左右を確認してから渡る——小さなことだが、知っているだけで街歩きの安心感が違う。"
+        }
+      ],
+      "spots": [
+        {
+          "name": "The Strand Arcade",
+          "area": "シドニー",
+          "g": "sight",
+          "tip": "1892年築の優雅なアーケード。良質なオパール専門店が集まる。QVBから徒歩数分",
+          "map": "https://maps.google.com/?q=Strand+Arcade+412-414+George+Street+Sydney"
+        }
+      ],
+      "sources": [
+        {
+          "t": "Tourist Refund Scheme – making the claim（Australian Border Force 公式）",
+          "u": "https://www.abf.gov.au/entering-and-leaving-australia/tourist-refund-scheme/making-the-claim"
+        },
+        {
+          "t": "Tourist refund scheme（Australian Taxation Office 公式）",
+          "u": "https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/gst/in-detail/rules-for-specific-transactions/international-transactions/gst-free-sales-to-travellers-departing-australia/tourist-refund-scheme"
+        },
+        {
+          "t": "Guide: Australia's GST Tourist Refund Scheme, TRS（Point Hacks）",
+          "u": "https://www.pointhacks.com.au/gst-tourist-refund-scheme-trs-australia/"
+        },
+        {
+          "t": "Uncover Australia's most popular souvenirs（Tourism Australia 公式）",
+          "u": "https://www.australia.com/en-us/facts-and-planning/about-australia/australian-souvenirs.html"
+        },
+        {
+          "t": "September weather – Sydney, Australia（Weather Atlas）",
+          "u": "https://www.weather-atlas.com/en/australia/sydney-weather-september"
+        },
+        {
+          "t": "September weather – Melbourne, Australia（Weather Atlas）",
+          "u": "https://www.weather-atlas.com/en/australia/melbourne-weather-september"
+        },
+        {
+          "t": "Pedestrian crossings（NSW Government 公式）",
+          "u": "https://www.nsw.gov.au/driving-boating-and-transport/roads-safety-and-rules/stopping-giving-way-turning/pedestrian-crossings"
+        },
+        {
+          "t": "Health and safety information for travellers（Tourism Australia 公式）",
+          "u": "https://www.australia.com/en/facts-and-planning/health-and-safety/faq.html"
+        }
+      ],
+      "memo": "気に入ったら「Strand ArcadeをDAY6の寄り道に追加して」の一言でOKです。免税の計算はレシートの合計を先に確認するのが早道——DAY7のTRSカウンターで慌てないように。ちなみに編集部はカンガルーレザーの財布が気になっています。荷物、まだ増やせるでしょうか。"
     }
   ]
 }
