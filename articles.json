@@ -3,7 +3,7 @@
     "paper": "南十字星",
     "en": "THE SOUTHERN CROSS",
     "sub": "まいにち届く、旅のミニマガジン",
-    "currentNo": 4
+    "currentNo": 6
   },
   "issues": [
     {
@@ -289,6 +289,140 @@
         }
       ],
       "memo": "気に入ったら「Strand ArcadeをDAY6の寄り道に追加して」の一言でOKです。免税の計算はレシートの合計を先に確認するのが早道——DAY7のTRSカウンターで慌てないように。ちなみに編集部はカンガルーレザーの財布が気になっています。荷物、まだ増やせるでしょうか。"
+    },
+    {
+      "no": 5,
+      "date": "2026-07-12",
+      "wd": "日",
+      "theme": "週のまとめ",
+      "title": "日曜は棚卸しの日——今週の4本と、並ばず座る技術",
+      "lead": "日曜日は棚卸しの日。今週発行した4本を並べてみると、旅程の隙間を埋める寄り道と、現地で困らないための知恵が思ったよりたくさん集まっていた。出発まであと70日。今日はその中から「2〜3ヶ月前」にやっておきたい準備をひとつ、深掘りします。",
+      "photos": [
+        {
+          "src": "assets/press/5-1.jpg",
+          "cap": "メルボルンCBD、Flinders Laneの昼下がり。Chin ChinもCumulus Inc.も、この通り沿いにある",
+          "credit": "Vanbasten 23 / CC BY-SA 3.0 (Wikimedia)"
+        }
+      ],
+      "body": [
+        {
+          "h": null,
+          "p": "日曜日は棚卸しの日。今週発行した4本——朝食の発電所カフェ、タップ決済とチップとアレルギーの英語、地上285メートルとひみつの庭、免税と本物の土産——を並べてみると、旅程の隙間を埋める寄り道と、現地で困らないための知恵が、思ったよりたくさん集まっていた。気になった記事があれば「◯◯を追加して」のひとことで、今すぐ旅程に採用できる。"
+        },
+        {
+          "h": "出発まで70日、次の関門は「2〜3ヶ月前」",
+          "p": "今日で出発まであと70日。準備タブのToDoで言えば、ちょうど「2〜3ヶ月前」の欄の途中にいる。パスポートの残存確認や航空券・ホテルの予約確定はもう済んでいる頃だと思うので、今週はその次、<b>「人気店の混雑対策を確認」</b>という項目を深掘りしてみたい。旅程にはDAY2のChin Chin、DAY3のCumulus Inc.と、メルボルンを代表する2つの人気店がすでに組み込まれているが、どちらも予約が取れない店だ。せっかくの最初の2晩を「並んで疲れて終わった」にしないための作戦を、今のうちに手帳へ書き込んでおこう。"
+        },
+        {
+          "h": "Chin Chin、月曜18時という好条件",
+          "p": "DAY2のChin Chinは、小人数だと予約自体を受け付けていない完全ウォークインの店。名前を書いて、外の列かダウンステアーズのバー「GoGo」で待つのが定番のスタイルだ。混雑のピークは金・土曜の夜と、平日でも19〜20時台と言われている。逆に言えば、<b>日並びの月曜、しかも18時という早めの時間はかなりの好条件</b>で、席に着くまでの待ち時間はぐっと短くなる可能性が高い。それでも多少待つ前提で、スタッフに連絡先を伝えて呼び出してもらう仕組みを使うと、その場に立ちっぱなしにならずに済む。もし待つなら、GoGoで一杯やりながらというのも悪くない過ごし方だ。"
+        },
+        {
+          "h": "Cumulus Inc.、火曜も同じ発想で",
+          "p": "DAY3のCumulus Inc.も同様で、7〜14名の団体は予約できるが、2人のような少人数はウォークイン専用。混雑を避けるならランチ後の15時台が一番の狙い目とされているが、旅程ではディナー利用なので、Chin Chinと同じく<b>「平日・開店直後に近い早めの時間」</b>という原則で臨むのがよさそうだ。火曜18時というこの旅の設定は、悪くない部類に入る。両店に共通するのは、待たされる前提で来た人ほど機嫌よく過ごせるということ。多少の行列は「メルボルンの人気店に来た証」くらいに受け止めておくと、気持ちの負担が違ってくる。"
+        },
+        {
+          "h": null,
+          "p": "どちらも「絶対に座れる」保証はできない、というのが正直なところだ。それでも、開店直後に近い時間を選ぶ・並ぶ前提で心の準備をしておく・待ち時間はバーで過ごすという3つの構えを持っているだけで、当日の気持ちの余裕はまるで違ってくる。出発まで70日、来週も引き続き、旅程の隙間を埋める発掘を続けます。"
+        }
+      ],
+      "sources": [
+        {
+          "t": "Reservations | Cumulus Inc.（公式）",
+          "u": "https://www.cumulusinc.com.au/reservations"
+        },
+        {
+          "t": "No reservation? Melbourne spots taking walk-ins（Melbourne Food and Wine Festival）",
+          "u": "https://www.melbournefoodandwine.com.au/eat/no-reservation-melbourne-spots-taking-walk-ins/"
+        },
+        {
+          "t": "CHIN CHIN, Melbourne（Tripadvisor Restaurant Review）",
+          "u": "https://www.tripadvisor.com/Restaurant_Review-g255100-d2705861-Reviews-Chin_Chin-Melbourne_Victoria.html"
+        },
+        {
+          "t": "Chin Chin | Restaurants in Melbourne（Time Out Melbourne）",
+          "u": "https://www.timeout.com/melbourne/restaurants/chin-chin"
+        },
+        {
+          "t": "Cumulus Inc. — Local Modern in CBD, Melbourne（Curious Spoon）",
+          "u": "https://curiousspoon.app/spot/melbourne/cumulus-inc"
+        }
+      ],
+      "memo": "この号はDAY2 Chin ChinとDAY3 Cumulus Inc.、両方のディナー前に効きます。準備タブ「2〜3ヶ月前」の欄にチェックを一つどうぞ。編集部はどちらも未経験なので、正直「並んでみたい」が本音です。"
+    },
+    {
+      "no": 6,
+      "date": "2026-07-13",
+      "wd": "月",
+      "theme": "ニュース",
+      "title": "祭りの月がはじまる——シドニー・フリンジ本日解禁と、5年ぶりの観覧車",
+      "lead": "月曜は「ニュース」号。今日はちょうど、シドニーの秋祭り「シドニー・フリンジ・フェスティバル」の全プログラムが解禁される日でした。会期は9月まるごと——DAY4〜6のシドニー滞在とぴったり重なります。おまけにメルボルンでは、5年止まっていた観覧車が動き出す気配も。9月の南半球、街の気配を先取りします。",
+      "photos": [
+        {
+          "src": "assets/press/6-1.jpg",
+          "cap": "5年ぶりに動き出すか——ドックランズの観覧車「Melbourne Star」",
+          "credit": "Chris Phutully / CC BY 2.0 (Wikimedia)"
+        },
+        {
+          "src": "assets/press/6-2.jpg",
+          "cap": "シドニーのPitt Street Mall。宿から徒歩圏、9月はここもフリンジの舞台になる",
+          "credit": "MDRX / CC BY-SA 4.0 (Wikimedia)"
+        }
+      ],
+      "body": [
+        {
+          "h": null,
+          "p": "月曜日は、旅先の「いま」を先取りする号にしようと思う。今日調べていて驚いたのは、シドニーの秋の風物詩「シドニー・フリンジ・フェスティバル」の全プログラムが、なんと本日解禁されたばかりだということ。会期は9月1日から30日まで、シドニー中70以上の会場を使う、まるごと1ヶ月のインディーズ芸術祭だ。DAY4〜6、ちょうどシドニーに滞在している間じゅう、この祭りの真っ只中にいることになる。"
+        },
+        {
+          "h": "フリンジ、街のあちこちが舞台になる",
+          "p": "「フリンジ」とは、主流の芸術祭からあふれた（＝fringe）インディーズ表現を集めたお祭りのこと。2026年は450以上のイベントが、Central・Eastern・Inner West・Greater Sydneyの4エリアに分かれて開催される。演劇・コメディ・サーカス・キャバレー・ダンスとジャンルは幅広く、多くのチケットは手頃な価格のようだ。宿泊するリッジス・ワールド・スクエア（Pitt St）はシドニーのCentralエリアのど真ん中にあるので、<b>会場探しに苦労しない立地</b>という点でも相性がいい。旅程には組み込んでいないが、DAY5の集合8:25厳守を崩さない範囲で、DAY4の夜やDAY6の空き時間にふらっと立ち寄る、という選択肢が生まれた。詳しい会場と演目は、本日公開されたばかりの公式サイトのプログラムから探せるはずだ。"
+        },
+        {
+          "h": "メルボルンでは、5年ぶりに星が回る",
+          "p": "一方メルボルンでは、ドックランズで2021年から止まったままだった観覧車「Melbourne Star（メルボルン・スター）」が、2026年後半に再始動するというニュースが流れている。運営会社の経営破綻で5年間眠っていた高さ120メートルの観覧車に、スイスと米国の投資家から1100万ドル超の出資が入り、ゴンドラの快適性向上やWi-Fi設置などの改修が進んでいるようだ。ただし再開の正確な日付はまだ「2026年後半」としか分かっておらず、<b>DAY2〜3のメルボルン滞在（9/21〜23）に間に合うかは要確認</b>というのが正直なところ。出発前のニュースで開業日が判明したら、また号を出して知らせたい。"
+        },
+        {
+          "h": null,
+          "p": "ちなみにメルボルンでは、この旅の直後、9月24日からロイヤル・メルボルン・ショーが、9月29日からはメルボルン・フリンジ・フェスティバル（演劇やコメディの祭典）が幕を開ける。どちらも私たちの滞在（〜9月23日）にはわずかに間に合わないが、9月というシーズンそのものが、南半球で「春の祭りの季節」へ切り替わる合図なのだと思うと少しわくわくする。シドニーでは祭りの真っ只中に立ち、メルボルンでは開幕直前の高揚とすれ違う——そんな9月になりそうだ。"
+        }
+      ],
+      "spots": [
+        {
+          "name": "Melbourne Star Observation Wheel",
+          "area": "メルボルン",
+          "g": "view",
+          "tip": "2021年から休止中。2026年後半に再開予定（時期未確定・要事前確認）",
+          "map": "https://maps.google.com/?q=Melbourne+Star+101+Waterfront+Way+Docklands"
+        }
+      ],
+      "sources": [
+        {
+          "t": "Sydney Fringe Festival 公式サイト",
+          "u": "https://sydneyfringe.com/"
+        },
+        {
+          "t": "Sydney Fringe 2026: Australia's fastest-growing indie arts festival wants your show!（ArtsHub）",
+          "u": "https://www.artshub.com.au/news/sponsored-content/sydney-fringe-2026-australias-fastest-growing-indie-arts-festival-wants-your-show-2841436/"
+        },
+        {
+          "t": "It's official: The infamous Melbourne Star will spin again this year（Time Out Melbourne）",
+          "u": "https://www.timeout.com/melbourne/news/its-official-the-infamous-melbourne-star-will-spin-again-in-2026-081425"
+        },
+        {
+          "t": "The Melbourne Star Observation Wheel will reopen in the second half of 2026（Melbourning.）",
+          "u": "https://www.melbourning.com.au/2026/04/24/the-melbourne-star-observation-wheel-will-reopen-in-the-second-half-of-2026/"
+        },
+        {
+          "t": "Melbourne Royal Show 公式サイト",
+          "u": "https://royalshow.com.au/"
+        },
+        {
+          "t": "Melbourne Fringe Festival 公式サイト",
+          "u": "https://www.melbournefringe.com.au/"
+        }
+      ],
+      "memo": "この号はDAY4〜6のシドニー滞在にまるごと効きます。フリンジのプログラムは今日解禁されたばかりなので、出発が近づいたらもう一度覗いてみると新しい発見があるかも。メルボルン・スターは正直「間に合うかどうか五分五分」——編集部は期待しすぎず、開通のニュースが出たら号外を出します。"
     }
   ]
 }
