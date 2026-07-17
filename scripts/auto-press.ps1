@@ -17,6 +17,6 @@ $prompt = Get-Content -Raw -Encoding UTF8 $promptFile
 
 "==== $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss') START ====" | Out-File -FilePath $log -Append -Encoding utf8
 & claude -p $prompt --model sonnet --permission-mode acceptEdits `
-  --allowedTools 'WebSearch' 'WebFetch' 'Read' 'Write' 'Bash(node:*)' 'Bash(git:*)' `
+  --allowedTools 'WebSearch' 'WebFetch' 'Read' 'Write' 'Bash(node:*)' 'Bash(git:*)' 'Bash(curl:*)' `
   --output-format text 2>&1 | Out-File -FilePath $log -Append -Encoding utf8
 "==== $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss') END (exit=$LASTEXITCODE) ====" | Out-File -FilePath $log -Append -Encoding utf8

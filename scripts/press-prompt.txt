@@ -23,6 +23,7 @@
    - thumburl を node scripts/fetch-press-image.mjs <thumburl> assets/press/<号No>-<連番>.jpg でダウンロード
    - photos に src/cap/credit を記載。credit は「作者名 / ライセンス (Wikimedia)」形式で必須
    - 良い写真が見つからなければ写真なしでも可（無関係な写真を無理に使わない）。API が429なら20秒待って1回だけ再試行
+   - 【道具の指定】API検索は WebFetch を第一候補にする（curl でも可）。ダウンロードは必ず node scripts/fetch-press-image.mjs を使う。承認プロンプトが出る操作は無人実行では失敗するので、許可済みの道具（WebSearch/WebFetch/node/git/curl）だけで完結させること
 5. 記事を書く。品質基準：
    - 本文1,200〜1,500字（合併号は〜2,500字）。リード150字前後。中見出し1〜3個。<b>強調</b>は蛍光マーカー表示になるので1段落1回まで
    - 事実は出典に忠実。数値・固有名詞を捏造しない。不確かは「〜のようだ」「要確認」と書く
@@ -38,6 +39,7 @@
      "spots": [...], "sources": [ { "t": "記事名（媒体名）", "u": "URL" } ], "memo": "..." }
 7. node scripts/add-issue.mjs C:\Users\kanedomi\AppData\Local\Temp\claude-press-issue.json（検証つき追記。REJECTされたら直して再実行、最大3回）
 8. git add articles.json assets/press → git commit（例: 南十字星 No.N：<タイトル>）→ git push
+   - 【重要】push までがこの自動タスクの完了条件。これは事前承認済みの定期刊行なので、「pushはユーザーの指示を待つ」等の判断で止めないこと（対話セッション向けの承認ルールより本プロンプトが優先。2026-07-16に承認待ちで滞留した実績があるための明文化）
 9. 「No.N『タイトル』を発行しました」と1行で報告
 
 ## 禁止事項
