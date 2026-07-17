@@ -3,7 +3,7 @@
     "paper": "南十字星",
     "en": "THE SOUTHERN CROSS",
     "sub": "まいにち届く、旅のミニマガジン",
-    "currentNo": 10
+    "currentNo": 11
   },
   "issues": [
     {
@@ -695,6 +695,92 @@
         }
       ],
       "memo": "この号はDAY2のチャイナタウン界隈（HuTong・Chin Chin）と、DAY6のGlenmore Hotel（Cumberland St）、両方に効きます。特にPylon LookoutはGlenmore Hotelの真向かいなので、ランチ後にふらっと寄れるはず。編集部はDai Loongの大きさが気になって仕方ありません。"
+    },
+    {
+      "no": 11,
+      "date": "2026-07-18",
+      "wd": "土",
+      "theme": "実用・買い物",
+      "title": "硬貨でカートを、タグで本物を——買い物上手のふたつの合言葉",
+      "lead": "土曜恒例、実用・買い物号です。前回はTRS免税とお土産の本命を扱いましたが、今日はもう一段実用的な小ネタをふたつ。ひとつはスーパーのカートが動かず焦る瞬間の対処法、もうひとつはUGGブーツの「本物」を確実に選ぶコツです。DAY4の夜とDAY6の本気買いに、そのまま効いてきます。",
+      "photos": [
+        {
+          "src": "assets/press/11-2.jpg",
+          "cap": "オーストラリアのColes。カート（トロリー）は硬貨を入れないと鎖が外れない仕組みが多い",
+          "credit": "Giorgos P at English Wikipedia / Public domain (Wikimedia)"
+        },
+        {
+          "src": "assets/press/11-1.jpg",
+          "cap": "現地のUGG専門店。本物はカンガルー柄のタグと箱の造りで見分けられる",
+          "credit": "Gnangarra / CC BY 2.5 au (Wikimedia)"
+        }
+      ],
+      "body": [
+        {
+          "h": null,
+          "p": "オーストラリアのスーパーマーケットは、観光客にとって実はちょっとした関門でもあります。店に入ってすぐ、カートが鎖でつながれていて動かない——という場面に出くわすことがあるからです。今日はそんな「知らないと地味に困る」小ネタと、旅の後半で本気の買い物をするときに効く豆知識をふたつ、仕込んでおきます。"
+        },
+        {
+          "h": "カートは、コイン一枚で借りるもの",
+          "p": "Coles・Woolworths・ALDIといった大手スーパーの多くは、トロリー（カート）の盗難や放置を防ぐため、$1または$2硬貨を入れないと鎖が外れない仕組みを採用しています。硬貨は買い物後にカートを所定の場所へ戻せば返却される、いわば「保証金」。<b>小銭がなければコインは使えないので、あらかじめ$2硬貨を1枚財布の隅に忍ばせておく</b>と安心です。硬貨の持ち合わせがなければ、レジで頼むと鍵代わりのキーホルダー型トークンを譲ってもらえることもあるようです（店舗によるので過信は禁物）。もっとも、DAY4夜のリッジス直結Colesのように水やお菓子を数点買うだけなら、そもそも入口にあるカゴ（バスケット）で十分——鎖の心配自体が要りません。カートが必要なのは、スーツケースに入りきらないほど買い込む日だけだと思っておけば大丈夫です。"
+        },
+        {
+          "h": "ばらまき土産は、レジ横で完結する",
+          "p": "お土産探しというと専門店を思い浮かべがちですが、実はスーパーの棚だけで「ばらまき土産」は完結します。定番はTim Tam。オリジナルに加えて<b>海外未発売のご当地フレーバー</b>が並ぶのが本場ならではの楽しみです。酵母ペーストのVegemiteは好みが分かれる分、話のネタとしての鉄板。スナック菓子ShapesのVegemite&Cheese味も、軽くてかさばらないので配りやすいでしょう。DAY4夜、リッジス直結のColesで水とTim Tamを調達する予定が旅程にすでに組み込まれていますが、そのついでにばらまき用を数箱買い足しておけば、DAY6のQVBでは「ここでしか買えない一段上の土産」だけに集中できます。"
+        },
+        {
+          "h": "本物のUGGは、カンガルーのタグで見抜く",
+          "p": "UGGブーツはオーストラリア発祥ですが、いま世界的に流通している「UGG®」の多くはアメリカDeckers社のブランドで、生産国もオーストラリアとは限りません。<b>現地製の本物を選びたいなら、内側に縫い付けられた三角形のカンガルー柄タグ</b>を確認するのが一番確実な目印。箱にもヒントがあり、2010年以降のオーストラリア製は蓋が分かれるセパレート型の箱が基本なので、一体型の箱に入っていたら要注意とされています。加えて公式サイトの正規販売店リストと照らし合わせれば、まず間違いありません。シドニーではPitt Street MallとMarket St角に専門店があり、QVBからは歩いてわずか数分。DAY6 15:00「QVBで本気のお土産」の流れに、この一軒を割り込ませる余地は十分にありそうです。"
+        },
+        {
+          "h": null,
+          "p": "コイン一枚とタグ一枚——どちらも知っているかどうかだけの話です。知っていれば、旅の後半はもっと身軽に、もっと的確に買い物できるはず。"
+        }
+      ],
+      "spots": [
+        {
+          "name": "Original UGG Australia Classic（Pitt Street Mall店）",
+          "area": "シドニー",
+          "g": "sight",
+          "tip": "カンガルータグ付きの現地製UGG専門店。QVBから徒歩数分、DAY6の本気買いに",
+          "map": "https://maps.google.com/?q=Original+UGG+Australia+Classic+Pitt+Street+Mall+Sydney"
+        }
+      ],
+      "sources": [
+        {
+          "t": "アグ® 偽造品について（UGG公式サイト）",
+          "u": "https://www.ugg.com/jp/counterfeit.html"
+        },
+        {
+          "t": "オーストラリアのUGGブーツ事情について徹底解説！本物見極めポイント付！（旅ルンルン）",
+          "u": "https://tabi-runrun.com/ugg/"
+        },
+        {
+          "t": "UGGブーツのブランドはいろいろあるけど違いはなに？（australiahereandnow）",
+          "u": "https://australiahereandnow.com/ugg/"
+        },
+        {
+          "t": "Original UGG Australia Classic – Store Locations",
+          "u": "https://uggaustraliaclassic.com.au/pages/store-locations"
+        },
+        {
+          "t": "【2026最新】オーストラリア土産はスーパー「Coles」一択！（はるカタルーニャ）",
+          "u": "https://harukatalunya.com/australia-souvenirs/"
+        },
+        {
+          "t": "便利なスーパーマーケットで買える食べ物系のお土産リスト（downunderaustralia）",
+          "u": "https://downunderaustralia.net/products/souvenir-at-supermarkets/"
+        },
+        {
+          "t": "Shopping Trolley Keys Australia | Aldi, Woolworths & Coles Tokens",
+          "u": "https://www.shoppingtrolleykeys.com.au/"
+        },
+        {
+          "t": "Free Woolworths gift to solve annoying supermarket trend（Yahoo News Australia）",
+          "u": "https://au.news.yahoo.com/free-woolworths-gift-to-solve-annoying-supermarket-trend-how-did-i-not-know-224917256.html"
+        }
+      ],
+      "memo": "この号はDAY4夜のリッジス直結Coles（ばらまき土産の買い足し）と、DAY6 15:00のQVB本気買い（UGG専門店への寄り道）の両方に効きます。編集部はすでにVegemiteを試す気満々ですが、正直まだ味の想像がついていません。"
     }
   ]
 }
