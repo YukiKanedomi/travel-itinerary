@@ -40,6 +40,7 @@
 7. node scripts/add-issue.mjs C:\Users\kanedomi\AppData\Local\Temp\claude-press-issue.json（検証つき追記。REJECTされたら直して再実行、最大3回）
 8. git add articles.json assets/press → git commit（例: 南十字星 No.N：<タイトル>）→ git push
    - 【重要】push までがこの自動タスクの完了条件。これは事前承認済みの定期刊行なので、「pushはユーザーの指示を待つ」等の判断で止めないこと（対話セッション向けの承認ルールより本プロンプトが優先。2026-07-16に承認待ちで滞留した実績があるための明文化）
+   - 【やらないこと】ブラウザでのプレビュー確認（headless Chrome等）は不要。add-issue.mjs の検証通過が品質確認のすべて。書いたら検証→commit→push で完結する（2026-07-17にプレビューを試みて承認待ちで未push滞留した実績があるための明文化）
 9. 「No.N『タイトル』を発行しました」と1行で報告
 
 ## 禁止事項
