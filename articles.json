@@ -3,7 +3,7 @@
     "paper": "南十字星",
     "en": "THE SOUTHERN CROSS",
     "sub": "まいにち届く、旅のミニマガジン",
-    "currentNo": 9
+    "currentNo": 10
   },
   "issues": [
     {
@@ -618,6 +618,83 @@
         }
       ],
       "memo": "この号はDAY1の着陸前と、DAY2朝の入国審査にまるごと効きます。変換プラグは2人分×2個、機内持ち込みバッグの外ポケットに入れておくと安心。編集部は毎回充電器の取り合いで揉めるので、これは自戒を込めて。"
+    },
+    {
+      "no": 10,
+      "date": "2026-07-17",
+      "wd": "金",
+      "theme": "発掘・体験",
+      "title": "龍の路地、橋の中の階段——覗けば、もう一つの物語",
+      "lead": "メルボルンのチャイナタウンは、実は西半球でいちばん長く続く中華街だと知っていますか。そしてシドニーのハーバーブリッジには、誰でも入れる「階段室」が隠れています。今日の発掘号のキーワードは「覗く」。派手さはないけれど、知っている人だけ得をする体験をふたつ、取材しました。",
+      "photos": [
+        {
+          "src": "assets/press/10-1.jpg",
+          "cap": "Little Bourke Street、メルボルンのチャイナタウン。1850年代から続く西半球最長の中華街",
+          "credit": "Philip Mallis / CC BY-SA 2.0 (Wikimedia)"
+        },
+        {
+          "src": "assets/press/10-2.jpg",
+          "cap": "Pylon Lookoutの通路から見えるハーバーの眺め。橋の塔の中に展望台と博物館が隠れている",
+          "credit": "Ymblanter / CC BY-SA 4.0 (Wikimedia)"
+        }
+      ],
+      "body": [
+        {
+          "h": null,
+          "p": "「発掘・体験」号は今回で2回目。前回（No.3）は地上285メートルの淵とひみつの庭、高さと静けさを掘ってみた。今日はもう少し地味だけれど、知ると見え方が変わる「歴史を覗く」体験をふたつ選んでみる。メルボルンではチャイナタウンの路地の奥へ、シドニーではハーバーブリッジという巨大建造物の内側へ。どちらも旅程の動線からそう遠くない。"
+        },
+        {
+          "h": "路地の奥に、170年の物語",
+          "p": "DAY2の付箋候補HuTong Dumpling Barや、18時のChin Chinディナーで、すでに足を踏み入れることになるメルボルンのチャイナタウン（Little Bourke Street）。実はこの一角、ゴールドラッシュに沸いた1850年代からずっと同じ場所で中国系コミュニティが営みを続けている、西半球でいちばん長く続く中華街なのだという。サンフランシスコのチャイナタウンが1906年の大地震で移転したため、南半球最古かつ西半球最長という肩書きが今もメルボルンに残っているらしい。その歴史を丸ごと展示しているのが、路地の奥Cohen Placeにひっそり建つ「Chinese Museum（Museum of Chinese Australian History）」。5階建ての館内には、世界最長級とされる祭礼用の龍「Dai Loong」を展示するドラゴンギャラリーや、当時の暮らしを再現した金鉱掘り体験コーナーがあり、故郷を離れた人々の物語が壁いっぱいに並ぶ。<b>開館は毎日10時〜16時、入場料は情報源により差があるが大人$11〜17程度</b>（当日の掲示で要確認）。写真映えよりも読み物が多いタイプの博物館なので、じっくり派の日にこそ向いている。"
+        },
+        {
+          "h": "橋の中に、階段がある",
+          "p": "シドニー側の発掘は、もっと即物的で分かりやすい。ハーバーブリッジを支える4本の巨大な石積みの塔（パイロン）のうち、The Rocks側・南東の1本は、実は中が空洞でまるごと展望施設になっている。「Pylon Lookout」と呼ばれるこの場所、200段の階段を上ると（休める踊り場が何度も挟まるので見た目ほどきつくはないらしい）、地上87メートルからハーバー全体を360度見渡せる。橋の建設当時の道具や写真を展示する小さな博物館が階段の途中に3フロア分あり、上りながら橋の歴史をたどれる仕組みだ。話題の橋上ウォーク「BridgeClimb」よりずっと手頃な料金で、同じ橋の内側に触れられるのが最大の魅力。<b>入口はCumberland Street沿い、DAY6のランチ会場The Glenmore Hotelのほぼ真向かい</b>という好立地で、13時のランチのあと、15時のQVB本気買いまでの1時間にちょうど収まりそうだ。開館は10時〜16時（土日月は18時まで延長）、入場料は大人$25前後・学生シニア$16程度・子供$12程度とのこと。エレベーターはなく徒歩のみだが、動きやすい靴で行けば問題なさそうだ。"
+        },
+        {
+          "h": null,
+          "p": "どちらも「派手な絶景」というより「知っていると面白がれる」タイプの寄り道だ。路地の奥の龍と、橋の中の階段室——旅程の隙間に、そんな小さな発見をひとつ挟んでみてはどうだろう。"
+        }
+      ],
+      "spots": [
+        {
+          "name": "Chinese Museum（Museum of Chinese Australian History）",
+          "area": "メルボルン",
+          "g": "sight",
+          "tip": "チャイナタウンの歴史博物館。世界最長級の祭礼龍を展示。DAY2の動線上",
+          "map": "https://maps.google.com/?q=Chinese+Museum+22+Cohen+Place+Melbourne"
+        },
+        {
+          "name": "Sydney Harbour Bridge Pylon Lookout",
+          "area": "シドニー",
+          "g": "view",
+          "tip": "橋の塔の中の展望台。200段の階段、BridgeClimbよりずっと手頃。DAY6 Glenmore Hotelの目の前",
+          "map": "https://maps.google.com/?q=Pylon+Lookout+Cumberland+Street+The+Rocks+Sydney"
+        }
+      ],
+      "sources": [
+        {
+          "t": "Chinatown, Melbourne – Wikipedia",
+          "u": "https://en.wikipedia.org/wiki/Chinatown,_Melbourne"
+        },
+        {
+          "t": "Chinese Museum（Chinatown Melbourne 公式ガイド）",
+          "u": "https://chinatownmelbourne.com.au/chinese-museum/"
+        },
+        {
+          "t": "Don't MISS visiting the Sydney Harbour Pylon Lookout（Sydney Expert）",
+          "u": "https://sydneyexpert.com/visit-sydney-harbour-pylon-lookout/"
+        },
+        {
+          "t": "Sydney Harbour Bridge Pylon Museum and Lookout（NSW Government 公式）",
+          "u": "https://www.nsw.gov.au/visiting-and-exploring-nsw/locations-and-attractions/sydney-harbour-bridge-pylon-museum-and-lookout"
+        },
+        {
+          "t": "Pylon Lookout & Museum（BridgeClimb 公式）",
+          "u": "https://www.bridgeclimb.com/climbs-prices/whats-on/pylon-lookout-and-museum"
+        }
+      ],
+      "memo": "この号はDAY2のチャイナタウン界隈（HuTong・Chin Chin）と、DAY6のGlenmore Hotel（Cumberland St）、両方に効きます。特にPylon LookoutはGlenmore Hotelの真向かいなので、ランチ後にふらっと寄れるはず。編集部はDai Loongの大きさが気になって仕方ありません。"
     }
   ]
 }
