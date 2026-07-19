@@ -3,7 +3,7 @@
     "paper": "南十字星",
     "en": "THE SOUTHERN CROSS",
     "sub": "まいにち届く、旅のミニマガジン",
-    "currentNo": 12
+    "currentNo": 13
   },
   "issues": [
     {
@@ -850,6 +850,87 @@
         }
       ],
       "memo": "この号は準備タブ8月1日のリマインダー「ETA申請」にまるごと効きます。ケース外し・メガネ外し・明るい場所——この3点だけ覚えておけば大丈夫そうです。編集部はすでにアプリを試し撮りしたい気持ちでいっぱいですが、申請は1回しかやり直せないので大人しく8月1日を待ちます。"
+    },
+    {
+      "no": 13,
+      "date": "2026-07-20",
+      "wd": "月",
+      "theme": "ニュース",
+      "title": "自由時間のとなりに、宝石の国宝級——NGVカルティエ展と、フリンジの本気",
+      "lead": "月曜恒例のニュース号。今週わかったのは、DAY3の「完全自由時間」のすぐ隣に、オーストラリア初公開級のジュエリー展が来ていたということ。おまけにシドニーでは、フリンジ・フェスティバルの全プログラムがついに出そろい、滞在エリアのど真ん中に気になる一軒も見つかりました。",
+      "photos": [
+        {
+          "src": "assets/press/13-1.jpg",
+          "cap": "NGVインターナショナルの吹き抜け。常設展は無料だが、今年は有料の特別展が同居している",
+          "credit": "Glenn J. Mason / CC BY 2.0 (Wikimedia)"
+        },
+        {
+          "src": "assets/press/13-2.jpg",
+          "cap": "The Rocks地区の石畳の通り。Copa on The RocksもこのあたりのAtherden Streetで開かれる",
+          "credit": "Dietmar Rabich / CC BY-SA 4.0 (Wikimedia)"
+        }
+      ],
+      "body": [
+        {
+          "h": null,
+          "p": "月曜恒例のニュース号。今週わかったのは、DAY3（9/22）の「完全自由時間」のすぐ隣に、思いがけない特別展が来ていたということ。おまけにシドニーでは、フリンジ・フェスティバルの全プログラムがついに出そろい、滞在エリアのど真ん中に気になる一軒も見つかった。今日はこの2つを取材します。"
+        },
+        {
+          "h": "自由時間のすぐ隣に、宝石の国宝級",
+          "p": "旅程のDAY3には、すでに「NGV（ビクトリア国立美術館）」が寄り道の付箋として仕込んである。入場無料・雨天時の切り札という位置づけだったが、今年のNGVインターナショナルはちょっと様子が違うようだ。世界的ジュエラー、カルティエの回顧展「CARTIER: Melbourne Winter Masterpieces® 2026」が6月12日から10月4日まで開催中で、ちょうどふたりのメルボルン滞在（9/20〜23）とまるごと重なっている。ロンドンのヴィクトリア&アルバート博物館との共同企画で、ジュエリーや時計など約400点を展示——うちかなりの数がオーストラリア初公開というから、規模がうかがえる。<b>NGVの常設展は入場無料だが、この特別展は時間指定の予約制チケットが必要</b>なようなので、行くなら公式サイトで事前に入場時間を押さえておきたい（料金体系は要確認）。DAY3 15:00「5つ星ホテルを満喫」の自由時間枠に、この特別展を差し込む、という選択肢が生まれた形だ。"
+        },
+        {
+          "h": "フリンジ、本気の顔ぶれが出そろった",
+          "p": "シドニー側では、No.6号で「今日解禁」と伝えたシドニー・フリンジ・フェスティバルの全プログラムが、ついに本決まりになった。450以上のイベント、64会場という規模は変わらないが、今回の取材で見つかったのが「Copa on The Rocks」という一軒。The Rocks地区のAtherden Streetを丸ごとキャバレー風の社交場に変えてしまう、リクエスト曲をみんなで歌うピアノバー形式の催しで、9月2日から10月11日まで毎晩開かれるという。<b>会場のAtherden Streetは、DAY6のGlenmore Hotel（Cumberland St）やPylon Lookoutからすぐの一角</b>で、DAY4〜6のシドニー滞在はまるごとその営業期間に収まる。チケットは$39〜45程度とのことで、堅苦しさのない雰囲気らしい。"
+        },
+        {
+          "h": null,
+          "p": "ちなみに、メルボルンでは9月26日にAFLグランドファイナルが控えている。街を挙げての一大イベントだが、ふたりがメルボルンを発つのは9月23日夕方。街が一番盛り上がる瞬間には、もうシドニーにいることになる——旅の巡り合わせとしては、悪くない話だと思う。"
+        }
+      ],
+      "spots": [
+        {
+          "name": "NGV International — CARTIER展",
+          "area": "メルボルン",
+          "g": "sight",
+          "tip": "約400点のカルティエ・ジュエリー展（〜10/4）。常設は無料だが特別展は時間指定の有料予約制・要確認",
+          "map": "https://maps.google.com/?q=National+Gallery+of+Victoria+180+St+Kilda+Road+Melbourne"
+        },
+        {
+          "name": "Copa on The Rocks",
+          "area": "シドニー",
+          "g": "sight",
+          "tip": "シドニー・フリンジの目玉、歌って参加するピアノバー（9/2〜10/11）。Glenmore Hotel/Pylon Lookoutのすぐ近く",
+          "map": "https://maps.google.com/?q=Atherden+Street+The+Rocks+Sydney"
+        }
+      ],
+      "sources": [
+        {
+          "t": "CARTIER: Melbourne Winter Masterpieces® 2026（NGV 公式）",
+          "u": "https://www.ngv.vic.gov.au/exhibition/cartier/"
+        },
+        {
+          "t": "CARTIER | Exhibition Access Guide（NGV 公式）",
+          "u": "https://www.ngv.vic.gov.au/cartier-exhibition-access-guide/"
+        },
+        {
+          "t": "Australian-exclusive Cartier exhibition opens at NGV（Signature Luxury Travel & Style）",
+          "u": "https://www.signatureluxurytravel.com.au/ngv/"
+        },
+        {
+          "t": "Sydney Fringe Festival launches dynamic 2026 program with over 350 events（Aussie Theatre）",
+          "u": "https://www.aussietheatre.com.au/news/sydney-fringe-festival-launches-dynamic-2026-program-with-over-350-events/"
+        },
+        {
+          "t": "Sydney Fringe Festival unveils dynamic 2026 program with over 350 events across 64 venues（Australasian Leisure Management）",
+          "u": "https://www.ausleisure.com.au/news/sydney-fringe-festival-unveils-dynamic-2026-program-with-over-350-events-across-64-venues"
+        },
+        {
+          "t": "AFL Grand Final Melbourne 2026 — Confirmed Date, Time and Planning Notes（Amir Brooks）",
+          "u": "https://amirbrooks.com.au/melbourne/afl-grand-final-melbourne-2026"
+        }
+      ],
+      "memo": "この号はDAY3（9/22）15:00の自由時間と、DAY4〜6のシドニー滞在にそれぞれ効きます。NGVは常設無料でも特別展は別料金・要予約——早めに公式サイトを確認しておくと安心です。編集部はカルティエよりピアノバーで熱唱したい気持ちが強めです。"
     }
   ]
 }
