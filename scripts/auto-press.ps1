@@ -19,4 +19,13 @@ $prompt = Get-Content -Raw -Encoding UTF8 $promptFile
 & claude -p $prompt --model sonnet --permission-mode acceptEdits `
   --allowedTools 'WebSearch' 'WebFetch' 'Read' 'Write' 'Bash(node:*)' 'Bash(git:*)' 'Bash(curl:*)' `
   --output-format text 2>&1 | Out-File -FilePath $log -Append -Encoding utf8
+# Publish safety net (owner-approved 2026-07-20): the agent sometimes ends without
+# completing step 8 (publish) and issues pile up unseen. If validated commits are
+# left unpublished, finish the pre-approved daily publication mechanically.
+# cmd /c avoids PS 5.1 wrapping git's stderr progress into ErrorRecords.
+$ahead = cmd /c "git rev-list --count origin/main..main 2>nul"
+if ($ahead -match '^[0-9]+$' -and [int]$ahead -gt 0) {
+  "SAFETY-NET: publishing $ahead remaining commit(s)." | Out-File -FilePath $log -Append -Encoding utf8
+  cmd /c "git push origin main 2>&1" | Out-File -FilePath $log -Append -Encoding utf8
+}
 "==== $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss') END (exit=$LASTEXITCODE) ====" | Out-File -FilePath $log -Append -Encoding utf8
