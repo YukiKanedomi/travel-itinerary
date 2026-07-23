@@ -3,7 +3,7 @@
     "paper": "南十字星",
     "en": "THE SOUTHERN CROSS",
     "sub": "まいにち届く、旅のミニマガジン",
-    "currentNo": 16
+    "currentNo": 17
   },
   "issues": [
     {
@@ -1152,6 +1152,87 @@
         }
       ],
       "memo": "eSIMはDAY1の出発前、オンラインチェックインはDAY1（成田18:40発）とDAY7（シドニー8:55発）の前日にそれぞれ効きます。ちなみに編集部は毎回SIM設定を出発前夜に忘れて空港で焦るタイプなので、この号は自分たちへの戒めでもあります。"
+    },
+    {
+      "no": 17,
+      "date": "2026-07-24",
+      "wd": "金",
+      "theme": "発掘・体験",
+      "photos": [
+        {
+          "src": "assets/press/17-1.jpg",
+          "cap": "セント・ポール大聖堂。フェデレーション・スクエアの向かい、フリンダース・ストリート駅のすぐそば",
+          "credit": "Woozifi / CC BY-SA 3.0 (Wikimedia)"
+        },
+        {
+          "src": "assets/press/17-2.jpg",
+          "cap": "Susannah Place Museum。1844年築、150年住み継がれた4軒の連続長屋",
+          "credit": "Collywolly / CC BY-SA 4.0 (Wikimedia)"
+        }
+      ],
+      "title": "塔は、四十年遅れてきた——大聖堂の背伸びと、路地裏に残る移民の台所",
+      "lead": "金曜恒例、発掘・体験号。DAY2のホージア・レーンから数分、完成から40年近く遅れて尖塔がついたメルボルンの大聖堂を見つけました。DAY6のロックス地区では、150年間住み継がれてきた移民の長屋が今も台所ごと開いています。食べない寄り道をふたつ、掘りました。",
+      "body": [
+        {
+          "h": null,
+          "p": "水曜号がカフェなら、金曜号は「食べない」担当。今日はメルボルンとシドニー、それぞれの旅程のすぐそばに、知らずに素通りしてしまいそうな「時間の重なり」をふたつ見つけた。ひとつは完成まで40年がかりだった大聖堂の塔、もうひとつは150年間ずっと人が住み続けた小さな長屋。どちらも旅程の動線からほんの数分、無料か格安で覗ける寄り道だ。"
+        },
+        {
+          "h": "完成のあと、40年遅れて塔が生えた",
+          "p": "DAY2 11:30のホージア・レーンから歩いてすぐ、フリンダース・ストリート駅の向かい、フェデレーション・スクエアの真正面に立つのが「セント・ポール大聖堂」。この場所では1835年、メルボルンで最初のキリスト教礼拝が行われたとされ、もとは穀物市場だった土地に建てられた教会が老朽化し、1885年に取り壊されたあと、英国のゴシック・リヴァイヴァル建築家ウィリアム・バターフィールドの設計で今の大聖堂が1891年に完成した。<b>バターフィールド自身は一度も現地を訪れず</b>、原寸大のものまで含む詳細な図面をすべて英国から送り込んだという。「植民地の人間に任せると図面通りにいかない」と警戒してのことだったらしい。もっとも本人はメルボルンの運営委員会と対立し、1884年、完成を待たずに設計を降りてしまい、以後の仕上げは地元の建築家ジョセフ・リードが引き継いだ。<b>目印になる尖塔だけはさらに別枠で、実際に建てられたのは1926年から1932年にかけて</b>——本体の完成から実に35〜40年後、バターフィールド自身はその姿を一度も見ないまま1900年に世を去っている。多色のレンガ積みや幾何学模様のタイル床、木組みの天井が見どころで、入場は無料・毎日開放。ホージア・レーンのストリートアートを堪能したあと、数分の寄り道として重ねられそうだ。"
+        },
+        {
+          "h": "路地裏の長屋は、150年住み継がれた",
+          "p": "シドニー側は、DAY6 11:30に立ち寄る予定のロックス地区、Gloucester Street沿いに並ぶ「Susannah Place Museum」。1844年、アイルランド移民の実業家エドワード・ライリーが姪の名にちなんで名付けた4軒続きの長屋で、その後150年以上にわたりアイルランド系・ギリシャ系・ノルウェー系の船員など、100家族を超える労働者階級の暮らしを見てきたのだという。スラム撤去や再開発の波を生き延び、当時の姿のまま残った珍しい建物が今は博物館になっている。<b>角の一軒にある「コーナーショップ」は入場無料</b>で、90年間実際にその場所で営業していた雑貨店をそのまま覗ける。4軒の家の中まで入るガイドツアーは大人$20程度・木〜土曜10時〜17時の受付で、DAY6（9/25・金曜）はちょうど対象日にあたる。支払いはカードのみのようだ。"
+        },
+        {
+          "h": null,
+          "p": "大聖堂の塔も、長屋の台所も、急いで完成させなかったからこそ今も残っている——そう思うと、ただの通りすがりの建物が少し違って見えてくる。"
+        }
+      ],
+      "spots": [
+        {
+          "name": "St Paul's Cathedral (Melbourne)",
+          "area": "メルボルン",
+          "g": "sight",
+          "tip": "1891年完成、尖塔は1926〜32年築で本体より35〜40年遅れ。入場無料・毎日開放。ホージア・レーンから徒歩数分",
+          "map": "https://maps.google.com/?q=St+Paul%27s+Cathedral+Melbourne"
+        },
+        {
+          "name": "Susannah Place Museum",
+          "area": "シドニー",
+          "g": "sight",
+          "tip": "1844年築、150年住み継がれた移民の長屋。コーナーショップは無料、家屋内部はガイドツアー（木〜土10-17時・$20程度）。ロックス地区の一角",
+          "map": "https://maps.google.com/?q=Susannah+Place+Museum+58+Gloucester+Street+The+Rocks+Sydney"
+        }
+      ],
+      "sources": [
+        {
+          "t": "St Paul's Cathedral, Melbourne – Wikipedia",
+          "u": "https://en.wikipedia.org/wiki/St_Paul%27s_Cathedral,_Melbourne"
+        },
+        {
+          "t": "St Paul's Cathedral（What's On Melbourne 公式）",
+          "u": "https://whatson.melbourne.vic.gov.au/things-to-do/st-pauls-cathedral"
+        },
+        {
+          "t": "Plan your visit – Susannah Place（Museums of History NSW 公式）",
+          "u": "https://mhnsw.au/visit-us/susannah-place/plan-your-visit/"
+        },
+        {
+          "t": "The Grocer's Shop – Guided Tour（Susannah Place Museum 公式）",
+          "u": "https://mhnsw.au/visit-us/susannah-place/content/guided-tours-the-grocers-shop/"
+        },
+        {
+          "t": "Susannah Place Museum（The Rocks 公式）",
+          "u": "https://www.therocks.com/see-do-stay/susannah-place-museum"
+        },
+        {
+          "t": "Tickets, Prices & Discounts – Susannah Place (Sydney)（WhichMuseum）",
+          "u": "https://whichmuseum.com/museum/susannah-place-sydney-16215/tickets-prices"
+        }
+      ],
+      "memo": "この号はDAY2 11:30のホージア・レーン（大聖堂はそこから数分）と、DAY6 11:30のロックス地区（Susannah Placeはガイドツアー対応日のちょうど金曜）に効きます。中まで見るならガイドツアー、外と雑貨店だけならふらっと無料でも十分。編集部は「完成に40年かかった塔」というエピソードにやたら親近感を覚えました——うちの原稿もだいたい遅れます。"
     }
   ]
 }
