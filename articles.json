@@ -3,7 +3,7 @@
     "paper": "南十字星",
     "en": "THE SOUTHERN CROSS",
     "sub": "まいにち届く、旅のミニマガジン",
-    "currentNo": 17
+    "currentNo": 18
   },
   "issues": [
     {
@@ -1233,6 +1233,84 @@
         }
       ],
       "memo": "この号はDAY2 11:30のホージア・レーン（大聖堂はそこから数分）と、DAY6 11:30のロックス地区（Susannah Placeはガイドツアー対応日のちょうど金曜）に効きます。中まで見るならガイドツアー、外と雑貨店だけならふらっと無料でも十分。編集部は「完成に40年かかった塔」というエピソードにやたら親近感を覚えました——うちの原稿もだいたい遅れます。"
+    },
+    {
+      "no": 18,
+      "date": "2026-07-25",
+      "wd": "土",
+      "theme": "実用・買い物",
+      "title": "6時に閉まる街で、賢く買う——曜日のズレと、鞄に入る本物",
+      "lead": "オーストラリアの店は、日本の感覚より早く閉まります。しかも「レイトナイトショッピング」がある曜日は、この旅程の買い物day（DAY6）とは一日ズレている——それを知っておくだけで、当日の段取りがぐっと楽になります。サイズ表記のコツと、QVBのすぐ近くで見つけた「食べられる本物のお土産」もあわせてどうぞ。",
+      "photos": [
+        {
+          "src": "assets/press/18-1.jpg",
+          "cap": "Pitt Street Mall。DAY6 15:00「QVBで本気の土産探し」の舞台だが、金曜は18時に閉まる",
+          "credit": "John Rotenstein / Public domain (Wikimedia)"
+        },
+        {
+          "src": "assets/press/18-2.jpg",
+          "cap": "レモンマートル（Backhousia citriodora）の花。柑橘のような香りの葉が、パンやお菓子に使われる",
+          "credit": "Krzysztof Ziarnek, Kenraiz / CC BY-SA 4.0 (Wikimedia)"
+        }
+      ],
+      "body": [
+        {
+          "h": null,
+          "p": "コンビニも百貨店も21時、22時まで開いているのが当たり前の日本と違って、オーストラリアの店は総じて閉店が早めです。しかも週に一度だけ「遅くまで開く日」がある——その曜日を知らずに旅程を組むと、閉まったシャッターの前で予定が狂うことになりかねません。今日は買い物の「時間割」と、サイズ表記のコツ、それに本気で掘り出した「食べられる本物」をお届けします。"
+        },
+        {
+          "h": "レイトナイトは木曜、旅程は金曜というズレ",
+          "p": "QVBを含むシドニーCBDの多くの店は月〜水・金・土が9時〜18時、日曜は11時〜17時という営業時間で、週にただ一日、<b>木曜だけ21時まで</b>営業を延長する「レイトナイトショッピング」の日にあたるようです。ところがDAY6（9/25）は金曜——旅程で「15:00 QVBで本気の土産探し」と組まれているこの日は、通常営業と同じ18時閉店になる計算です。3時間ほどの持ち時間なので焦る必要はありませんが、<b>「あとで戻ってこよう」は効かない</b>と思っておくのが安全そうです。一方メルボルンは木・金の両方が21時までのレイトナイトのようですが、滞在するDAY2〜4は月・火・水。せっかくの延長営業とは丸ごとすれ違う日並びで、こちらも「夜はディナー、買い物は日中」と割り切るのが正解のようです。"
+        },
+        {
+          "h": "サイズは「ひと桁足す」と覚える",
+          "p": "UGGや服を試着なしで買うなら、サイズ表記の違いも仕込んでおきたいところ。オーストラリアはイギリスと同じ基準で、女性用衣料はおおむね<b>豪州サイズの数字に1を足すと日本の号数に近づく</b>と言われています（例：豪州10号は日本の11号相当）。ブランドごとの誤差はあるので過信は禁物ですが、目安として知っておくと店頭で迷いにくくなりそうです。男性のシャツやジャケットは胸囲（インチ）がそのままサイズ表記になる方式で、こちらは実測に近い分むしろ分かりやすいかもしれません。"
+        },
+        {
+          "h": "台所ではなく、ブッシュの香りを鞄に",
+          "p": "最後にひとつ、QVBのすぐ近くで見つけた「本物」を。O'Connell Street沿い、QVBから歩いてすぐのビルの一角に「Native Foodways」という小さなベーカリーがあります。First Nations（オーストラリア先住民）の人々が運営する社会的企業で、店頭に並ぶパイやペストリーには、レモンマートルやワトルシード、ソルトブッシュ、カンガルー肉、ネイティブジンジャーといった<b>この大陸にしかない食材</b>が使われているそうです。持ち帰り用の焼き菓子もあり、宝飾品やオパールとはまた違う角度の「ここでしか」感があります。DAY6の本気買いの合間、小腹が空いたタイミングに寄り道してみる価値がありそうです。"
+        },
+        {
+          "h": null,
+          "p": "閉店時刻とサイズ表記、どちらも知っていれば数分で終わる話ですが、知らずに現地で慌てるとその数分が地味に効いてきます。買い物の主役は品物ですが、今日は「時間」と「単位」という裏方に光を当ててみました。"
+        }
+      ],
+      "spots": [
+        {
+          "name": "Native Foodways",
+          "area": "シドニー",
+          "g": "food",
+          "tip": "First Nations運営のベーカリー。レモンマートル・カンガルー等の native ingredients。QVBから徒歩数分",
+          "map": "https://maps.google.com/?q=Native+Foodways+1+O%27Connell+Street+Sydney"
+        }
+      ],
+      "sources": [
+        {
+          "t": "Opening Hours（QVB 公式）",
+          "u": "https://www.qvb.com.au/opening-hours"
+        },
+        {
+          "t": "Melbourne late night shopping hours（What's On Melbourne 公式）",
+          "u": "https://whatson.melbourne.vic.gov.au/article/melbourne-late-night-shopping-hours"
+        },
+        {
+          "t": "Dress size conversion chart for shopping online（Finder Shopping）",
+          "u": "https://www.findershopping.com.au/dress-size-conversion-chart/"
+        },
+        {
+          "t": "What We Do（Native Foodways 公式）",
+          "u": "https://nativefoodways.com.au/pages/what-we-do"
+        },
+        {
+          "t": "Bakery（Native Foodways 公式）",
+          "u": "https://nativefoodways.com.au/pages/bakery"
+        },
+        {
+          "t": "Native Foodways' Corey Grech: The place where passion and knowledge meet（Baking Business）",
+          "u": "https://bakingbusiness.com.au/native-foodways-corey-grech-close-up/"
+        }
+      ],
+      "memo": "この号はDAY6 15:00のQVB本気買いに一番効きます——18時閉店なので、Native Foodwaysへの寄り道は買い物の「合間」に挟むのがコツ。メルボルン滞在中（DAY2〜4）は素直に夜はディナー優先でどうぞ。編集部はカンガルー肉のパイが気になって仕方ありません。"
     }
   ]
 }
