@@ -3,7 +3,7 @@
     "paper": "南十字星",
     "en": "THE SOUTHERN CROSS",
     "sub": "まいにち届く、旅のミニマガジン",
-    "currentNo": 19
+    "currentNo": 20
   },
   "issues": [
     {
@@ -1387,6 +1387,96 @@
         }
       ],
       "memo": "この号は準備タブ8月1日のリマインダー「海外旅行保険を確認・加入」にまるごと効きます。まずは今使っているカードの補償内容を並べてみるのが最初の一歩——編集部もまだ確認していないので、今夜のうちに探してみます。"
+    },
+    {
+      "no": 20,
+      "date": "2026-07-27",
+      "wd": "月",
+      "theme": "ニュース",
+      "title": "図書館の真下に、駅ができた——地下鉄全通の朗報と、波のかたちの新市場",
+      "lead": "DAY3に立ち寄る予定のビクトリア州立図書館。実はこの地下に、新しい駅ができていました。半年前に全通したメルボルンの地下路線と、思わぬ運賃の朗報。おまけにシドニーでは、波打つ木の屋根が話題の新しい魚市場もオープンしたばかりです。旅の直前になって動き出した、街のふたつの新顔を取材しました。",
+      "photos": [
+        {
+          "src": "assets/press/20-1.jpg",
+          "cap": "2025年11月開業、メトロ・トンネルのState Library駅ホーム。ビクトリア州立図書館の真下にあたる",
+          "credit": "Alison Newman / CC BY-SA 4.0 (Wikimedia)"
+        },
+        {
+          "src": "assets/press/20-2.jpg",
+          "cap": "同じくTown Hall駅のホーム。DAY2のホージア・レーンやChin Chinがあるレーンウェイ街のど真ん中",
+          "credit": "The Kora Person / CC BY-SA 4.0 (Wikimedia)"
+        }
+      ],
+      "body": [
+        {
+          "h": null,
+          "p": "メルボルンとシドニー、それぞれの街をあらためて調べ直してみると、ここ数ヶ月で街の顔つきが変わるような出来事がふたつ見つかった。ひとつは地下鉄、もうひとつは市場。どちらも旅程にすでに組み込まれている場所のすぐそばで起きた変化で、知っておくと当日の動き方が少し変わってきそうだ。"
+        },
+        {
+          "h": "地下鉄が、図書館の真下まで届いた",
+          "p": "メルボルンでは2026年2月1日、新しい地下路線「メトロ・トンネル」がついに全面開業した。CBDの地下を貫く9キロの複線トンネルで、アーデン・パークビル・州立図書館・タウンホール・アンザックという5つの新駅が生まれ、既存のサンベリー線とクランボーン／パケナム線がこのトンネルでつながった。<b>なかでも「State Library」駅は、まさにDAY3に訪れる予定のビクトリア州立図書館の真下にあたる位置に開業</b>している。Swanston Street北端、メルボルン・セントラル駅とも地下でつながっているので、あのドーム閲覧室（No.7号で取材済み）へ、地下からそのまま歩いて向かえるようになったわけだ。もうひとつの新駅「Town Hall」はSwanston StreetのCollins〜Flinders間、DAY2のホージア・レーンやChin Chinがあるレーンウェイ文化のど真ん中にできた。運賃はゾーン1・2が統合されているため追加料金の心配は要らず、Mykiの使い方（No.2号）もこれまで通りでいい。"
+        },
+        {
+          "h": "おまけに、運賃は9月まで半額",
+          "p": "さらに耳寄りなのが運賃そのものの話。ビクトリア州政府は2026年6月1日から2027年1月1日まで、電車・トラム・バスの運賃を<b>州内全域・全利用者一律で半額</b>にすると発表している。1日の運賃上限は通常の$11.40から$5.70に下がり、Mykiやモバイルmykiでタップするだけで自動的に半額計算される仕組みのようだ。ちょうどふたりのメルボルン滞在（DAY2〜4）はこの期間のど真ん中にあたる。ただし対象はあくまで電車・トラム・バスで、SkyBusは対象外とのこと——DAY2着陸後の空港バスは、これまで通りの運賃と考えておいたほうがよさそうだ。"
+        },
+        {
+          "h": "シドニーには、波のかたちの新しい市場",
+          "p": "シドニー側でも、大きな新顔がひとつ生まれていた。2026年1月19日、老朽化していたシドニー・フィッシュマーケットが、ブラックワトル湾（CBDから西へ約2km）の新しい建物に生まれ変わって開業したのだ。デンマークの建築事務所3XNが手がけた屋根は、594本の木製梁と407枚のアルミパネルを組んだ、全長200メートルの波打つ曲面。売り場面積は旧市場の倍以上に広がり、40店を超える飲食・小売店が入っている。開業週だけで23万人以上が訪れたというから、その人気ぶりがうかがえる。<b>貝や甲殻類が主役の市場だが、建物と港の眺めを楽しむだけの寄り道もできる</b>ので、心配は要らない。現在の旅程には入っていない場所だが、行き方は電車＋バスの乗り継ぎで約24分。バランガローと直結する新しいフェリー航路も計画中のようだが、就航時期は未定（要確認）で、今のところは既存路線での乗り継ぎになりそうだ。"
+        },
+        {
+          "h": null,
+          "p": "地下鉄も市場も、旅程を決めた頃にはまだ工事中か開業前だった場所。数ヶ月のあいだに街のほうが先に動いていた、というのはちょっと面白い巡り合わせだと思う。次にメルボルンの地図を開くときは、ぜひ「State Library」の文字も探してみてほしい。"
+        }
+      ],
+      "spots": [
+        {
+          "name": "New Sydney Fish Market",
+          "area": "シドニー",
+          "g": "sight",
+          "tip": "2026年1月開業、波打つ木製屋根が特徴の新市場。貝が苦手でも建物と港の眺めだけ楽しめる",
+          "map": "https://maps.google.com/?q=Sydney+Fish+Market+Pyrmont+Sydney"
+        }
+      ],
+      "sources": [
+        {
+          "t": "Melbourne's new Metro Tunnel opens this weekend（Time Out Melbourne）",
+          "u": "https://www.timeout.com/melbourne/news/melbournes-new-metro-tunnel-opens-this-weekend-112825"
+        },
+        {
+          "t": "State Library Station（Victoria's Big Build 公式）",
+          "u": "https://bigbuild.vic.gov.au/use-metro-tunnel/stations/state-library"
+        },
+        {
+          "t": "Melbourne Metro Tunnel Stations Guide（Seniors in Melbourne）",
+          "u": "https://seniorsinmelbourne.com.au/metro-tunnel-stations/"
+        },
+        {
+          "t": "Public transport now half price for everyone（vic.gov.au 公式）",
+          "u": "https://www.vic.gov.au/half-price-travel"
+        },
+        {
+          "t": "Extra Month Of Free PT - Then Half-Price Fares For All（Premier of Victoria 公式）",
+          "u": "https://www.premier.vic.gov.au/extra-month-free-pt-then-half-price-fares-all"
+        },
+        {
+          "t": "New Sydney Fish Market set to open on 19 January 2026（Sydney Fish Market 公式）",
+          "u": "https://www.sydneyfishmarket.com.au/new-sydney-fish-market-set-to-open-on-19-january-2026-2/"
+        },
+        {
+          "t": "3XN-designed Sydney Fish Market opens to the public（Dezeen）",
+          "u": "https://www.dezeen.com/2026/01/19/3xn-designed-sydney-fish-market-opens/"
+        },
+        {
+          "t": "Sydney's New Fish Market Welcomed Over 230,000 People Its Opening Week（The Urban List Sydney）",
+          "u": "https://www.theurbanlist.com/sydney/a-list/sydney-fish-market-2"
+        },
+        {
+          "t": "Ferry wharf to connect Sydney's new Fish Market to the Harbour（NSW Government 公式）",
+          "u": "https://www.nsw.gov.au/ministerial-releases/ferry-wharf-to-connect-sydneys-new-fish-market-to-harbour"
+        }
+      ],
+      "memo": "この号はDAY3 12:30の州立図書館訪問に一番効きます——地下からState Library駅に直接アクセスできるようになりました。運賃半額はDAY2〜4のメルボルン滞在中ずっと有効なので、Mykiタップのたびにちょっと得した気分になれるはず。シドニーの新魚市場は今の旅程にはありませんが、気になったら「新Fish Marketを寄り道に追加して」の一言でどうぞ。編集部は波打つ屋根を見るためだけに行きたい派です。"
     }
   ]
 }
