@@ -3,7 +3,7 @@
     "paper": "南十字星",
     "en": "THE SOUTHERN CROSS",
     "sub": "まいにち届く、旅のミニマガジン",
-    "currentNo": 23
+    "currentNo": 24
   },
   "issues": [
     {
@@ -1698,6 +1698,87 @@
         }
       ],
       "memo": "この号はDAY1の成田出発とDAY7のシドニー出発、両方の保安検査で効きます。カード会社への電話は準備タブの「出発直前」欄に書き留めておくのが確実——編集部は毎回この電話を後回しにして前日に慌てるので、今回は先手を打ちたいです。"
+    },
+    {
+      "no": 24,
+      "date": "2026-07-31",
+      "wd": "金",
+      "theme": "発掘・体験",
+      "title": "閉ざされていた場所が、いま開いている——尼僧院の工房村と、監獄島のドック",
+      "lead": "メルボルンには、100年以上前は尼僧院で、いまは100を超えるアーティストの工房になった場所があります。シドニーには、囚人の監獄から巨大な造船所へと姿を変えた島があります。金曜恒例の発掘・体験号、今日のキーワードは「閉じていた場所が開かれた瞬間」。フェリーと徒歩で辿り着ける、ふたつの転生した場所を取材しました。",
+      "photos": [
+        {
+          "src": "assets/press/24-1.jpg",
+          "cap": "Abbotsford Convent。ブルーストーン造りの旧尼僧院、いまは100以上の工房が入る文化拠点",
+          "credit": "Redtree21 / CC BY-SA 4.0 (Wikimedia)"
+        },
+        {
+          "src": "assets/press/24-2.jpg",
+          "cap": "Cockatoo Island。シドニー湾最大の島、かつては監獄・少女感化院・造船所だった",
+          "credit": "MDRX / CC BY-SA 4.0 (Wikimedia)"
+        }
+      ],
+      "body": [
+        {
+          "h": null,
+          "p": "「発掘・体験」号もこれで5回目になった。今日見つけたふたつの場所には、ちょっと面白い共通点がある。どちらも、かつては「入れない・出られない」場所だったということだ。メルボルンでは女性たちが一生を捧げた尼僧院、シドニーでは囚人が収容された監獄島。閉ざされていた壁の中に、いまは誰でも足を踏み入れられる。旅程の中心からは少し外れるけれど、知っておくと選択肢が増える2つの寄り道を掘ってみた。"
+        },
+        {
+          "h": "尼僧院は、100の工房になった",
+          "p": "メルボルンCBDからヤラ川沿いに歩いて（あるいは自転車で）30〜40分ほど、Collingwoodの少し先に「Abbotsford Convent（アボッツフォード・コンヴェント）」はある。1863年から1975年まで、Good Shepherd Sistersという修道会の尼僧院として使われ、最盛期には1,000人を超える修道女と少女たちが暮らしていたという、ブルーストーン積みの重厚な建物群だ。<b>いまはその6ヘクタールの敷地に、100以上のアーティスト・職人の工房と2つのギャラリー、カフェ、コミュニティラジオ局までが同居する文化拠点</b>に生まれ変わっている。工房の扉は開いていることが多く、陶芸や絵画が生まれる現場をのぞきながら回廊を歩けるのが最大の魅力だ。入場は無料、月に一度ファーマーズマーケットも開かれるらしい。行き方はメルボルンCBDから電車（Mernda線かHurstbridge線）でVictoria Park駅まで行き、そこから徒歩10〜15分、またはバス200・207・241番でClarke St下車が早い。<b>DAY3、15時からの「5つ星ホテルを満喫」の代わりに、少し外へ出てみたい気分の日があれば</b>候補に入れておきたい。ヤラ川沿いの遊歩道を歩いて向かうだけでも、CBDの喧騒から離れた小さな旅になりそうだ。"
+        },
+        {
+          "h": "監獄島は、フェリーで29分",
+          "p": "シドニー側の発掘は、湾の真ん中に浮かぶ「Cockatoo Island（コカトゥー・アイランド、先住民名Wareamah）」。シドニー湾で最大のこの島は、1839年から1869年までは流刑地の監獄として、1888年から1908年までは少女の感化院として、そして1847年から1992年まではオーストラリア屈指の造船・修理工場として使われ続けた。<b>いまも残るドライドックは、囚人の労働だけで掘られた国内唯一のもの</b>とされ、島全体が「オーストラリア囚人遺跡群」としてユネスコ世界遺産に登録されている。アクセスはサーキュラー・キーのWharf 4からF8フェリーで約29分、15分間隔で出ているのでほとんど待たずに乗れる。運賃はシドニー市内と同じタップ決済でよく、内港区間なので片道$7.35程度（DAY4号で紹介したOpal相当のカードがそのまま使える）。上陸すれば入場無料で、囚人時代の独房から巨大な機械工場まで自由に歩き回れるし、$6の音声ガイド、または上島・下島それぞれ60分の有料ツアーを使えばより深く歴史を追える。<b>キャンプ場やグランピングテントまで用意されていて、実は宿泊もできる島</b>だというのも、調べていて驚いた発見だった。"
+        },
+        {
+          "h": null,
+          "p": "正直に言うと、今回の旅程は最初から最後までかなり詰まっているので、Cockatoo Islandを丸ごと1日使って回るのは難しそうだ。それでもサーキュラー・キーから29分という距離を知っておけば、もし予定が崩れて時間が浮いた日や、次にシドニーへ来る機会があったときの「答え」がひとつ増える。尼僧院の工房も監獄島のドックも、閉ざされていた時間の長さがそのまま、いま歩いたときの静けさになっている気がする。"
+        }
+      ],
+      "spots": [
+        {
+          "name": "Abbotsford Convent",
+          "area": "メルボルン",
+          "g": "sight",
+          "tip": "旧尼僧院、いまは100以上の工房が集まる文化拠点。入場無料。CBDから電車+徒歩かバスで20〜30分",
+          "map": "https://maps.google.com/?q=Abbotsford+Convent+1+St+Heliers+Street+Abbotsford+Melbourne"
+        },
+        {
+          "name": "Cockatoo Island",
+          "area": "シドニー",
+          "g": "sight",
+          "tip": "世界遺産の監獄・造船所跡。Circular QuayからF8フェリーで29分、タップ決済でそのまま乗車可",
+          "map": "https://maps.google.com/?q=Cockatoo+Island+Sydney"
+        }
+      ],
+      "sources": [
+        {
+          "t": "Abbotsford Convent 公式サイト",
+          "u": "https://abbotsfordconvent.com.au/"
+        },
+        {
+          "t": "Abbotsford Convent（Visit Victoria 公式）",
+          "u": "https://www.visitvictoria.com/regions/melbourne/see-and-do/art-and-culture/history-and-heritage/abbotsford-convent"
+        },
+        {
+          "t": "How to Get to Abbotsford Convent by Bus, Train or Tram（Moovit）",
+          "u": "https://moovitapp.com/index/en-gb/public_transportation-Abbotsford_Convent_Convent_Building-Melbourne-site_165150685-2803"
+        },
+        {
+          "t": "Plan your trip to Cockatoo Island（Cockatoo Island 公式）",
+          "u": "https://www.cockatooisland.gov.au/en/visit-us/plan-your-trip/"
+        },
+        {
+          "t": "Cockatoo Island（DCCEEW 公式・世界遺産情報）",
+          "u": "https://www.dcceew.gov.au/parks-heritage/heritage/places/national/cockatoo-island"
+        },
+        {
+          "t": "Visiting Cockatoo Island: Everything You Need to Know（Sydney Expert）",
+          "u": "https://sydneyexpert.com/cockatoo-island/"
+        }
+      ],
+      "memo": "Abbotsford ConventはDAY3の15時「5つ星ホテルを満喫」の代わりの選択肢に。Cockatoo Islandは正直このぎっしり旅程には組み込みにくいですが、サーキュラー・キーから29分という近さは覚えておいて損なし——次にシドニーへ来る理由がひとつ増えました。編集部は監獄島でキャンプできると知って、ひそかに次の旅の計画を練り始めています。"
     }
   ]
 }
