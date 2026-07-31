@@ -3,7 +3,7 @@
     "paper": "南十字星",
     "en": "THE SOUTHERN CROSS",
     "sub": "まいにち届く、旅のミニマガジン",
-    "currentNo": 24
+    "currentNo": 25
   },
   "issues": [
     {
@@ -1779,6 +1779,75 @@
         }
       ],
       "memo": "Abbotsford ConventはDAY3の15時「5つ星ホテルを満喫」の代わりの選択肢に。Cockatoo Islandは正直このぎっしり旅程には組み込みにくいですが、サーキュラー・キーから29分という近さは覚えておいて損なし——次にシドニーへ来る理由がひとつ増えました。編集部は監獄島でキャンプできると知って、ひそかに次の旅の計画を練り始めています。"
+    },
+    {
+      "no": 25,
+      "date": "2026-08-01",
+      "wd": "土",
+      "theme": "実用・買い物",
+      "title": "荷物で分かれる、免税の道——ゲート10の窓口と、9月なのに焼ける空",
+      "lead": "土曜恒例「実用・買い物」も5回目。今日は免税手続きの「当日どう動くか」を一歩踏み込んで取材しました。大きな買い物や液体は、実は違う窓口に先回りする必要があるようです。あわせて、涼しい9月でも日焼け止めが欠かせない理由もお届けします。DAY7の帰国日の朝と、毎日の外出前チェックに効く一本です。",
+      "photos": [
+        {
+          "src": "assets/press/25-1.jpg",
+          "cap": "シドニー空港の出発ロビー。身の回り品の免税品はセキュリティ通過後のGate10近くの窓口へ、液体や大型の免税品はチェックインより前に別窓口で見せる必要があるらしい",
+          "credit": "MDRX / CC BY-SA 4.0 (Wikimedia)"
+        },
+        {
+          "src": "assets/press/25-2.jpg",
+          "cap": "上空から見たボンダイ・ビーチ。オーストラリアの日差しは、涼しい9月でも侮れないようだ",
+          "credit": "Dronepicr / CC BY 3.0 (Wikimedia)"
+        }
+      ],
+      "body": [
+        {
+          "h": null,
+          "p": "「実用・買い物」号もこれで5回目。免税の仕組みもお土産の掘り出し方も、これまでの号でだいぶ手の内を明かしてきたけれど、今日はもう一歩踏み込んで「当日、実際にどう動くか」を調べてみた。あわせて、涼しいはずの9月でも気を抜けない日差しの話も。"
+        },
+        {
+          "h": "免税窓口は、荷物で分かれる",
+          "p": "TRSの基本ルール（同じ店で$300以上・購入から60日以内・還付は支払額の1/11）は本紙既報のとおりだが、オーストラリア国境警備隊（ABF）とシドニー空港の公式案内を読み比べると、出発当日の窓口が中身によって2つに分かれることが分かった。<b>手荷物だけで完結する買い物は、保安検査を通過したあとGate10近くのTRSオフィス（エアサイド）へ</b>——事前にTRSアプリで購入情報を入力してQRコードを作っておけば、レシートを1枚ずつ見せる手間を省ける。一方、ワインのような液体・制限物質や、スーツケースに入れて預けるしかない大きな買い物は勝手が違うようだ。チェックインより前に、到着階（Arrival Hall）レベル1にあるABF Client Services Counterで先に品物を見せておく必要があるらしい。案内では搭乗予定時刻の少なくとも30分前までにTRSオフィスへ到着するよう書かれているが、混雑期はもっと余裕を見ておいたほうが良さそうだ。DAY7、シドニー空港からの出発日はJALのチェックインに向かう前に、免税品の中身で列の順番を決めておくと慌てずに済みそうだ。"
+        },
+        {
+          "h": "9月なのに、日焼け止めを忘れない理由",
+          "p": "気温だけ見ると9月のシドニーもメルボルンも「まだ肌寒い春先」だが、紫外線の強さは気温とは別物のようだ。調べてみると、シドニーでは9月から4月にかけて日中の長い時間帯で日焼け止めが推奨される時期にあたるらしい。理由のひとつはオーストラリア上空のオゾン層が同緯度の他地域より薄い傾向にあること、もうひとつは春に向けて太陽の高度がぐんぐん上がっていくことのようだ。<b>「まだ夏じゃないから」は、日差しに関しては通用しない</b>ということらしい。加えて春は一年でいちばん天気が変わりやすい季節ともいわれ、折りたたみ傘を1本バッグに忍ばせておくと、急な雨にも日差しにも両対応できて心強そうだ。"
+        },
+        {
+          "h": "歩道は左、荷物は目の届くところに",
+          "p": "最後に、街を歩くときの小さな習慣をふたつ。ひとつはエスカレーターや歩道での立ち位置——追い越す人のために左側に寄るのが暗黙のマナーとされている。もうひとつはカフェのテラス席。オーストラリアの治安は総じて良好とされているものの、スマホや財布をテーブルに置いたまま目を離すのは避けたほうが無難なようだ。"
+        },
+        {
+          "h": null,
+          "p": "免税もカフェも日差しも、知っていれば数十秒で終わる話だけれど、当日その数十秒があるとないとでは心の余裕がだいぶ違う気がする。次の土曜も、こうした「地味だけど効く」小ネタを探してきたい。"
+        }
+      ],
+      "sources": [
+        {
+          "t": "Tourist Refund Scheme（Sydney Airport 公式）",
+          "u": "https://www.sydneyairport.com.au/info-sheet/tourist-refund-scheme-article"
+        },
+        {
+          "t": "Tourist Refund Scheme – making the claim（Australian Border Force 公式）",
+          "u": "https://www.abf.gov.au/entering-and-leaving-australia/tourist-refund-scheme/making-the-claim"
+        },
+        {
+          "t": "UV Index（Cancer Council Australia 公式）",
+          "u": "https://www.cancer.org.au/cancer-information/causes-and-prevention/sun-safety/uv-index"
+        },
+        {
+          "t": "Sydney UV Index: Monthly Ranges, Peak Radiation Hours, and Exposure Thresholds（Sydney Weather）",
+          "u": "https://www.sydneyweather.au/blog/sydney-uv-index-guide.html"
+        },
+        {
+          "t": "What to Wear in Australia in September（PEROZ）",
+          "u": "https://www.peroz.com.au/blogs/fashion/what-to-wear-in-australia-in-september"
+        },
+        {
+          "t": "15 Etiquette in Australia You Need to Master Before Socializing（Traveloka）",
+          "u": "https://www.traveloka.com/en-au/explore/destination/etiquette-in-australia-trp/360357"
+        }
+      ],
+      "memo": "免税窓口の使い分けは、DAY7シドニー出発の朝に効きます。日焼け止めは毎日の外出前チェックにひとつ加えてください——9月でも紫外線は油断禁物とのこと。編集部は日焼け止めを塗り直す習慣が続くか、今から少し不安です。"
     }
   ]
 }
