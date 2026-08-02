@@ -3,7 +3,7 @@
     "paper": "南十字星",
     "en": "THE SOUTHERN CROSS",
     "sub": "まいにち届く、旅のミニマガジン",
-    "currentNo": 26
+    "currentNo": 27
   },
   "issues": [
     {
@@ -1909,6 +1909,76 @@
         }
       ],
       "memo": "この号はDAY1メルボルン到着より前、準備タブ「1ヶ月前」欄のETA申請に効きます。まだ49日あるので焦る段階ではありませんが、アプリのダウンロードだけ今日のうちに済ませておくと後がラクそうです。編集部は今週5本書いてみて、監獄島でキャンプできると知ったことが一番の収穫でした。"
+    },
+    {
+      "no": 27,
+      "date": "2026-08-03",
+      "wd": "月",
+      "theme": "ニュース",
+      "title": "帰る日に、街がいちばん沸く——グランドファイナルと、ロックスの新しい歌声",
+      "lead": "帰国便に乗り込む9月26日、実はメルボルンではAFLグランドファイナルが開催され、街いちばんの一日を迎えます。かたやシドニーのロックスには、フリンジ発の新しい夜遊びスポットが誕生した様子。月曜ニュース号は、旅の始まりと終わりをそっとつなぐ2つの話題をお届けします。",
+      "photos": [
+        {
+          "src": "assets/press/27-1.jpg",
+          "cap": "帰国日9/26、この街いちばんの一日——MCGでAFLグランドファイナルが開催される",
+          "credit": "Donaldytong / Public Domain (Wikimedia)"
+        },
+        {
+          "src": "assets/press/27-2.jpg",
+          "cap": "ロックス、George Street付近の街並み。すぐ近くのAtherden Streetに新しい夜のスポットが誕生した",
+          "credit": "Dietmar Rabich / CC BY-SA 4.0 (Wikimedia)"
+        }
+      ],
+      "body": [
+        {
+          "h": null,
+          "p": "月曜恒例、ニュース号。今日は「日付がぴたりと重なる」話をふたつ持ってきた。ひとつはDAY7、帰国の日に起きるメルボルンの一大イベント。もうひとつはDAY6、ロックス散策のすぐそばに現れた新しい夜の顔だ。旅の始点と終点、両方の街から届いた最新情報をお届けする。"
+        },
+        {
+          "h": "帰る日に、メルボルンがいちばん沸く",
+          "p": "9月26日は帰国のためシドニー空港へ向かう日だが、実はこの日の午後2時30分（現地時間）、メルボルンのMCG（メルボルン・クリケット・グラウンド）ではAFL（オーストラリアンフットボールリーグ）のグランドファイナルが開催される。オーストラリア最大級のスポーツイベントで、街じゅうが一年で最も盛り上がる一日だ。試合前のプレゲーム・エンターテインメントには<b>キーリー・ミノーグの出演が発表された</b>ばかりで、グランドファイナルでのパフォーマンスは今回が初めてになるという。対戦カードは決勝トーナメントを経て9月下旬に確定するため、まだ未定（要確認）。旅の1日目に降り立ったメルボルンが、まさに帰国するその瞬間、一年でいちばん熱を帯びる——そう思うと、機内から見る雲の下の景色が少し違って見えるかもしれない。ちなみに前日9月25日（金）は、グランドファイナルの前日にあたるビクトリア州独自の祝日らしい。"
+        },
+        {
+          "h": "ロックスに、フリンジの新しい歌声",
+          "p": "DAY6に歩く予定のロックス地区にも、旬な話題がひとつ。シドニー・フリンジ・フェスティバルの2026年プログラムに「Copa on The Rocks」というシンガロング・ピアノバーが新規参入した。会場はロックスのAtherden Street、期間は9月2日から10月11日までとかなり長く、DAY6（9/25）はすっぽりその中に収まる。<b>グラマラスなキャバレー・ラウンジに姿を変えた路地</b>で、生演奏のピアノに合わせて観客が一緒に歌う参加型のショーだという。予約の要否など詳細は現地の公式情報を要確認だが、ロックスの石畳を歩いたその足で、少し夜更かししてみるのも面白そうだ。"
+        },
+        {
+          "h": null,
+          "p": "メルボルンで始まり、シドニーで終わるこの旅。最終日は空の上から一年でいちばん賑やかなメルボルンを想像し、その前夜はロックスの路地でひと晩だけの歌声に耳を傾ける——そんな「両端の縁取り」を、今週はそっと手帳に足しておきたい。"
+        }
+      ],
+      "spots": [
+        {
+          "name": "Copa on The Rocks",
+          "area": "シドニー",
+          "g": "sight",
+          "tip": "フリンジ発のシンガロング・ピアノバー。9/2〜10/11、ロックスのAtherden Streetで開催（DAY6散策圏内）",
+          "map": "https://maps.google.com/?q=Atherden+Street+The+Rocks+Sydney"
+        }
+      ],
+      "sources": [
+        {
+          "t": "Kylie Minogue headlining 2026 AFL Grand Final pre-game entertainment（RACV）",
+          "u": "https://www.racv.com.au/royalauto/lifestyle-home/entertainment/afl-grand-final-entertainment-game-guide.html"
+        },
+        {
+          "t": "AFL Grand Final Melbourne 2026 — Confirmed Date, Time and Planning Notes",
+          "u": "https://amirbrooks.com.au/melbourne/afl-grand-final-melbourne-2026"
+        },
+        {
+          "t": "【2026年版】9月のメルボルン：気候、服装、イベント、混雑状況（トラベルドンキー）",
+          "u": "https://www.traveldonkey.jp/blog/australia/melbourne/47004/"
+        },
+        {
+          "t": "Sydney Fringe Festival unveils dynamic 2026 program with over 350 events across 64 venues（Australasian Leisure Management）",
+          "u": "https://www.ausleisure.com.au/news/sydney-fringe-festival-unveils-dynamic-2026-program-with-over-350-events-across-64-venues"
+        },
+        {
+          "t": "Sydney Fringe Festival launches its 2026 program with over 350 events（Sydney Arts Guide）",
+          "u": "https://sydneyartsguide.com.au/sydney-fringe-festival-launches-its-2026-program-with-over-350-events/"
+        }
+      ],
+      "memo": "この号はDAY6のロックス散策とDAY7の帰国便、旅の最後の2日にきいてきます。Copa on The Rocksが気になったら「DAY6の寄り道に追加して」でどうぞ。編集部はグランドファイナルの対戦カードが今から気になって仕方ありません——決まったらまた号外を出すかもしれません。"
     }
   ]
 }
