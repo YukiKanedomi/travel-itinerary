@@ -3,7 +3,7 @@
     "paper": "南十字星",
     "en": "THE SOUTHERN CROSS",
     "sub": "まいにち届く、旅のミニマガジン",
-    "currentNo": 35
+    "currentNo": 36
   },
   "issues": [
     {
@@ -2575,6 +2575,75 @@
         }
       ],
       "memo": "この号はDAY6（9/25）17:00「ホテルに一時帰還」〜18:30「Opera Bar」の隙間にちょうど効きます。営業時間だけは要確認——編集部も一次情報が割れていて少し迷いました。フラスコがぶくぶく鳴る音、ぜひ聞いてみてください。"
+    },
+    {
+      "no": 36,
+      "date": "2026-08-13",
+      "wd": "木",
+      "theme": "実用",
+      "title": "サンドイッチが2,664ドルになった日——「YES」の一言で守れるもの",
+      "lead": "機内で配られる小さな入国カード、その「食品：Yes / No」という一項目のせいで、約28万円の罰金を受け取った旅行者がいます。答えは「No」ではなく「わからなければYES」。今日の実用号は、DAY2着陸直後に効く申告のコツと、鼻のいいビーグルの話です。",
+      "photos": [
+        {
+          "src": "assets/press/36-1.jpg",
+          "cap": "メルボルン空港ターミナル2、国際線到着エリア。DAY2、この先に検疫のカウンターが待っている",
+          "credit": "MDRX / CC BY-SA 4.0 (Wikimedia)"
+        },
+        {
+          "src": "assets/press/36-2.jpg",
+          "cap": "検疫探知犬の訓練の様子（写真は米国の例）。オーストラリアの空港でもビーグルなどが荷物のにおいを嗅いで回る",
+          "credit": "USDA / Public domain (Wikimedia)"
+        }
+      ],
+      "body": [
+        {
+          "h": null,
+          "p": "着陸態勢に入る少し前、客室乗務員がオレンジ色の小さなカードを配りにくる。オーストラリアの入国カードだ。名前や滞在先と並んで、いくつかの項目に「Yes」か「No」で答える欄がある。そのうちのひとつが「食品を持っていますか」。この一行、実はかなり真剣に答えたほうがいい項目だということを、今日は取材してみて知った。"
+        },
+        {
+          "h": "サンドイッチ一つが、2,664ドルになった日",
+          "p": "2022年、シンガポールから旅行してきたオーストラリア人女性が話題になった。チャンギ空港で買ったサブウェイのサンドイッチを機内で半分食べ、残り半分を持ったまま入国。申告用紙は手荷物のことだと思い込み、食品の欄に「No」と書いてしまったという。結果は<b>2,664豪ドルの罰金</b>。似た話は他にもあり、マクドナルドのマフィンを2つ申告し忘れた旅行者が1,874豪ドルを科された例も報じられている。金額は年々見直されているようで、2026年時点では違反の内容によって罰則がさらに引き上げられているとの報道もある（正確な最新額は要確認）。笑い話のようだが、本人にとっては旅の思い出が罰金の記憶に変わってしまった出来事だ。"
+        },
+        {
+          "h": "「YES」と答えれば、実はほとんど問題ない",
+          "p": "ここが今日いちばん伝えたいポイントなのだが、<b>申告して罰金を科されることはまずない</b>。持ち込めない物だと分かれば、その場で没収・廃棄されて終わりというのが基本の流れのようだ。罰金が発生するのは「申告しなかった」「嘘をついた」場合。つまり守るべき合言葉は「わからなければYES」の一つだけでいい。機内で配られたお菓子の食べ残し、乗り継ぎ空港で買ったチョコレート、常備薬に入っている乾燥ハーブ——食べ物や植物・動物由来のものが少しでも鞄に入っていたら、迷わずYesにチェックを。DAY2、メルボルン空港ではスマートゲートを抜けたあと荷物を受け取り、Yesと答えた人は赤いランプの「Goods to Declare」の列へ進む。検疫の係官に何を持っているか聞かれたら、そのまま答えればいい。使えるフレーズは「I have some food to declare」のひとことで十分だ。"
+        },
+        {
+          "h": "鼻のいいビーグルが、荷物のにおいを覚えている",
+          "p": "もう一つ知っておくと面白いのが、到着ロビーをうろうろしている検疫探知犬の存在だ。多くはビーグル犬で、乗客の荷物のあいだを縫うように歩き、においだけで肉や果物を見つけ出す。優秀な犬になると、1〜2日前まで荷物に入っていた食品のにおいまで嗅ぎ分けるというから侮れない。愛想がよく人懐っこい犬種が選ばれているそうで、決して怖がらせるための存在ではなく、正直に申告さえしていれば、むしろ愛嬌のあるマスコットのように眺めていられる相手だ。"
+        },
+        {
+          "h": null,
+          "p": "DAY2、機内食のデザートやJALでもらった飴が鞄の隅に残っていないか、着陸前に一度だけ確認してみてほしい。入っていたら答えは「Yes」。それだけで、サンドイッチの二の舞は避けられる。"
+        }
+      ],
+      "sources": [
+        {
+          "t": "What food can you bring in?（Australian Border Force 公式）",
+          "u": "https://www.abf.gov.au/entering-and-leaving-australia/can-you-bring-it-in/categories/food"
+        },
+        {
+          "t": "Infringement notices at the airport（Department of Agriculture, Fisheries and Forestry 公式）",
+          "u": "https://www.agriculture.gov.au/biosecurity-trade/policy/legislation/compliance/infringement-notice-scheme/infringement-notices-at-the-airport"
+        },
+        {
+          "t": "How a Subway sandwich cost one traveler $1,840（CBS News）",
+          "u": "https://www.cbsnews.com/news/subway-australia-fine-jessica-lee-customs/"
+        },
+        {
+          "t": "A passenger was fined $1,874 after an airport security dog sniffed out two McMuffins（NBC News）",
+          "u": "https://www.nbcnews.com/news/world/passenger-was-fined-1874-airport-security-dog-sniffed-two-mcmuffins-lu-rcna41109"
+        },
+        {
+          "t": "検疫（在日オーストラリア大使館 公式）",
+          "u": "https://japan.embassy.gov.au/tkyojapanese/quarantine_jp.html"
+        },
+        {
+          "t": "オーストラリア入国カードの書き方まとめ（Trip.com）",
+          "u": "https://jp.trip.com/guide/arrival/australia-immigration-card.html"
+        }
+      ],
+      "memo": "この号はDAY2、メルボルン着陸直後の検疫申告（食品YES）にまるごと効きます。機内でもらったお菓子、うっかり鞄の中で眠らせていませんか？　編集部は毎回だいたい先に食べてしまう派なので、今回ばかりは反省しています。"
     }
   ]
 }
