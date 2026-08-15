@@ -71,16 +71,31 @@
 .hours-note { margin:10px 18px 0 26px; font-size:10px; color:var(--ink-faint); }
 
 /* ── 準備：ToDo帳面 ── */
-.check-row { display:flex; gap:10px; align-items:flex-start; padding:9px 2px 8px;
+/* 指で押しやすいよう行の高さと箱を少し大きくしてある */
+.check-row { display:flex; gap:11px; align-items:flex-start; padding:11px 2px 10px;
   border-bottom:1px solid var(--line); cursor:pointer; }
 .check-row:last-child { border-bottom:none; }
-.cbox { width:16px; height:16px; flex-shrink:0; margin-top:3px; border:1.6px solid var(--ink-soft);
-  border-radius:3px; background:var(--paper-hi); position:relative; }
-.check-row.done .cbox::after { content:""; position:absolute; left:2px; top:-6px; width:16px; height:16px;
-  border-right:2.6px solid var(--red); border-bottom:2.6px solid var(--red);
+.check-row:active { background:rgba(120,100,75,.05); }
+.cbox { width:19px; height:19px; flex-shrink:0; margin-top:2px; border:1.6px solid var(--ink-soft);
+  border-radius:4px; background:var(--paper-hi); position:relative; }
+.check-row.done .cbox { background:#F6EDE6; border-color:rgba(199,64,45,.55); }
+.check-row.done .cbox::after { content:""; position:absolute; left:3px; top:-5px; width:18px; height:18px;
+  border-right:2.8px solid var(--red); border-bottom:2.8px solid var(--red);
   transform:rotate(40deg) scale(.62); border-radius:1px; }
-.check-row .ct { flex:1; font-size:12.5px; line-height:1.6; }
+.check-row .ct { flex:1; font-size:13px; line-height:1.65; }
 .check-row.done .ct { color:var(--ink-faint); text-decoration:line-through; text-decoration-color:rgba(199,64,45,.5); }
+
+/* 段・箱ごとの内訳（3/7）と「残りだけ」表示 */
+.grp-n { float:right; font-family:var(--mono); font-size:10px; font-weight:600; letter-spacing:0; color:var(--ink-faint); }
+.ledger.all-done .grp-n { color:var(--green); }
+.only-left { font-family:inherit; font-size:10px; font-weight:700; letter-spacing:.04em; white-space:nowrap;
+  color:var(--ink-faint); background:var(--paper-hi); border:1px solid var(--edge); border-radius:6px;
+  padding:5px 10px; cursor:pointer; }
+.only-left.on { background:var(--red); border-color:var(--red); color:#fff; }
+.sec-hint { margin:5px 18px 0 26px; font-size:10px; color:var(--ink-faint); line-height:1.6; }
+.chk-wrap.hide-done .check-row.done { display:none; }
+.grp-empty { display:none; font-size:10.5px; color:var(--green); padding:7px 2px 2px; }
+.chk-wrap.hide-done .ledger.all-done .grp-empty { display:block; }
 .bk-note2 { width:100%; margin:2px 0 8px 26px; max-width:calc(100% - 26px); border:none; border-bottom:1px dashed #C9BCA2;
   background:transparent; padding:3px 2px 4px; font-size:11.5px; font-family:var(--mono); color:var(--blue); }
 .bk-note2::placeholder { color:#BFB39C; font-family:"Zen Kaku Gothic New",sans-serif; font-size:10.5px; }
@@ -88,15 +103,7 @@
 .prog .pt { font-family:var(--mono); font-size:11px; color:var(--ink-soft); white-space:nowrap; }
 .prog .bar { flex:1; height:7px; border:1px solid var(--ink-soft); border-radius:4px; background:var(--paper-hi); overflow:hidden; }
 .prog .fill { height:100%; background:repeating-linear-gradient(45deg, var(--red) 0 5px, #d4604e 5px 10px); opacity:.75; transition:width .25s; }
-.remind-row { display:flex; gap:10px; padding:9px 2px 8px; border-bottom:1px solid var(--line);
-  text-decoration:none; color:var(--ink); align-items:baseline; }
-.remind-row:last-child { border-bottom:none; }
-.remind-row .rd { font-family:var(--mono); font-size:11px; font-weight:600; width:38px; flex-shrink:0; color:var(--red); }
-.remind-row .rb { flex:1; min-width:0; }
-.remind-row .rt { font-size:12px; font-weight:700; line-height:1.5; }
-.remind-row .rn { font-size:10px; color:var(--ink-faint); line-height:1.55; }
-.remind-row .cal { font-size:9px; font-weight:700; color:var(--blue); border:1px solid rgba(74,111,165,.5);
-  border-radius:5px; padding:3px 7px; white-space:nowrap; align-self:center; }
+/* .remind-row は出発前リマインダーの廃止（2026-08-15）に伴い削除した */
 .kb-card { margin:10px 18px 0 26px; background:var(--paper-hi); border:1px solid var(--edge); border-radius:6px;
   padding:11px 13px; box-shadow:0 1px 3px rgba(90,75,50,.1); }
 .kb-title { font-size:12.5px; font-weight:900; }

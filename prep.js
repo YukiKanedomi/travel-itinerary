@@ -1,18 +1,6 @@
-/* ============ v2 prep.js — 準備タブ（リマインダー・ToDo・予約・知識・持ち物） ============ */
+/* ============ v2 prep.js — 準備タブ（ToDo・予約・知識・持ち物） ============ */
 /* localStorage キーは現行アプリと互換: prep_todo_v1 / prep_book_v1 / prep_booknote_v1 / checklist_v1 */
-
-var PREP_REMIND = [
-  { date:'20260801', title:'ETA申請（豪州 電子渡航許可）', note:'AustralianETAアプリで申請。ICパスポート＋クレカ。約A$20。' },
-  { date:'20260801', title:'パスポート残存確認＆JTBへ旅券情報を連絡', note:'残存6ヶ月以上を確認（出発時点）。' },
-  { date:'20260801', title:'海外旅行保険を確認・加入', note:'クレカ付帯の有無と補償範囲もチェック。' },
-  { date:'20260913', title:'MyJTBで最終日程表・eチケット・ホテル予約確認書を入手', note:'出発7日前目安。MyJTB／コンタクトボードから。' },
-  { date:'20260913', title:'eSIM購入・設定', note:'日本で準備し、到着後に有効化。' },
-  { date:'20260913', title:'クレカ2枚 海外利用ON＋少額AUD用意', note:'ブランド違いで。支払いは現地通貨(AUD)で（DCC回避）。' },
-  { date:'20260913', title:'外務省たびレジ登録', note:'https://www.ezairyu.mofa.go.jp/tabireg/' },
-  { date:'20260918', title:'荷造り・持ち物最終チェック', note:'変換プラグ(Type I)・防水上着・常用薬を忘れずに。' },
-  { date:'20260919', title:'JALオンラインチェックイン＋目覚まし・空港交通の確認', note:'出発24時間前から可能。' },
-  { date:'20260920', title:'【出発当日】パスポート/ETA/予約確認・検疫申告(食品YES)を再確認', note:'NRT 18:40発（JL773）。' }
-];
+/* 出発前リマインダー（Googleカレンダー登録）は 2026-08-15 に廃止。ToDo に一本化した */
 
 var PREP_TODO = [
   { grp:'2〜3ヶ月前', text:'パスポートの残存期間を確認（入国時に有効。推奨：滞在＋6ヶ月）' },
@@ -116,11 +104,13 @@ var PACKING = [
 function lsGet(key){ try { return JSON.parse(localStorage.getItem(key) || '{}'); } catch(e){ return {}; } }
 function lsSet(key, obj){ try { localStorage.setItem(key, JSON.stringify(obj)); } catch(e){} }
 
-function rmNextDay(s){ var dt=new Date(+s.slice(0,4),+s.slice(4,6)-1,+s.slice(6,8)+1); return ''+dt.getFullYear()+('0'+(dt.getMonth()+1)).slice(-2)+('0'+dt.getDate()).slice(-2); }
-function rmFmt(s){ return (+s.slice(4,6))+'/'+(+s.slice(6,8)); }
-function gcalUrl(title,date,details){
-  return 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=' + encodeURIComponent(title)
-       + '&dates=' + date + '/' + rmNextDay(date) + '&details=' + encodeURIComponent(details||'');
+/* 進捗バーと「残りだけ」トグルの見出し。scope は td（ToDo）/ pk（持ち物） */
+function prepSecHead(label, scope, hint){
+  return '<div class="sec-h">— ' + label + ' —</div>' +
+    '<div class="prog"><span class="pt"><span id="' + scope + '-done">0</span>/<span id="' + scope + '-total">0</span></span>' +
+    '<div class="bar"><div class="fill" id="' + scope + '-fill" style="width:0%"></div></div>' +
+    '<button type="button" class="only-left" data-scope="' + scope + '">残りだけ</button></div>' +
+    (hint ? '<div class="sec-hint">' + hint + '</div>' : '');
 }
 
 function renderPrepPage() {
@@ -129,28 +119,22 @@ function renderPrepPage() {
   var h = '<div class="ch-head"><div class="ch-eyebrow">PREPARATION</div><div class="ch-h1">準備</div>' +
     '<div class="ch-sub">チェックはこの端末に自動保存されます</div></div>';
 
-  /* リマインダー */
-  h += '<div class="sec-h">— 出発前リマインダー（タップでGoogleカレンダーに登録） —</div><div class="ledger" style="margin-top:0">';
-  PREP_REMIND.forEach(function(r){
-    h += '<a class="remind-row" href="' + gcalUrl(r.title, r.date, r.note) + '" target="_blank" rel="noopener">' +
-      '<span class="rd">' + rmFmt(r.date) + '</span><span class="rb"><span class="rt">' + r.title + '</span>' +
-      (r.note ? '<span class="rn">' + r.note + '</span>' : '') + '</span><span class="cal">＋カレンダー</span></a>';
-  });
-  h += '</div>';
-
   /* ToDo */
-  h += '<div class="sec-h">— 出発前 ToDo —</div>';
+  h += prepSecHead('出発前 ToDo', 'td', '時期ごとの段。済んだものを隠すと残りだけが見えます');
   var groups = [];
   PREP_TODO.forEach(function(t){ if (groups.indexOf(t.grp) < 0) groups.push(t.grp); });
+  h += '<div class="chk-wrap" id="wrap-td">';
   groups.forEach(function(g){
-    h += '<div class="ledger" style="margin-top:8px"><div class="ledger-title">' + g + '</div>';
+    h += '<div class="ledger" style="margin-top:8px"><div class="ledger-title">' + g +
+         '<span class="grp-n"></span></div>';
     PREP_TODO.forEach(function(t, i){
       if (t.grp !== g) return;
       h += '<div class="check-row' + (todoDone[i] ? ' done' : '') + '" data-todo="' + i + '">' +
            '<span class="cbox"></span><span class="ct">' + t.text + '</span></div>';
     });
-    h += '</div>';
+    h += '<div class="grp-empty">この段はすべて完了</div></div>';
   });
+  h += '</div>';
 
   /* 予約トラッカー */
   h += '<div class="sec-h">— 予約・手配トラッカー —</div><div class="ledger" style="margin-top:0">';
@@ -162,17 +146,19 @@ function renderPrepPage() {
   h += '</div>';
 
   /* 持ち物 */
-  h += '<div class="sec-h">— 持ち物チェックリスト —</div>' +
-       '<div class="prog"><span class="pt"><span id="pk-done">0</span>/<span id="pk-total">0</span></span><div class="bar"><div class="fill" id="pk-fill" style="width:0%"></div></div></div>';
+  h += prepSecHead('持ち物チェックリスト', 'pk', '荷造り中は「残りだけ」にすると詰め忘れが見つけやすいです');
   var pkState = lsGet('checklist_v1');
+  h += '<div class="chk-wrap" id="wrap-pk">';
   PACKING.forEach(function(cat){
-    h += '<div class="ledger" style="margin-top:8px"><div class="ledger-title">' + cat.cat + '</div>';
+    h += '<div class="ledger" style="margin-top:8px"><div class="ledger-title">' + cat.cat +
+         '<span class="grp-n"></span></div>';
     cat.items.forEach(function(item){
       h += '<div class="check-row' + (pkState[item] ? ' done' : '') + '" data-pk="' + item.replace(/"/g,'&quot;') + '">' +
            '<span class="cbox"></span><span class="ct">' + item + '</span></div>';
     });
-    h += '</div>';
+    h += '<div class="grp-empty">この箱はすべて完了</div></div>';
   });
+  h += '</div>';
 
   /* 基礎知識 */
   h += '<div class="sec-h">— 入国・現地の基礎知識 —</div>';
@@ -181,11 +167,22 @@ function renderPrepPage() {
   });
 
   host.innerHTML = h;
-  updatePackProgress();
+  prepUpdateCounts();
 
   /* イベント（委任） */
   host.addEventListener('click', function(e){
-    var row = e.target.closest ? e.target.closest('.check-row') : null;
+    if (!e.target.closest) return;
+    /* 「残りだけ」トグル */
+    var tg = e.target.closest('.only-left');
+    if (tg) {
+      var wrap = document.getElementById('wrap-' + tg.getAttribute('data-scope'));
+      if (!wrap) return;
+      var on = wrap.classList.toggle('hide-done');
+      tg.classList.toggle('on', on);
+      tg.textContent = on ? '全部表示' : '残りだけ';
+      return;
+    }
+    var row = e.target.closest('.check-row');
     if (!row) return;
     if (row.hasAttribute('data-todo')) {
       var d = lsGet('prep_todo_v1'); var k = row.getAttribute('data-todo');
@@ -196,8 +193,8 @@ function renderPrepPage() {
     } else if (row.hasAttribute('data-pk')) {
       var p = lsGet('checklist_v1'); var k3 = row.getAttribute('data-pk');
       p[k3] = !p[k3]; lsSet('checklist_v1', p); row.classList.toggle('done', !!p[k3]);
-      updatePackProgress();
     }
+    prepUpdateCounts();
   });
   host.addEventListener('input', function(e){
     if (!e.target.classList || !e.target.classList.contains('bk-note2')) return;
@@ -206,11 +203,24 @@ function renderPrepPage() {
     lsSet('prep_booknote_v1', n);
   });
 }
-function updatePackProgress(){
-  var rows = document.querySelectorAll('#pane-prep [data-pk]');
-  var done = document.querySelectorAll('#pane-prep [data-pk].done').length;
-  var dEl = document.getElementById('pk-done'), tEl = document.getElementById('pk-total'), fEl = document.getElementById('pk-fill');
-  if (dEl) dEl.textContent = done;
-  if (tEl) tEl.textContent = rows.length;
-  if (fEl) fEl.style.width = (rows.length ? Math.round(done/rows.length*100) : 0) + '%';
+/* ToDo・持ち物の進捗（全体バーと、段／箱ごとの内訳）をまとめて更新する */
+function prepUpdateCounts(){
+  ['td','pk'].forEach(function(scope){
+    var wrap = document.getElementById('wrap-' + scope);
+    if (!wrap) return;
+    var total = wrap.querySelectorAll('.check-row').length;
+    var done  = wrap.querySelectorAll('.check-row.done').length;
+    var dEl = document.getElementById(scope + '-done'), tEl = document.getElementById(scope + '-total'),
+        fEl = document.getElementById(scope + '-fill');
+    if (dEl) dEl.textContent = done;
+    if (tEl) tEl.textContent = total;
+    if (fEl) fEl.style.width = (total ? Math.round(done/total*100) : 0) + '%';
+    Array.prototype.forEach.call(wrap.querySelectorAll('.ledger'), function(led){
+      var t = led.querySelectorAll('.check-row').length;
+      var d = led.querySelectorAll('.check-row.done').length;
+      var n = led.querySelector('.grp-n');
+      if (n) n.textContent = d + '/' + t;
+      led.classList.toggle('all-done', t > 0 && d === t);
+    });
+  });
 }
