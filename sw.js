@@ -10,9 +10,10 @@
  * 旧世代（tabi-shiori-v* / tabi-techo-v*）は一度だけ掃除する。
  * /v1/ のアーカイブ（tabi-shiori-arch-*）には触れない。
  */
-const CACHE = 'tabi-techo-root-v12';
-const V = '12'; // index.html の ?v= と揃える
-const ASSETS = [
+const CACHE = 'tabi-techo-root-v13';
+const V = '13'; // index.html の ?v= と揃える
+/* 必須シェル：1つでも取得に失敗したらインストール自体を失敗させる（約1MB） */
+const CORE = [
   './',
   './index.html',
   './pages.css?v=' + V,
@@ -24,12 +25,14 @@ const ASSETS = [
   './news.js?v=' + V,
   './articles.json',
   './manifest.webmanifest',
+  './assets/app-icon-180.png', './assets/app-icon-192.png', './assets/app-icon-512.png'
+];
+/* 任意コンテンツ：1枚ずつ取得し、失敗してもインストールは成功させる（写真・誌面・挿絵 約16MB） */
+const OPTIONAL = [
   './assets/day1.jpg', './assets/day2.jpg', './assets/day3.jpg', './assets/day4.jpg',
   './assets/day5.jpg', './assets/day6.jpg', './assets/day7.jpg',
   './assets/scrap-laneway.jpg', './assets/scrap-qvm.jpg', './assets/scrap-koala.jpg', './assets/scrap-opera.jpg',
   './assets/hero-sydney.jpg',
-  './assets/app-icon-180.png', './assets/app-icon-192.png', './assets/app-icon-512.png',
-  /* 手引きタブ：挿絵と誌面ライブラリ（2026-08-17 追加） */
   './assets/art/magpie.png', './assets/art/binchicken.png', './assets/art/skybus.png', './assets/art/koala.png',
   './assets/art/smartgate.png', './assets/art/pie.png', './assets/art/coffee.png', './assets/art/suitcase.png',
   './assets/guide/p01.jpg', './assets/guide/p02.jpg', './assets/guide/p03.jpg', './assets/guide/p04.jpg',
@@ -41,8 +44,14 @@ const ASSETS = [
 
 self.addEventListener('install', function (e) {
   e.waitUntil(
-    caches.open(CACHE).then(function (c) { return c.addAll(ASSETS); })
-      .then(function () { return self.skipWaiting(); })
+    caches.open(CACHE).then(function (c) {
+      return c.addAll(CORE).then(function () {
+        /* 任意分は個別追加。失敗は握り潰す（既にキャッシュ済みなら次回fetchで拾われる） */
+        return Promise.all(OPTIONAL.map(function (u) {
+          return c.add(u).catch(function () {});
+        }));
+      });
+    }).then(function () { return self.skipWaiting(); })
   );
 });
 
@@ -76,8 +85,11 @@ self.addEventListener('fetch', function (e) {
   if (isNav) {
     e.respondWith(
       fetch(req).then(function (res) {
-        var cp = res.clone();
-        caches.open(CACHE).then(function (c) { c.put(req, cp); });
+        /* 404やエラーページはキャッシュしない。保存はイベント寿命に紐づける */
+        if (res && res.ok) {
+          var cp = res.clone();
+          e.waitUntil(caches.open(CACHE).then(function (c) { return c.put(req, cp); }));
+        }
         return res;
       }).catch(function () {
         return caches.match(req).then(function (r) { return r || caches.match('./index.html'); });
@@ -89,7 +101,7 @@ self.addEventListener('fetch', function (e) {
         return cached || fetch(req).then(function (res) {
           if (res && (res.ok || res.type === 'opaque')) {
             var cp = res.clone();
-            caches.open(CACHE).then(function (c) { c.put(req, cp); });
+            e.waitUntil(caches.open(CACHE).then(function (c) { return c.put(req, cp); }));
           }
           return res;
         });

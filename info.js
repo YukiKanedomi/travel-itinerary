@@ -141,7 +141,7 @@ function renderInfoPage(){
   /* 交通ガイド */
   h += '<div class="sec-h">— 交通スマートガイド —</div>' +
     '<div class="kb-card"><div class="kb-title">旅行中ずっと運賃半額（メルボルン）</div><div class="kb-body">ビクトリア州は<b>2026/6/1〜2027/1/1</b>の間、公共交通が<b>すべて半額</b>。旅行期間はまるごと対象。※SkyBusは対象外</div></div>' +
-    '<div class="kb-card"><div class="kb-title">メルボルン：無料トラム＆Myki</div><div class="kb-body"><b>CBD内の無料トラムゾーンは料金もカードも不要</b>。DAY2・3の市内散策はほぼ無料で回れる。ゾーン外・電車は<b>Myki</b>（駅・コンビニで購入）。半額期間中の上限：2時間 約$2.85／1日 平日約$5.70・週末約$4.00。空港はSkyBus（約$22）かUber（$60〜70、荷物多なら推奨）</div></div>' +
+    '<div class="kb-card"><div class="kb-title">メルボルン：無料トラム＆Myki</div><div class="kb-body"><b>CBD内の無料トラムゾーンは料金もカードも不要</b>。DAY2・3の市内散策はほぼ無料で回れる。ゾーン外・電車は<b>Myki</b>（駅・コンビニで購入）。半額期間中の上限：2時間 約$2.85／1日 平日約$5.70・週末約$4.00。空港はSkyBus（$25.90/人・往復$43.40）かUber（$60〜75/台）</div></div>' +
     '<div class="kb-card"><div class="kb-title">シドニー：タッチ決済でOK</div><div class="kb-body">クレカ／Apple Pay／Google Payをかざすだけで電車・バス・フェリー・ライトレール全部OK。<b>降車時もタップ必須</b>（忘れると最大運賃）。1日上限 月〜木$19.30／<b>金〜日・祝$9.65</b>（週末おトク）。Airport Linkは<b>空港駅利用料 約$18が別途</b>——2人＋荷物ならUber（$40〜60）と比較を</div></div>';
 
   /* 予算 */

@@ -17,7 +17,7 @@
 /* ============ 手帳デザインシステム（案A: 旅の手帳） ============ */
 :root {
   --paper:#F3EDE2; --paper-hi:#FDFBF6; --paper-dim:#E9E0CE;
-  --ink:#3F3A33; --ink-soft:#5E564A; --ink-faint:#7A6F5E;
+  --ink:#3F3A33; --ink-soft:#5E564A; --ink-faint:#6E6250;
   --line:rgba(120,100,75,.22); --edge:#D8CDB8;
   --red:#C7402D; --blue:#4A6FA5; --tape:#E8C458; --green:#5B7F4E;
   --mono:"IBM Plex Mono",monospace;
@@ -96,7 +96,7 @@ body {
 .lrow .t { font-family:var(--mono); font-size:13px; font-weight:600; width:48px; flex-shrink:0; padding-top:1px; }
 .lrow .body { flex:1; min-width:0; }
 .lrow .h { font-size:13.5px; font-weight:700; line-height:1.45; }
-.lrow .d { font-size:11px; color:var(--ink-faint); line-height:1.6; margin-top:1px; }
+.lrow .d { font-size:11.5px; color:var(--ink-faint); line-height:1.6; margin-top:1px; }
 /* 展開式（手順・補足・リンク） */
 .chev { align-self:center; flex-shrink:0; padding-left:6px; font-size:10px; color:var(--ink-faint);
   transition:transform .2s; }
@@ -105,7 +105,7 @@ body {
 .lrow.open .lmore { display:block; }
 .lstep { display:flex; gap:8px; font-size:11px; color:var(--ink-soft); line-height:1.7; padding:2px 0; }
 .lstep .n { font-family:var(--mono); font-size:10px; color:var(--red); flex-shrink:0; padding-top:3px; width:12px; }
-.ltip { font-size:10.5px; color:var(--ink-soft); line-height:1.65; padding:3px 0 2px; }
+.ltip { font-size:11px; color:var(--ink-soft); line-height:1.65; padding:3px 0 2px; }
 .ltip.warn { color:var(--red); font-weight:700; }
 .lbtns { display:flex; gap:8px; margin:9px 0 4px; }
 .lbtn { flex:1; max-width:150px; text-align:center; text-decoration:none; font-size:11px; font-weight:700;
@@ -239,7 +239,7 @@ body {
 /* 文字入力中はソフトキーボードが固定要素を画面中央あたりまで押し上げるので、その間は隠す */
 body:has(input:focus) .idx, body:has(textarea:focus) .idx { display:none; }
 </style>
-<!-- ?v= はキャッシュずれ対策。sw.js の CACHE と一緒に上げる --><link rel="stylesheet" href="pages.css?v=12">
+<!-- ?v= はキャッシュずれ対策。sw.js の CACHE と一緒に上げる --><link rel="stylesheet" href="pages.css?v=13">
 </head>
 <body>
 <div class="holes"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
@@ -257,12 +257,12 @@ body:has(input:focus) .idx, body:has(textarea:focus) .idx { display:none; }
 <nav class="idx" id="idx"></nav>
 <div id="toast"></div>
 
-<script src="trip.js?v=12"></script>
-<script src="map.js?v=12"></script>
-<script src="prep.js?v=12"></script>
-<script src="guide.js?v=12"></script>
-<script src="info.js?v=12"></script>
-<script src="news.js?v=12"></script>
+<script src="trip.js?v=13"></script>
+<script src="map.js?v=13"></script>
+<script src="prep.js?v=13"></script>
+<script src="guide.js?v=13"></script>
+<script src="info.js?v=13"></script>
+<script src="news.js?v=13"></script>
 <script>
 /* ============ 旅の手帳 v2 — シェル ============ */
 var NAV = [
@@ -490,6 +490,12 @@ function renderIdx() {
     if (m) { show('toc'); openDay(parseInt(m[1],10)); return; }
     var id = location.hash.replace('#','');
     show(NAV.some(function(n){ return n.id === id; }) ? id : 'now');
+  });
+  /* 開き直したとき「いま」の日付・現在行を再計算（開きっぱなしで日をまたぐ対策） */
+  safe(function(){
+    document.addEventListener('visibilitychange', function(){
+      if (!document.hidden) { try { renderNow(); } catch(e){} }
+    });
   });
   /* オフライン対応（Service Worker）。file:// での確認時は登録しない */
   safe(function(){

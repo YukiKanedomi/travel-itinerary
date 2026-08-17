@@ -7,35 +7,41 @@ var newsOpenNo = null; /* null = 最新号 */
 var MG_CHIP = { 'ニュース':'t-news', 'スポット深掘り':'t-spot', '発掘・食':'t-spot', '発掘・体験':'t-spot',
   'スポット発掘':'t-spot', '実用':'t-use', '実用・買い物':'t-use', '週のまとめ':'t-week' };
 
+/* 自動配信データはHTMLとして信用しない。表示前に必ずこれを通す */
+function nEsc(s) {
+  return String(s == null ? '' : s)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
 function newsDaysLeft(dateStr) {
   var d = Math.ceil((new Date('2026-09-20T00:00:00+09:00') - new Date(dateStr + 'T06:00:00+09:00')) / 86400000);
   return d > 0 ? d : 0;
 }
 function mgPhotoHTML(p, alt) {
-  return '<div class="mg-photo' + (alt ? ' alt' : '') + '"><img src="' + p.src + '" alt="" loading="lazy">' +
-    '<div class="pc"><span class="cap">' + (p.cap || '') + '</span>' +
-    (p.credit ? '<span class="credit">' + p.credit + '</span>' : '') + '</div></div>';
+  return '<div class="mg-photo' + (alt ? ' alt' : '') + '"><img src="' + nEsc(p.src) + '" alt="" loading="lazy">' +
+    '<div class="pc"><span class="cap">' + nEsc(p.cap || '') + '</span>' +
+    (p.credit ? '<span class="credit">' + nEsc(p.credit) + '</span>' : '') + '</div></div>';
 }
 function mgSheetHTML(m, issue) {
   var left = newsDaysLeft(issue.date);
   var photos = issue.photos || [];
   var chip = MG_CHIP[issue.theme] || 't-spot';
   var h = '<div class="mg-sheet"><div class="tape"></div>';
-  h += '<div class="mg-brand"><span class="mg-logo">' + m.paper + '</span><span class="en">' + m.en + '</span>' +
+  h += '<div class="mg-brand"><span class="mg-logo">' + nEsc(m.paper) + '</span><span class="en">' + nEsc(m.en) + '</span>' +
     '<span class="no">No.' + issue.no + '</span></div>';
-  h += '<div class="mg-meta"><span class="mg-chip ' + chip + '">' + issue.theme + '</span>' +
-    '<span class="mg-date">' + issue.date.replace(/-/g, '.') + ' ' + issue.wd + '</span>' +
+  h += '<div class="mg-meta"><span class="mg-chip ' + chip + '">' + nEsc(issue.theme) + '</span>' +
+    '<span class="mg-date">' + nEsc(issue.date).replace(/-/g, '.') + ' ' + nEsc(issue.wd) + '</span>' +
     '<span class="mg-left">出発まで' + left + '日</span></div>';
-  h += '<h2 class="mg-title">' + issue.title + '</h2>';
-  h += '<p class="mg-lead">' + issue.lead + '</p>';
+  h += '<h2 class="mg-title">' + nEsc(issue.title) + '</h2>';
+  h += '<p class="mg-lead">' + nEsc(issue.lead) + '</p>';
   if (photos[0]) h += mgPhotoHTML(photos[0], false);
   /* 本文（2枚目の写真があれば中盤に挟む） */
   h += '<div class="mg-body">';
   var paras = issue.body || [];
   var mid = photos[1] ? Math.ceil(paras.length / 2) : -1;
   paras.forEach(function(b, i) {
-    if (b.h) h += '<div><span class="mg-h">' + b.h + '</span></div>';
-    h += '<p class="mg-p">' + b.p + '</p>';
+    if (b.h) h += '<div><span class="mg-h">' + nEsc(b.h) + '</span></div>';
+    h += '<p class="mg-p">' + nEsc(b.p) + '</p>';
     if (i + 1 === mid) h += '</div>' + mgPhotoHTML(photos[1], true) + '<div class="mg-body">';
   });
   h += '</div>';
@@ -44,19 +50,19 @@ function mgSheetHTML(m, issue) {
     h += '<div class="mg-spots-t">きょうの発掘 — タップでマップ</div><div class="fusen-grid mg-spots">';
     issue.spots.forEach(function(s) {
       var g = (typeof GENRE !== 'undefined' && GENRE[s.g]) ? GENRE[s.g] : { cls: 'g-cafe' };
-      h += '<a class="fusen ' + g.cls + '" href="' + s.map + '" target="_blank" rel="noopener">' +
-        '<span class="tag">' + s.area + '</span><span class="go">MAP</span>' +
-        '<div class="nm">' + s.name + '</div><div class="tp">' + s.tip + '</div></a>';
+      h += '<a class="fusen ' + g.cls + '" href="' + nEsc(s.map) + '" target="_blank" rel="noopener">' +
+        '<span class="tag">' + nEsc(s.area) + '</span><span class="go">MAP</span>' +
+        '<div class="nm">' + nEsc(s.name) + '</div><div class="tp">' + nEsc(s.tip) + '</div></a>';
     });
     h += '</div>';
   }
   if (issue.sources && issue.sources.length) {
     h += '<div class="mg-src"><span class="l">参考</span>' +
-      issue.sources.map(function(s) { return '<a href="' + s.u + '" target="_blank" rel="noopener">' + s.t + '</a>'; }).join('　') +
+      issue.sources.map(function(s) { return '<a href="' + nEsc(s.u) + '" target="_blank" rel="noopener">' + nEsc(s.t) + '</a>'; }).join('　') +
       '</div>';
   }
-  if (issue.memo) h += '<div class="mg-memo"><span class="l">編集部より</span><p>' + issue.memo + '</p></div>';
-  h += '<div class="mg-foot"><span>' + m.en + '</span><span>' + m.sub + '</span></div>';
+  if (issue.memo) h += '<div class="mg-memo"><span class="l">編集部より</span><p>' + nEsc(issue.memo) + '</p></div>';
+  h += '<div class="mg-foot"><span>' + nEsc(m.en) + '</span><span>' + nEsc(m.sub) + '</span></div>';
   return h + '</div>';
 }
 function renderNewsPage() {
@@ -77,8 +83,8 @@ function renderNewsPage() {
     h += '<div class="sec-h">— バックナンバー —</div><div class="np-back">';
     NEWS.issues.slice().reverse().forEach(function(i) {
       h += '<button class="np-back-row' + (i.no === issue.no ? ' on' : '') + '" onclick="openIssue(' + i.no + ')">' +
-        '<span class="bn">No.' + i.no + '</span><span class="bd">' + i.date.slice(5).replace('-', '/') + '（' + i.wd + '）</span>' +
-        '<span class="bt">' + i.title + '</span></button>';
+        '<span class="bn">No.' + i.no + '</span><span class="bd">' + nEsc(i.date).slice(5).replace('-', '/') + '（' + nEsc(i.wd) + '）</span>' +
+        '<span class="bt">' + nEsc(i.title) + '</span></button>';
     });
     h += '</div>';
   }
@@ -96,8 +102,8 @@ function injectNowPress() {
   if (!host || !NEWS || !NEWS.issues || !NEWS.issues.length) return;
   var i = NEWS.issues[NEWS.issues.length - 1];
   host.innerHTML = '<button class="np-band" onclick="show(\'news\')">' +
-    '<span class="np-band-l">けさの' + NEWS.meta.paper + '</span>' +
-    '<span class="np-band-t">No.' + i.no + '｜' + i.title + '</span>' +
+    '<span class="np-band-l">けさの' + nEsc(NEWS.meta.paper) + '</span>' +
+    '<span class="np-band-t">No.' + i.no + '｜' + nEsc(i.title) + '</span>' +
     '<span class="np-band-a">読む ›</span></button>';
 }
 function initNews() {
