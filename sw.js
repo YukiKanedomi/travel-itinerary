@@ -10,8 +10,8 @@
  * 旧世代（tabi-shiori-v* / tabi-techo-v*）は一度だけ掃除する。
  * /v1/ のアーカイブ（tabi-shiori-arch-*）には触れない。
  */
-const CACHE = 'tabi-techo-root-v10';
-const V = '10'; // index.html の ?v= と揃える
+const CACHE = 'tabi-techo-root-v12';
+const V = '12'; // index.html の ?v= と揃える
 const ASSETS = [
   './',
   './index.html',
@@ -19,6 +19,7 @@ const ASSETS = [
   './trip.js?v=' + V,
   './map.js?v=' + V,
   './prep.js?v=' + V,
+  './guide.js?v=' + V,
   './info.js?v=' + V,
   './news.js?v=' + V,
   './articles.json',
@@ -27,7 +28,15 @@ const ASSETS = [
   './assets/day5.jpg', './assets/day6.jpg', './assets/day7.jpg',
   './assets/scrap-laneway.jpg', './assets/scrap-qvm.jpg', './assets/scrap-koala.jpg', './assets/scrap-opera.jpg',
   './assets/hero-sydney.jpg',
-  './assets/app-icon-180.png', './assets/app-icon-192.png', './assets/app-icon-512.png'
+  './assets/app-icon-180.png', './assets/app-icon-192.png', './assets/app-icon-512.png',
+  /* 手引きタブ：挿絵と誌面ライブラリ（2026-08-17 追加） */
+  './assets/art/magpie.png', './assets/art/binchicken.png', './assets/art/skybus.png', './assets/art/koala.png',
+  './assets/art/smartgate.png', './assets/art/pie.png', './assets/art/coffee.png', './assets/art/suitcase.png',
+  './assets/guide/p01.jpg', './assets/guide/p02.jpg', './assets/guide/p03.jpg', './assets/guide/p04.jpg',
+  './assets/guide/p05.jpg', './assets/guide/p06.jpg', './assets/guide/p07.jpg', './assets/guide/p08.jpg',
+  './assets/guide/p09.jpg', './assets/guide/p10.jpg', './assets/guide/p11.jpg', './assets/guide/p12.jpg',
+  './assets/guide/p13.jpg', './assets/guide/p14.jpg', './assets/guide/p15.jpg', './assets/guide/p16.jpg',
+  './assets/guide/p17.jpg', './assets/guide/p18.jpg', './assets/guide/p19.jpg', './assets/guide/p20.jpg'
 ];
 
 self.addEventListener('install', function (e) {
