@@ -252,3 +252,27 @@
 .gd-nav.prev { left:6px; } .gd-nav.next { right:6px; }
 .gd-close { position:fixed; top:14px; right:14px; width:40px; height:40px; border:0; border-radius:50%;
   background:rgba(255,255,255,.16); color:#fff; font-size:20px; cursor:pointer; }
+
+/* ============ 章ジャンプチップ（jmpHTML） ============ */
+.jmp { position:sticky; top:0; z-index:6; display:flex; gap:7px; overflow-x:auto;
+  padding:9px 18px 9px 26px; margin-bottom:2px;
+  background:linear-gradient(180deg, var(--paper) 78%, rgba(243,237,226,0));
+  -webkit-overflow-scrolling:touch; scrollbar-width:none; }
+.jmp::-webkit-scrollbar { display:none; }
+.jmp button { flex-shrink:0; font-family:inherit; cursor:pointer; font-size:10.5px; font-weight:700;
+  letter-spacing:.08em; color:var(--ink-soft); padding:5px 12px 4px;
+  background:var(--paper-hi); border:1px solid var(--edge); border-bottom-width:2.5px; border-radius:5px 5px 3px 3px;
+  box-shadow:0 1px 2px rgba(90,75,50,.14); }
+.jmp button:active { transform:translateY(1px); }
+.jmp-t { scroll-margin-top:52px; }
+
+/* ============ 作法カードの折りたたみ ============ */
+.gd-fold { cursor:pointer; }
+.gd-fold .kb-body { display:none; }
+.gd-fold.open .kb-body { display:block; }
+.gd-fold .gd-art { width:56px; height:56px; transition:width .15s, height .15s; }
+.gd-fold.open .gd-art { width:104px; height:104px; }
+.gd-fold .kb-title { padding-right:16px; position:relative; }
+.gd-fold .kb-title::after { content:"▾"; position:absolute; right:0; top:1px; font-size:10px; color:var(--ink-faint);
+  transition:transform .2s; }
+.gd-fold.open .kb-title::after { transform:rotate(180deg); }

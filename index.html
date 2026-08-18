@@ -239,7 +239,7 @@ body {
 /* 文字入力中はソフトキーボードが固定要素を画面中央あたりまで押し上げるので、その間は隠す */
 body:has(input:focus) .idx, body:has(textarea:focus) .idx { display:none; }
 </style>
-<!-- ?v= はキャッシュずれ対策。sw.js の CACHE と一緒に上げる --><link rel="stylesheet" href="pages.css?v=13">
+<!-- ?v= はキャッシュずれ対策。sw.js の CACHE と一緒に上げる --><link rel="stylesheet" href="pages.css?v=14">
 </head>
 <body>
 <div class="holes"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
@@ -257,12 +257,12 @@ body:has(input:focus) .idx, body:has(textarea:focus) .idx { display:none; }
 <nav class="idx" id="idx"></nav>
 <div id="toast"></div>
 
-<script src="trip.js?v=13"></script>
-<script src="map.js?v=13"></script>
-<script src="prep.js?v=13"></script>
-<script src="guide.js?v=13"></script>
-<script src="info.js?v=13"></script>
-<script src="news.js?v=13"></script>
+<script src="trip.js?v=14"></script>
+<script src="map.js?v=14"></script>
+<script src="prep.js?v=14"></script>
+<script src="guide.js?v=14"></script>
+<script src="info.js?v=14"></script>
+<script src="news.js?v=14"></script>
 <script>
 /* ============ 旅の手帳 v2 — シェル ============ */
 var NAV = [
@@ -277,6 +277,17 @@ var NAV = [
 var current = 'now';
 
 function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;'); }
+
+/* ---- 章ジャンプ（長いタブの上部に置くインデックスチップ） ---- */
+function jmpHTML(items){
+  return '<div class="jmp">' + items.map(function(it){
+    return '<button type="button" onclick="jumpTo(\'' + it[0] + '\')">' + it[1] + '</button>';
+  }).join('') + '</div>';
+}
+function jumpTo(id){
+  var el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior:'smooth', block:'start' });
+}
 
 /* ---- 部品 ---- */
 function stubHTML(v, alt, tapeCls) {

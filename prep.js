@@ -123,8 +123,8 @@ function lsGet(key){ try { return JSON.parse(localStorage.getItem(key) || '{}');
 function lsSet(key, obj){ try { localStorage.setItem(key, JSON.stringify(obj)); } catch(e){} }
 
 /* 進捗バーと「残りだけ」トグルの見出し。scope は td（ToDo）/ pk（持ち物） */
-function prepSecHead(label, scope, hint){
-  return '<div class="sec-h">— ' + label + ' —</div>' +
+function prepSecHead(label, scope, hint, id){
+  return '<div class="sec-h jmp-t"' + (id ? ' id="' + id + '"' : '') + '>— ' + label + ' —</div>' +
     '<div class="prog"><span class="pt"><span id="' + scope + '-done">0</span>/<span id="' + scope + '-total">0</span></span>' +
     '<div class="bar"><div class="fill" id="' + scope + '-fill" style="width:0%"></div></div>' +
     '<button type="button" class="only-left" data-scope="' + scope + '">残りだけ</button></div>' +
@@ -138,7 +138,8 @@ function renderPrepPage() {
     '<div class="ch-sub">チェックはこの端末に自動保存されます</div></div>';
 
   /* ToDo */
-  h += prepSecHead('出発前 ToDo', 'td', '時期ごとの段。済んだものを隠すと残りだけが見えます');
+  h += jmpHTML([['jp-td','ToDo'],['jp-bk','予約'],['jp-pk','持ち物'],['jp-kb','基礎知識']]);
+  h += prepSecHead('出発前 ToDo', 'td', '時期ごとの段。済んだものを隠すと残りだけが見えます', 'jp-td');
   var groups = [];
   PREP_TODO.forEach(function(t){ if (groups.indexOf(t.grp) < 0) groups.push(t.grp); });
   h += '<div class="chk-wrap" id="wrap-td">';
@@ -164,7 +165,7 @@ function renderPrepPage() {
   h += '</div>';
 
   /* 持ち物 */
-  h += prepSecHead('持ち物チェックリスト', 'pk', '荷造り中は「残りだけ」にすると詰め忘れが見つけやすいです');
+  h += prepSecHead('持ち物チェックリスト', 'pk', '荷造り中は「残りだけ」にすると詰め忘れが見つけやすいです', 'jp-pk');
   var pkState = lsGet('checklist_v1');
   h += '<div class="chk-wrap" id="wrap-pk">';
   PACKING.forEach(function(cat){
@@ -179,7 +180,7 @@ function renderPrepPage() {
   h += '</div>';
 
   /* 基礎知識 */
-  h += '<div class="sec-h">— 入国・現地の基礎知識 —</div>';
+  h += '<div class="sec-h jmp-t" id="jp-kb">— 入国・現地の基礎知識 —</div>';
   PREP_KB.forEach(function(k){
     h += '<div class="kb-card"><div class="kb-title">' + k.title + '</div><div class="kb-body">' + k.body + '</div></div>';
   });

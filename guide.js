@@ -134,6 +134,8 @@ var GUIDE_PAGES = [
 ];
 var gdViewerIdx = 0;
 
+function gdFold(el) { el.classList.toggle('open'); }
+
 function gdArt(name) {
   return name ? '<img class="gd-art" src="assets/art/' + name + '.png" alt="" loading="lazy">' : '';
 }
@@ -144,22 +146,23 @@ function renderGuidePage() {
   var h = '<div class="toc-head"><div class="toc-eyebrow">FIELD GUIDE</div>' +
     '<div class="toc-h1">旅の手引き</div></div>';
   h += '<div class="sec-hint">当日の動きかたと、現地の細かい作法。じっくり読む詳細版はGoogleドライブの「渡航当日ガイド」に。</div>';
+  h += jmpHTML([['jg-go','出発日'],['jg-back','帰国日'],['jg-hb','作法帖'],['jg-lib','誌面']]);
 
-  h += '<div class="sec-h">— 出発日の動きかた（9/20 家 → 9/21 ホテル） —</div>';
+  h += '<div class="sec-h jmp-t" id="jg-go">— 出発日の動きかた（9/20 家 → 9/21 ホテル） —</div>';
   h += ledgerHTML(GUIDE_GO, null);
 
-  h += '<div class="sec-h">— 帰国日の動きかた（9/26） —</div>';
+  h += '<div class="sec-h jmp-t" id="jg-back">— 帰国日の動きかた（9/26） —</div>';
   h += ledgerHTML(GUIDE_BACK, null);
 
-  h += '<div class="sec-h">— 現地の作法ハンドブック —</div>';
+  h += '<div class="sec-h jmp-t" id="jg-hb">— 現地の作法ハンドブック —</div>';
   GUIDE_HB.forEach(function(k){
-    h += '<div class="kb-card gd-card">' + gdArt(k.art) +
+    h += '<div class="kb-card gd-card gd-fold" onclick="gdFold(this)">' + gdArt(k.art) +
       '<div class="kb-title">' + k.title + '</div>' +
       (k.lead ? '<div class="gd-lead">' + k.lead + '</div>' : '') +
       '<div class="kb-body">' + k.body + '</div></div>';
   });
 
-  h += '<div class="sec-h">— 誌面ライブラリ（全20見開き） —</div>';
+  h += '<div class="sec-h jmp-t" id="jg-lib">— 誌面ライブラリ（全20見開き） —</div>';
   h += '<div class="sec-hint">この旅のために編んだ特集。タップで拡大、左右で前後の頁へ。機内でも読めます。</div>';
   h += '<div class="gd-grid">';
   GUIDE_PAGES.forEach(function(cap, i){

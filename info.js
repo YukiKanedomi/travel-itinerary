@@ -93,7 +93,8 @@ function renderInfoPage(){
     '<div class="tile"><div class="tk">日本への電話</div><div class="tv">+81を付ける</div></div></div>';
 
   /* 換算機 */
-  h += '<div class="sec-h">— AUD ⇄ 円 かんたん換算 —</div>' +
+  h += jmpHTML([['ji-fx','換算'],['ji-em','緊急'],['ji-ho','宿'],['ji-tr','交通'],['ji-bd','予算'],['ji-ln','リンク']]);
+  h += '<div class="sec-h jmp-t" id="ji-fx">— AUD ⇄ 円 かんたん換算 —</div>' +
     '<div class="conv"><div class="conv-row">' +
       '<div class="conv-col"><div class="conv-lbl" id="v2-conv-flbl">AUD（豪ドル）</div>' +
         '<input class="conv-in" id="v2-conv-in" type="number" inputmode="decimal" placeholder="0"></div>' +
@@ -105,7 +106,7 @@ function renderInfoPage(){
       '<button class="fx-btn" onclick="refreshFx()">更新</button></div></div>';
 
   /* 緊急連絡先（赤枠） */
-  h += '<div class="sec-h">— 緊急連絡先（発信リンクなし・番号は目で確認） —</div>' +
+  h += '<div class="sec-h jmp-t" id="ji-em">— 緊急連絡先（発信リンクなし・番号は目で確認） —</div>' +
     '<div class="emer-frame"><div class="ef-t">EMERGENCY</div>' +
     '<div class="irow"><span class="k">警察・救急・消防</span><span class="v"><b>000</b>（豪州統合緊急番号）</span></div>' +
     '<div class="irow"><span class="k">在シドニー日本領事館</span><span class="v">+61-2-9250-1000</span></div>' +
@@ -118,7 +119,7 @@ function renderInfoPage(){
     '<div class="irow"><span class="k">海外旅行保険</span><span class="v"><input class="emer-in" id="emer-ins" placeholder="保険会社の緊急窓口をメモ"></span></div></div>';
 
   /* タクシーカード */
-  h += '<div class="sec-h">— タクシー／Uberで見せる宿泊先（長押しでコピー可） —</div>' +
+  h += '<div class="sec-h jmp-t" id="ji-ho">— タクシー／Uberで見せる宿泊先（長押しでコピー可） —</div>' +
     '<div class="taxi"><div class="tx-k">MELBOURNE — 9/21–23</div>' +
     '<div class="tx-n">InterContinental Melbourne The Rialto</div>' +
     '<div class="tx-a">495 Collins Street, Melbourne VIC 3000</div>' +
@@ -139,7 +140,7 @@ function renderInfoPage(){
     '<div class="d">ミセス・マッコリーズ・ポイントは朝の順光。Opera Bar（9/25）は日没17:53頃が夕景の狙い目</div></div></div></div>';
 
   /* 交通ガイド */
-  h += '<div class="sec-h">— 交通スマートガイド —</div>' +
+  h += '<div class="sec-h jmp-t" id="ji-tr">— 交通スマートガイド —</div>' +
     '<div class="kb-card"><div class="kb-title">旅行中ずっと運賃半額（メルボルン）</div><div class="kb-body">ビクトリア州は<b>2026/6/1〜2027/1/1</b>の間、公共交通が<b>すべて半額</b>。旅行期間はまるごと対象。※SkyBusは対象外</div></div>' +
     '<div class="kb-card"><div class="kb-title">メルボルン：無料トラム＆Myki</div><div class="kb-body"><b>CBD内の無料トラムゾーンは料金もカードも不要</b>。DAY2・3の市内散策はほぼ無料で回れる。ゾーン外・電車は<b>Myki</b>（駅・コンビニで購入）。半額期間中の上限：2時間 約$2.85／1日 平日約$5.70・週末約$4.00。空港はSkyBus（$25.90/人・往復$43.40）かUber（$60〜75/台）</div></div>' +
     '<div class="kb-card"><div class="kb-title">シドニー：タッチ決済でOK</div><div class="kb-body">クレカ／Apple Pay／Google Payをかざすだけで電車・バス・フェリー・ライトレール全部OK。<b>降車時もタップ必須</b>（忘れると最大運賃）。1日上限 月〜木$19.30／<b>金〜日・祝$9.65</b>（週末おトク）。Airport Linkは<b>空港駅利用料 約$18が別途</b>——2人＋荷物ならUber（$40〜60）と比較を</div></div>';
@@ -156,7 +157,7 @@ function renderInfoPage(){
     '<div class="irow total"><span class="k"><b>合計目安</b></span><span class="v"><b>約¥1,174,000</b></span></div></div>';
 
   /* 参考リンク */
-  h += '<div class="sec-h">— 役立つ参考サイト（日本語） —</div>';
+  h += '<div class="sec-h jmp-t" id="ji-ln">— 役立つ参考サイト（日本語） —</div>';
   INFO_LINKS.forEach(function(c){
     h += '<div class="kb-card"><div class="kb-title">' + c.cat + '</div>';
     c.rows.forEach(function(r){
