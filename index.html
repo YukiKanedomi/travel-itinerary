@@ -85,6 +85,17 @@ body {
   width:92px; height:21px; z-index:2; opacity:.88; box-shadow:0 1px 2px rgba(90,75,50,.18);
   background:repeating-linear-gradient(45deg, rgba(232,196,88,.85) 0 8px, rgba(226,186,70,.85) 8px 16px); }
 .tape.b { background:repeating-linear-gradient(45deg, rgba(74,111,165,.5) 0 8px, rgba(74,111,165,.42) 8px 16px); }
+/* 半券の展開（予約詳細） */
+.stub.x { cursor:pointer; }
+.stub-chev { font-size:8px; letter-spacing:.1em; color:var(--ink-faint); margin-top:4px; transition:transform .2s; }
+.stub-wrap.open .stub-chev { transform:rotate(180deg); }
+.stub-more { display:none; margin:9px 4px 0 10px; padding:10px 13px 6px; background:var(--paper-hi);
+  border:1px dashed #C9BCA2; border-radius:6px; box-shadow:0 1px 3px rgba(90,75,50,.1); }
+.stub-wrap.open .stub-more { display:block; }
+.stub-more .r { font-size:11px; color:var(--ink-soft); line-height:1.7; padding:2px 0; }
+.stub-more .r.warn { color:var(--red); font-weight:700; }
+.stub-more .lbtns { margin:9px 0 6px; }
+.stub-more .lbtn { cursor:pointer; font-family:inherit; font-size:11px; }
 
 /* ── 帳面（確定スケジュールの台帳） ── */
 .ledger { margin:14px 18px 0 26px; position:relative; }
@@ -239,7 +250,7 @@ body {
 /* 文字入力中はソフトキーボードが固定要素を画面中央あたりまで押し上げるので、その間は隠す */
 body:has(input:focus) .idx, body:has(textarea:focus) .idx { display:none; }
 </style>
-<!-- ?v= はキャッシュずれ対策。sw.js の CACHE と一緒に上げる --><link rel="stylesheet" href="pages.css?v=14">
+<!-- ?v= はキャッシュずれ対策。sw.js の CACHE と一緒に上げる --><link rel="stylesheet" href="pages.css?v=15">
 </head>
 <body>
 <div class="holes"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
@@ -257,12 +268,12 @@ body:has(input:focus) .idx, body:has(textarea:focus) .idx { display:none; }
 <nav class="idx" id="idx"></nav>
 <div id="toast"></div>
 
-<script src="trip.js?v=14"></script>
-<script src="map.js?v=14"></script>
-<script src="prep.js?v=14"></script>
-<script src="guide.js?v=14"></script>
-<script src="info.js?v=14"></script>
-<script src="news.js?v=14"></script>
+<script src="trip.js?v=15"></script>
+<script src="map.js?v=15"></script>
+<script src="prep.js?v=15"></script>
+<script src="guide.js?v=15"></script>
+<script src="info.js?v=15"></script>
+<script src="news.js?v=15"></script>
 <script>
 /* ============ 旅の手帳 v2 — シェル ============ */
 var NAV = [
@@ -291,8 +302,9 @@ function jumpTo(id){
 
 /* ---- 部品 ---- */
 function stubHTML(v, alt, tapeCls) {
-  return '<div class="stub-wrap"><div class="tape' + (tapeCls?' '+tapeCls:'') + '"></div>' +
-    '<div class="stub' + (alt?' alt':'') + '">' +
+  var hasEx = v.ex && v.ex.length;
+  var h = '<div class="stub-wrap"><div class="tape' + (tapeCls?' '+tapeCls:'') + '"></div>' +
+    '<div class="stub' + (alt?' alt':'') + (hasEx?' x':'') + '"' + (hasEx?' onclick="stubFold(this)"':'') + '>' +
       '<div class="stub-main">' +
         '<div class="stub-kicker">' + v.kicker + '</div>' +
         '<div class="stub-name">' + v.name + '</div>' +
@@ -300,9 +312,23 @@ function stubHTML(v, alt, tapeCls) {
       '</div>' +
       '<div class="stub-cut"><div class="lbl">' + v.cut.label + '</div>' +
         '<div class="big">' + v.cut.big + '</div><div class="lbl">' + v.cut.sub + '</div>' +
-        '<div class="barcode"></div></div>' +
-    '</div></div>';
+        '<div class="barcode"></div>' + (hasEx?'<div class="stub-chev">詳細 ▾</div>':'') + '</div>' +
+    '</div>';
+  if (hasEx) {
+    h += '<div class="stub-more" onclick="event.stopPropagation()">';
+    v.ex.forEach(function(r){
+      var warn = r.indexOf('注意｜') === 0;
+      h += '<div class="r' + (warn?' warn':'') + '">' + (warn ? r : '・' + r) + '</div>';
+    });
+    h += '<div class="lbtns">';
+    if (v.day) h += '<button class="lbtn" onclick="gotoDay(' + v.day + ')">DAY ' + v.day + ' を開く</button>';
+    if (v.map) h += '<a class="lbtn" href="' + v.map + '" target="_blank" rel="noopener">Google マップ</a>';
+    if (v.web) h += '<a class="lbtn web" href="' + v.web + '" target="_blank" rel="noopener">公式サイト</a>';
+    h += '</div></div>';
+  }
+  return h + '</div>';
 }
+function stubFold(el) { el.parentNode.classList.toggle('open'); }
 function rowExtras(r) {
   if (!r.steps && !r.tips && !r.map && !r.web) return '';
   var m = '<div class="lmore">';
@@ -447,12 +473,13 @@ function renderToc() {
   h += '<div class="ledger" style="margin-top:22px"><div class="ledger-title">— 動かせないもの（予約済み） —</div></div>';
   h += stubHTML(TRIP.flights[0], false, '') + stubHTML(TRIP.flights[1], true, 'b') + stubHTML(TRIP.flights[2], false, '');
   TRIP.hotels.forEach(function(ht, i){
-    h += '<div class="stub-wrap"><div class="stub' + (i%2?' alt':'') + '">' +
-      '<div class="stub-main"><div class="stub-kicker">HOTEL — ' + (i===0?'MELBOURNE':'SYDNEY') + '</div>' +
-      '<div class="stub-name">' + ht.jp + '</div>' +
-      '<div class="stub-meta"><b>' + ht.addr + '</b><br>' + ht.stay + '<br>' + ht.note + '<br>TEL ' + ht.tel + '</div></div>' +
-      '<div class="stub-cut"><div class="lbl">STAY</div><div class="big">' + (i===0?'2':'3') + '泊</div><div class="barcode"></div></div>' +
-      '</div></div>';
+    h += stubHTML({
+      kicker:'HOTEL — ' + (i===0?'MELBOURNE':'SYDNEY'),
+      name: ht.jp,
+      meta: '<b>' + ht.addr + '</b><br>' + ht.stay + '<br>' + ht.note + '<br>TEL ' + ht.tel,
+      cut: { label:'STAY', big:(i===0?'2':'3') + '泊', sub:'' },
+      ex: ht.ex, day: ht.day, map: ht.map, web: ht.web
+    }, i%2 === 1, '');
   });
   host.innerHTML = h;
 }

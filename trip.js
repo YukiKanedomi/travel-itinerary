@@ -20,26 +20,61 @@ var TRIP = {
     { id:'JL773', kicker:'JAL INTERNATIONAL — OUTBOUND',
       name:'成田 → メルボルン', route:'NRT T2 18:40 → MEL T2 05:45(+1)',
       meta:'9/20（日）・約10時間05分・機中泊<br>エコノミー JAL Sky Wider・座席 51A / 51C',
-      cut:{ label:'BOARD', big:'18:40', sub:'NRT T2' } },
+      cut:{ label:'BOARD', big:'18:40', sub:'NRT T2' },
+      day:1, web:'https://www.jal.co.jp/',
+      ex:[
+        'チェックイン：前日18:40からオンライン（搭乗券はiPhoneのWalletへ）。空港では荷物預けのみで速い',
+        '受託 23kg×2個／機内持込にルーター・モバイルバッテリー・羽織り・ボールペン2本',
+        '機内でもらえる：ブランケット（薄手・追加可）・アイマスク・耳栓',
+        '着陸1.5時間前に起床 → 入国カード記入（滞在先＝495 Collins St）',
+        '注意｜機内食のあとすぐ就寝。この夜の睡眠が7日間の体力を決める' ] },
     { id:'VA859', kicker:'VIRGIN AUSTRALIA — DOMESTIC',
       name:'メルボルン → シドニー', route:'MEL T3 16:00 → SYD T2 17:25',
       meta:'9/23（水）・1時間25分・直行<br>2名隣同士 座席確定・T3はヴァージン専用',
-      cut:{ label:'BOARD', big:'16:00', sub:'MEL T3' } },
+      cut:{ label:'BOARD', big:'16:00', sub:'MEL T3' },
+      day:4, web:'https://www.virginaustralia.com/',
+      ex:[
+        'チェックイン：48時間前からアプリ／Web。T3は国際線T2の並びで徒歩圏',
+        '受託 1人1個23kg／機内持込は7kgまで（国際線より厳しい。重い物は着る）',
+        '豪州の国内線は液体の100ml制限なし。買った水もそのまま持ち込める',
+        '春休み（VIC 9/19〜）＋AFL決勝前週で混みぎみ。チェックインは早めに済ませる',
+        '注意｜モバイルバッテリーとルーターは預け入れ不可。必ず手荷物へ' ] },
     { id:'JL52', kicker:'JAL INTERNATIONAL — INBOUND',
       name:'シドニー → 羽田', route:'SYD T1 08:55 → HND T3 17:45',
       meta:'9/26（土）・約9時間50分<br>プレミアムエコノミー・座席 17A / 17C',
-      cut:{ label:'BOARD', big:'08:55', sub:'SYD T1' } }
+      cut:{ label:'BOARD', big:'08:55', sub:'SYD T1' },
+      day:7, web:'https://www.jal.co.jp/',
+      ex:[
+        '6:45にT1着 → JALカウンターで荷物預け（推奨は出発2時間前まで）',
+        'TRSは保安検査・出国審査の「あと」ゲート8/9付近。7:25までに列へ・30分前で受付終了',
+        '機内でVisit Japan Webの税関QRを作っておくと羽田の通過が速い',
+        '羽田T3着17:45 → 2階到着ロビーの返却BOXへWi-Fiルーターを返す',
+        '注意｜TRS対象品とレシートは預け入れ荷物に入れない' ] }
   ],
 
   hotels: [
     { name:'InterContinental Melbourne The Rialto', jp:'インターコンチネンタル メルボルン ザ リアルト',
       addr:'495 Collins Street, Melbourne VIC 3000', tel:'+61 3 8627 1400',
       stay:'9/21（月）15:00 IN — 9/23（水）11:00 OUT・2泊',
-      note:'クラシックルーム（キング1台）・朝食なし。19世紀ゴシック建築' },
+      note:'クラシックルーム（キング1台）・朝食なし。19世紀ゴシック建築',
+      day:2, map:'https://maps.google.com/?q=495+Collins+Street+Melbourne',
+      web:'https://www.ihg.com/intercontinental/hotels/gb/en/melbourne/melha/hoteldetail',
+      ex:[
+        '早く着いた日はフロントに荷物預かり（無料）。「Can I leave my luggage until check-in?」',
+        '備品：ドライヤー・バスローブ・スリッパ・Agrariaアメニティあり／歯ブラシ・髭剃りなし',
+        'サザンクロス駅から徒歩5分。ホテルの目の前がもう無料トラムゾーン',
+        'チェックイン時にデポジット（カード仮押さえ・チェックアウトで戻る）。カード枠に余裕を' ] },
     { name:'Rydges World Square', jp:'リッジス ワールド スクエア',
       addr:'389 Pitt Street, Sydney NSW 2000', tel:'+61 2 8268 1888',
       stay:'9/23（水）15:00 IN — 9/26（土）11:00 OUT・3泊',
-      note:'エグゼクティブルーム（キング1台）・朝食付き。スーパーColes直結' }
+      note:'エグゼクティブルーム（キング1台）・朝食付き。スーパーColes直結',
+      day:4, map:'https://maps.google.com/?q=389+Pitt+Street+Sydney',
+      web:'https://www.rydges.com/accommodation/sydney-nsw/world-square-sydney-cbd/',
+      ex:[
+        '朝食は6:30〜（最終日は6:15発なので食べられない。前夜にColesでパンを）',
+        '備品：ドライヤー・アイロンあり／スリッパ・バスローブ・無料の水はなし',
+        '地下がスーパーColes直結。夜の買い出しと水の調達はここで',
+        'Museum駅から徒歩3〜4分／DAY5集合のヒルトンへは徒歩10分' ] }
   ],
 
   days: [
