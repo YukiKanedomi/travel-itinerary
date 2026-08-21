@@ -3,7 +3,7 @@
     "paper": "南十字星",
     "en": "THE SOUTHERN CROSS",
     "sub": "まいにち届く、旅のミニマガジン",
-    "currentNo": 43
+    "currentNo": 44
   },
   "issues": [
     {
@@ -3157,6 +3157,91 @@
         }
       ],
       "memo": "この号はDAY5（9/24）の朝9:15フェザーデール動物園と、15:00〜のルーラ散策に効きます。コアラは撫でるだけ・抱っこ写真はNGなので、心の準備を。桜は蕾〜咲きはじめかもしれませんが、それはそれで十分きれいなはず。※8/20（木）は取材休みをいただいたため、本号は少し厚めの合併号です。"
+    },
+    {
+      "no": 44,
+      "date": "2026-08-22",
+      "wd": "土",
+      "theme": "実用・買い物",
+      "photos": [
+        {
+          "src": "assets/press/44-1.jpg",
+          "cap": "メルボルンのボーク・ストリート・モール。トラムが行き交うショッピング街",
+          "credit": "Tangerineduel / CC BY 4.0 (Wikimedia)"
+        },
+        {
+          "src": "assets/press/44-2.jpg",
+          "cap": "シドニーのピット・ストリート・モール。UGG専門店と同じ並びにKathmanduがある",
+          "credit": "MDRX / CC BY-SA 4.0 (Wikimedia)"
+        }
+      ],
+      "title": "一日のうちに、四季が来る——羽織りと、現地調達という保険",
+      "lead": "DAY1〜3のメルボルンと、DAY4〜7のシドニーは、同じ9月でも空模様の性格がまるで違う。「一日に四季が来る」と言われるメルボルンの振れ幅と、後半から晴れてくるシドニーの傾向、そして荷造りが外れたときの現地の保険まで、今日はまとめて掘り下げます。",
+      "body": [
+        {
+          "h": null,
+          "p": "DAY1でメルボルンに降り立ってからDAY7で羽田に戻るまで、南半球はいまが春の入り口。日本の9月とはだいぶ違う顔に何度も出会うことになりそうです。しかもメルボルンとシドニーでは、空模様の性格そのものが違う。今日は数字で押さえておきたい天気の傾向と、もし服装の読みを外しても現地で立て直せる「保険」の場所を、まとめて紹介したいと思います。"
+        },
+        {
+          "h": "メルボルンは、一日に四季が来る",
+          "p": "メルボルンには「一日に四季がある（four seasons in one day）」という言い伝えがあり、9月はその変わりやすさが一年でもっとも際立つ月とされている。平均最高気温は17℃前後、最低は9℃前後だが、これはあくまで平均。実際は朝は肌寒く、昼前にかけて日差しでぐっと上がり、夕方はまた風とともに冷え込む、という振れ幅が一日のなかで起きるらしい。雨も多めで、9月は月に15日ほど、合計58mm前後の降水があるとされている。<b>DAY1〜3のメルボルン滞在は、まさにこの「読みにくい」季節のまっただなか</b>にあたる。フライトの持ち物リストに「羽織り」を機内持込にと書いてあるのは伊達ではなく、到着したその日から、レイヤーを一枚脱いだり着たりする前提で街を歩くことになりそうだ。"
+        },
+        {
+          "h": "シドニーは、後半になるほど晴れてくる",
+          "p": "一方のシドニーは、9月を通してもう少し性格がはっきりしている。平均最高気温は20℃、最低は11℃と、メルボルンよりひとまわり暖かい。ただし9月は冬の名残と春が綱引きする月でもあり、前半は最高気温18℃前後と冬っぽさが残る一方、後半に向けて晴れて乾いた「らしい」春の空気に変わっていくようだ。降水量も年間でもっとも少ない部類の月らしい。旅程で言えばDAY4〜7、9/23以降がちょうどこの「後半」に重なる。ブルーマウンテンズやシドニー市内を歩く日々は、メルボルンの3日間より天気に振り回されにくいはず——とはいえ油断は禁物、南半球の予報はやはり直前まで要確認だ。"
+        },
+        {
+          "h": "外れても、現地で立て直せる",
+          "p": "それでも荷造りの読みが外れることはある。そんなときの保険として覚えておきたいのが、アウトドアブランドのKathmandu。メルボルンはボーク・ストリート・モールのGalleria店（385 Bourke St）、シドニーはピット・ストリート・モールのMidCity店（197 Pitt St、UGG専門店と同じモール）と、どちらも旅程の動線上にある。<b>防水のパッカブルレインジャケットやメリノウールのベースレイヤー</b>が揃っていて、圧縮ポーチに収まる薄手のものを選べば荷物もさほど増えない。旅の記念というより実用品として持ち帰る、という選び方も悪くないと思う。天気予報を見て「今日は危ないかも」と思ったら、寄り道ついでに覗いてみてほしい。"
+        },
+        {
+          "h": null,
+          "p": "天気だけは、どれだけ調べても直前まで確定しない。それでも「メルボルンは振れ幅が大きい」「シドニーは後半から安定する」という傾向を知っておくだけで、荷造りの判断は変わってくる。羽織りを一枚多めに持つか、現地で買い足す前提で身軽に行くか——どちらを選んでも、知っていれば慌てずに済むはずです。"
+        }
+      ],
+      "spots": [
+        {
+          "name": "Kathmandu（メルボルンCBD Galleria店）",
+          "area": "メルボルン",
+          "g": "sight",
+          "tip": "ボーク・ストリート・モール沿い、385 Bourke St。パッカブルレインジャケットとメリノベースレイヤーが充実",
+          "map": "https://maps.google.com/?q=Kathmandu+385+Bourke+Street+Melbourne"
+        },
+        {
+          "name": "Kathmandu（シドニー MidCity店）",
+          "area": "シドニー",
+          "g": "sight",
+          "tip": "ピット・ストリート・モール沿い、197 Pitt St。UGG専門店と同じモール内",
+          "map": "https://maps.google.com/?q=Kathmandu+197+Pitt+Street+Sydney"
+        }
+      ],
+      "sources": [
+        {
+          "t": "Melbourne Weather in September (weather-and-climate.com)",
+          "u": "https://weather-and-climate.com/Melbourne-September-averages"
+        },
+        {
+          "t": "Four Seasons in One Day - Weather Melbourne Australia",
+          "u": "https://www.we-love-melbourne.net/weather-melbourne.html"
+        },
+        {
+          "t": "Sydney Spring Weather Data: September-November (sydneyweather.au)",
+          "u": "https://www.sydneyweather.au/blog/spring-weather-sydney-guide.html"
+        },
+        {
+          "t": "Sydney Weather in September (holiday-weather.com)",
+          "u": "https://www.holiday-weather.com/sydney/averages/september/"
+        },
+        {
+          "t": "Kathmandu Galleria - Melbourne CBD（公式店舗ページ）",
+          "u": "https://www.kathmandu.com.au/pages/store-location/kathmandu-galleria-melbourne-cbd"
+        },
+        {
+          "t": "Kathmandu Sydney - 197-211 Pitt St 店舗情報",
+          "u": "https://www.shopfully.com.au/stores/kathmandu/149115/197-211-pitt-st"
+        }
+      ],
+      "memo": "この号は準備タブの「1週間前：天気の最終確認と服装の最終調整」と、DAY1・JL773の持ち物リストにある「羽織り」に効きます。メルボルン（DAY1〜3）は振れ幅に備えて羽織りを手放さず、シドニー（DAY4〜7）は後半ほど晴れる想定で身軽に。Kathmanduはあくまで保険なので、無理に立ち寄り予定へ組み込まなくて大丈夫です。"
     }
   ]
 }
