@@ -3,7 +3,7 @@
     "paper": "南十字星",
     "en": "THE SOUTHERN CROSS",
     "sub": "まいにち届く、旅のミニマガジン",
-    "currentNo": 45
+    "currentNo": 46
   },
   "issues": [
     {
@@ -3307,6 +3307,71 @@
         }
       ],
       "memo": "この号は準備タブ「1ヶ月前」ToDoの『N'EXの指定席を2人分購入』にまるごと効きます。9/20は11年ぶりの5連休の2日目にあたるので、まだの方は今日〜今週中の予約がおすすめです。編集部も今夜のうちに、えきねっとで隣席を押さえておきます。"
+    },
+    {
+      "no": 46,
+      "date": "2026-08-24",
+      "wd": "月",
+      "theme": "ニュース",
+      "title": "石畳の路地が、歌う酒場に化ける——フリンジ月間、ロックスの隠しごと",
+      "lead": "月曜恒例のニュース号です。7月号でお伝えしたシドニー・フリンジ・フェスティバル、いよいよ今週末8/29に本開幕。会期はDAY4〜7の滞在をまるごと越えて10月上旬まで伸びていました。具体的な演目が出そろったところで、ロックスの路地が丸ごと歌う酒場に変わるという発見をひとつ。",
+      "photos": [
+        {
+          "src": "assets/press/46-1.jpg",
+          "cap": "The Rocks地区に残る石造りのテラスハウス。Copa on The Rocksの舞台、Atherden St周辺の街並み",
+          "credit": "sv1ambo / CC BY 2.0 (Wikimedia)"
+        }
+      ],
+      "body": [
+        {
+          "h": null,
+          "p": "7月13日号で、シドニー・フリンジ・フェスティバルの会期がDAY4〜6の滞在とまるごと重なる、という話をお届けした。あれから1ヶ月半、8月に入って具体的な演目とチケットが出そろい、規模もあらためて判明した——350以上のイベント、2,000人を超えるアーティスト、会場は64か所。公式オープニングの無料ストリートパーティ「Fringe Ignite!」は今週末8/29（土）、ダーリングハーストのStanley Streetで開かれるという。会期そのものも、当初の印象より長く、一部のプログラムは10月11日まで続くようだ。私たちのシドニー滞在（DAY4〜7、9/23夜〜9/26朝）は、この祭りのちょうど折り返し地点にすっぽり収まる格好になる。ちなみにこの祭り、いまの形になったのは2010年。2012年に「参加自由（オープンアクセス）」方式へ舵を切ってから急成長し、直近2024年には約3,000人のアーティストと約10万人の観客を集めたというから、いまや街ぐるみの一大行事だ。"
+        },
+        {
+          "h": "ロックスの路地が、歌う酒場に化ける",
+          "p": "今回いちばん驚いたのは、DAY6 11:30に私たちが歩く予定のロックス地区、その中の小さな通りAtherden St 6-8番地が、9月2日から10月11日まで丸ごと歌う酒場に変身するという話だ。名づけて「Copa on The Rocks」。案内役はシンガーのアンドリュー・ブケニャで、客も一緒に肩を組んで歌う、シンガロング形式のピアノバーらしい。石畳のテラスハウスが並ぶ、あの歴史地区の一角がキャバレー仕立てのラウンジに変わる——という組み合わせだけでも、一度覗いてみたくなる話だ。<b>チケットは39〜45豪ドルほどで、事前予約制</b>のようだ。"
+        },
+        {
+          "h": "路地の外でも、街は騒がしい",
+          "p": "フリンジは路地裏の酒場だけにとどまらない。先住民のアーティストによる「First Nations Program（Yalgali）」では、トニ・ジャンクの新作ミュージカル『Inheritance』や、エレイン・クロムビーの『Grief, Love and Lead Balloons』が上演される。Factory Theatreでは月間を通じてコメディの公演が続き、9月4日にはリッジスから少し足を延ばしたレーン・コーヴでも、フリンジ連動の無料ファミリーイベントが幕を開けた。街のあちこちで、誰かがステージに立っている——それが9月のシドニーの日常らしい。"
+        },
+        {
+          "h": null,
+          "p": "正直なところ、私たちの旅程には夜にふらっと立ち寄れる余白があまりない。DAY5は8:25厳守の集合が控えているので前夜は早めに休みたいし、DAY6の夜はオペラバーでの乾杯のあとパッキングが待っている。だから今回は「予定に組み込む」より「通りがかりに気配を感じる」くらいがちょうどよさそうだ。DAY6にロックスを歩くとき、Atherden Stの角から歌声が漏れていたら、それがこの号で調べたCopa on The Rocksだと思ってもらえたらうれしい。出発が近づいたら、公式サイトで9/23〜26にちょうど重なる演目がないか、もう一度覗いてみるつもりだ。"
+        }
+      ],
+      "spots": [
+        {
+          "name": "Copa on The Rocks (Sydney Fringe)",
+          "area": "シドニー",
+          "g": "sight",
+          "tip": "9/2〜10/11開催のシンガロング・ピアノバー。要事前予約、$39〜45",
+          "map": "https://maps.google.com/?q=6-8+Atherden+Street+The+Rocks+Sydney"
+        }
+      ],
+      "sources": [
+        {
+          "t": "Sydney Fringe Festival 公式サイト",
+          "u": "https://www.sydneyfringe.com/"
+        },
+        {
+          "t": "Sydney Fringe Festival launches dynamic 2026 program（Australian Arts Review）",
+          "u": "https://artsreview.com.au/sydney-fringe-festival-launches-dynamic-2026-program/"
+        },
+        {
+          "t": "Sydney Fringe Festival unveils dynamic 2026 program with over 350 events across 64 venues（Australasian Leisure Management）",
+          "u": "https://www.ausleisure.com.au/news/sydney-fringe-festival-unveils-dynamic-2026-program-with-over-350-events-across-64-venues"
+        },
+        {
+          "t": "SYDNEY FRINGE FESTIVAL LAUNCHES ITS 2026 PROGRAM WITH OVER 350 EVENTS（Sydney Arts Guide）",
+          "u": "https://sydneyartsguide.com.au/sydney-fringe-festival-launches-its-2026-program-with-over-350-events/"
+        },
+        {
+          "t": "The Sydney Fringe — Wikipedia",
+          "u": "https://en.wikipedia.org/wiki/The_Sydney_Fringe"
+        }
+      ],
+      "memo": "この号はDAY6 11:30のロックス散策に効きます。Atherden St 6-8番地で9/2〜10/11開催中の歌う酒場「Copa on The Rocks」は、角を曲がればすぐの立地。予定には組み込みませんが、看板を見かけたら小さな答え合わせを。編集部は、8:25集合の前夜に夜更かしできない旅程の切なさを、今日また噛みしめました。"
     }
   ]
 }
