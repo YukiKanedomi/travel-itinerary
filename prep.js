@@ -35,7 +35,7 @@ var PREP_TODO = [
   /* 以下は 2026-08-15 追記。既存のチェック位置を保つため末尾に足す（表示は grp で振り分けられる） */
   { grp:'1ヶ月前', text:'スーツケース・ベルト・ネームタグを用意（夫婦で色違いにすると識別が速い）' },
   { grp:'2週間前', text:'メルボルン→シドニー国内線の受託手荷物を確認（1人1個23kgが標準）' },
-  { grp:'2週間前', text:'トレッキングで履く靴の靴底を洗って乾かす（土は検疫の対象）' },
+  { grp:'2週間前', text:'トレッキングで履く靴の靴底を洗って乾かす（土は検疫の対象）', skip:true }, /* 2026-08-26 ユーザー指示で非表示。チェック位置が index 方式なので削除はしない */
   { grp:'1週間前', text:'ネームタグに氏名（ローマ字）と国際形式の電話番号を記入（自宅住所は書かない）' },
   { grp:'前日', text:'全機器をフル充電（モバイルバッテリー・イヤホン・カメラ）' },
   { grp:'前日', text:'オフライン地図と機内で見る動画をダウンロード' },
@@ -147,7 +147,7 @@ function renderPrepPage() {
     h += '<div class="ledger" style="margin-top:8px"><div class="ledger-title">' + g +
          '<span class="grp-n"></span></div>';
     PREP_TODO.forEach(function(t, i){
-      if (t.grp !== g) return;
+      if (t.grp !== g || t.skip) return;
       h += '<div class="check-row' + (todoDone[i] ? ' done' : '') + '" data-todo="' + i + '">' +
            '<span class="cbox"></span><span class="ct">' + t.text + '</span></div>';
     });
