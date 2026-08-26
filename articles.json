@@ -3,7 +3,7 @@
     "paper": "南十字星",
     "en": "THE SOUTHERN CROSS",
     "sub": "まいにち届く、旅のミニマガジン",
-    "currentNo": 48
+    "currentNo": 49
   },
   "issues": [
     {
@@ -3504,6 +3504,66 @@
         }
       ],
       "memo": "宿泊3泊のどこかで、身軽な数分ができたらぜひ。DAY5のヒルトン集合8:25厳守が最優先なので、無理に朝の予定へねじ込まず、荷ほどきの合間やチェックアウト前にどうぞ。"
+    },
+    {
+      "no": 49,
+      "date": "2026-08-27",
+      "wd": "木",
+      "theme": "実用",
+      "title": "顔で通る国境、紙に書くわたしたち",
+      "lead": "9/21早朝、メルボルンに着いたらまず入国審査。実はいまオーストラリアの国境は、顔認証だけで通り抜ける人と、紙のカードに手書きする人とに分かれ始めています。私たちJAL組がどちら側になるのか、機内で焦らないための予習です。",
+      "photos": [
+        {
+          "src": "assets/press/49-1.jpg",
+          "cap": "メルボルン国際空港 第2ターミナル到着エリア——この壁の先に入国審査が待つ",
+          "credit": "MDRX / CC BY-SA 4.0 (Wikimedia)"
+        }
+      ],
+      "body": [
+        {
+          "h": null,
+          "p": "長いフライトを終えて着陸態勢に入ると、機内アナウンスとともに配られるのが入国カード……というのが、これまでのオーストラリア入国の定番でした。着陸1.5時間前に起きて、機内食の余韻の中でペンを走らせる。ところが今、その景色が国の一部ですでに変わり始めています。今日は、9/21早朝にメルボルンで私たちを待っている入国審査の中身を、少し先回りして覗いてみます。"
+        },
+        {
+          "h": "顔だけで通る「SmartGate」",
+          "p": "オーストラリアの主要空港には「SmartGate（スマートゲート）」という自動化ゲートがあります。ICチップ入りのeパスポート（日本のパスポートは対象）を持つ7歳以上・身長110cm以上の人なら、審査官と対面せずに通過が可能。機械にパスポートを読み取らせ、画面の簡単な質問に答え、カメラの前に立って顔認証——それだけでゲートが開きます。<b>審査官との会話がほぼ発生しないぶん、パスポートに入国スタンプは押されません</b>。記念にスタンプが欲しい人は、あえて有人カウンターに並ぶ必要があるというのも、ちょっと面白いところです。"
+        },
+        {
+          "h": "紙のカードすら要らない人たちが現れた",
+          "p": "さらに一歩進んでいるのが「Australia Travel Declaration（ATD）」という新しい仕組み。出発前72時間以内にオンラインで申告を済ませてQRコードを受け取っておけば、到着後はそれを見せるだけで入国＋検疫の申告が完了します。2024年10月にブリスベンで試験導入されたのを皮切りに、2025年8月にシドニー、2026年5月にはメルボルンへも拡大済み。2027年末までに豪州全土の国際空港・海港へ広げる計画だそうです。<b>ただし今のところ対象はQantas便のみ</b>で、専用アプリでの申告が条件になっています。"
+        },
+        {
+          "h": "私たちはJAL組——紙＋顔認証のコンボへ",
+          "p": "ATDはQantas便限定なので、JL773で向かう私たちには関係がありません。つまり9/21のメルボルン到着は、これまで通り<b>機内で紙の入国カードに記入し、着陸後はSmartGateで顔認証通過</b>という組み合わせになりそうです。滞在先はホテル名（InterContinental Melbourne The Rialto）と住所（495 Collins Street）を書けるようにしておくとスムーズ。万一SmartGateが混んでいて有人カウンターに回された場合、聞かれるのはたいてい「What is the purpose of your stay?（滞在目的は？）」「Sightseeing.」、「How long will you stay?（滞在期間は？）」「Six days.」くらいの短いやり取りです。長く説明しようとせず、短く具体的に答えるのがコツだそう。"
+        },
+        {
+          "h": null,
+          "p": "顔認証でも紙のカードでも、その先に待っているのがバイオセキュリティ（検疫）の申告です。ここは今回どちらのルートを通っても省略できません。機内食の残りやお菓子を持っていたら、<b>正直に「YES」と答える</b>のが鉄則。ここで嘘をつくと高額な罰金の対象になり得ます（詳しくは第36号「サンドイッチが2,664ドルになった日」も参考に）。デジタル化が進んでも、正直に申告するという基本は変わらないようです。"
+        }
+      ],
+      "sources": [
+        {
+          "t": "【2026年版】オーストラリア出入国審査 スマートゲートの手順と注意点 — TravelDonkey",
+          "u": "https://www.traveldonkey.jp/blog/australia/australia_travel_information/7807/"
+        },
+        {
+          "t": "オーストラリア｜紙の入国カードを廃止予定 ー デジタル申告「Australia Travel Declaration」を展開 — 特典旅行.com",
+          "u": "https://www.tokutenryoko.com/news/passage/18558"
+        },
+        {
+          "t": "Australia Travel Declaration to be rolled out nationwide — Australian Border Force",
+          "u": "https://www.abf.gov.au/newsroom-subsite/Pages/Australia-Travel-Declaration-to-be-rolled-out-nationwide.aspx"
+        },
+        {
+          "t": "Digital incoming passenger card expanded to eligible Melbourne-bound international travellers — Australian Government",
+          "u": "https://minister.homeaffairs.gov.au/JulianHill/Pages/digital-incoming-passenger-card-expanded-to-eligible-melbourne-bound-international-travellers.aspx"
+        },
+        {
+          "t": "入国審査でよく聞かれる質問フレーズ＆英語回答例 — JAWHM",
+          "u": "https://www.jawhm.or.jp/blog/tokyoblog/%E6%B8%A1%E8%88%AA%E3%81%BE%E3%81%A7%E3%81%AE%E6%BA%96%E5%82%99/19983/"
+        }
+      ],
+      "memo": "9/21早朝、メルボルン到着後の入国審査で使う予習回です。機内で配られる紙の入国カードは記入必須（滞在先＝495 Collins St）。SmartGateは自動化ゲート、通れなくても慌てず有人カウンターへ。検疫申告の「YES」だけは何があっても忘れずに。"
     }
   ]
 }
