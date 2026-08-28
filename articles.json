@@ -3,7 +3,7 @@
     "paper": "南十字星",
     "en": "THE SOUTHERN CROSS",
     "sub": "まいにち届く、旅のミニマガジン",
-    "currentNo": 50
+    "currentNo": 51
   },
   "issues": [
     {
@@ -3648,6 +3648,87 @@
         }
       ],
       "memo": "DAY6（9/25）はCBD中心の予定でぎっしりなので、この2.5キロを丸ごと歩くのは難しそうです。もし朝を1時間早められたら、寄り道候補のボンダイビーチだけでも覗いてみてください。"
+    },
+    {
+      "no": 51,
+      "date": "2026-08-29",
+      "wd": "土",
+      "theme": "実用・買い物",
+      "title": "涼しいのに、刺すように焼ける——世界一の紫外線大国で買う、たった一本",
+      "lead": "9月のメルボルンとシドニーは、日本の初夏くらいの気温だと前回お伝えしました。けれど服のことばかり考えていると見落とすのが、気温とはまるで連動しない紫外線の強さです。オーストラリアは世界でいちばん日焼け止めにうるさい国。土曜恒例、実用・買い物号です。",
+      "photos": [
+        {
+          "src": "assets/press/51-1.jpg",
+          "cap": "ボンダイビーチの日光浴——涼しい顔の下で、肌はしっかり炙られている",
+          "credit": "chris fleizach / CC BY-SA 2.0 (Wikimedia)"
+        },
+        {
+          "src": "assets/press/51-2.jpg",
+          "cap": "ピット・ストリート・モール——薬局チェーンが軒を連ねる、シドニーの買い物本通り",
+          "credit": "Kgbo / CC BY-SA 4.0 (Wikimedia)"
+        }
+      ],
+      "body": [
+        {
+          "h": null,
+          "p": "「今日は20℃くらいだから、長袖1枚で平気そう」——そう油断して外を歩き、夜になって顔がひりひりする。オーストラリアを訪れた旅行者が最初の1日でよくやる失敗です。気温は穏やかでも、頭上から降ってくる紫外線の量はまったく別の話。しかも今回の旅程はQVマーケットもブルーマウンテンズも、屋外を長時間歩く日が続きます。"
+        },
+        {
+          "h": "気温と紫外線は、別の生き物",
+          "p": "理由は主に二つ。ひとつは南半球側の成層圏オゾン層が北半球より薄く、南極上空のオゾンホールの影響も受けやすいこと。もうひとつは大気が澄んでいて塵や汚染が少ないため、紫外線が地表まで届きやすいことです。9月のシドニー・メルボルンはまだ春の入り口ですが、それでもUV指数は「中〜高」の日が珍しくなく、11月以降は日本の真夏を超える「極端に高い」域まで一気に跳ね上がります。オーストラリアの保健当局は<b>「UV指数3以上の日は日焼け対策必須」</b>と呼びかけていて、9月でもこの基準を超える日はざらにあります。"
+        },
+        {
+          "h": "国じゅうがSPF50なのには、理由がある",
+          "p": "オーストラリアはメラノーマ（悪性黒色腫）の発症率が世界最高水準の国。国民の3人に2人が生涯のうちに何らかの皮膚がんと診断されるとも言われ、1980年代から続く「Slip Slop Slap（シャツを着て、日焼け止めを塗って、帽子をかぶって）」の標語は今や国民的な合言葉です。だから日焼け止めは単なる化粧品ではなく、TGA（医薬品行政機関）が審査する医薬品扱い。パッケージの「AUST L」番号がその証で、法律上「SPF50+」より上の表示は認められていません。逆に言えば、店頭に並ぶものはどれも折り紙付きということです。"
+        },
+        {
+          "h": "買うなら、この一本",
+          "p": "現地で定番なのが、ビーチブランドのBondi Sandsや、がん協会監修のCancer Council。どちらも高倍率・広域紫外線対応（Broad Spectrum）・耐水タイプが基本形で、薬局チェーンのChemist WarehouseやPricelineなら手のひらサイズから家族用の大容量ボトルまで揃います。メルボルンならボーク・ストリート・モール沿い345 Bourke St、シドニーならピット・ストリート・モール沿い249-251 Pitt St（ホテルからも徒歩圏）に大型店があります。ちなみにTRS免税は「未使用のまま持ち帰る物」が対象なので、旅の途中で使い切る日焼け止めは免税と無縁。純粋に「効くから買う」で選ぶ一本です。"
+        },
+        {
+          "h": null,
+          "p": "おすすめは、メルボルン滞在の早いうちに1本調達しておくこと。特にDAY5のブルーマウンテンズは高地＋一日じゅう屋外という、旅程でいちばん紫外線の当たる日。8:25ヒルトン集合は5分前厳守で当日の朝に買い物する余裕はないので、前日までに手に入れておくと安心です。2時間おきの塗り直しも忘れずに。"
+        }
+      ],
+      "spots": [
+        {
+          "name": "Chemist Warehouse（Bourke Street Mall店）",
+          "area": "メルボルン",
+          "g": "sight",
+          "tip": "345 Bourke St。ボーク・ストリート・モール沿いの大型薬局。Bondi Sands・Cancer Councilなど日焼け止めが充実",
+          "map": "https://maps.google.com/?q=Chemist+Warehouse+345+Bourke+Street+Melbourne"
+        },
+        {
+          "name": "Chemist Warehouse（Pitt Street店）",
+          "area": "シドニー",
+          "g": "sight",
+          "tip": "249-251 Pitt St。QVBそば、ホテル（389 Pitt St）から徒歩圏の大型薬局",
+          "map": "https://maps.google.com/?q=Chemist+Warehouse+249+Pitt+Street+Sydney"
+        }
+      ],
+      "sources": [
+        {
+          "t": "UV Index | Cancer Council Australia",
+          "u": "https://www.cancer.org.au/cancer-information/causes-and-prevention/sun-safety/uv-index"
+        },
+        {
+          "t": "Slip-Slop-Slap — Wikipedia",
+          "u": "https://en.wikipedia.org/wiki/Slip-Slop-Slap"
+        },
+        {
+          "t": "Sunscreen regulation in Australia | Therapeutic Goods Administration (TGA)",
+          "u": "https://www.tga.gov.au/products/medicines/therapeutic-sunscreens/overview/sunscreen-regulation-australia"
+        },
+        {
+          "t": "Incidence and mortality | Skin Cancer Statistics | Cancer Council Australia",
+          "u": "https://www.cancer.org.au/about-us/policy-and-advocacy/prevention/uv-radiation/related-resources/skin-cancer-incidence-and-mortality"
+        },
+        {
+          "t": "Sydney UV Index: Monthly Ranges — Sydney Weather",
+          "u": "https://www.sydneyweather.au/blog/sydney-uv-index-guide.html"
+        }
+      ],
+      "memo": "DAY5（9/24）のブルーマウンテンズは、今回の旅程でいちばん紫外線を浴びる日。高地＋一日じゅう屋外＋8:25ヒルトン集合5分前厳守で当日の朝は買い物できないので、DAY2〜3のメルボルンのうちに1本調達しておくと安心です。"
     }
   ]
 }
