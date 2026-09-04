@@ -3,7 +3,7 @@
     "paper": "南十字星",
     "en": "THE SOUTHERN CROSS",
     "sub": "まいにち届く、旅のミニマガジン",
-    "currentNo": 57
+    "currentNo": 58
   },
   "issues": [
     {
@@ -4138,6 +4138,68 @@
         }
       ],
       "memo": "DAY2（9/21）11:30の予定枠が、まさにこのホージア・レーン。今日見る絵は\"今だけの一枚\"だと思って眺めてみてください。すぐ近くのAC/DCレーン（徒歩2分）まで足を延ばすと、また違う絵柄の壁が見られます。"
+    },
+    {
+      "no": 58,
+      "date": "2026-09-05",
+      "wd": "土",
+      "theme": "実用・買い物",
+      "title": "その数十セントは、たった6日で消える——サーチャージ最後の夏と、渡ってはいけない道",
+      "lead": "レジでカードを出すたび、小さく上乗せされる金額。オーストラリアのその慣習は今年10月1日に禁止が決まっています。ただし私たちの帰国日はその6日前——今回の旅では、まだ現役です。あわせてメルボルンの街角で覚えておきたい、渡ってはいけないタイミングの話も。土曜恒例、実用・買い物号です。",
+      "photos": [
+        {
+          "src": "assets/press/58-1.jpg",
+          "cap": "横断歩道の標識と信号——「ここを渡れ」のサインは、思ったより厳格に運用されている",
+          "credit": "Matthew Paul Argall / CC BY 2.0 (Wikimedia)"
+        },
+        {
+          "src": "assets/press/58-2.jpg",
+          "cap": "ボーク・ストリート・モール——トラムと自転車と歩行者が入り乱れる、メルボルンの買い物本通り",
+          "credit": "Philip Mallis / CC BY-SA 2.0 (Wikimedia)"
+        }
+      ],
+      "body": [
+        {
+          "h": "レジの端に乗る、あの小さな一行",
+          "p": "日本のコンビニやスーパーでは意識したことがないかもしれませんが、オーストラリアではカードで払うと会計に数十セントから数ドルの「サーチャージ」が上乗せされることがあります。EFTPOS端末やレシートに小さく「surcharge applies」と表示されることが多く、店がカード会社に払う決済手数料を客に転嫁する仕組みです。チェーン店より、カフェや個人商店のほうが乗せている印象があります。"
+        },
+        {
+          "h": null,
+          "p": "実はこの慣習、<b>2026年10月1日からVisa・Mastercard・EFTPOSの3ネットワークで全面禁止</b>になることが、オーストラリア準備銀行（RBA）から正式に発表されています。ただし私たちの旅程は9月20日〜26日。禁止が始まるのは、帰国してわずか6日後というタイミングです。つまり今回の買い物では、まだサーチャージが生きていると考えて動くのが正解。会計時に端末の画面かレシートをひと目確認し、気になる金額なら現金払いに切り替えるのが手っ取り早い対処法です。なお American Express や一部の決済方式はこの禁止の対象外なので、10月以降も上乗せが残る店はあるようです。"
+        },
+        {
+          "h": "渡ってはいけないタイミングがある",
+          "p": "買い物の話のついでに、メルボルンの街を歩くときの豆知識もひとつ。ビクトリア州の交通ルール（Road Safety Road Rules）では、近く（目安20メートル以内）に横断歩道があるのにそこを使わずに渡ったり、歩行者信号が赤や点滅のオレンジのときに渡り始めたりすると、反則金の対象になります。金額は情報源によって表記に幅があり要確認ですが、数百ドル規模と伝えられており、決して小さな額ではなさそうです。"
+        },
+        {
+          "h": null,
+          "p": "トラムが道の真ん中を走り、車は日本と同じ左側通行のメルボルンは、信号や横断歩道の感覚だけは油断しがちな街でもあります。渡る前にもう一度右からの車を確認する癖を、旅の最初の街でつけておくと、シドニーに移ってからも安心です。"
+        }
+      ],
+      "spots": [
+        {
+          "name": "ボーク・ストリート・モール（Bourke Street Mall）",
+          "area": "メルボルン",
+          "g": "sight",
+          "tip": "トラムと歩行者専用の買い物通り。信号のある交差点以外での横断は避け、トラムの走行帯にも注意",
+          "map": "https://maps.google.com/?q=Bourke+Street+Mall+Melbourne"
+        }
+      ],
+      "sources": [
+        {
+          "t": "Frequently Asked Questions – Removal of payment surcharges from 1 October 2026 | Reserve Bank of Australia",
+          "u": "https://www.rba.gov.au/payments-and-infrastructure/review-of-retail-payments-regulation/2026-03/conclusions-paper/faqs/"
+        },
+        {
+          "t": "RBA to End Card Payment Surcharges from 1 October 2026 | Moore Australia",
+          "u": "https://www.moore-australia.com.au/news/rba-end-card-payment-surcharges/"
+        },
+        {
+          "t": "Is Jaywalking Illegal in Australia? | Astor Legal",
+          "u": "https://astorlegal.com.au/is-jaywalking-illegal-in-australia/"
+        }
+      ],
+      "memo": "編集部より：サーチャージ警戒はDAY3のQVマーケットやDAY6のシドニーでの買い物タイムで、横断ルールの話はDAY2・DAY3のメルボルン市内散策で効いてきます。どちらも「知っているだけで得する/避けられる」系。ちなみに編集部、日本の横断歩道の少なさに慣れすぎて、海外だと毎回律儀に信号待ちしてしまいがちです。"
     }
   ]
 }
