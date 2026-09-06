@@ -253,6 +253,33 @@
 .gd-close { position:fixed; top:14px; right:14px; width:40px; height:40px; border:0; border-radius:50%;
   background:rgba(255,255,255,.16); color:#fff; font-size:20px; cursor:pointer; }
 
+/* ============ 「読む」タブの小見出し切替（雑誌／手引き／情報） ============ */
+.readbar { margin-top:12px; }
+.readbar[hidden] { display:none; }
+
+/* ============ 書類ポケット（docs.js） ============ */
+.dc-add { display:block; margin:10px 18px 0 26px; text-align:center; border:1.5px dashed var(--ink-soft); border-radius:8px;
+  padding:12px; font-size:12px; font-weight:700; color:var(--ink-soft); cursor:pointer; background:rgba(253,251,246,.5); }
+.dc-add input { display:none; }
+.dc-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:10px 18px 0 26px; }
+.dc-item { background:var(--paper-hi); border:1px solid var(--edge); border-radius:6px; padding:6px;
+  box-shadow:0 1px 3px rgba(60,50,30,.12); }
+.dc-item img, .dc-pdf { width:100%; aspect-ratio:3/4; object-fit:cover; border-radius:3px; display:block; cursor:pointer;
+  background:var(--paper-dim); }
+.dc-pdf { display:flex; align-items:center; justify-content:center; font-family:var(--mono); font-size:18px; font-weight:600;
+  color:var(--ink-faint); }
+.dc-name { width:100%; margin-top:5px; border:none; border-bottom:1px dashed #C9BCA2; background:transparent;
+  font-family:inherit; font-size:11px; font-weight:700; color:var(--ink); padding:2px; }
+.dc-name::placeholder { color:#BFB39C; font-weight:400; }
+.dc-del { margin-top:4px; background:none; border:none; font-family:inherit; font-size:10px; color:var(--ink-faint);
+  cursor:pointer; padding:2px 0; }
+.dc-del.arm { color:var(--red); font-weight:700; }
+.dc-viewer { display:none; position:fixed; inset:0; z-index:80; background:rgba(20,16,10,.93);
+  align-items:center; justify-content:center; }
+.dc-viewer.on { display:flex; }
+.dc-viewer img { max-width:100vw; max-height:92vh; object-fit:contain; }
+.dc-viewer iframe { width:100vw; height:92vh; border:0; background:#fff; }
+
 /* ============ 章ジャンプチップ（jmpHTML） ============ */
 .jmp { position:sticky; top:0; z-index:6; display:flex; gap:7px; overflow-x:auto;
   padding:9px 18px 9px 26px; margin-bottom:2px;

@@ -26,11 +26,11 @@ var TRIP = {
         'チェックイン：前日18:40からオンライン（搭乗券はiPhoneのWalletへ）。空港では荷物預けのみで速い',
         '受託 23kg×2個／機内持込にルーター・モバイルバッテリー・羽織り・ボールペン2本',
         '機内でもらえる：ブランケット（薄手・追加可）・アイマスク・耳栓',
-        '着陸1.5時間前に起床 → 入国カード記入（滞在先＝495 Collins St）',
+        '着陸1.5時間前に起床 → 入国カード記入（滞在先＝495 Collins St）。書き方の図解は「読む → 手引き → 誌面」の24・25頁',
         '注意｜機内食のあとすぐ就寝。この夜の睡眠が7日間の体力を決める' ] },
     { id:'VA859', kicker:'VIRGIN AUSTRALIA — DOMESTIC',
       name:'メルボルン → シドニー', route:'MEL T3 16:00 → SYD T2 17:25',
-      meta:'9/23（水）・1時間25分・直行<br>2名隣同士 座席確定・T3はヴァージン専用',
+      meta:'9/23（水）・1時間25分・直行<br>座席 24A / 24B・T3はヴァージン専用',
       cut:{ label:'BOARD', big:'16:00', sub:'MEL T3' },
       day:4, web:'https://www.virginaustralia.com/',
       ex:[
@@ -74,7 +74,8 @@ var TRIP = {
         '朝食は6:30〜（最終日は6:15発なので食べられない。前夜にColesでパンを）',
         '備品：ドライヤー・アイロンあり／スリッパ・バスローブ・無料の水はなし',
         '地下がスーパーColes直結。夜の買い出しと水の調達はここで',
-        'Museum駅から徒歩3〜4分／DAY5集合のヒルトンへは徒歩10分' ] }
+        'Museum駅から徒歩3〜4分／DAY5集合のヒルトンへは徒歩10分',
+        '注意｜チェックインでデポジット（カード仮押さえ・現金なら1滞在300ドル）。カードは予約名義本人のもので' ] }
   ],
 
   days: [
@@ -169,7 +170,7 @@ var TRIP = {
         { t:'21:00', h:'ホテル帰着', d:'長旅の最初の夜。ゆっくり休んで' }
       ],
       memo:'フラットホワイト発祥の地。初日の一杯をぜひ。',
-      picks:['ngv','hutong','patricia','brunetti','hardware','degraves'] },
+      picks:['ngv','hutong','patricia','brunetti','hardware','degraves','lune','pidapipo'] },
 
     { n:3, date:'9/22', wd:'火', title:'マーケットと世界遺産と図書館',
       wx:{ t:'メルボルン 9–18°C', note:'朝晩冷える。重ね着で調整' },
@@ -192,7 +193,7 @@ var TRIP = {
         { t:'21:00', h:'ホテル帰着', d:'明日は移動日。早めに就寝' }
       ],
       memo:'メルボルンは「1日で四季」の街。ウインドブレーカーをバッグに。',
-      picks:['ngv','stkilda','brighton','cumulus','udon','lord','rolld','patricia','brunetti'] },
+      picks:['ngv','stkilda','brighton','cumulus','udon','lord','rolld','patricia','brunetti','adk','borek','lune'] },
 
     { n:4, date:'9/23', wd:'水', title:'メルボルンの朝、シドニーの夜',
       wx:{ t:'シドニー 12–21°C', note:'日中は過ごしやすい陽気' },
@@ -236,7 +237,7 @@ var TRIP = {
           map:'https://maps.google.com/?q=Circular+Quay+Sydney' }
       ],
       memo:'VA859が遅れたら夕食はColes調達で部屋ごはんに切替もOK。夜景は明日以降でも見られる——無理をしない。',
-      picks:['chatthai','spice','chinatown','messina'] },
+      picks:['chatthai','spice','chinatown','messina','pieface'] },
 
     { n:5, date:'9/24', wd:'木', title:'ブルーマウンテンズと動物たちの日',
       wx:{ t:'カトゥーンバ 5–14°C', note:'山は市内より5〜8°C低い。しっかり防寒' },
@@ -258,7 +259,9 @@ var TRIP = {
             '8:10発なら8:20頃着＝集合の5分前。不安なら8:05に出発を',
             'Googleマップで「Hilton Sydney」徒歩ナビを使えば迷わない' ] },
         { t:'8:25', h:'ヒルトン ロビー集合', d:'8:30出発。遅刻するとツアーに乗れません', hard:true,
-          tips:[ '注意｜アラームは2つセット。バウチャー「SYDODOAOPT87」を提示' ] },
+          tips:[
+            '注意｜アラームは2つセット。バウチャー「SYDODOAOPT87」を提示',
+            '困ったら現地マイバスデスク 02-9510-0139（平日9-17時・日本語可）／時間外の緊急は +61 438 424 021' ] },
         { t:'9:15', h:'フェザーデール動物園', d:'コアラと記念撮影・カンガルーに餌やり（抱っこはNSW州で禁止）',
           map:'https://maps.google.com/?q=Featherdale+Wildlife+Park+Doonside+NSW', web:'https://www.featherdale.com.au/' },
         { t:'11:15', h:'カヒルズ ルックアウト', d:'断崖からジャミソン渓谷のパノラマ。プロ撮影データのプレゼントあり' },
@@ -268,7 +271,10 @@ var TRIP = {
           map:'https://maps.google.com/?q=Echo+Point+Lookout+Katoomba+NSW' },
         { t:'15:00', h:'ルーラの街を散策', d:'標高985m。キャンディ店・雑貨・コーヒーブレイク',
           map:'https://maps.google.com/?q=Leura+Mall+NSW+Blue+Mountains' },
-        { t:'17:30', h:'ホテル前で解散', d:'リッジスの目の前で降車。最高の移動効率' },
+        { t:'17:30', h:'ホテル前で解散', d:'リッジスの目の前で降車。最高の移動効率',
+          tips:[
+            '解散場所は当日「リッジス・センターポイント・ウィンヤード」の3か所から選ぶ方式。リッジスを指定する',
+            'ツアーの記念写真はデータでもらえる（LINE・AirDrop・メール）' ] },
         { t:'19:00', h:'夕食はシンプルに', d:'疲れているのでワールドスクエア周辺でさくっと' }
       ],
       memo:'薄手ダウンかウインドブレーカー必須。山の紫外線も強いので日焼け止めを。',
@@ -296,7 +302,7 @@ var TRIP = {
         { t:'22:00', h:'完全パッキング', d:'明日は早朝発。今夜のうちにスーツケースを仕上げる' }
       ],
       memo:'$300以上買った店のレシートは捨てない——空港でTRS（10%還付）に使う。品物はスーツケースの取り出しやすい位置へ。',
-      picks:['manly','bondi','watsons','barangaroo','operatour','bourke','messina','singleo','grounds_alex','harrys','pancakes'] },
+      picks:['manly','bondi','watsons','barangaroo','operatour','bourke','messina','singleo','grounds_alex','harrys','pancakes','rocksmkt','larenai','pieface'] },
 
     { n:7, date:'9/26', wd:'土', title:'南十字星に手を振って、帰国',
       wx:{ t:'シドニー 13–21°C', note:'朝は冷える。一枚羽織って' },
@@ -361,17 +367,15 @@ var PICKS = {
   bourke:   { g:'cafe', name:'Bourke Street Bakery', tip:'定番ベーカリー。ソーセージロール', map:'https://maps.google.com/?q=Bourke+Street+Bakery+Sydney' },
   messina:  { g:'cafe', name:'Gelato Messina', tip:'行列必至のジェラート。食後に', map:'https://maps.google.com/?q=Gelato+Messina+Sydney' },
   singleo:  { g:'cafe', name:'Single O（Surry Hills）', tip:'シドニー代表のスペシャルティコーヒー', map:'https://maps.google.com/?q=Single+O+Surry+Hills' },
-  grounds_alex:{ g:'cafe', name:'The Grounds of Alexandria', tip:'庭園カフェの名店。CBDから15分', map:'https://maps.google.com/?q=The+Grounds+of+Alexandria+Sydney' }
+  grounds_alex:{ g:'cafe', name:'The Grounds of Alexandria', tip:'庭園カフェの名店。CBDから15分', map:'https://maps.google.com/?q=The+Grounds+of+Alexandria+Sydney' },
+  lune:     { g:'cafe', name:'Lune Croissanterie（CBD）', tip:'NYタイムズが「世界一かも」と評したクロワッサン。161 Collins St・入口はRussell St側。行列は見た目より速い', map:'https://maps.google.com/?q=Lune+Croissanterie+CBD+Melbourne' },
+  pidapipo: { g:'cafe', name:'Pidapipó（Degraves St）', tip:'メルボルン代表のジェラート。カフェ路地の食後に', map:'https://maps.google.com/?q=Pidapipo+Degraves+Street+Melbourne' },
+  adk:      { g:'food', name:'ホットジャムドーナツ（QVM）', tip:'1950年から同じレシピの名物屋台ADK。揚げたて5個$8', map:'https://maps.google.com/?q=American+Doughnut+Kitchen+Queen+Victoria+Market' },
+  borek:    { g:'food', name:'ボレク屋台（QVM）', tip:'トルコ風の平焼きパン$5前後。ドーナツ前の塩気に', map:'https://maps.google.com/?q=Borek+Bakehouse+Queen+Victoria+Market' },
+  pieface:  { g:'food', name:'Pie Face（World Square）', tip:'ホテル真下のパイチェーン。小腹・朝ごはんの保険に', map:'https://maps.google.com/?q=Pie+Face+World+Square+Sydney' },
+  rocksmkt: { g:'food', name:'ロックス・フードマーケット', tip:'金曜10-15時だけの屋台市（串焼き・餃子・菓子）。DAY6はちょうど金曜', map:'https://maps.google.com/?q=The+Rocks+Markets+Playfair+Street+Sydney' },
+  larenai:  { g:'cafe', name:'La Renaissance（ロックス）', tip:'老舗フランス菓子店。中庭でエクレア休憩。〜16:30', map:'https://maps.google.com/?q=La+Renaissance+Patisserie+The+Rocks+Sydney' }
 };
-
-/* 旅行前の準備（「いま」ページ用の抜粋。詳細は準備タブへ） */
-var PREP_SOON = [
-  { h:'ETA（電子渡航許可）を申請', d:'スマホアプリから。なければ入国不可' },
-  { h:'たびレジ登録', d:'外務省の海外安全情報登録' },
-  { h:'JTB最終日程表の受取', d:'出発7日前までにMyJTBへ届く → 現地緊急番号をしおりにメモ' },
-  { h:'Uberアプリ＋クレカ登録', d:'日本で済ませておく' },
-  { h:'Visit Japan Web登録', d:'帰国時の税関申告をスムーズに' }
-];
 
 var GENRE = {
   sight: { label:'観光',  cls:'g-sight' },

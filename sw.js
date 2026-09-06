@@ -1,4 +1,4 @@
-/* Service Worker — 旅の手帳（ルート本番）オフライン対応
+﻿/* Service Worker — 旅の手帳（ルート本番）オフライン対応
  * - アプリ本体＋DAY写真＋アイコンをプリキャッシュ
  * - Google Fonts は初回オンライン閲覧時にキャッシュ→以後オフラインでも同じ書体
  * - ナビゲーションは network-first（オンライン時は常に最新）
@@ -10,8 +10,8 @@
  * 旧世代（tabi-shiori-v* / tabi-techo-v*）は一度だけ掃除する。
  * /v1/ のアーカイブ（tabi-shiori-arch-*）には触れない。
  */
-const CACHE = 'tabi-techo-root-v16';
-const V = '16'; // index.html の ?v= と揃える
+const CACHE = 'tabi-techo-root-v17';
+const V = '17'; // index.html の ?v= と揃える
 /* 必須シェル：1つでも取得に失敗したらインストール自体を失敗させる（約1MB） */
 const CORE = [
   './',
@@ -23,6 +23,8 @@ const CORE = [
   './guide.js?v=' + V,
   './info.js?v=' + V,
   './news.js?v=' + V,
+  './wx.js?v=' + V,
+  './docs.js?v=' + V,
   './articles.json',
   './manifest.webmanifest',
   './assets/app-icon-180.png', './assets/app-icon-192.png', './assets/app-icon-512.png'
@@ -39,7 +41,10 @@ const OPTIONAL = [
   './assets/guide/p05.jpg', './assets/guide/p06.jpg', './assets/guide/p07.jpg', './assets/guide/p08.jpg',
   './assets/guide/p09.jpg', './assets/guide/p10.jpg', './assets/guide/p11.jpg', './assets/guide/p12.jpg',
   './assets/guide/p13.jpg', './assets/guide/p14.jpg', './assets/guide/p15.jpg', './assets/guide/p16.jpg',
-  './assets/guide/p17.jpg', './assets/guide/p18.jpg', './assets/guide/p19.jpg', './assets/guide/p20.jpg'
+  './assets/guide/p17.jpg', './assets/guide/p18.jpg', './assets/guide/p19.jpg', './assets/guide/p20.jpg',
+  './assets/guide/p21.jpg', './assets/guide/p22.jpg', './assets/guide/p23.jpg',
+  './assets/guide/p24.jpg', './assets/guide/p25.jpg', './assets/guide/p26.jpg', './assets/guide/p27.jpg',
+  './assets/guide/p28.jpg', './assets/guide/p29.jpg', './assets/guide/p30.jpg', './assets/guide/p31.jpg'
 ];
 
 self.addEventListener('install', function (e) {

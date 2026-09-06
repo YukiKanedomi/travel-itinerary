@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
@@ -220,6 +220,34 @@ body {
 .count-sub { font-size:11px; color:var(--ink-faint); margin-top:4px; }
 .ribbon { position:absolute; right:26px; top:-2px; width:22px; height:64px; background:var(--red);
   clip-path:polygon(0 0, 100% 0, 100% 100%, 50% 84%, 0 100%); opacity:.85; }
+/* 「いま」ハブ：予報カード・いまやること・旅行中の現在地帯 */
+.wx-card { margin:14px 18px 0 26px; background:var(--paper-hi); border:1px solid var(--edge); border-radius:6px;
+  padding:10px 13px 8px; box-shadow:0 1px 3px rgba(90,75,50,.1); }
+.wx-t { font-size:10.5px; letter-spacing:.2em; font-weight:700; color:var(--ink-faint); }
+.wx-row { display:flex; gap:10px; align-items:baseline; padding:5px 0 4px; border-bottom:1px dotted rgba(120,100,75,.3); }
+.wx-row:last-of-type { border-bottom:none; }
+.wx-d { width:132px; flex-shrink:0; font-size:11px; font-weight:700; color:var(--ink-soft); }
+.wx-d small { font-weight:500; color:var(--ink-faint); }
+.wxl { font-family:var(--mono); font-size:11.5px; }
+.wxl.wx-none { color:var(--ink-faint); font-family:inherit; font-size:10.5px; }
+.wx-foot { font-size:9.5px; color:var(--ink-faint); margin-top:6px; }
+.now-grp { display:inline-block; margin-left:6px; font-size:9px; color:var(--ink-faint); border:1px solid var(--edge);
+  border-radius:8px; padding:0 6px; vertical-align:1px; white-space:nowrap; }
+.now-empty { font-size:11.5px; color:var(--green); padding:8px 2px; }
+.now-strip { margin:14px 18px 0 26px; background:var(--paper-hi); border:1.5px solid var(--ink); border-radius:8px;
+  padding:10px 13px; box-shadow:0 2px 6px rgba(90,75,50,.16); }
+.ns-top { display:flex; align-items:baseline; gap:8px; }
+.ns-clock { font-family:var(--mono); font-size:26px; font-weight:600; line-height:1; }
+.ns-sub { font-size:10px; color:var(--ink-faint); }
+.ns-wx { margin-left:auto; font-family:var(--mono); font-size:11px; text-align:right; }
+.ns-next { display:flex; align-items:baseline; gap:8px; margin-top:9px; padding-top:8px; border-top:1px dashed #C9BCA2; }
+.ns-l { font-size:9px; letter-spacing:.16em; font-weight:700; color:var(--red); flex-shrink:0; }
+.ns-t { font-family:var(--mono); font-size:13px; font-weight:600; flex-shrink:0; }
+.ns-h { font-size:13px; font-weight:700; flex:1; min-width:0; line-height:1.4; }
+.ns-left { font-size:11px; font-weight:700; color:var(--red); white-space:nowrap; }
+.ns-btns { display:flex; gap:8px; margin-top:9px; }
+.ns-btns .lbtn { max-width:none; font-family:inherit; cursor:pointer; }
+.lbtn.warn { border-color:var(--red); color:var(--red); }
 
 /* ── 移植中スタブ ── */
 .stub-page { margin:26px 18px 0 26px; border:1.5px dashed var(--edge); border-radius:8px;
@@ -250,12 +278,13 @@ body {
 /* 文字入力中はソフトキーボードが固定要素を画面中央あたりまで押し上げるので、その間は隠す */
 body:has(input:focus) .idx, body:has(textarea:focus) .idx { display:none; }
 </style>
-<!-- ?v= はキャッシュずれ対策。sw.js の CACHE と一緒に上げる --><link rel="stylesheet" href="pages.css?v=16">
+<!-- ?v= はキャッシュずれ対策。sw.js の CACHE と一緒に上げる --><link rel="stylesheet" href="pages.css?v=17">
 </head>
 <body>
 <div class="holes"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
 
 <main>
+  <div class="area-tabs readbar" id="readbar" hidden></div>
   <section id="pane-now"  class="pane"></section>
   <section id="pane-toc"  class="pane"></section>
   <section id="pane-news" class="pane"></section>
@@ -268,24 +297,30 @@ body:has(input:focus) .idx, body:has(textarea:focus) .idx { display:none; }
 <nav class="idx" id="idx"></nav>
 <div id="toast"></div>
 
-<script src="trip.js?v=16"></script>
-<script src="map.js?v=16"></script>
-<script src="prep.js?v=16"></script>
-<script src="guide.js?v=16"></script>
-<script src="info.js?v=16"></script>
-<script src="news.js?v=16"></script>
+<script src="trip.js?v=17"></script>
+<script src="map.js?v=17"></script>
+<script src="prep.js?v=17"></script>
+<script src="guide.js?v=17"></script>
+<script src="info.js?v=17"></script>
+<script src="news.js?v=17"></script>
+<script src="wx.js?v=17"></script>
+<script src="docs.js?v=17"></script>
 <script>
 /* ============ 旅の手帳 v2 — シェル ============ */
+/* 下部タブは5つ。「読む」は雑誌・手引き・情報の3面をまとめ、上部の小見出しで切り替える */
 var NAV = [
-  { id:'toc',  label:'旅程' },
   { id:'now',  label:'いま' },
-  { id:'news', label:'雑誌' },
+  { id:'toc',  label:'旅程' },
   { id:'map',  label:'地図' },
   { id:'prep', label:'準備' },
-  { id:'guide', label:'手引き' },
-  { id:'info', label:'情報' }
+  { id:'read', label:'読む' }
 ];
+var READ_SUB = [ ['news','雑誌'], ['guide','手引き'], ['info','情報'] ];
+var PANES = ['now','toc','news','map','prep','guide','info'];
 var current = 'now';
+var readSub = 'news';
+try { readSub = localStorage.getItem('read_sub_v1') || 'news'; } catch(e) {}
+function isReadId(id){ return READ_SUB.some(function(s){ return s[0] === id; }); }
 
 function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;'); }
 
@@ -376,8 +411,10 @@ function picksHTML(keys) {
 }
 function dayPageHTML(day, withBack) {
   var h = withBack ? '<button class="back" onclick="renderToc()">‹ 旅程の目次へ</button>' : '';
+  var wxLoc = WX_DAY_LOC[day.n];
   h += '<div class="page-head">' +
-    '<div class="ph-wx"><span class="t">' + day.wx.t + '</span><br>' + day.wx.note + '</div>' +
+    '<div class="ph-wx"><span class="t">' + day.wx.t + '</span><br>' + day.wx.note +
+      (wxLoc ? '<br><span class="wxl" data-wx="' + wxLoc + '|' + TRIP_YMD[day.n - 1] + '"></span>' : '') + '</div>' +
     '<div class="ph-row"><div class="ph-day">' + day.n + '<small>日目</small></div>' +
     '<div class="ph-date"><span class="mono">' + day.date + '</span> ' + day.wd + '曜日</div></div>' +
     '<div class="ph-title">' + day.title + '</div></div>';
@@ -414,27 +451,97 @@ function auParts() {
     return { ymd:p.year+'-'+p.month+'-'+p.day, min:hh*60+parseInt(p.minute,10) };
   } catch(e){ return null; }
 }
+var TRIP_YMD = ['2026-09-20','2026-09-21','2026-09-22','2026-09-23','2026-09-24','2026-09-25','2026-09-26'];
 function tripDayToday() { /* 旅行中なら該当DAY、旅行外なら null */
   var au = auParts(); if (!au) return null;
-  var d0 = ['2026-09-20','2026-09-21','2026-09-22','2026-09-23','2026-09-24','2026-09-25','2026-09-26'];
-  var i = d0.indexOf(au.ymd);
+  var i = TRIP_YMD.indexOf(au.ymd);
   return i >= 0 ? TRIP.days[i] : null;
+}
+/* その日の帳面の時刻基準（DAY1だけ日本時間で書いてあるので、豪州時間から1時間戻す） */
+function dayLocalMin(day) {
+  var au = auParts(); if (!au) return -1;
+  return day.n === 1 ? (au.min - 60 + 1440) % 1440 : au.min;
+}
+function rowMin(r) {
+  var m = /^(\d{1,2}):(\d{2})$/.exec(r.t);
+  return m ? parseInt(m[1],10)*60+parseInt(m[2],10) : null;
 }
 function dayNowIndex(day) {
   var today = tripDayToday(); if (!today || today.n !== day.n) return -1;
-  var au = auParts(); var idx = -1;
+  var now = dayLocalMin(day); var idx = -1;
   day.sched.forEach(function(r, i){
-    var m = /^(\d{1,2}):(\d{2})$/.exec(r.t);
-    if (m && parseInt(m[1],10)*60+parseInt(m[2],10) <= au.min) idx = i;
+    var m = rowMin(r);
+    if (m !== null && m <= now) idx = i;
   });
   return idx;
 }
 
 /* ---- 各ページ ---- */
+/* ---- 「いま」の部品 ---- */
+function fmtMin(m) { return ('0' + Math.floor(m / 60)).slice(-2) + ':' + ('0' + (m % 60)).slice(-2); }
+/* 旅行中の最上段：現地時刻・天気・次の予定・すぐ押すボタン */
+function nowStripHTML(day) {
+  var now = dayLocalMin(day); if (now < 0) return '';
+  var au = auParts();
+  var loc = WX_DAY_LOC[day.n];
+  var next = null;
+  day.sched.forEach(function(r){ var m = rowMin(r); if (next === null && m !== null && m > now) next = { r:r, m:m }; });
+  var h = '<div class="now-strip" id="now-strip"><div class="ns-top">' +
+    '<span class="ns-clock">' + fmtMin(day.n === 1 ? now : au.min) + '</span>' +
+    '<span class="ns-sub">' + (day.n === 1 ? '日本時間' : '現地時間・日本は ' + fmtMin((au.min - 60 + 1440) % 1440)) + '</span>' +
+    (loc ? '<span class="ns-wx" data-wx-now="' + loc + '"></span>' : '') + '</div>';
+  if (next) {
+    var left = next.m - now;
+    h += '<div class="ns-next"><span class="ns-l">次の予定</span><span class="ns-t">' + next.r.t + '</span>' +
+      '<span class="ns-h">' + next.r.h + '</span>' +
+      '<span class="ns-left">' + (left >= 60 ? 'あと' + Math.floor(left / 60) + '時間' + (left % 60 ? left % 60 + '分' : '') : 'あと' + left + '分') + '</span></div>';
+  } else {
+    h += '<div class="ns-next"><span class="ns-l">次の予定</span><span class="ns-h">きょうの予定はすべて終了。おつかれさまでした</span></div>';
+  }
+  h += '<div class="ns-btns">' +
+    (next && next.r.map ? '<a class="lbtn" href="' + next.r.map + '" target="_blank" rel="noopener">次の場所へ</a>' : '') +
+    '<button class="lbtn" onclick="show(\'prep\'); jumpTo(\'jp-dc\')">書類</button>' +
+    '<button class="lbtn warn" onclick="show(\'info\'); jumpTo(\'ji-em\')">緊急連絡先</button></div></div>';
+  return h;
+}
+/* 旅行前：出発までの日数に応じて「いま期限が来ている段」の未完了ToDoを出す（準備タブと同じ保存先） */
+function nowTodoHTML(days) {
+  var due = ['2〜3ヶ月前', '1ヶ月前'];
+  if (days <= 14) due.push('2週間前');
+  if (days <= 7) due.push('1週間前');
+  if (days <= 1) due.push('前日');
+  var done = lsGet('prep_todo_v1'), items = [];
+  PREP_TODO.forEach(function(t, i){ if (!t.skip && !done[i] && due.indexOf(t.grp) >= 0) items.push({ i:i, t:t }); });
+  var h = '<div class="ledger" style="margin-top:16px"><div class="ledger-title">— いまやること<span class="grp-n">残り ' + items.length + '</span></div>';
+  if (!items.length) h += '<div class="now-empty">この時期の準備はすべて完了。次の段は準備タブに。</div>';
+  items.slice(0, 8).forEach(function(x){
+    h += '<div class="check-row" data-now-todo="' + x.i + '"><span class="cbox"></span>' +
+      '<span class="ct">' + x.t.text + '<span class="now-grp">' + x.t.grp + '</span></span></div>';
+  });
+  if (items.length > 8) h += '<button class="back" style="margin-left:0" onclick="show(\'prep\')">残り ' + (items.length - 8) + ' 件は準備タブで ›</button>';
+  return h + '</div>';
+}
+var WX_TRIP_ROWS = [
+  ['9/21 月', 'メルボルン', 'mel', '2026-09-21'], ['9/22 火', 'メルボルン', 'mel', '2026-09-22'],
+  ['9/23 水', 'メルボルン（移動日）', 'mel', '2026-09-23'], ['9/24 木', 'ブルーマウンテンズ', 'bm', '2026-09-24'],
+  ['9/25 金', 'シドニー', 'syd', '2026-09-25'], ['9/26 土', 'シドニー', 'syd', '2026-09-26']
+];
+function wxCardHTML() {
+  var h = '<div class="wx-card"><div class="wx-t">— 旅行中の天気予報 —</div>';
+  WX_TRIP_ROWS.forEach(function(r){
+    h += '<div class="wx-row"><span class="wx-d">' + r[0] + ' <small>' + r[1] + '</small></span>' +
+      '<span class="wxl" data-wx="' + r[2] + '|' + r[3] + '"></span></div>';
+  });
+  return h + '<div class="wx-foot" data-wx-foot></div></div>';
+}
 function renderNow() {
   var host = document.getElementById('pane-now');
   var today = tripDayToday();
-  if (today) { host.innerHTML = dayPageHTML(today, false); return; }
+  if (today) {
+    host.innerHTML = nowStripHTML(today) + dayPageHTML(today, false);
+    wxApply();
+    return;
+  }
   var days = Math.ceil((new Date(TRIP.depart) - new Date()) / 86400000);
   var h = '<div class="now-head"><div class="ribbon"></div>' +
     '<div class="now-eyebrow">' + TRIP.title + '</div>';
@@ -445,15 +552,33 @@ function renderNow() {
     h += '<div class="count"><span class="unit" style="font-size:20px">旅はおしまい。おかえりなさい！</span></div>';
   }
   h += '</div>';
+  if (days >= 0) h += nowTodoHTML(days);
+  h += wxCardHTML();
   h += '<div id="now-press"></div>';
   h += stubHTML(TRIP.flights[0], false, '');
   h += '<div class="scrap-wrap"><div class="scrap l tall"><div class="tape"></div>' +
     '<img src="assets/hero-sydney.jpg" alt="" loading="lazy">' +
     '<div class="cap">SYDNEY — もうすぐ、この景色に会える</div></div></div>';
-  var rows = PREP_SOON.map(function(p){ return { t:'☐', h:p.h, d:p.d }; });
-  h += ledgerHTML(rows, 'そろそろやること', -1);
-  h += '<div class="memo"><span class="lead">メモ｜</span>詳しい持ち物と予約の控えは<u>準備タブ</u>に。旅程は左下の「旅程」から。</div>';
+  h += '<div class="memo"><span class="lead">メモ｜</span>持ち物・予約・書類ポケットは<u>準備タブ</u>に。旅程は「旅程」から。</div>';
   host.innerHTML = h;
+  wxApply();
+  if (typeof injectNowPress === 'function') injectNowPress();
+}
+/* 「いま」のToDoにチェック → 準備タブと同じ保存先を更新し、準備タブの行も同期する */
+function nowTodoToggle(row) {
+  var k = row.getAttribute('data-now-todo');
+  var d = lsGet('prep_todo_v1'); d[k] = !d[k]; lsSet('prep_todo_v1', d);
+  row.classList.toggle('done', !!d[k]);
+  var pr = document.querySelector('#pane-prep .check-row[data-todo="' + k + '"]');
+  if (pr) pr.classList.toggle('done', !!d[k]);
+  if (typeof prepUpdateCounts === 'function') prepUpdateCounts();
+}
+/* 旅行中は1分ごとに最上段（時計・次の予定）だけ描き直す */
+function tickNowStrip() {
+  var today = tripDayToday(); var el = document.getElementById('now-strip');
+  if (!today || !el) return;
+  el.outerHTML = nowStripHTML(today);
+  wxApply();
 }
 function renderToc() {
   var host = document.getElementById('pane-toc');
@@ -486,6 +611,7 @@ function renderToc() {
 function openDay(n) {
   var day = TRIP.days[n-1];
   document.getElementById('pane-toc').innerHTML = dayPageHTML(day, true);
+  wxApply();
   window.scrollTo(0, 0);
 }
 function renderStub(id, name, detail) {
@@ -498,16 +624,25 @@ function renderStub(id, name, detail) {
 
 /* ---- ナビ ---- */
 function show(id) {
+  if (id === 'read') id = readSub;
+  var isRead = isReadId(id);
+  if (isRead) { readSub = id; try { localStorage.setItem('read_sub_v1', id); } catch(e) {} }
   current = id;
-  NAV.forEach(function(n){
-    document.getElementById('pane-' + n.id).classList.toggle('on', n.id === id);
+  PANES.forEach(function(p){
+    document.getElementById('pane-' + p).classList.toggle('on', p === id);
   });
+  var rb = document.getElementById('readbar');
+  rb.hidden = !isRead;
+  if (isRead) rb.innerHTML = READ_SUB.map(function(s){
+    return '<button type="button" class="' + (s[0]===id?'on':'') + '" onclick="show(\'' + s[0] + '\')">' + s[1] + '</button>';
+  }).join('');
   renderIdx();
   window.scrollTo(0, 0);
 }
 function renderIdx() {
   document.getElementById('idx').innerHTML = NAV.map(function(n){
-    return '<button class="' + (n.id===current?'on':'') + '" onclick="show(\'' + n.id + '\')">' + n.label + '</button>';
+    var on = n.id === current || (n.id === 'read' && isReadId(current));
+    return '<button class="' + (on?'on':'') + '" onclick="show(\'' + n.id + '\')">' + n.label + '</button>';
   }).join('');
 }
 
@@ -522,17 +657,27 @@ function renderIdx() {
   safe(renderInfoPage);
   safe(initNews);
   safe(renderIdx);
-  /* ディープリンク: #toc / #map / #prep / #info / #day1〜#day7 */
+  /* ディープリンク: #toc / #map / #prep / #read / #news / #guide / #info / #day1〜#day7 */
   safe(function(){
     var m = /^#day([1-7])$/.exec(location.hash);
     if (m) { show('toc'); openDay(parseInt(m[1],10)); return; }
     var id = location.hash.replace('#','');
-    show(NAV.some(function(n){ return n.id === id; }) ? id : 'now');
+    show(PANES.indexOf(id) >= 0 || id === 'read' ? id : 'now');
   });
+  /* 「いま」のToDoチェック（委任） */
+  safe(function(){
+    document.getElementById('pane-now').addEventListener('click', function(e){
+      var row = e.target.closest && e.target.closest('.check-row[data-now-todo]');
+      if (row) nowTodoToggle(row);
+    });
+  });
+  /* 天気：取得（3時間以内なら前回分）＋ 旅行中は1分ごとに最上段を更新 */
+  safe(wxRefresh);
+  safe(function(){ setInterval(tickNowStrip, 60000); });
   /* 開き直したとき「いま」の日付・現在行を再計算（開きっぱなしで日をまたぐ対策） */
   safe(function(){
     document.addEventListener('visibilitychange', function(){
-      if (!document.hidden) { try { renderNow(); } catch(e){} }
+      if (!document.hidden) { try { renderNow(); wxRefresh(); } catch(e){} }
     });
   });
   /* オフライン対応（Service Worker）。file:// での確認時は登録しない */
