@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#F3EDE2">
+<title>スーツケース比較帳 — 旅の手帳 付録</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --paper:#F3EDE2; --paper-hi:#FDFBF6; --paper-dim:#E9E0CE;
+  --ink:#3F3A33; --ink-soft:#5E564A; --ink-faint:#6E6250;
+  --line:rgba(120,100,75,.22); --edge:#D8CDB8;
+  --red:#C7402D; --blue:#4A6FA5; --tape:#E8C458; --green:#5B7F4E;
+  --mono:"IBM Plex Mono",monospace;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { -webkit-text-size-adjust:100%; }
+body {
+  font-family:"Zen Kaku Gothic New","Hiragino Kaku Gothic ProN",sans-serif;
+  color:var(--ink); line-height:1.7; letter-spacing:.02em;
+  background:
+    repeating-linear-gradient(93deg, rgba(160,140,110,.035) 0 2px, transparent 2px 5px),
+    repeating-linear-gradient(2deg, rgba(120,100,80,.025) 0 1px, transparent 1px 4px),
+    var(--paper);
+  max-width:980px; margin:0 auto; padding:0 0 60px;
+}
+.head { padding:26px 20px 14px; border-bottom:2.5px solid var(--ink); }
+.eyebrow { font-size:9.5px; letter-spacing:.3em; color:var(--red); font-weight:700; }
+h1 { font-size:24px; font-weight:900; line-height:1.4; margin-top:2px; }
+.lead { font-size:12px; color:var(--ink-soft); margin-top:6px; line-height:1.75; }
+.lead b { color:var(--ink); }
+.cond { display:flex; flex-wrap:wrap; gap:6px; margin-top:10px; }
+.cond span { font-size:10.5px; font-weight:700; padding:3px 10px; border:1px solid var(--edge); border-radius:10px; background:var(--paper-hi); color:var(--ink-soft); }
+
+/* 並べ替え・絞り込み */
+.ctl { position:sticky; top:0; z-index:5; padding:10px 20px 8px; background:linear-gradient(180deg, var(--paper) 80%, rgba(243,237,226,0)); }
+.ctl .row { display:flex; gap:6px; overflow-x:auto; scrollbar-width:none; padding-bottom:4px; }
+.ctl .row::-webkit-scrollbar { display:none; }
+.ctl .lbl { font-size:9.5px; letter-spacing:.2em; font-weight:700; color:var(--ink-faint); margin:4px 0 2px; }
+.ctl button { flex-shrink:0; font-family:inherit; cursor:pointer; font-size:11px; font-weight:700; letter-spacing:.04em;
+  color:var(--ink-soft); padding:6px 12px; background:var(--paper-hi); border:1px solid var(--edge); border-radius:6px;
+  box-shadow:0 1px 2px rgba(90,75,50,.12); }
+.ctl button.on { background:var(--ink); color:var(--paper-hi); border-color:var(--ink); }
+.ctl button.on.red { background:var(--red); border-color:var(--red); }
+.count { font-size:10.5px; color:var(--ink-faint); padding:2px 20px 0; }
+
+/* カード */
+.grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(280px, 1fr)); gap:14px; padding:14px 20px 0; }
+.card { background:var(--paper-hi); border:1px solid var(--edge); border-radius:8px; overflow:hidden; position:relative;
+  box-shadow:0 2px 6px rgba(90,75,50,.14); display:flex; flex-direction:column; }
+.card.hide { display:none; }
+.rank { position:absolute; left:10px; top:10px; z-index:2; font-family:var(--mono); font-size:11px; font-weight:600;
+  background:var(--ink); color:var(--paper-hi); border-radius:4px; padding:2px 8px; }
+.card.pick .rank { background:var(--red); }
+.pickmark { position:absolute; right:10px; top:10px; z-index:2; font-size:9.5px; font-weight:900; letter-spacing:.1em;
+  color:var(--red); border:2px solid var(--red); border-radius:3px; padding:1px 7px 0; background:rgba(253,251,246,.85); transform:rotate(3deg); }
+.ph { height:210px; background:#fff; display:flex; align-items:center; justify-content:center; border-bottom:1px solid var(--line); position:relative; }
+.ph img { max-width:92%; max-height:190px; object-fit:contain; display:block; }
+.ph .alt { display:none; flex-direction:column; align-items:center; gap:6px; color:var(--ink-faint); font-size:11px; }
+.ph .alt i { display:block; width:70px; height:96px; border-radius:8px; border:2.5px solid var(--edge); background:var(--paper-dim); position:relative; }
+.ph .alt i::before { content:""; position:absolute; left:22px; top:-12px; width:22px; height:12px; border:2.5px solid var(--edge); border-bottom:none; border-radius:5px 5px 0 0; }
+.ph.noimg img { display:none; } .ph.noimg .alt { display:flex; }
+.body { padding:12px 14px 12px; flex:1; display:flex; flex-direction:column; gap:7px; }
+.brand { font-size:9.5px; letter-spacing:.18em; font-weight:700; color:var(--ink-faint); }
+.name { font-size:15px; font-weight:900; line-height:1.4; }
+.name small { font-size:11px; font-weight:700; color:var(--ink-soft); margin-left:6px; }
+.price { font-family:var(--mono); font-size:18px; font-weight:600; }
+.price small { font-family:inherit; font-size:10px; color:var(--ink-faint); font-weight:400; margin-left:6px; }
+.spec { font-family:var(--mono); font-size:11px; color:var(--ink-soft); line-height:1.6; }
+.spec b { color:var(--ink); font-weight:600; }
+.tags { display:flex; flex-wrap:wrap; gap:4px; }
+.tags span { font-size:9.5px; font-weight:700; padding:2px 8px; border-radius:8px; background:var(--paper-dim); color:var(--ink-soft); }
+.tags span.y { background:#DCE8CE; color:#3F6B2E; }
+.tags span.w { background:#F4E3B8; color:#8a6410; }
+.rate { display:grid; grid-template-columns:auto 1fr; gap:3px 10px; align-items:center; margin-top:2px; }
+.rate .k { font-size:10px; font-weight:700; color:var(--ink-soft); }
+.rate .bar { height:7px; border:1px solid var(--ink-soft); border-radius:4px; background:var(--paper-hi); overflow:hidden; }
+.rate .bar i { display:block; height:100%; background:repeating-linear-gradient(45deg, var(--red) 0 5px, #d4604e 5px 10px); opacity:.75; }
+.cmt { font-size:11.5px; color:var(--ink-soft); line-height:1.7; }
+.cmt b { color:var(--ink); }
+.fit { font-size:11px; color:var(--blue); font-weight:700; line-height:1.6; }
+.btns { display:flex; gap:8px; margin-top:auto; padding-top:6px; }
+.btns a { flex:1; text-align:center; text-decoration:none; font-size:11px; font-weight:700; padding:8px 0; border-radius:6px;
+  border:1.5px solid var(--ink); color:var(--ink); background:var(--paper-hi); }
+.btns a.web { border-color:var(--green); color:var(--green); }
+
+/* 比較表 */
+.sec-h { margin:28px 20px 8px; font-size:10.5px; letter-spacing:.2em; font-weight:700; color:var(--ink-faint); }
+.sec-hint { margin:0 20px 8px; font-size:10.5px; color:var(--ink-faint); }
+.tblwrap { margin:0 20px; overflow-x:auto; -webkit-overflow-scrolling:touch; border:1px solid var(--edge); border-radius:8px; background:var(--paper-hi); }
+table { border-collapse:collapse; font-size:11px; min-width:900px; }
+th, td { padding:8px 10px; border-bottom:1px solid var(--line); text-align:left; white-space:nowrap; vertical-align:top; }
+th { font-size:9.5px; letter-spacing:.12em; color:var(--ink-faint); font-weight:700; background:var(--paper-dim); position:sticky; top:0; }
+td.n { font-weight:700; position:sticky; left:0; background:var(--paper-hi); min-width:150px; max-width:190px; white-space:normal; line-height:1.4; }
+td.m { font-family:var(--mono); }
+td .y { color:#3F6B2E; font-weight:700; } td .no { color:var(--ink-faint); }
+
+.foot { margin:26px 20px 0; font-size:10.5px; color:var(--ink-faint); line-height:1.8; border-top:1px solid var(--line); padding-top:12px; }
+.foot a { color:var(--blue); }
+</style>
+</head>
+<body>
+<div class="head">
+  <div class="eyebrow">SUITCASE NOTES — 旅の手帳 付録</div>
+  <h1>スーツケース比較帳</h1>
+  <div class="lead">今回買うのは<b>夫の1個</b>。条件は <b>60〜70L・黒以外・4.5kg以下・静音キャスター</b>。妻は手持ちの黒を使うので、色違いで一目で分かることも条件に入れています。評価の星は私（Claude）の主観で、価格と仕様は各社公式ページの確認値です。</div>
+  <div class="cond"><span>7日間・受託23kg</span><span>VA859は1人1個</span><span>石畳の街を歩く</span><span>お土産で膨らむ</span><span>渋谷で現物確認</span></div>
+</div>
+
+<div class="ctl">
+  <div class="lbl">並べ替え</div>
+  <div class="row" id="sorts">
+    <button data-sort="pick" class="on red">おすすめ順</button>
+    <button data-sort="price">価格が安い順</button>
+    <button data-sort="weight">軽い順</button>
+    <button data-sort="capacity">容量が大きい順</button>
+    <button data-sort="design">デザイン評価順</button>
+  </div>
+  <div class="lbl">絞り込み</div>
+  <div class="row" id="filters">
+    <button data-f="all" class="on">すべて</button>
+    <button data-f="budget1">〜3万円</button>
+    <button data-f="budget2">3〜6万円</button>
+    <button data-f="budget3">6万円〜</button>
+    <button data-f="stopper">ストッパー付き</button>
+    <button data-f="front">前や片側から開く</button>
+    <button data-f="light">4kg未満</button>
+  </div>
+</div>
+<div class="count" id="count"></div>
+<div class="grid" id="grid"></div>
+
+<div class="sec-h">— 仕様の横並び —</div>
+<div class="sec-hint">横にスクロールできます。価格は税込の通常価格（セール中は備考に）。</div>
+<div class="tblwrap"><table id="tbl"></table></div>
+
+<div class="foot" id="foot"></div>
+
+<script src="suitcases-data.js"></script>
+<script>
+var esc = function(s){ return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;'); };
+var yen = function(n){ return n == null ? '—' : '¥' + Number(n).toLocaleString('ja-JP'); };
+var RATE_KEYS = [['light','軽さ'],['func','機能'],['design','デザイン'],['trust','信頼性'],['value','コスパ']];
+
+function cardHTML(s, i) {
+  var price = s.currency === 'AUD' ? 'A$' + Number(s.price).toLocaleString() : yen(s.price);
+  var tags = [];
+  if (s.stopper) tags.push('<span class="y">ストッパー</span>');
+  if (s.expandable) tags.push('<span class="y">拡張</span>');
+  if (s.open && /フロント|ブック|片開き|360/.test(s.open)) tags.push('<span class="y">' + esc(s.open) + '</span>');
+  else if (s.open) tags.push('<span>' + esc(s.open) + '</span>');
+  if (s.warranty) tags.push('<span>' + esc(s.warranty) + '</span>');
+  if (s.made_in) tags.push('<span>' + esc(s.made_in) + '</span>');
+  if (s.colors) tags.push('<span class="w">' + s.colors + '色</span>');
+  var rate = RATE_KEYS.map(function(k){
+    return '<span class="k">' + k[1] + '</span><span class="bar"><i style="width:' + (s.rate[k[0]] * 20) + '%"></i></span>';
+  }).join('');
+  return '<div class="card' + (s.pick === 1 ? ' pick' : '') + '" data-id="' + esc(s.id) + '">' +
+    '<span class="rank">' + (i + 1) + '</span>' + (s.pick === 1 ? '<span class="pickmark">本命</span>' : '') +
+    '<div class="ph' + (s.image ? '' : ' noimg') + '">' +
+      (s.image ? '<img src="' + esc(s.image) + '" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.parentNode.classList.add(\'noimg\')">' : '') +
+      '<div class="alt"><i></i>写真は公式ページで</div></div>' +
+    '<div class="body">' +
+      '<div class="brand">' + esc(s.brand) + '</div>' +
+      '<div class="name">' + esc(s.model) + (s.variant ? '<small>' + esc(s.variant) + '</small>' : '') + '</div>' +
+      '<div class="price">' + price + (s.price_note ? '<small>' + esc(s.price_note) + '</small>' : '') + '</div>' +
+      '<div class="spec"><b>' + (s.capacity != null ? s.capacity + 'L' : '—') + (s.capacity_exp ? '→' + s.capacity_exp + 'L' : '') + '</b>・<b>' +
+        (s.weight != null ? s.weight + 'kg' : '—') + '</b>・' + esc(s.size || '—') + '</div>' +
+      '<div class="tags">' + tags.join('') + '</div>' +
+      '<div class="rate">' + rate + '</div>' +
+      '<div class="cmt">' + s.comment + '</div>' +
+      '<div class="fit">向く人｜' + esc(s.fit) + '</div>' +
+      '<div class="btns"><a class="web" href="' + esc(s.url) + '" target="_blank" rel="noopener">公式ページ</a></div>' +
+    '</div></div>';
+}
+function tableHTML(list) {
+  var h = '<tr><th>モデル</th><th>価格</th><th>容量</th><th>重量</th><th>サイズ</th><th>開き方</th><th>ストッパー</th><th>拡張</th><th>キャスター</th><th>保証</th><th>色数</th><th>生産</th><th>備考</th></tr>';
+  list.forEach(function(s){
+    var price = s.currency === 'AUD' ? 'A$' + Number(s.price).toLocaleString() : yen(s.price);
+    h += '<tr><td class="n">' + esc(s.brand) + '<br>' + esc(s.model) + (s.variant ? ' ' + esc(s.variant) : '') + '</td>' +
+      '<td class="m">' + price + '</td>' +
+      '<td class="m">' + (s.capacity != null ? s.capacity + 'L' : '—') + (s.capacity_exp ? '→' + s.capacity_exp : '') + '</td>' +
+      '<td class="m">' + (s.weight != null ? s.weight + 'kg' : '—') + '</td>' +
+      '<td class="m">' + esc(s.size || '—') + '</td>' +
+      '<td>' + esc(s.open || '—') + '</td>' +
+      '<td>' + (s.stopper ? '<span class="y">あり</span>' : '<span class="no">なし</span>') + '</td>' +
+      '<td>' + (s.expandable ? '<span class="y">あり</span>' : '<span class="no">なし</span>') + '</td>' +
+      '<td>' + esc(s.wheels || '—') + '</td>' +
+      '<td>' + esc(s.warranty || '—') + '</td>' +
+      '<td class="m">' + (s.colors || '—') + '</td>' +
+      '<td>' + esc(s.made_in || '—') + '</td>' +
+      '<td style="white-space:normal;min-width:220px">' + esc(s.notes || '') + '</td></tr>';
+  });
+  return h;
+}
+var sortKey = 'pick', filterKey = 'all';
+function jpy(s){ return s.currency === 'AUD' ? s.price * 100 : s.price; } /* 絞り込み用のざっくり円換算 */
+function render() {
+  var list = SUITCASES.slice();
+  list.sort(function(a, b){
+    if (sortKey === 'price') return (jpy(a) || 1e9) - (jpy(b) || 1e9);
+    if (sortKey === 'weight') return (a.weight || 99) - (b.weight || 99);
+    if (sortKey === 'capacity') return (b.capacity || 0) - (a.capacity || 0);
+    if (sortKey === 'design') return b.rate.design - a.rate.design || a.pick - b.pick;
+    return a.pick - b.pick;
+  });
+  var shown = list.filter(function(s){
+    if (filterKey === 'budget1') return jpy(s) != null && jpy(s) < 30000;
+    if (filterKey === 'budget2') return jpy(s) >= 30000 && jpy(s) < 60000;
+    if (filterKey === 'budget3') return jpy(s) >= 60000;
+    if (filterKey === 'stopper') return !!s.stopper;
+    if (filterKey === 'front') return /フロント|ブック|片開き|360/.test(s.open || '');
+    if (filterKey === 'light') return s.weight != null && s.weight < 4;
+    return true;
+  });
+  document.getElementById('grid').innerHTML = shown.map(cardHTML).join('');
+  document.getElementById('count').textContent = shown.length + ' / ' + SUITCASES.length + ' 件';
+  document.getElementById('tbl').innerHTML = tableHTML(shown);
+}
+document.getElementById('sorts').addEventListener('click', function(e){
+  var b = e.target.closest('button'); if (!b) return;
+  sortKey = b.getAttribute('data-sort');
+  Array.prototype.forEach.call(this.querySelectorAll('button'), function(x){ x.classList.toggle('on', x === b); x.classList.toggle('red', x === b && sortKey === 'pick'); });
+  render();
+});
+document.getElementById('filters').addEventListener('click', function(e){
+  var b = e.target.closest('button'); if (!b) return;
+  filterKey = b.getAttribute('data-f');
+  Array.prototype.forEach.call(this.querySelectorAll('button'), function(x){ x.classList.toggle('on', x === b); });
+  render();
+});
+document.getElementById('foot').innerHTML = '価格・仕様は ' + esc(SUITCASES_META.checked) + ' に各社公式ページで確認。写真は各社公式ページの画像を参照表示しています（このサイトには保存していません。表示されない場合は公式ページで）。星の評価と「向く人」は私（Claude）の主観です。<br>' +
+  '<a href="./">← 旅の手帳へ戻る</a>';
+render();
+</script>
+</body>
+</html>
