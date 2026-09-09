@@ -3,7 +3,7 @@
     "paper": "南十字星",
     "en": "THE SOUTHERN CROSS",
     "sub": "まいにち届く、旅のミニマガジン",
-    "currentNo": 62
+    "currentNo": 63
   },
   "issues": [
     {
@@ -4472,6 +4472,60 @@
         }
       ],
       "memo": "DAY2 11:30のホージア・レーンにそのまま効きます。写真を撮ったあと、13:00のIl Solito Postoランチの前にバー席でひと皿だけつまむ選択肢としてもどうぞ（開いているのは12:00から）。編集部は次回、アンチョアを実食してから号を書きたい気持ちでいっぱいです。"
+    },
+    {
+      "no": 63,
+      "date": "2026-09-10",
+      "wd": "木",
+      "theme": "実用",
+      "title": "コールズは、現金を拒めません——2026年、新ルールとATMのひとこと",
+      "lead": "「オーストラリアはもうキャッシュレスの国」。そう思ってAUDの現金をゼロで行こうとしていたら、ちょっと待ってください。2026年1月から、スーパーと給油所には現金を拒めない新ルールが始まっています。実用号は、財布に残す小銭の話です。",
+      "photos": [
+        {
+          "src": "assets/press/63-1.jpg",
+          "cap": "オーストラリアの紙幣。ポリマー製で防水・破れにくい",
+          "credit": "Martin Kingsley from Melbourne, Australia / CC BY 2.0 (Wikimedia)"
+        },
+        {
+          "src": "assets/press/63-2.jpg",
+          "cap": "Coles。DAY2・DAY4で立ち寄る予定のスーパーチェーン",
+          "credit": "Orderinchaos / CC BY-SA 4.0 (Wikimedia)"
+        }
+      ],
+      "body": [
+        {
+          "h": null,
+          "p": "タップ決済がここまで主役になった国で、今さら現金の話かと思われるかもしれません。実際、市内の移動もカフェの会計も、クレジットカードやスマホをタッチするだけで完結してしまいます（No.2号）。ただ2026年1月1日から、オーストラリアには少し意外な新ルールが始まっていました。<b>スーパーマーケットと給油所は、現金での支払いを拒めなくなった</b>のです。"
+        },
+        {
+          "h": "現金お断りの国、に新しいルール",
+          "p": "対象はコールズやウールワースといった大手スーパー、アンポルやBPなどの給油所チェーン。営業時間のうち午前7時から午後9時までの間、500豪ドル以下の対面取引であれば、現金を受け取る義務があります。年間売上1000万豪ドル未満の小規模店は原則対象外ですが、大手チェーンの看板を掲げる店舗は含まれるようです。財務大臣ジム・チャルマーズ氏は「必要なときに現金で支払えるべきだ」とコメントしており、まずは3年間の試行運用とのこと。つまりDAY2・DAY4に立ち寄る予定のColesは、まさにこのルールの対象店。カードのタップが基本で構わないものの、<b>「念のための小銭」を持つ意味が薄れたわけではない</b>、というのが今回の取材でわかったことです。"
+        },
+        {
+          "h": "ATMで得する、ひとことフレーズ",
+          "p": "現地でAUDの現金がほしくなったら、ATMでの引き出しが手数料面では扱いやすい方法のようです。ここでひとつ覚えておきたいのが、画面に出てくる為替換算の選択。「Convert to JPY」のように自国通貨での確定額を提示されても、それはATM側が独自レートで上乗せする仕組みなので、選ぶべきは逆側。「Without conversion」または「Continue in AUD」を選べば、カード発行会社側の相場に近いレートで両替されます。スタッフに聞かれた場合の返答は「No conversion, please」か「In Australian dollars, please」のひとことで十分。現地ATMの手数料自体は1回あたり2〜7.5豪ドルほどかかることが多いようなので、こまめに少額を下ろすより、旅の前半でまとめて引き出しておくほうが手数料負けしにくそうです。"
+        },
+        {
+          "h": null,
+          "p": "というわけで結論は、現金は「主役ではないが、保険としては現役」。数十豪ドル分だけ両替やATMで用意しておけば、コールズのセルフレジでカードの通信が一瞬止まったときも、チップを気持ちで渡したいときも、慌てずに済みます。タップ決済のかしこさ（No.2号）と、現金という保険。両方持っておくのが、6日間の旅にはちょうど良い装備のようです。"
+        }
+      ],
+      "spots": [],
+      "sources": [
+        {
+          "t": "Australian supermarkets and servos must accept cash from January 2026, here's what to know（Time Out Australia）",
+          "u": "https://www.timeout.com/australia/news/australian-supermarkets-and-servos-must-accept-cash-from-january-2026-heres-what-to-know-010226"
+        },
+        {
+          "t": "Cash and ATMs in Australia: Info for ATMs, fees, limits, cards（ATM Fee Saver）",
+          "u": "https://atmfeesaver.com/cash-currency-exchange-atms-in-australia/"
+        },
+        {
+          "t": "Money in Australia: Banks, ATMs, cards & currency exchange（Wise）",
+          "u": "https://wise.com/au/blog/money-and-banks-in-australia"
+        }
+      ],
+      "memo": "DAY2・DAY4で立ち寄るColesは、この新ルールの対象店そのものです。タップ決済（No.2号）が基本でOKですが、数十豪ドルだけ現金の保険を持っておくと、DAY4夜のように予定が乱れた日でも安心感が違うはず。ATMの「Without conversion」、覚えておいて損はありません。"
     }
   ]
 }
