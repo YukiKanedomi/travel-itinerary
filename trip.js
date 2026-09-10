@@ -171,7 +171,7 @@ var TRIP = {
         { t:'13:00', h:'ランチ — Il Solito Posto', d:'Collins St東端・地下の隠れ家イタリアン。パスタ・リゾット・モクテル',
           map:'https://maps.google.com/?q=Il+Solito+Posto+113+Collins+Street+Melbourne', web:'https://ilsolitoposto.com.au/' },
         { t:'15:00', h:'チェックイン＆仮眠（最重要）', d:'欲張って観光を続けないこと。バスタブ＋1〜2時間の仮眠。明日からの体力はここで決まる' },
-        { t:'18:00', h:'ディナー — Chin Chin', d:'モダンタイの人気店。OpenTableで予約可（ウォークインも可・回転は早い）。辛さ調整可（mildで）',
+        { t:'18:00', h:'ディナー — Chin Chin', d:'モダンタイの人気店。予約せずウォークインで。17:30に着くと待ちが短く、回転は早い。辛さ調整可（mildで）',
           map:'https://maps.google.com/?q=Chin+Chin+Flinders+Lane+Melbourne', web:'https://chinchin.melbourne/' },
         { t:'21:00', h:'ホテル帰着', d:'長旅の最初の夜。ゆっくり休んで' }
       ],
@@ -195,7 +195,7 @@ var TRIP = {
           map:'https://maps.google.com/?q=State+Library+Victoria+Melbourne', web:'https://www.slv.vic.gov.au/' },
         { t:'13:00', h:'ランチ — フィッツロイ or CBD', d:'オープンエアのカフェか、CBDのビストロで' },
         { t:'15:00', h:'5つ星ホテルを満喫', d:'ラウンジ・プール・バスタブ。完全自由日の醍醐味' },
-        { t:'18:00', h:'ディナー — Cumulus Inc.', d:'モダンオージーの人気店。公式サイトか電話（+61 3 9650 1445）で予約可。ウォークインも歓迎',
+        { t:'18:00', h:'ディナー — Cumulus Inc.', d:'モダンオージーの人気店。予約せずウォークインで。17:45の早め入りが確実（ウォークイン歓迎の店）',
           map:'https://maps.google.com/?q=Cumulus+Inc+45+Flinders+Lane+Melbourne', web:'https://www.cumulusinc.com.au/' },
         { t:'21:00', h:'ホテル帰着', d:'明日は移動日。VA859のオンラインチェックイン（48時間前から・座席24A/24B）を済ませて早めに就寝' }
       ],
