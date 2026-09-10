@@ -8,7 +8,7 @@ var SPOTS = [
   { area:'mel', name:'ホージア・レーン', en:['Hosier Lane, Melbourne'], day:'DAY 2 観光（無料）', map:'https://maps.google.com/?q=Hosier+Lane+Melbourne', x:192, y:283, order:3, lat:-37.81636, lng:144.96908, move:'walk', legMin:5, tip:'ストリートアートの路地。絵柄は日々変化' },
   { area:'mel', name:'ブロック・アーケード', en:['282 Collins Street, Melbourne'], day:'DAY 2 観光', map:'https://maps.google.com/?q=Block+Arcade+Melbourne', web:'https://www.theblockarcade.com.au/', x:172, y:246, order:4, lat:-37.81558, lng:144.96433, move:'walk', legMin:4, tip:'1890年代のアーケード。床モザイクとHopetoun Tea Rooms' },
   { area:'mel', name:'Il Solito Posto', en:['113 Collins Street（地下）, Melbourne'], day:'DAY 2 ランチ', map:'https://maps.google.com/?q=Il+Solito+Posto+Melbourne', web:'https://ilsolitoposto.com.au/', x:258, y:245, order:5, lat:-37.8131, lng:144.9725, move:'walk', legMin:9, tip:'老舗イタリアン。地下の隠れ家ビストロ' },
-  { area:'mel', name:'Chin Chin', en:['125 Flinders Lane, Melbourne'], day:'DAY 2 ディナー（予約不可）', map:'https://maps.google.com/?q=Chin+Chin+Flinders+Lane+Melbourne', web:'https://chinchin.melbourne/', x:218, y:267, order:6, lat:-37.81569, lng:144.97042, move:'walk', legMin:6, tip:'モダンタイ。行列制だが回転が早い。辛さ調整可' },
+  { area:'mel', name:'Chin Chin', en:['125 Flinders Lane, Melbourne'], day:'DAY 2 ディナー（予約可）', map:'https://maps.google.com/?q=Chin+Chin+Flinders+Lane+Melbourne', web:'https://chinchin.melbourne/', x:218, y:267, order:6, lat:-37.81569, lng:144.97042, move:'walk', legMin:6, tip:'モダンタイ。OpenTableで予約可。辛さ調整可' },
   { area:'mel', name:'クイーンビクトリアマーケット', en:['Queen St & Victoria St, Melbourne'], day:'DAY 3 観光（火曜営業）', map:'https://maps.google.com/?q=Queen+Victoria+Market+Melbourne', web:'https://qvm.com.au/', x:139, y:91, order:7, lat:-37.80739, lng:144.95739, move:'tram', legMin:12, tip:'南半球最大級の市場。月・水休み' },
   { area:'mel', name:'カールトン庭園・王立展示館', en:['Carlton Gardens, Carlton'], day:'DAY 3 観光（世界遺産）', map:'https://maps.google.com/?q=Carlton+Gardens+Melbourne', web:'https://museumsvictoria.com.au/reb/', x:250, y:86, order:8, lat:-37.80467, lng:144.97147, move:'walk', legMin:13, tip:'世界遺産の王立展示館と庭園' },
   { area:'mel', name:'ビクトリア州立図書館', en:['328 Swanston St, Melbourne'], day:'DAY 3 観光（無料）', map:'https://maps.google.com/?q=State+Library+Victoria+Melbourne', web:'https://www.slv.vic.gov.au/', x:175, y:172, order:9, lat:-37.80977, lng:144.96554, move:'tram', legMin:10, tip:'荘厳なドーム閲覧室。上階ギャラリーも必見' },
@@ -323,18 +323,88 @@ var GMAP_STYLE = [
   { featureType:'transit.line', elementType:'geometry', stylers:[{ color:'#9AA0A6' }, { weight:1.2 }] },
   { featureType:'transit.station', elementType:'labels.icon', stylers:[{ saturation:-40 }] }
 ];
-/* 番号ピン（HTMLオーバーレイ）。模式図のピンと同じ見た目・同じ番号 */
+/* トイレ・水の地点（作法帖の実地リスト＋DAYの動線上）。Googleマップ表示時だけ重ねる */
+var AMENITIES = [
+  { area:'mel', kind:'wc', name:'公衆トイレ（Swanston×Collins角）', lat:-37.8159, lng:144.9666, tip:'広くてきれい。CBD歩きの基点' },
+  { area:'mel', kind:'wc', name:'ビクトリア州立図書館', lat:-37.80977, lng:144.96554, tip:'Swanston St側の正面から。館内はきれい' },
+  { area:'mel', kind:'wc', name:'MYER地下（Bourke St Mall）', lat:-37.81345, lng:144.96384, tip:'ブロックアーケード（コード式）の前にここで' },
+  { area:'mel', kind:'wc', name:'Melbourne Central', lat:-37.81, lng:144.96257, tip:'雨の日の逃げ先にも' },
+  { area:'mel', kind:'wc', name:'QVM（Queen St側）', lat:-37.80739, lng:144.95739, tip:'市場内。DAY3の最初に' },
+  { area:'mel', kind:'wc', name:'サザンクロス駅', lat:-37.81919, lng:144.9534, tip:'SkyBusを降りたら' },
+  { area:'mel', kind:'wc', name:'フリンダース・ストリート駅', lat:-37.81842, lng:144.96648, tip:'改札の外側にもある' },
+  { area:'mel', kind:'water', name:'Coles Central（Elizabeth St）', lat:-37.8175, lng:144.9653, tip:'水・ヨーグルト・朝食。セルフレジ' },
+  { area:'syd', kind:'water', name:'Coles（リッジス地下）', lat:-33.87715, lng:151.20755, tip:'ホテル直結。水は前夜にここで' },
+  { area:'syd', kind:'wc', name:'World Square', lat:-33.87764, lng:151.20603, tip:'ホテル真下。Pie Faceもここ' },
+  { area:'syd', kind:'wc', name:'QVB', lat:-33.87144, lng:151.20667, tip:'きれいで無料。買い物の前後に' },
+  { area:'syd', kind:'wc', name:'Westfield Sydney（Pitt St Mall）', lat:-33.87029, lng:151.2076, tip:'ヒルトンの向かい' },
+  { area:'syd', kind:'wc', name:'ヒルトン シドニー ロビー', lat:-33.87182, lng:151.2076, tip:'DAY5の集合前に' },
+  { area:'syd', kind:'wc', name:'サーキュラー・キー駅', lat:-33.86136, lng:151.21072, tip:'フェリー乗り場の並び' },
+  { area:'syd', kind:'wc', name:'オペラハウス（館内）', lat:-33.8572, lng:151.21512, tip:'無料。DAY6の散歩の途中に' },
+  { area:'syd', kind:'wc', name:'王立植物園（園内）', lat:-33.86277, lng:151.21571, tip:'入口の案内板で場所を確認' },
+  { area:'syd', kind:'wc', name:'ハイドパーク', lat:-33.87162, lng:151.21151, tip:'公園内の公衆トイレ' },
+  { area:'syd', kind:'wc', name:'ダーリングハーバー（Tumbalong Park）', lat:-33.8756, lng:151.2015, tip:'Ume Burgerの近く' },
+  { area:'syd', kind:'wc', name:'セントラル駅', lat:-33.88399, lng:151.20634, tip:'' },
+  { area:'syd', kind:'wc', name:'Museum駅', lat:-33.87573, lng:151.2101, tip:'ホテルの最寄り駅' },
+  { area:'blue', kind:'wc', name:'フェザーデール（入口）', lat:-33.76584, lng:150.88427, tip:'園に入ってすぐ' },
+  { area:'blue', kind:'wc', name:'シーニックワールド', lat:-33.72895, lng:150.30126, tip:'山で一番きれい。昼食のついでに' },
+  { area:'blue', kind:'wc', name:'エコーポイント案内所', lat:-33.7319, lng:150.3123, tip:'展望台のすぐ横' },
+  { area:'blue', kind:'wc', name:'ルーラ・モール（公衆トイレ）', lat:-33.71455, lng:150.33055, tip:'モールの端' }
+];
+var gmapLayers = { picks:true, amen:true };
+try { var _gl = JSON.parse(localStorage.getItem('map_layers_v1') || 'null'); if (_gl) gmapLayers = _gl; } catch(e){}
+var gmapLayerPins = { picks:[], amen:[] };
+function pickArea(p){ return p.lat < -36 ? 'mel' : (p.lng < 151 ? 'blue' : 'syd'); }
+function toggleLayer(k){
+  gmapLayers[k] = !gmapLayers[k];
+  try { localStorage.setItem('map_layers_v1', JSON.stringify(gmapLayers)); } catch(e){}
+  gmapLayerPins[k].forEach(function(pin){ pin.setMap(gmapLayers[k] ? gmapObj : null); });
+  var b = document.querySelector('.glayers button[data-l="' + k + '"]'); if (b) b.classList.toggle('on', gmapLayers[k]);
+}
+function addLayerPins(){
+  var C = gpinClass();
+  gmapLayerPins = { picks:[], amen:[] };
+  Object.keys(PICKS).forEach(function(k){
+    var p = PICKS[k]; if (p.lat == null || pickArea(p) !== currentArea) return;
+    gmapLayerPins.picks.push(new C(gmapLayers.picks ? gmapObj : null, { kind:'pick', key:k, g:p.g, lat:p.lat, lng:p.lng }, -1));
+  });
+  AMENITIES.forEach(function(a, i){
+    if (a.area !== currentArea) return;
+    gmapLayerPins.amen.push(new C(gmapLayers.amen ? gmapObj : null, { kind:a.kind, ai:i, lat:a.lat, lng:a.lng }, -1));
+  });
+}
+function showPickNote(k){
+  var p = PICKS[k]; var host = document.getElementById('v2-map-note'); if (!p || !host) return;
+  var g = GENRE[p.g] || { label:'' };
+  host.innerHTML = '<div class="map-note"><button class="mn-close" onclick="closeMapNote()">×</button>' +
+    '<div class="mn-name">' + p.name + '</div>' +
+    '<div><span class="mn-day">寄り道の付箋・' + g.label + '</span></div>' +
+    (p.tip ? '<div class="mn-tip">' + p.tip + '</div>' : '') +
+    '<div class="mn-actions"><a href="' + p.map + '" target="_blank" rel="noopener">Google マップ</a></div></div>';
+}
+function showAmenNote(i){
+  var a = AMENITIES[i]; var host = document.getElementById('v2-map-note'); if (!a || !host) return;
+  host.innerHTML = '<div class="map-note"><button class="mn-close" onclick="closeMapNote()">×</button>' +
+    '<div class="mn-name">' + a.name + '</div>' +
+    '<div><span class="mn-day">' + (a.kind === 'water' ? '水・買い出し' : 'トイレ') + '</span></div>' +
+    (a.tip ? '<div class="mn-tip">' + a.tip + '</div>' : '') +
+    '<div class="mn-actions"><a href="https://maps.google.com/?q=' + a.lat + ',' + a.lng + '" target="_blank" rel="noopener">Google マップ</a></div></div>';
+}
+
+/* 番号ピン（HTMLオーバーレイ）。模式図のピンと同じ見た目・同じ番号。kind: spot(既定)/pick/wc/water/me */
 var GPin = null;
 function gpinClass(){
   if (GPin) return GPin;
   GPin = function(map, s, idx){ this.s = s; this.idx = idx; this.setMap(map); };
   GPin.prototype = new google.maps.OverlayView();
   GPin.prototype.onAdd = function(){
-    var el = document.createElement('div');
-    el.className = 'gpin' + (this.s.hot ? ' hot' : '') + (this.s.me ? ' me' : '');
-    el.textContent = this.s.me ? '' : this.s.order;
+    var el = document.createElement('div'), s = this.s, k = s.kind || 'spot';
+    el.className = 'gpin' + (k === 'spot' ? (s.hot ? ' hot' : '') : ' gp-' + k + (s.g ? ' g-' + s.g : '')) + (s.me ? ' me' : '');
+    el.textContent = s.me ? '' : (k === 'spot' ? s.order : (k === 'wc' ? 'WC' : (k === 'water' ? '水' : '')));
     var self = this;
-    if (!this.s.me) el.addEventListener('click', function(e){ e.stopPropagation(); showMapNote(self.idx); gmapObj.panTo({ lat:self.s.lat, lng:self.s.lng }); });
+    if (!s.me) el.addEventListener('click', function(e){
+      e.stopPropagation();
+      if (k === 'spot') showMapNote(self.idx); else if (k === 'pick') showPickNote(s.key); else showAmenNote(s.ai);
+    });
     this.el = el;
     this.getPanes().overlayMouseTarget.appendChild(el);
   };
@@ -365,6 +435,7 @@ function initGmap(spots){
     });
     var C = gpinClass();
     spots.forEach(function(s){ new C(gmapObj, s, SPOTS.indexOf(s)); });
+    addLayerPins();
     /* 訪問順の線。徒歩はGoogleの経路で道なりに（取れなければ直線）、電車・車は薄い直線 */
     var dots = { path:google.maps.SymbolPath.CIRCLE, fillColor:'#5E564A', fillOpacity:.9, strokeOpacity:0, scale:2 };
     function drawDots(path){
@@ -443,7 +514,9 @@ function renderMapPage() {
     h += '<div class="mapframe-wrap"><div class="mapframe gm"><div class="tape"></div>' +
          '<div class="gmap" id="gmap"><div class="gmap-msg" id="gmap-msg">地図を読み込み中…</div></div>' +
          '<button type="button" class="gmap-loc" id="gmap-loc" onclick="gmapLocate()">現在地</button></div></div>';
-    h += '<div class="map-hint">ピンチで拡大、2本指で移動（1本指は画面スクロール）。右上のボタンで全画面</div>';
+    h += '<div class="area-tabs glayers"><button type="button" class="' + (gmapLayers.picks?'on':'') + '" data-l="picks" onclick="toggleLayer(\'picks\')">寄り道の付箋</button>' +
+         '<button type="button" class="' + (gmapLayers.amen?'on':'') + '" data-l="amen" onclick="toggleLayer(\'amen\')">トイレ・水</button></div>';
+    h += '<div class="map-hint">小さい色ピン＝寄り道（黄:カフェ／橙:たべる／緑:観光／青:絶景）、WC＝トイレ、水＝Coles。番号は確定の予定。2本指で移動・右上で全画面</div>';
   } else {
     h += '<div class="mapframe-wrap"><div class="mapframe"><div class="tape"></div>' +
          '<svg viewBox="' + geo.viewBox + '" xmlns="http://www.w3.org/2000/svg">' + defs + geo.bg + pins + '</svg></div></div>';

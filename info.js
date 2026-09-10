@@ -111,7 +111,7 @@ function renderInfoPage(){
     '<div class="irow"><span class="k">警察・救急・消防</span><span class="v"><b>000</b>（豪州統合緊急番号）</span></div>' +
     '<div class="irow"><span class="k">在シドニー日本領事館</span><span class="v">+61-2-9250-1000</span></div>' +
     '<div class="irow"><span class="k">在メルボルン日本領事館</span><span class="v">+61-3-9639-3244</span></div>' +
-    '<div class="irow"><span class="k">VISA紛失</span><span class="v">+1-800-847-2911（フリーダイヤル）</span></div>' +
+    '<div class="irow"><span class="k">VISA紛失</span><span class="v">豪州内 1800 125 440／コレクト +1 303 967 1096</span></div>' +
     '<div class="irow"><span class="k">JAL国際線</span><span class="v">0120-255-931（日本語）</span></div>' +
     '<div class="irow"><span class="k">IC メルボルン</span><span class="v">+61 3 8627 1400（フロント24h）</span></div>' +
     '<div class="irow"><span class="k">リッジスWS シドニー</span><span class="v">+61 2 8268 1888（フロント24h）</span></div>' +
@@ -142,8 +142,8 @@ function renderInfoPage(){
   /* 交通ガイド */
   h += '<div class="sec-h jmp-t" id="ji-tr">— 交通スマートガイド —</div>' +
     '<div class="kb-card"><div class="kb-title">旅行中ずっと運賃半額（メルボルン）</div><div class="kb-body">ビクトリア州は<b>2026/6/1〜2027/1/1</b>の間、公共交通が<b>すべて半額</b>。旅行期間はまるごと対象。※SkyBusは対象外</div></div>' +
-    '<div class="kb-card"><div class="kb-title">メルボルン：無料トラム＆Myki</div><div class="kb-body"><b>CBD内の無料トラムゾーンは料金もカードも不要</b>。DAY2・3の市内散策はほぼ無料で回れる。ゾーン外・電車は<b>Myki</b>（駅・コンビニで購入）。半額期間中の上限：2時間 約$2.85／1日 平日約$5.70・週末約$4.00。空港はSkyBus（$25.90/人・往復$43.40）かUber（$60〜75/台）</div></div>' +
-    '<div class="kb-card"><div class="kb-title">シドニー：タッチ決済でOK</div><div class="kb-body">クレカ／Apple Pay／Google Payをかざすだけで電車・バス・フェリー・ライトレール全部OK。<b>降車時もタップ必須</b>（忘れると最大運賃）。1日上限 月〜木$19.30／<b>金〜日・祝$9.65</b>（週末おトク）。Airport Linkは<b>空港駅利用料 約$18が別途</b>——2人＋荷物ならUber（$40〜60）と比較を</div></div>';
+    '<div class="kb-card"><div class="kb-title">メルボルン：無料トラム＆Myki</div><div class="kb-body"><b>CBD内の無料トラムゾーンは料金もカードも不要</b>。DAY2・3の市内散策はほぼ無料で回れる。ゾーン外・電車は<b>クレカのタッチ決済でも乗れる</b>（大人運賃・乗降とも同じカード）。Mykiは不要。半額期間中の上限：2時間 約$2.85／1日 平日約$5.70・週末約$4.00。空港はSkyBus（$25.90/人・往復$43.40）かUber（$60〜75/台）</div></div>' +
+    '<div class="kb-card"><div class="kb-title">シドニー：タッチ決済でOK</div><div class="kb-body">クレカ／Apple Pay／Google Payをかざすだけで電車・バス・フェリー・ライトレール全部OK。<b>降車時もタップ必須</b>（忘れると最大運賃）。1日上限 月〜木$19.30／<b>金〜日・祝$9.65</b>（週末おトク）。Airport Linkは<b>空港駅利用料$18.61が別途</b>（1人 約$23）。タクシーは空港→CBD<b>定額$60</b>（試行中）。2人＋荷物ならUber（$50〜65）かタクシーが楽</div></div>';
 
   /* 予算 */
   h += '<div class="sec-h">— 旅行予算目安（2人合計） —</div><div class="ledger bud" style="margin-top:0">' +

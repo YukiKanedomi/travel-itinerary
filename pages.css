@@ -56,6 +56,15 @@
   cursor:pointer; pointer-events:auto; }
 .gpin.hot { background:#C7402D; border-color:#8e2c1e; color:#FDFBF6; }
 .gpin.me { width:16px; height:16px; background:#4A6FA5; border:2.5px solid #fff; box-shadow:0 0 0 6px rgba(74,111,165,.25); pointer-events:none; }
+/* 寄り道の付箋（小さい色ピン）とトイレ・水 */
+.gpin.gp-pick { width:14px; height:14px; border:1.5px solid #3F3A33; box-shadow:0 1px 2px rgba(0,0,0,.25); }
+.gpin.gp-pick.g-cafe { background:#F0E0A6; } .gpin.gp-pick.g-food { background:#EFD2BB; }
+.gpin.gp-pick.g-sight { background:#D5E0BE; } .gpin.gp-pick.g-view { background:#C8D9E2; }
+.gpin.gp-wc, .gpin.gp-water { width:21px; height:21px; border-radius:4px; font-size:8.5px; letter-spacing:0;
+  background:#FFFDF7; border:1.4px solid #4A6FA5; color:#4A6FA5; }
+.gpin.gp-water { border-color:#5B7F4E; color:#5B7F4E; font-size:10px; }
+.glayers { margin-top:8px; }
+.glayers button { font-size:10.5px; padding:6px 0 7px; }
 
 /* ── 地図：貼り紙ポップアップ＆一覧 ── */
 .map-note { margin:12px 18px 0 26px; background:var(--paper-hi); border:1px solid var(--edge);
