@@ -3,10 +3,10 @@
 
 /* ---- 出発日（9/20-21）タイムライン ---- */
 var GUIDE_GO = [
-  { t:'12:20', h:'橋本駅発 — 京王特急 新宿行き', d:'橋本始発なので座れる。約45分・430円',
-    tips:[ 'N\'EXの指定席はえきねっとで事前購入済みのこと', '京王が止まったら控え：JR横浜線で横浜へ → N\'EX横浜発' ] },
-  { t:'13:38', h:'N\'EX 新宿発 → 空港第2ビル', d:'約75分・3,250円。乗り遅れても14:08発がある',
-    tips:[ '新宿の乗り換えは15分見る。N\'EXは5・6番線' ] },
+  { t:'12:14', h:'橋本駅発 — 京王線 新宿行き', d:'橋本始発なので座れる。新宿まで44分・409円',
+    tips:[ 'N\'EXの指定席は購入済み（チケットレス・4号車1番C/D）', '京王が止まったら控え：JR横浜線で横浜へ → N\'EX横浜発' ] },
+  { t:'13:38', h:'N\'EX 31号 新宿発 → 空港第2ビル', d:'約81分・14:59着。乗り遅れても14:08発がある',
+    tips:[ '新宿での40分は昼食とトイレに使う。N\'EXは5・6番線' ] },
   { t:'14:54', h:'成田T2着 → まず3階でWi-Fi受取', d:'「J WiFi & Mobile」カウンター（07:00-21:00）。予約メール提示・約5分',
     steps:[ '混んでいたら「法人会員優先レーン」のメールを係員に見せる',
       'ルーターとモバイルバッテリーは手荷物のカバンへ（預け入れ禁止）' ] },
@@ -89,7 +89,7 @@ var GUIDE_HB = [
   { art:null, title:'トイレ — 「困ったらコンビニ」が使えない国', lead:'探す順は、モール → デパート → 図書館。',
     body:'探す順は<b>ショッピングセンター → デパート → 図書館・美術館</b>。QVB・Melbourne Central・World Squareはきれいで無料。' +
       '政府公式アプリ<b>National Public Toilet Map</b>（toiletmap.gov.au）に全国25,000か所・営業時間つき。入れておく。' +
-      '<b>メルボルンCBDの実地リスト</b>：Swanston×Collins角の公衆トイレ（広い・きれい）／州立図書館（La Trobe St側）／' +
+      '<b>メルボルンCBDの実地リスト</b>：Swanston×Collins角の公衆トイレ（広い・きれい）／州立図書館（Swanston St側の正面から。La Trobe St側入口は改装で閉鎖中）／' +
       'MYER地下（Bourke St Mall）。<b>注意｜ブロックアーケードはコード式</b>。先にMYERで済ませてから行く。' },
   { art:null, title:'治安 — 気をつけるのはメルボルン', lead:'スマホを席に置かない。それだけで大半は防げる。',
     body:'近年は<b>メルボルンのほうが要注意</b>。無料トラム内のスリ・スマホひったくり・貼り替えQR詐欺。' +
@@ -98,7 +98,8 @@ var GUIDE_HB = [
   { art:'skybus', title:'フェリー・トラムの細部', lead:'乗る時も降りる時も、柱のセンサーにタッチ。',
     body:'シドニーのフェリーは<b>サーキュラー・キーの2〜6番埠頭</b>から。電光掲示板で行き先とWharf番号を確認 → ' +
       'センサーにクレカをタッチ。<b>改札のない埠頭でも柱のセンサーに必ずタッチ</b>（降車時も）。忘れると最大運賃。' +
-      '金土日は1日上限$9.65なので乗り放題感覚でよい。メルボルンのトラムは<b>無料ゾーン内なら本当に無料</b>・カードすら不要。ゾーンを出る時だけMyki。' },
+      '金土日は1日上限$9.65なので乗り放題感覚でよい。メルボルンのトラムは<b>無料ゾーン内なら本当に無料</b>・カードすら不要。ゾーンを出る時だけMyki。' +
+      '<b>注意｜2026年9月はシドニー・フェリーの労働争議（9/4〜10/6）</b>で欠航・遅延の可能性。乗る当日に transportnsw.info で運行を確認。タッチは引き続き必須。' },
   { art:'magpie', title:'マグパイ — 9月だけ空から来る', lead:'帽子をかぶっていれば、実質対策済み。',
     body:'カササギフエガラス。普段は美声で愛される鳥だが、<b>9月は繁殖期で一部のオスが後頭部めがけて急降下</b>してくる。' +
       '対策：<b>2人で並んで歩く／帽子とサングラス／走らない</b>。DAY6の植物園が該当エリアだが、どのみち帽子は着けるので実質対策済み。' +
@@ -120,6 +121,115 @@ var GUIDE_HB = [
       '<b>三井住友海上ライン</b> コレクトコール +81-3-3497-0915／<b>東京海上日動</b>（JALカード分）+81-3-6758-2460。' +
       '<b>キャッシュレス診療は不可＝全額立て替え</b>なので、病院に行く前にまず電話して案内を受ける。' +
       '領収書・診断書の原本は必ず保管。緊急通報（警察・消防・救急）は<b>000</b>。' }
+];
+
+/* ---- もしもの時の手順（トラブル別。上から順にやれば戻れる） ---- */
+var GUIDE_SOS = [
+  { title:'パスポートをなくした', lead:'再発行ではなく「帰国のための渡航書」。証明写真と警察の届出番号があれば数日で出る。',
+    steps:[ 'まず落ち着いて、最後に出した場所（ホテルの金庫・カウンター）を確認',
+      '最寄りの警察署で紛失届（Police report）。受理番号をもらう',
+      '在シドニー日本国総領事館 +61-2-9250-1000（メルボルンなら在メルボルン総領事館 +61-3-9639-3244）に電話して指示を受ける',
+      '持っていく物：証明写真2枚・パスポートのコピー（書類ポケット）・警察の受理番号・航空券の控え',
+      '帰国便の変更が要ればJTB海外デスク +81-50-3362-0660 へ' ],
+    tips:[ 'パスポートのコピーと証明写真は原本と別の場所に。これがあるだけで手続きが半日短くなる' ] },
+  { title:'スーツケースが出てこない（ロストバゲージ）', lead:'到着ロビーを出る前に申告する。出てしまうと補償が難しい。',
+    steps:[ 'ターンテーブルが止まっても出てこなければ、同じフロアの航空会社「Baggage Service」カウンターへ（JALならJAL、VA859ならVirgin）',
+      '預け札（バゲージタグの半券）とパスポートを提示。AirTagの位置を見せると話が早い',
+      'PIR（紛失報告書）の控えをもらう。番号は写真に撮る',
+      '届け先はホテルの住所（情報タブ「タクシーで見せる宿泊先」をそのまま見せる）',
+      '当座の着替えは夫婦で半分ずつ交換して詰めてあるので、相手のスーツケースで数日しのげる',
+      '保険会社（携行品）にも連絡。買い足した下着・洗面具の領収書は保管' ] },
+  { title:'体調が悪い・けがをした', lead:'病院より先に、まず保険会社に電話。日本語で病院を案内してくれる。',
+    steps:[ '三井住友海上 コレクトコール +81-3-3497-0915／東京海上日動（JALカード分）+81-3-6758-2460（24時間・日本語）',
+      '案内された病院へ。キャッシュレス診療は不可なので、その場で立て替える（クレカ）',
+      '領収書・診断書の原本は必ず受け取って保管。帰国後に請求',
+      '軽い症状なら薬局（Chemist Warehouse・Priceline）の薬剤師に相談。頭痛はPanadol、腹痛はGastro-Stop',
+      '意識がない・出血が止まらないなど緊急は 000（警察・消防・救急共通）。英語で "Ambulance, please." と住所' ],
+    tips:[ '注意｜救急車は有料（数百ドル）。保険の対象になるので躊躇しない' ] },
+  { title:'クレジットカードをなくした', lead:'止めて、もう1枚で続ける。現地で再発行はしない。',
+    steps:[ 'VISA紛失 +1-800-847-2911（フリーダイヤル）／JALカード 0120-255-931（日本語）に電話して停止',
+      'Apple Payに入れていた分はiPhoneの「探す」→ デバイス → 紛失としてマーク、で止まる',
+      '残りのカードで旅を続ける。夫婦で別のカードを持っているので必ず1枚は残る',
+      '現金が要る時はもう1枚のカードでATMキャッシング（銀行系ATM・Credit選択）' ] },
+  { title:'スマホをなくした・壊れた', lead:'相手のスマホがあれば旅は続く。しおりはオフラインで相手の端末に入っている。',
+    steps:[ '相手のiPhoneで「探す」→ 位置確認 → 紛失モード（画面に連絡先を表示・ロック）',
+      '見つからなければ通信会社に連絡して回線停止（eSIMはWorld eSIMのサポートへ）',
+      '連絡手段はiPad＋Wi-Fiルーター、またはホテルのWi-Fi',
+      '航空券（Wallet）はJALアプリに相手の端末でログインし直せば出せる。パスポートがあれば空港カウンターでも発券できる' ] },
+  { title:'飛行機が遅れた・欠航した', lead:'国内線VA859が遅れても、シドニーの夜は「部屋ごはん」に切り替えれば困らない。',
+    steps:[ 'VA859遅延：Virginアプリの通知を待つ。1〜2時間なら夕食をColes調達に切り替え、夜景は翌日以降へ',
+      'VA859欠航：Virginアプリ or カウンターで振替（当日便は本数が多い）。JTB海外デスク +81-50-3362-0660 に一報',
+      'JL52（帰国便）遅延：JALアプリで確認。羽田のWi-Fiルーター返却は当日中でなくても翌日返却でよい（延滞分は後日精算）',
+      'JL773（往路）遅延：メルボルン到着後の予定はすべて「ずれてよい」設計。ホテルの荷物預けは何時でも可' ] },
+  { title:'二人ではぐれた', lead:'決めておくのは1つだけ：「最後に一緒にいた場所の入口」で待つ。',
+    steps:[ 'その場で動かない。LINE通話（eSIMで通じる）',
+      '通じなければ「最後に一緒にいた場所の入口」に戻って15分待つ',
+      'それでも会えなければホテルのロビーへ。フロントに伝言を頼める',
+      '観光地では先に「はぐれたらここ」を指差してから別行動する（QVM＝時計塔、ロックス＝La Renaissanceの前、など）' ] },
+  { title:'ツアーの集合に遅れそう・場所が分からない', lead:'8:30出発は待ってくれない。電話が先。',
+    steps:[ 'マイバスデスク (02) 9510-0139（平日9-17時・日本語）／時間外は +61 438 424 021',
+      'ヒルトンは George St 488。QVBの斜向かい。リッジスから徒歩10分（Pitt St北→Park St左→George St右）',
+      '間に合わなかった場合の取消料は全額。翌日の同ツアーへの振替可否をマイバスに聞く' ] },
+  { title:'現金が足りない・ATMの使い方', lead:'現金はほぼ使わない国。要る時は銀行系ATMでクレカのキャッシング。',
+    steps:[ 'ATMは銀行（Commonwealth・ANZ・NAB・Westpac）のものを使う。コンビニのATMは手数料が高い',
+      'カードを入れて「Credit」を選ぶ → 暗証番号 → 金額（$100〜200で十分）',
+      '「手数料$2〜3を承諾しますか」と出たら Yes。帰国後に一括返済すれば利息は数十円',
+      '現金が要る場面：チップ不要、屋台もカード可。要るとすれば公衆トイレの有料機くらい' ] },
+  { title:'盗難・被害にあった', lead:'まず安全。次に警察の届出。保険はその紙がないと出ない。',
+    steps:[ '身の安全を確保。追いかけない',
+      '警察へ届出：緊急は 000、緊急でなければ Police Assistance Line 131 444。Police reportの番号をもらう',
+      'パスポートが含まれていれば「パスポートをなくした」の手順へ',
+      'カードが含まれていれば「クレジットカードをなくした」の手順へ',
+      '保険会社に連絡（携行品損害）。被害品の購入時期・金額をメモ' ] }
+];
+
+/* ---- 指差し英語（読み上げなくてよい。見せるだけで通じる短文） ---- */
+var GUIDE_PHRASES = [
+  { title:'カフェ', rows:[
+    ['A flat white, please.', 'フラットホワイトを1つ'],
+    ['Two flat whites, have here.', 'フラットホワイト2つ、店内で'],
+    ['Takeaway, please.', '持ち帰りで'],
+    ['Tap water, please.', '水道水をください（無料）'],
+    ['Can we sit here?', 'ここ座っていい？'] ] },
+  { title:'レストラン', rows:[
+    ['A table for two, please.', '2人です'],
+    ['No shellfish, please. Allergy.', '貝・甲殻類は抜いてください。アレルギーです'],
+    ['Is this spicy? Mild, please.', 'これ辛い？ 辛くしないで'],
+    ['Could we have the bill, please?', 'お会計をお願いします'],
+    ['Can I pay here?', 'ここで払えますか？'],
+    ['No tip, thanks.', 'チップはなしで'] ] },
+  { title:'ホテル', rows:[
+    ['Check in, please. Under TABINO.', 'チェックインお願いします。タビノで予約'],
+    ['Can I leave my luggage until check-in?', 'チェックインまで荷物を預かってもらえますか'],
+    ['What time is breakfast?', '朝食は何時から？'],
+    ['Wi-Fi password, please.', 'Wi-Fiのパスワードを'],
+    ['Check out, please.', 'チェックアウトお願いします'],
+    ['Could you call a taxi?', 'タクシーを呼んでもらえますか'] ] },
+  { title:'交通', rows:[
+    ['Does this go to Southern Cross?', 'これサザンクロス行き？'],
+    ['Two to the city, please.', '市内まで2人分'],
+    ['Where do I tap on?', 'タッチはどこで？'],
+    ['To this address, please.', 'この住所までお願いします（情報タブの宿泊先を見せる）'],
+    ['Terminal 3, Virgin Australia.', 'T3、ヴァージンオーストラリアへ'] ] },
+  { title:'空港・入国', rows:[
+    ['Holiday. Six days.', '観光です。6日間'],
+    ['I have snacks and medicine to declare.', 'お菓子と薬を申告します'],
+    ['Nothing else.', 'ほかにはありません'],
+    ['Where is the TRS counter?', 'TRSのカウンターはどこ？'],
+    ['My bag has not come out.', '荷物が出てきません'] ] },
+  { title:'買い物', rows:[
+    ['Just looking, thanks.', '見てるだけです'],
+    ['Do you have this in another colour?', '色違いはありますか'],
+    ['One tax invoice, please.', '領収書を1枚にまとめて（TRS用）'],
+    ['No bag, thanks.', '袋は要りません'],
+    ['Card, please.', 'カードで'] ] },
+  { title:'困った時', rows:[
+    ['Where is the toilet?', 'トイレはどこですか'],
+    ["I don't understand. Could you write it down?", '分かりません。書いてもらえますか'],
+    ["I've lost my passport.", 'パスポートをなくしました'],
+    ['Could you call an ambulance? / the police?', '救急車を／警察を呼んでください'],
+    ['I feel sick. Where is a pharmacy?', '気分が悪い。薬局はどこ？'],
+    ['Sorry, it stopped.', 'すみません、止まりました（セルフレジ）'] ] }
 ];
 
 /* ---- 誌面ライブラリ（assets/guide/p01-p20.jpg） ---- */
@@ -150,7 +260,7 @@ function renderGuidePage() {
   var h = '<div class="toc-head"><div class="toc-eyebrow">FIELD GUIDE</div>' +
     '<div class="toc-h1">旅の手引き</div></div>';
   h += '<div class="sec-hint">当日の動きかたと、現地の細かい作法。じっくり読む詳細版はGoogleドライブの「渡航当日ガイド」に。</div>';
-  h += jmpHTML([['jg-go','出発日'],['jg-back','帰国日'],['jg-hb','作法帖'],['jg-lib','誌面']]);
+  h += jmpHTML([['jg-go','出発日'],['jg-back','帰国日'],['jg-hb','作法帖'],['jg-sos','もしも'],['jg-en','指差し英語'],['jg-lib','誌面']]);
 
   h += '<div class="sec-h jmp-t" id="jg-go">— 出発日の動きかた（9/20 家 → 9/21 ホテル） —</div>';
   h += ledgerHTML(GUIDE_GO, null);
@@ -164,6 +274,27 @@ function renderGuidePage() {
       '<div class="kb-title">' + k.title + '</div>' +
       (k.lead ? '<div class="gd-lead">' + k.lead + '</div>' : '') +
       '<div class="kb-body">' + k.body + '</div></div>';
+  });
+
+  h += '<div class="sec-h jmp-t" id="jg-sos">— もしもの時の手順 —</div>';
+  h += '<div class="sec-hint">起きてほしくないことを、起きた順に。上から順にやれば旅に戻れます。番号は情報タブの緊急連絡先と同じ。</div>';
+  GUIDE_SOS.forEach(function(k){
+    var m = '<div class="lmore" style="margin-left:0;display:block">';
+    k.steps.forEach(function(st, i){ m += '<div class="lstep"><span class="n">' + (i+1) + '</span><span>' + st + '</span></div>'; });
+    (k.tips || []).forEach(function(tp){ var w = tp.indexOf('注意｜') === 0; m += '<div class="ltip' + (w ? ' warn' : '') + '">' + (w ? tp : '・' + tp) + '</div>'; });
+    m += '</div>';
+    h += '<div class="kb-card gd-card gd-fold" onclick="gdFold(this)">' +
+      '<div class="kb-title">' + k.title + '</div><div class="gd-lead">' + k.lead + '</div>' +
+      '<div class="kb-body">' + m + '</div></div>';
+  });
+
+  h += '<div class="sec-h jmp-t" id="jg-en">— 指差し英語 —</div>';
+  h += '<div class="sec-hint">読み上げなくても、この画面を見せれば通じる短文。タップで開く。</div>';
+  GUIDE_PHRASES.forEach(function(k){
+    var m = '';
+    k.rows.forEach(function(r){ m += '<div class="gd-ph"><div class="en">' + r[0] + '</div><div class="ja">' + r[1] + '</div></div>'; });
+    h += '<div class="kb-card gd-card gd-fold" onclick="gdFold(this)">' +
+      '<div class="kb-title">' + k.title + '</div><div class="kb-body">' + m + '</div></div>';
   });
 
   h += '<div class="sec-h jmp-t" id="jg-lib">— 誌面ライブラリ（全31頁） —</div>';

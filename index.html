@@ -278,7 +278,7 @@ body {
 /* 文字入力中はソフトキーボードが固定要素を画面中央あたりまで押し上げるので、その間は隠す */
 body:has(input:focus) .idx, body:has(textarea:focus) .idx { display:none; }
 </style>
-<!-- ?v= はキャッシュずれ対策。sw.js の CACHE と一緒に上げる --><link rel="stylesheet" href="pages.css?v=17">
+<!-- ?v= はキャッシュずれ対策。sw.js の CACHE と一緒に上げる --><link rel="stylesheet" href="pages.css?v=18">
 </head>
 <body>
 <div class="holes"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
@@ -297,14 +297,14 @@ body:has(input:focus) .idx, body:has(textarea:focus) .idx { display:none; }
 <nav class="idx" id="idx"></nav>
 <div id="toast"></div>
 
-<script src="trip.js?v=17"></script>
-<script src="map.js?v=17"></script>
-<script src="prep.js?v=17"></script>
-<script src="guide.js?v=17"></script>
-<script src="info.js?v=17"></script>
-<script src="news.js?v=17"></script>
-<script src="wx.js?v=17"></script>
-<script src="docs.js?v=17"></script>
+<script src="trip.js?v=18"></script>
+<script src="map.js?v=18"></script>
+<script src="prep.js?v=18"></script>
+<script src="guide.js?v=18"></script>
+<script src="info.js?v=18"></script>
+<script src="news.js?v=18"></script>
+<script src="wx.js?v=18"></script>
+<script src="docs.js?v=18"></script>
 <script>
 /* ============ 旅の手帳 v2 — シェル ============ */
 /* 下部タブは5つ。「読む」は雑誌・手引き・情報の3面をまとめ、上部の小見出しで切り替える */
@@ -501,6 +501,7 @@ function nowStripHTML(day) {
   h += '<div class="ns-btns">' +
     (next && next.r.map ? '<a class="lbtn" href="' + next.r.map + '" target="_blank" rel="noopener">次の場所へ</a>' : '') +
     '<button class="lbtn" onclick="show(\'prep\'); jumpTo(\'jp-dc\')">書類</button>' +
+    '<button class="lbtn" onclick="show(\'guide\'); jumpTo(\'jg-sos\')">もしも</button>' +
     '<button class="lbtn warn" onclick="show(\'info\'); jumpTo(\'ji-em\')">緊急連絡先</button></div></div>';
   return h;
 }
