@@ -23,6 +23,13 @@
 | `prep.js` | 準備タブ（リマインダー・ToDo・予約トラッカー・持ち物 PACKING） |
 | `info.js` | 情報タブ（為替・緊急連絡先・交通ガイド・参考リンク・予算） |
 | `pages.css` | 地図・準備・情報タブの装丁 |
+| `news.js` | 雑誌タブ「南十字星」（`articles.json` を読んで手帳に挟まったミニ雑誌として描画） |
+| `articles.json` | 雑誌の記事データ。**毎朝の自動配信（下記 TravelPressDaily）が追記する**。手で編集しない |
+| `wx.js` | 天気の実況（Open-Meteo・キー不要。3地点×16日、localStorage に3時間保持） |
+| `guide.js` | 手引きタブ（出発日タイムライン・現地の作法・誌面ライブラリ。2026-08-17 新設） |
+| `docs.js` | 書類ポケット（eチケット等を IndexedDB に端末内保存。ネットに送らない） |
+| `manifest.webmanifest` | PWA マニフェスト（ホーム画面追加用） |
+| `scripts/` | 自動配信ランチャー `auto-press.ps1`・`press-prompt.txt`・`add-issue.mjs`・`fetch-press-image.mjs`・ログ `auto-press.log` |
 | `sw.js` | オフライン対応（写真込みプリキャッシュ。更新時は CACHE を上げる） |
 | `validate.mjs` | データ検証。**データ変更後は `node validate.mjs` を必ず実行** |
 | `travel-data.md` | 人間可読の旅行内容ソース（ユーザーが他AIで編集→Claudeが trip.js に反映） |
@@ -35,9 +42,15 @@
 2. Claude が `trip.js`（旅程・付箋）や `map.js`（スポット・営業時間）を編集
 3. `node validate.mjs` で検証（曜日照合・時刻昇順・付箋キー・営業時間書式・DAY5厳守）
 4. **CSS/JSを変えたら3点セットでバージョンを上げる**: `sw.js` の CACHE と `V`、`index.html` のCSS/JS参照の `?v=` を同じ番号に揃える（資産はcache-firstのため。`?v=` を忘れると旧SW稼働中の端末で「新HTML＋旧CSS」のちぐはぐ表示が起きる）。trip.js等のデータのみの変更でも同様
-5. headless Chrome でレンダリング確認 → ユーザー確認 → 明示指示があったら push
+5. headless Chrome でレンダリング確認 → 検証が通ったらそのまま push（2026-09-11 ユーザー指示「今後も自動的にpushしてください」）。push したことは報告に一言添える
 
-※ push は必ずユーザーの明示指示を待つ。デザインプレビューはGoogleドライブ（Claude成果物/travel-itinerary/デザイン比較/）にも保存。
+※ push は自動でよい（`node validate.mjs`・構文チェック・必要なら描画確認が通ってから。`git pull --rebase --autostash` → push → デプロイ成功を確認）。個人情報（参考資料/）を含めない条件は変わらない。デザインプレビューは Read でチャットに見せる（保存が要るときだけ Drive の `Claude成果物/travel-itinerary/デザイン比較/`）。
+
+## 自動配信（TravelPressDaily・2026-09-06 確認、稼働中）
+
+- タスクスケジューラ `TravelPressDaily`（毎朝 6:47）が `scripts/auto-press.ps1` を起動し、`claude -p` がその日の記事を調べて `add-issue.mjs` で `articles.json` に追記し、**無人で git push する**（2026-09-06 時点で第59号）。2026-09-19 以降はプロンプトが自ら終了する。
+- 停止: `Unregister-ScheduledTask -TaskName 'TravelPressDaily' -Confirm:$false`。状態: `Get-ScheduledTaskInfo -TaskName 'TravelPressDaily'`。作法は `headless-job` スキル。
+- 2026-09-11 に手動セッションも自動 push 可となったため、自動配信との区別は不要になった。
 
 ## trip.js の書式（スケジュール行）
 
