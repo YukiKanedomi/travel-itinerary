@@ -281,6 +281,15 @@ var gmapMode = 'auto';   /* 'auto' | 'svg'（利用者が模式図を選んだ�
 try { gmapMode = localStorage.getItem('map_mode_v1') || 'auto'; } catch(e){}
 function gmapWanted(){ return !!gmapKey() && navigator.onLine !== false && gmapMode !== 'svg'; }
 function setMapMode(m){ gmapMode = m; try { localStorage.setItem('map_mode_v1', m); } catch(e){} renderMapPage(); }
+/* 貼り付け欄からキーを取り出して記憶（リンクごと貼ってもよい） */
+function saveGmapKey(){
+  var el = document.getElementById('gkey-in'); if (!el) return;
+  var m = /([A-Za-z0-9_\-]{30,})/.exec(el.value || '');
+  if (!m) { el.placeholder = 'キーが見つかりません。リンク全体を貼ってください'; el.value = ''; return; }
+  try { localStorage.setItem('gmaps_key', m[1]); } catch(e){}
+  gmapMode = 'auto'; try { localStorage.setItem('map_mode_v1', 'auto'); } catch(e){}
+  renderMapPage();
+}
 var gmapLoading = null, gmapObj = null, gmapMe = null;
 function loadGmaps(){
   if (window.google && google.maps) return Promise.resolve();
@@ -415,7 +424,9 @@ function renderMapPage() {
     h += '<div class="area-tabs gmode"><button class="' + (useG?'on':'') + '" onclick="setMapMode(\'auto\')">Googleマップ</button>' +
          '<button class="' + (useG?'':'on') + '" onclick="setMapMode(\'svg\')">模式図</button></div>';
   } else {
-    h += '<div class="sec-hint">Googleマップで見るには「有効化リンク」を一度開く（Driveの travel-itinerary/地図 フォルダ）。オフラインではこの模式図が出ます。</div>';
+    h += '<div class="gkey"><div class="sec-hint">Googleマップで見るには、有効化リンク（またはキー）をここに貼り付けて保存。ホーム画面のアプリはSafariと記憶が別なので、こちらでも一度だけ必要です。オフラインでは模式図が出ます。</div>' +
+         '<div class="gkey-row"><input class="gkey-in" id="gkey-in" type="text" placeholder="有効化リンクかキーを貼り付け" autocapitalize="off" autocorrect="off" spellcheck="false">' +
+         '<button type="button" class="only-left" onclick="saveGmapKey()">保存</button></div></div>';
   }
   var pins = '';
   spots.forEach(function(s){
