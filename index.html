@@ -650,6 +650,15 @@ function renderIdx() {
 /* ---- init ---- */
 (function(){
   function safe(f){ try{ f(); }catch(e){ if(window.console) console.warn(e); } }
+  /* Googleマップのキー: #key=… を一度付けて開くと端末に記憶し、URLからは消して地図タブを開く。
+     地図タブの描画より前に済ませる（描画時に localStorage を見るため） */
+  safe(function(){
+    var m = /[#?&]key=([A-Za-z0-9_\-]{20,})/.exec(location.hash + location.search);
+    if (m) {
+      try { localStorage.setItem('gmaps_key', m[1]); } catch(e){}
+      history.replaceState(null, '', location.pathname + '#map');
+    }
+  });
   safe(renderNow);
   safe(renderToc);
   safe(renderMapPage);
@@ -658,14 +667,6 @@ function renderIdx() {
   safe(renderInfoPage);
   safe(initNews);
   safe(renderIdx);
-  /* Googleマップのキー: #key=… を一度付けて開くと端末に記憶し、URLからは消して地図タブを開く */
-  safe(function(){
-    var m = /[#?&]key=([A-Za-z0-9_\-]{20,})/.exec(location.hash + location.search);
-    if (m) {
-      try { localStorage.setItem('gmaps_key', m[1]); } catch(e){}
-      history.replaceState(null, '', location.pathname + '#map');
-    }
-  });
   /* ディープリンク: #toc / #map / #prep / #read / #news / #guide / #info / #day1〜#day7 */
   safe(function(){
     var m = /^#day([1-7])$/.exec(location.hash);
