@@ -477,10 +477,10 @@ function openSV(lat, lng, label){
   msg.textContent = '読み込み中…';
   loadGmaps().then(function(){
     var target = new google.maps.LatLng(lat, lng);
-    /* 一般投稿の球体写真（屋内・真っ黒になりがち）は避け、Google公式の屋外パノラマだけを探す。近くに無ければ半径を広げる */
+    /* 一般投稿の球体写真（屋内・真っ黒になりがち）は避け、Google公式の撮影分だけを探す（OUTDOOR指定では投稿写真が混ざった）。近くに無ければ半径を広げる */
     var svc = new google.maps.StreetViewService(), radii = [150, 400], i = 0;
     function tryNext(){
-      svc.getPanorama({ location:target, radius:radii[i], preference:'nearest', source:google.maps.StreetViewSource.OUTDOOR }, function(data, st){
+      svc.getPanorama({ location:target, radius:radii[i], preference:'nearest', source:(google.maps.StreetViewSource && google.maps.StreetViewSource.GOOGLE) || 'google' }, function(data, st){
         if (st !== 'OK' || !data || !data.location) {
           if (++i < radii.length) return tryNext();
           msg.textContent = 'この地点はストリートビュー未対応です'; return;
@@ -491,6 +491,7 @@ function openSV(lat, lng, label){
     tryNext();
     function showPano(data){
       msg.textContent = '';
+      document.getElementById('sv-pano').dataset.credit = data.copyright || '';
       var loc = data.location.latLng;
       var heading = svHeading({ lat:loc.lat(), lng:loc.lng() }, { lat:lat, lng:lng });
       svPano = new google.maps.StreetViewPanorama(document.getElementById('sv-pano'), {
