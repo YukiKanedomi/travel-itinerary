@@ -248,6 +248,17 @@ body {
 .ns-btns { display:flex; gap:8px; margin-top:9px; }
 .ns-btns .lbtn { max-width:none; font-family:inherit; cursor:pointer; }
 .lbtn.warn { border-color:var(--red); color:var(--red); }
+.lbtn.sv { border-color:var(--blue); color:var(--blue); font-family:inherit; cursor:pointer; }
+/* 入口の予行演習（Street View） */
+.sv-viewer { display:none; position:fixed; inset:0; z-index:90; background:#151310; flex-direction:column; }
+.sv-viewer.on { display:flex; }
+.sv-head { display:flex; align-items:center; gap:10px; padding:calc(10px + env(safe-area-inset-top)) 14px 10px; color:#F3EDE2; }
+.sv-t { flex:1; min-width:0; font-size:13px; font-weight:700; line-height:1.4; }
+.sv-close { flex-shrink:0; font-family:inherit; font-size:12px; font-weight:700; padding:7px 14px; border-radius:6px;
+  border:1px solid #F3EDE2; background:transparent; color:#F3EDE2; cursor:pointer; }
+.sv-pano { flex:1; min-height:0; }
+.sv-msg { position:absolute; left:0; right:0; top:50%; text-align:center; color:#F3EDE2; font-size:13px; padding:0 24px; pointer-events:none; line-height:1.8; }
+.sv-hint { padding:8px 14px calc(8px + env(safe-area-inset-bottom)); font-size:10.5px; color:#B8AE9C; line-height:1.6; }
 
 /* ── 移植中スタブ ── */
 .stub-page { margin:26px 18px 0 26px; border:1.5px dashed var(--edge); border-radius:8px;
@@ -278,7 +289,7 @@ body {
 /* 文字入力中はソフトキーボードが固定要素を画面中央あたりまで押し上げるので、その間は隠す */
 body:has(input:focus) .idx, body:has(textarea:focus) .idx { display:none; }
 </style>
-<!-- ?v= はキャッシュずれ対策。sw.js の CACHE と一緒に上げる --><link rel="stylesheet" href="pages.css?v=24">
+<!-- ?v= はキャッシュずれ対策。sw.js の CACHE と一緒に上げる --><link rel="stylesheet" href="pages.css?v=25">
 </head>
 <body>
 <div class="holes"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
@@ -296,15 +307,21 @@ body:has(input:focus) .idx, body:has(textarea:focus) .idx { display:none; }
 
 <nav class="idx" id="idx"></nav>
 <div id="toast"></div>
+<div class="sv-viewer" id="sv-viewer">
+  <div class="sv-head"><span class="sv-t" id="sv-title"></span><button type="button" class="sv-close" onclick="closeSV()">閉じる</button></div>
+  <div class="sv-pano" id="sv-pano"></div>
+  <div class="sv-msg" id="sv-msg"></div>
+  <div class="sv-hint">ドラッグで見回す・道路の矢印で進む。実際の景色とは季節や工事で違うことがあります</div>
+</div>
 
-<script src="trip.js?v=24"></script>
-<script src="map.js?v=24"></script>
-<script src="prep.js?v=24"></script>
-<script src="guide.js?v=24"></script>
-<script src="info.js?v=24"></script>
-<script src="news.js?v=24"></script>
-<script src="wx.js?v=24"></script>
-<script src="docs.js?v=24"></script>
+<script src="trip.js?v=25"></script>
+<script src="map.js?v=25"></script>
+<script src="prep.js?v=25"></script>
+<script src="guide.js?v=25"></script>
+<script src="info.js?v=25"></script>
+<script src="news.js?v=25"></script>
+<script src="wx.js?v=25"></script>
+<script src="docs.js?v=25"></script>
 <script>
 /* ============ 旅の手帳 v2 — シェル ============ */
 /* 下部タブは5つ。「読む」は雑誌・手引き・情報の3面をまとめ、上部の小見出しで切り替える */
@@ -365,7 +382,7 @@ function stubHTML(v, alt, tapeCls) {
 }
 function stubFold(el) { el.parentNode.classList.toggle('open'); }
 function rowExtras(r) {
-  if (!r.steps && !r.tips && !r.map && !r.web) return '';
+  if (!r.steps && !r.tips && !r.map && !r.web && !r.sv) return '';
   var m = '<div class="lmore">';
   (r.steps || []).forEach(function(s, i){
     m += '<div class="lstep"><span class="n">' + (i+1) + '</span><span>' + s + '</span></div>';
@@ -374,8 +391,9 @@ function rowExtras(r) {
     var warn = tp.indexOf('注意｜') === 0;
     m += '<div class="ltip' + (warn ? ' warn' : '') + '">' + (warn ? tp : '・' + tp) + '</div>';
   });
-  if (r.map || r.web) {
+  if (r.map || r.web || r.sv) {
     m += '<div class="lbtns">';
+    if (r.sv) m += '<button class="lbtn sv" onclick="openSV(' + r.sv.lat + ',' + r.sv.lng + ',\'' + r.sv.label + '\')">入口を見る 360°</button>';
     if (r.map) m += '<a class="lbtn" href="' + r.map + '" target="_blank" rel="noopener">Google マップ</a>';
     if (r.web) m += '<a class="lbtn web" href="' + r.web + '" target="_blank" rel="noopener">公式サイト</a>';
     m += '</div>';
@@ -440,6 +458,42 @@ function dayPageHTML(day, withBack) {
   return h;
 }
 function gotoDay(n) { show('toc'); openDay(n); }
+
+/* ---- 入口の予行演習（Street View 360°）。地図と同じキーで動く ---- */
+var svPano = null;
+function svHeading(a, b){
+  var r = Math.PI / 180, dLon = (b.lng - a.lng) * r;
+  var y = Math.sin(dLon) * Math.cos(b.lat * r);
+  var x = Math.cos(a.lat * r) * Math.sin(b.lat * r) - Math.sin(a.lat * r) * Math.cos(b.lat * r) * Math.cos(dLon);
+  return (Math.atan2(y, x) * 180 / Math.PI + 360) % 360;
+}
+function openSV(lat, lng, label){
+  var v = document.getElementById('sv-viewer'), msg = document.getElementById('sv-msg');
+  document.getElementById('sv-title').textContent = label;
+  document.getElementById('sv-pano').innerHTML = '';
+  v.classList.add('on');
+  if (typeof gmapKey !== 'function' || !gmapKey()) { msg.textContent = 'Googleマップの有効化が必要です（地図タブでキーを貼り付け）'; return; }
+  if (navigator.onLine === false) { msg.textContent = 'オンラインのときに見られます'; return; }
+  msg.textContent = '読み込み中…';
+  loadGmaps().then(function(){
+    var target = new google.maps.LatLng(lat, lng);
+    new google.maps.StreetViewService().getPanorama({ location:target, radius:120, preference:'nearest' }, function(data, st){
+      if (st !== 'OK' || !data || !data.location) { msg.textContent = 'この地点はストリートビュー未対応です'; return; }
+      msg.textContent = '';
+      var loc = data.location.latLng;
+      var heading = svHeading({ lat:loc.lat(), lng:loc.lng() }, { lat:lat, lng:lng });
+      svPano = new google.maps.StreetViewPanorama(document.getElementById('sv-pano'), {
+        pano:data.location.pano, pov:{ heading:heading, pitch:0 }, zoom:0.8,
+        addressControl:false, showRoadLabels:true, motionTracking:false, motionTrackingControl:false,
+        fullscreenControl:false, panControl:false, enableCloseButton:false
+      });
+    });
+  }).catch(function(){ msg.textContent = '読み込めませんでした（電波を確認）'; });
+}
+function closeSV(){
+  document.getElementById('sv-viewer').classList.remove('on');
+  document.getElementById('sv-pano').innerHTML = ''; svPano = null;
+}
 
 /* ---- 現地時間（豪東部）で「今の行」を判定 ---- */
 /* 旅行中の画面を出発前に確かめるためのプレビュー: ?today=2026-09-22T10:30（現地時刻として扱う） */
@@ -688,6 +742,11 @@ function renderIdx() {
       var row = e.target.closest && e.target.closest('.check-row[data-now-todo]');
       if (row) nowTodoToggle(row);
     });
+  });
+  /* 確認用: ?sv=lat,lng を付けると起動時にその地点の予行演習を開く */
+  safe(function(){
+    var q = /[?&]sv=(-?[\d.]+),(-?[\d.]+)/.exec(location.search);
+    if (q) setTimeout(function(){ openSV(parseFloat(q[1]), parseFloat(q[2]), 'プレビュー'); }, 800);
   });
   /* 天気：取得（3時間以内なら前回分）＋ 旅行中は1分ごとに最上段を更新 */
   safe(wxRefresh);

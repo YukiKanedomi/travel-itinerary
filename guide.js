@@ -10,7 +10,7 @@ var GUIDE_GO = [
   { t:'14:54', h:'成田T2着 → まず3階でWi-Fi受取', d:'「J WiFi & Mobile」カウンター（07:00-21:00）。予約メール提示・約5分',
     steps:[ '混んでいたら「法人会員優先レーン」のメールを係員に見せる',
       'ルーターとモバイルバッテリーは手荷物のカバンへ（預け入れ禁止）' ] },
-  { t:'15:15', h:'JALカウンターで荷物を預ける', d:'パスポートを出すだけ。搭乗券はWalletのQRでOK',
+  { t:'15:15', h:'JALカウンターで荷物を預ける', d:'パスポートを出すだけ。搭乗券はWalletのQRでOK', sv:{ lat:35.77325, lng:140.38759, label:'成田空港 第2ターミナル（出発階の車寄せ）' },
     tips:[ 'オンラインチェックイン済なら「荷物預けのみ」の列が速い',
       '聞かれるのはほぼ一つ「モバイルバッテリーは預け入れに入っていませんか？」→「入っていません」' ] },
   { t:'15:40', h:'身軽になったら自由時間（17:00まで）', d:'4階展望デッキ（無料）→ IASSラウンジ（保安検査前のエリア）。最後の日本食は検査後の制限エリアで',
@@ -233,6 +233,19 @@ var GUIDE_PHRASES = [
     ['Sorry, it stopped.', 'すみません、止まりました（セルフレジ）'] ] }
 ];
 
+/* ---- 入口の予行演習（Street View）。旅程の行の sv に加えて、行に紐づかない地点 ---- */
+var SV_EXTRA = [
+  { when:'9/21', label:'サザンクロス駅 Collins St側の出口（SkyBus降車後）', lat:-37.8180, lng:144.9536 },
+  { when:'9/25', label:'サーキュラー・キー 3番埠頭（マンリー行きフェリー）', lat:-33.8613, lng:151.2105 }
+];
+function svPoints(){
+  var out = [];
+  GUIDE_GO.forEach(function(r){ if (r.sv) out.push({ when:'9/20 ' + r.t, label:r.sv.label, lat:r.sv.lat, lng:r.sv.lng }); });
+  TRIP.days.forEach(function(d){ d.sched.forEach(function(r){ if (r.sv) out.push({ when:d.date + ' ' + r.t, label:r.sv.label, lat:r.sv.lat, lng:r.sv.lng }); }); });
+  SV_EXTRA.forEach(function(p){ out.push(p); });
+  return out;
+}
+
 /* ---- 誌面ライブラリ（assets/guide/p01-p20.jpg） ---- */
 var GUIDE_PAGES = [
   '宿 — インターコンチネンタル メルボルン', '宿 — リッジス ワールドスクエア',
@@ -261,7 +274,7 @@ function renderGuidePage() {
   var h = '<div class="toc-head"><div class="toc-eyebrow">FIELD GUIDE</div>' +
     '<div class="toc-h1">旅の手引き</div></div>';
   h += '<div class="sec-hint">当日の動きかたと、現地の細かい作法。じっくり読む詳細版はGoogleドライブの「渡航当日ガイド」に。</div>';
-  h += jmpHTML([['jg-go','出発日'],['jg-back','帰国日'],['jg-hb','作法帖'],['jg-sos','もしも'],['jg-en','指差し英語'],['jg-lib','誌面']]);
+  h += jmpHTML([['jg-go','出発日'],['jg-back','帰国日'],['jg-hb','作法帖'],['jg-sos','もしも'],['jg-en','指差し英語'],['jg-sv','予行演習'],['jg-lib','誌面']]);
 
   h += '<div class="sec-h jmp-t" id="jg-go">— 出発日の動きかた（9/20 家 → 9/21 ホテル） —</div>';
   h += ledgerHTML(GUIDE_GO, null);
@@ -297,6 +310,15 @@ function renderGuidePage() {
     h += '<div class="kb-card gd-card gd-fold" onclick="gdFold(this)">' +
       '<div class="kb-title">' + k.title + '</div><div class="kb-body">' + m + '</div></div>';
   });
+
+  h += '<div class="sec-h jmp-t" id="jg-sv">— 入口の予行演習（360°） —</div>';
+  h += '<div class="sec-hint">迷いやすい場所の「見た目」を出発前に歩いておく。Googleマップの有効化が必要（オンライン時のみ）。景色は季節や工事で変わることがあります。</div>';
+  h += '<div class="ledger" style="margin-top:8px">';
+  svPoints().forEach(function(p){
+    h += '<div class="lrow"><div class="lmain"><div class="t">' + p.when.replace(' ', '<br>') + '</div><div class="body"><div class="h">' + p.label + '</div>' +
+      '<div class="lbtns"><button class="lbtn sv" onclick="openSV(' + p.lat + ',' + p.lng + ',\'' + p.label + '\')">入口を見る 360°</button></div></div></div></div>';
+  });
+  h += '</div>';
 
   h += '<div class="sec-h jmp-t" id="jg-lib">— 誌面ライブラリ（全31頁） —</div>';
   h += '<div class="sec-hint">この旅のために編んだ特集。タップで拡大、左右で前後の頁へ。機内でも読めます。</div>';
