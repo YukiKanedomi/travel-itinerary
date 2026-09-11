@@ -289,7 +289,7 @@ body {
 /* 文字入力中はソフトキーボードが固定要素を画面中央あたりまで押し上げるので、その間は隠す */
 body:has(input:focus) .idx, body:has(textarea:focus) .idx { display:none; }
 </style>
-<!-- ?v= はキャッシュずれ対策。sw.js の CACHE と一緒に上げる --><link rel="stylesheet" href="pages.css?v=25">
+<!-- ?v= はキャッシュずれ対策。sw.js の CACHE と一緒に上げる --><link rel="stylesheet" href="pages.css?v=26">
 </head>
 <body>
 <div class="holes"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
@@ -314,14 +314,14 @@ body:has(input:focus) .idx, body:has(textarea:focus) .idx { display:none; }
   <div class="sv-hint">ドラッグで見回す・道路の矢印で進む。実際の景色とは季節や工事で違うことがあります</div>
 </div>
 
-<script src="trip.js?v=25"></script>
-<script src="map.js?v=25"></script>
-<script src="prep.js?v=25"></script>
-<script src="guide.js?v=25"></script>
-<script src="info.js?v=25"></script>
-<script src="news.js?v=25"></script>
-<script src="wx.js?v=25"></script>
-<script src="docs.js?v=25"></script>
+<script src="trip.js?v=26"></script>
+<script src="map.js?v=26"></script>
+<script src="prep.js?v=26"></script>
+<script src="guide.js?v=26"></script>
+<script src="info.js?v=26"></script>
+<script src="news.js?v=26"></script>
+<script src="wx.js?v=26"></script>
+<script src="docs.js?v=26"></script>
 <script>
 /* ============ 旅の手帳 v2 — シェル ============ */
 /* 下部タブは5つ。「読む」は雑誌・手引き・情報の3面をまとめ、上部の小見出しで切り替える */
@@ -477,8 +477,19 @@ function openSV(lat, lng, label){
   msg.textContent = '読み込み中…';
   loadGmaps().then(function(){
     var target = new google.maps.LatLng(lat, lng);
-    new google.maps.StreetViewService().getPanorama({ location:target, radius:120, preference:'nearest' }, function(data, st){
-      if (st !== 'OK' || !data || !data.location) { msg.textContent = 'この地点はストリートビュー未対応です'; return; }
+    /* 一般投稿の球体写真（屋内・真っ黒になりがち）は避け、Google公式の屋外パノラマだけを探す。近くに無ければ半径を広げる */
+    var svc = new google.maps.StreetViewService(), radii = [150, 400], i = 0;
+    function tryNext(){
+      svc.getPanorama({ location:target, radius:radii[i], preference:'nearest', source:google.maps.StreetViewSource.OUTDOOR }, function(data, st){
+        if (st !== 'OK' || !data || !data.location) {
+          if (++i < radii.length) return tryNext();
+          msg.textContent = 'この地点はストリートビュー未対応です'; return;
+        }
+        showPano(data);
+      });
+    }
+    tryNext();
+    function showPano(data){
       msg.textContent = '';
       var loc = data.location.latLng;
       var heading = svHeading({ lat:loc.lat(), lng:loc.lng() }, { lat:lat, lng:lng });
@@ -487,7 +498,7 @@ function openSV(lat, lng, label){
         addressControl:false, showRoadLabels:true, motionTracking:false, motionTrackingControl:false,
         fullscreenControl:false, panControl:false, enableCloseButton:false
       });
-    });
+    }
   }).catch(function(){ msg.textContent = '読み込めませんでした（電波を確認）'; });
 }
 function closeSV(){
