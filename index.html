@@ -278,7 +278,7 @@ body {
 /* 文字入力中はソフトキーボードが固定要素を画面中央あたりまで押し上げるので、その間は隠す */
 body:has(input:focus) .idx, body:has(textarea:focus) .idx { display:none; }
 </style>
-<!-- ?v= はキャッシュずれ対策。sw.js の CACHE と一緒に上げる --><link rel="stylesheet" href="pages.css?v=23">
+<!-- ?v= はキャッシュずれ対策。sw.js の CACHE と一緒に上げる --><link rel="stylesheet" href="pages.css?v=24">
 </head>
 <body>
 <div class="holes"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
@@ -297,14 +297,14 @@ body:has(input:focus) .idx, body:has(textarea:focus) .idx { display:none; }
 <nav class="idx" id="idx"></nav>
 <div id="toast"></div>
 
-<script src="trip.js?v=23"></script>
-<script src="map.js?v=23"></script>
-<script src="prep.js?v=23"></script>
-<script src="guide.js?v=23"></script>
-<script src="info.js?v=23"></script>
-<script src="news.js?v=23"></script>
-<script src="wx.js?v=23"></script>
-<script src="docs.js?v=23"></script>
+<script src="trip.js?v=24"></script>
+<script src="map.js?v=24"></script>
+<script src="prep.js?v=24"></script>
+<script src="guide.js?v=24"></script>
+<script src="info.js?v=24"></script>
+<script src="news.js?v=24"></script>
+<script src="wx.js?v=24"></script>
+<script src="docs.js?v=24"></script>
 <script>
 /* ============ 旅の手帳 v2 — シェル ============ */
 /* 下部タブは5つ。「読む」は雑誌・手引き・情報の3面をまとめ、上部の小見出しで切り替える */
@@ -442,7 +442,15 @@ function dayPageHTML(day, withBack) {
 function gotoDay(n) { show('toc'); openDay(n); }
 
 /* ---- 現地時間（豪東部）で「今の行」を判定 ---- */
+/* 旅行中の画面を出発前に確かめるためのプレビュー: ?today=2026-09-22T10:30（現地時刻として扱う） */
+var NOW_OVERRIDE = null;
+try {
+  var _t = /[?&]today=(\d{4}-\d{2}-\d{2})T(\d{2}):(\d{2})/.exec(location.search);
+  /* DAY1（9/20）は日本時間で指定できるよう、内部の豪州時間に+60分して持つ */
+  if (_t) NOW_OVERRIDE = { ymd:_t[1], min:parseInt(_t[2],10)*60+parseInt(_t[3],10) + (_t[1] === '2026-09-20' ? 60 : 0) };
+} catch(e){}
 function auParts() {
+  if (NOW_OVERRIDE) return { ymd:NOW_OVERRIDE.ymd, min:NOW_OVERRIDE.min };
   try {
     var p = {};
     new Intl.DateTimeFormat('en-US',{timeZone:'Australia/Sydney',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false})
