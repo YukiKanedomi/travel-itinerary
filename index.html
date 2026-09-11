@@ -498,6 +498,9 @@ function closeSV(){
 /* ---- 現地時間（豪東部）で「今の行」を判定 ---- */
 /* 旅行中の画面を出発前に確かめるためのプレビュー: ?today=2026-09-22T10:30（現地時刻として扱う） */
 var NOW_OVERRIDE = null;
+/* 確認用: ?sv=lat,lng は #key= の処理でURLが書き換わる前に読んでおく */
+var SV_PREVIEW = null;
+try { var _s = /[?&]sv=(-?[\d.]+),(-?[\d.]+)/.exec(location.search); if (_s) SV_PREVIEW = [parseFloat(_s[1]), parseFloat(_s[2])]; } catch(e){}
 try {
   var _t = /[?&]today=(\d{4}-\d{2}-\d{2})T(\d{2}):(\d{2})/.exec(location.search);
   /* DAY1（9/20）は日本時間で指定できるよう、内部の豪州時間に+60分して持つ */
@@ -745,8 +748,7 @@ function renderIdx() {
   });
   /* 確認用: ?sv=lat,lng を付けると起動時にその地点の予行演習を開く */
   safe(function(){
-    var q = /[?&]sv=(-?[\d.]+),(-?[\d.]+)/.exec(location.search);
-    if (q) setTimeout(function(){ openSV(parseFloat(q[1]), parseFloat(q[2]), 'プレビュー'); }, 800);
+    if (SV_PREVIEW) setTimeout(function(){ openSV(SV_PREVIEW[0], SV_PREVIEW[1], 'プレビュー'); }, 800);
   });
   /* 天気：取得（3時間以内なら前回分）＋ 旅行中は1分ごとに最上段を更新 */
   safe(wxRefresh);
