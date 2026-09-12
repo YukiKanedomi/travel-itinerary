@@ -1,6 +1,7 @@
 ﻿<!DOCTYPE html>
 <html lang="ja">
 <head>
+<script>try{var _n=localStorage.getItem('night_v1');if(_n)document.documentElement.classList.add(_n==='on'?'night':'day');}catch(e){}</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#F3EDE2">
@@ -21,7 +22,18 @@
   --line:rgba(120,100,75,.22); --edge:#D8CDB8;
   --red:#C7402D; --blue:#4A6FA5; --tape:#E8C458; --green:#5B7F4E;
   --mono:"IBM Plex Mono",monospace;
+  --r-card:8px; --shadow-card:0 1px 3px rgba(90,75,50,.1);
+  /* 夜の手帳: --inv が 1 のとき紙面を反転＋色相を戻して「暖色の減光」にする（写真と地図は元に戻す） */
+  --inv:0;
 }
+/* 夜はカード（paper-hi）を真っ黒でなく暗い生成りに落とすため、反転前の色を少し沈める */
+html.night { --inv:1; --paper-hi:#DCD5C8; }
+@media (prefers-color-scheme: dark) { html:not(.day) { --inv:1; --paper-hi:#DCD5C8; } }
+main, .holes, .idx, .day-sticky, #toast { filter:invert(var(--inv)) hue-rotate(calc(var(--inv) * 180deg)); }
+main img, main .gmap, main .mapframe, main video, main canvas { filter:invert(var(--inv)) hue-rotate(calc(var(--inv) * 180deg)); }
+html.night body { background:#1D1813; }
+@media (prefers-color-scheme: dark) { html:not(.day) body { background:#1D1813; } }
+html.night { color-scheme:dark; }
 * { margin:0; padding:0; box-sizing:border-box; }
 html { -webkit-text-size-adjust:100%; }
 img { max-width:100%; height:auto; } /* pages.css 不達時でも写真がはみ出さない保険 */
@@ -56,7 +68,7 @@ body {
 .ph-day small { font-size:15px; font-weight:700; letter-spacing:.08em; }
 .ph-date { font-size:13px; color:var(--ink-faint); font-weight:500; }
 .ph-date .mono { font-size:15px; font-weight:600; color:var(--ink); }
-.ph-title { font-size:16.5px; font-weight:700; margin-top:2px; }
+.ph-title { font-size:17px; font-weight:700; margin-top:2px; font-feature-settings:"palt"; letter-spacing:.01em; word-break:auto-phrase; text-wrap:balance; }
 .ph-wx { position:absolute; right:18px; top:20px; text-align:right; font-size:12.5px;
   color:var(--ink-faint); line-height:1.55; max-width:150px; word-break:auto-phrase; }
 .ph-wx .t { font-family:var(--mono); font-size:13px; font-weight:600; color:var(--ink); white-space:nowrap; }
@@ -68,7 +80,7 @@ body {
   transform:rotate(-1.2deg); position:relative; display:flex; }
 .stub.alt { transform:rotate(.8deg); }
 .stub-main { flex:1; padding:12px 12px 10px 14px; min-width:0; }
-.stub-kicker { font-size:11px; letter-spacing:.2em; color:var(--red); font-weight:700; }
+.stub-kicker { font-size:12px; letter-spacing:.24em; color:var(--red); font-weight:700; }
 .stub-name { font-size:15px; font-weight:900; line-height:1.4; margin:2px 0 4px; }
 .stub-meta { font-size:12px; color:var(--ink-faint); line-height:1.6; }
 .stub-meta b { color:var(--ink); font-weight:700; }
@@ -90,7 +102,7 @@ body {
 .stub-chev { font-size:11.5px; letter-spacing:.04em; color:var(--ink); font-weight:700; margin-top:6px; transition:transform .2s; white-space:nowrap; }
 .stub-wrap.open .stub-chev { transform:rotate(180deg); }
 .stub-more { display:none; margin:9px 4px 0 10px; padding:10px 13px 6px; background:var(--paper-hi);
-  border:1px dashed #C9BCA2; border-radius:6px; box-shadow:0 1px 3px rgba(90,75,50,.1); }
+  border:1px dashed #C9BCA2; border-radius:6px; box-shadow:var(--shadow-card); }
 .stub-wrap.open .stub-more { display:block; }
 .stub-more .r { font-size:13px; color:var(--ink-soft); line-height:1.7; padding:2px 0; }
 .stub-more .r.warn { color:var(--red); font-weight:700; }
@@ -126,7 +138,7 @@ body {
 .pager { display:flex; gap:10px; margin:22px 18px 0 26px; }
 .pager button { flex:1; font-family:inherit; cursor:pointer; text-align:left; padding:10px 12px;
   background:var(--paper-hi); border:1px solid var(--edge); border-radius:8px; color:var(--ink);
-  box-shadow:0 1px 3px rgba(90,75,50,.1); }
+  box-shadow:var(--shadow-card); }
 .pager button.nx { text-align:right; }
 .pager .pl { display:block; font-family:var(--mono); font-size:11.5px; color:var(--ink-faint); letter-spacing:.1em; }
 .pager .pt2 { display:block; font-size:13.5px; font-weight:700; line-height:1.4; margin-top:1px; }
@@ -143,7 +155,7 @@ body {
   box-shadow:0 1px 2px rgba(90,75,50,.14), 0 5px 12px -3px rgba(90,75,50,.3); }
 .scrap.l { transform:rotate(-1.1deg); }
 .scrap img { width:100%; height:120px; object-fit:cover; display:block;
-  filter:saturate(.92) contrast(.98); border:1px solid rgba(90,75,50,.12); }
+  filter:invert(var(--inv)) hue-rotate(calc(var(--inv) * 180deg)) saturate(.92) contrast(.98); border:1px solid rgba(90,75,50,.12); }
 .scrap.tall img { height:150px; }
 .scrap .cap { position:absolute; bottom:4px; left:10px; right:10px; font-size:12px; color:var(--ink-soft);
   letter-spacing:.06em; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
@@ -191,7 +203,7 @@ body {
 
 /* ── 目次（旅程インデックス） ── */
 .toc-head { padding:22px 18px 12px 26px; border-bottom:2.5px solid var(--ink); }
-.toc-eyebrow { font-size:11.5px; letter-spacing:.3em; color:var(--red); font-weight:700; }
+.toc-eyebrow { font-size:12px; letter-spacing:.24em; color:var(--red); font-weight:700; }
 .toc-h1 { font-size:23px; font-weight:900; line-height:1.4; margin-top:2px; }
 .toc-range { font-family:var(--mono); font-size:13px; color:var(--ink-faint); margin-top:2px; }
 .toc-list { margin:6px 18px 0 26px; }
@@ -213,7 +225,7 @@ body {
 
 /* ── 「いま」ページ（旅行前） ── */
 .now-head { padding:22px 18px 14px 26px; border-bottom:2.5px solid var(--ink); position:relative; }
-.now-eyebrow { font-size:11.5px; letter-spacing:.3em; color:var(--red); font-weight:700; }
+.now-eyebrow { font-size:12px; letter-spacing:.24em; color:var(--red); font-weight:700; }
 .count { display:flex; align-items:baseline; gap:8px; margin-top:4px; }
 .count .num { font-family:var(--mono); font-size:56px; font-weight:600; line-height:1; letter-spacing:-.02em; }
 .count .unit { font-size:14px; font-weight:700; }
@@ -222,7 +234,7 @@ body {
   clip-path:polygon(0 0, 100% 0, 100% 100%, 50% 84%, 0 100%); opacity:.85; }
 /* 「いま」ハブ：予報カード・いまやること・旅行中の現在地帯 */
 .wx-card { margin:14px 18px 0 26px; background:var(--paper-hi); border:1px solid var(--edge); border-radius:6px;
-  padding:10px 13px 8px; box-shadow:0 1px 3px rgba(90,75,50,.1); }
+  padding:10px 13px 8px; box-shadow:var(--shadow-card); }
 .wx-t { font-size:12.5px; letter-spacing:.2em; font-weight:700; color:var(--ink-faint); }
 .wx-row { display:flex; gap:10px; align-items:baseline; padding:5px 0 4px; border-bottom:1px dotted rgba(120,100,75,.3); }
 .wx-row:last-of-type { border-bottom:none; }
@@ -289,7 +301,7 @@ body {
 /* 文字入力中はソフトキーボードが固定要素を画面中央あたりまで押し上げるので、その間は隠す */
 body:has(input:focus) .idx, body:has(textarea:focus) .idx { display:none; }
 </style>
-<!-- ?v= はキャッシュずれ対策。sw.js の CACHE と一緒に上げる --><link rel="stylesheet" href="pages.css?v=30">
+<!-- ?v= はキャッシュずれ対策。sw.js の CACHE と一緒に上げる --><link rel="stylesheet" href="pages.css?v=31">
 </head>
 <body>
 <div class="holes"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
@@ -316,14 +328,14 @@ body:has(input:focus) .idx, body:has(textarea:focus) .idx { display:none; }
   <div class="sv-hint">ドラッグで見回す・道路の矢印で進む。実際の景色とは季節や工事で違うことがあります</div>
 </div>
 
-<script src="trip.js?v=30"></script>
-<script src="map.js?v=30"></script>
-<script src="prep.js?v=30"></script>
-<script src="guide.js?v=30"></script>
-<script src="info.js?v=30"></script>
-<script src="news.js?v=30"></script>
-<script src="wx.js?v=30"></script>
-<script src="docs.js?v=30"></script>
+<script src="trip.js?v=31"></script>
+<script src="map.js?v=31"></script>
+<script src="prep.js?v=31"></script>
+<script src="guide.js?v=31"></script>
+<script src="info.js?v=31"></script>
+<script src="news.js?v=31"></script>
+<script src="wx.js?v=31"></script>
+<script src="docs.js?v=31"></script>
 <script>
 /* ============ 旅の手帳 v2 — シェル ============ */
 /* 下部タブは5つ。「読む」は雑誌・手引き・情報の3面をまとめ、上部の小見出しで切り替える */
@@ -447,7 +459,7 @@ function dayPageHTML(day, withBack) {
     '<img src="' + opening.p + '" alt="" loading="lazy"><div class="cap">' + opening.c + '</div></div></div>';
   h += ledgerHTML(day.sched, 'きょうの流れ', dayNowIndex(day));
   /* 2枚目がある日は、メイン写真を締めに */
-  if (day.photo2 && day.photo) h += '<div class="scrap-wrap"><div class="scrap l"><div class="tape"></div>' +
+  if (day.photo2 && day.photo) h += '<div class="scrap-wrap"><div class="scrap l">' +
     '<img src="' + day.photo + '" alt="" loading="lazy"><div class="cap">' + day.cap + '</div></div></div>';
   if (day.memo) h += '<div class="memo"><span class="lead">メモ｜</span>' + day.memo + '</div>';
   h += picksHTML(day.picks);
@@ -618,7 +630,7 @@ function renderNow() {
   var host = document.getElementById('pane-now');
   var today = tripDayToday();
   if (today) {
-    host.innerHTML = nowStripHTML(today) + nowFocusHTML(today);
+    host.innerHTML = nowStripHTML(today) + nowFocusHTML(today) + nightBtnHTML();
     wxApply();
     return;
   }
@@ -640,6 +652,7 @@ function renderNow() {
     '<img src="assets/hero-sydney.jpg" alt="" loading="lazy">' +
     '<div class="cap">SYDNEY — もうすぐ、この景色に会える</div></div></div>';
   h += '<div class="memo"><span class="lead">メモ｜</span>持ち物・予約・書類ポケットは<u>準備タブ</u>に。旅程は「旅程」から。</div>';
+  h += nightBtnHTML();
   host.innerHTML = h;
   wxApply();
   if (typeof injectNowPress === 'function') injectNowPress();
@@ -751,8 +764,23 @@ function renderRead() {
       return '<button type="button" class="read-card" onclick="show(\'' + c[0] + '\')">' +
         '<span class="rc-body"><span class="rc-k">' + c[1] + '</span><span class="rc-t">' + c[2] + '</span>' +
         '<span class="rc-d">' + c[3] + '</span></span><span class="rc-c">›</span></button>';
-    }).join('') + '</div>';
+    }).join('') + '</div>' + nightBtnHTML();
 }
+/* 夜の手帳：端末のダークモードに従い、ボタンで上書きできる（記憶は night_v1） */
+function nightEffective() {
+  var h = document.documentElement;
+  if (h.classList.contains('night')) return true;
+  if (h.classList.contains('day')) return false;
+  return !!(window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches);
+}
+function toggleNight() {
+  var on = !nightEffective(), h = document.documentElement;
+  h.classList.toggle('night', on); h.classList.toggle('day', !on);
+  try { localStorage.setItem('night_v1', on ? 'on' : 'off'); } catch(e) {}
+  Array.prototype.forEach.call(document.querySelectorAll('.night-btn'), function(b){ b.textContent = nightBtnLabel(); });
+}
+function nightBtnLabel() { return nightEffective() ? '昼の手帳に戻す' : '夜の手帳にする'; }
+function nightBtnHTML() { return '<div class="night-row"><button type="button" class="night-btn" onclick="toggleNight()">' + nightBtnLabel() + '</button></div>'; }
 /* 日ページの追従見出し：見出しが画面から消えている間だけ上に出す */
 var _dsObs = null, _dsDay = null;
 function daySticky(on) {
