@@ -127,9 +127,9 @@ function lsSet(key, obj){ try { localStorage.setItem(key, JSON.stringify(obj)); 
 /* 進捗バーと「残りだけ」トグルの見出し。scope は td（ToDo）/ pk（持ち物） */
 function prepSecHead(label, scope, hint, id){
   return '<div class="sec-h jmp-t"' + (id ? ' id="' + id + '"' : '') + '>— ' + label + ' —</div>' +
-    '<div class="prog"><span class="pt"><span id="' + scope + '-done">0</span>/<span id="' + scope + '-total">0</span></span>' +
+    '<div class="prog"><span class="pt">残り <b id="' + scope + '-left">0</b> <small><span id="' + scope + '-done">0</span>/<span id="' + scope + '-total">0</span></small></span>' +
     '<div class="bar"><div class="fill" id="' + scope + '-fill" style="width:0%"></div></div>' +
-    '<button type="button" class="only-left" data-scope="' + scope + '">残りだけ</button></div>' +
+    '<button type="button" class="only-left on" data-scope="' + scope + '">全部表示</button></div>' +
     (hint ? '<div class="sec-hint">' + hint + '</div>' : '');
 }
 
@@ -144,7 +144,7 @@ function renderPrepPage() {
   h += prepSecHead('出発前 ToDo', 'td', '時期ごとの段。済んだものを隠すと残りだけが見えます', 'jp-td');
   var groups = [];
   PREP_TODO.forEach(function(t){ if (groups.indexOf(t.grp) < 0) groups.push(t.grp); });
-  h += '<div class="chk-wrap" id="wrap-td">';
+  h += '<div class="chk-wrap hide-done" id="wrap-td">';
   groups.forEach(function(g){
     h += '<div class="ledger" style="margin-top:8px"><div class="ledger-title">' + g +
          '<span class="grp-n"></span></div>';
@@ -169,7 +169,7 @@ function renderPrepPage() {
   /* 持ち物 */
   h += prepSecHead('持ち物チェックリスト', 'pk', '荷造り中は「残りだけ」にすると詰め忘れが見つけやすいです', 'jp-pk');
   var pkState = lsGet('checklist_v1');
-  h += '<div class="chk-wrap" id="wrap-pk">';
+  h += '<div class="chk-wrap hide-done" id="wrap-pk">';
   PACKING.forEach(function(cat){
     h += '<div class="ledger" style="margin-top:8px"><div class="ledger-title">' + cat.cat +
          '<span class="grp-n"></span></div>';
@@ -207,6 +207,9 @@ function renderPrepPage() {
       tg.textContent = on ? '全部表示' : '残りだけ';
       return;
     }
+    /* 段の見出しをタップで折りたたみ */
+    var lt = e.target.closest('.chk-wrap .ledger-title');
+    if (lt) { lt.parentNode.classList.toggle('folded'); return; }
     var row = e.target.closest('.check-row');
     if (!row) return;
     if (row.hasAttribute('data-todo')) {
@@ -239,6 +242,7 @@ function prepUpdateCounts(){
         fEl = document.getElementById(scope + '-fill');
     if (dEl) dEl.textContent = done;
     if (tEl) tEl.textContent = total;
+    var lEl = document.getElementById(scope + '-left'); if (lEl) lEl.textContent = total - done;
     if (fEl) fEl.style.width = (total ? Math.round(done/total*100) : 0) + '%';
     Array.prototype.forEach.call(wrap.querySelectorAll('.ledger'), function(led){
       var t = led.querySelectorAll('.check-row').length;

@@ -289,14 +289,15 @@ body {
 /* 文字入力中はソフトキーボードが固定要素を画面中央あたりまで押し上げるので、その間は隠す */
 body:has(input:focus) .idx, body:has(textarea:focus) .idx { display:none; }
 </style>
-<!-- ?v= はキャッシュずれ対策。sw.js の CACHE と一緒に上げる --><link rel="stylesheet" href="pages.css?v=28">
+<!-- ?v= はキャッシュずれ対策。sw.js の CACHE と一緒に上げる --><link rel="stylesheet" href="pages.css?v=29">
 </head>
 <body>
 <div class="holes"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
 
 <main>
-  <div class="area-tabs readbar" id="readbar" hidden></div>
+  <div class="readbar" id="readbar" hidden></div>
   <section id="pane-now"  class="pane"></section>
+  <section id="pane-read" class="pane"></section>
   <section id="pane-toc"  class="pane"></section>
   <section id="pane-news" class="pane"></section>
   <section id="pane-map"  class="pane"></section>
@@ -305,6 +306,7 @@ body:has(input:focus) .idx, body:has(textarea:focus) .idx { display:none; }
   <section id="pane-info" class="pane"></section>
 </main>
 
+<div class="day-sticky" id="day-sticky" hidden></div>
 <nav class="idx" id="idx"></nav>
 <div id="toast"></div>
 <div class="sv-viewer" id="sv-viewer">
@@ -314,14 +316,14 @@ body:has(input:focus) .idx, body:has(textarea:focus) .idx { display:none; }
   <div class="sv-hint">ドラッグで見回す・道路の矢印で進む。実際の景色とは季節や工事で違うことがあります</div>
 </div>
 
-<script src="trip.js?v=28"></script>
-<script src="map.js?v=28"></script>
-<script src="prep.js?v=28"></script>
-<script src="guide.js?v=28"></script>
-<script src="info.js?v=28"></script>
-<script src="news.js?v=28"></script>
-<script src="wx.js?v=28"></script>
-<script src="docs.js?v=28"></script>
+<script src="trip.js?v=29"></script>
+<script src="map.js?v=29"></script>
+<script src="prep.js?v=29"></script>
+<script src="guide.js?v=29"></script>
+<script src="info.js?v=29"></script>
+<script src="news.js?v=29"></script>
+<script src="wx.js?v=29"></script>
+<script src="docs.js?v=29"></script>
 <script>
 /* ============ 旅の手帳 v2 — シェル ============ */
 /* 下部タブは5つ。「読む」は雑誌・手引き・情報の3面をまとめ、上部の小見出しで切り替える */
@@ -333,7 +335,7 @@ var NAV = [
   { id:'read', label:'読む' }
 ];
 var READ_SUB = [ ['news','雑誌'], ['guide','手引き'], ['info','情報'] ];
-var PANES = ['now','toc','news','map','prep','guide','info'];
+var PANES = ['now','toc','read','news','map','prep','guide','info'];
 var current = 'now';
 var readSub = 'news';
 try { readSub = localStorage.getItem('read_sub_v1') || 'news'; } catch(e) {}
@@ -616,7 +618,7 @@ function renderNow() {
   var host = document.getElementById('pane-now');
   var today = tripDayToday();
   if (today) {
-    host.innerHTML = nowStripHTML(today) + dayPageHTML(today, false);
+    host.innerHTML = nowStripHTML(today) + nowFocusHTML(today);
     wxApply();
     return;
   }
@@ -651,11 +653,29 @@ function nowTodoToggle(row) {
   if (pr) pr.classList.toggle('done', !!d[k]);
   if (typeof prepUpdateCounts === 'function') prepUpdateCounts();
 }
-/* 旅行中は1分ごとに最上段（時計・次の予定）だけ描き直す */
+/* 旅行中の本文：いまの行と、そのあと2つだけ。残りは「きょうの全部を見る」で開く */
+function nowFocusHTML(day) {
+  var idx = dayNowIndex(day), start = Math.max(idx, 0);
+  var rows = day.sched.slice(start, start + 3);
+  return '<div id="now-focus" data-idx="' + idx + '">' +
+    '<div class="now-dayline"><b>' + day.n + '日目</b>' + day.date + ' ' + day.wd + '曜日 — ' + day.title + '</div>' +
+    ledgerHTML(rows, idx >= 0 ? 'いま と つぎ' : 'きょうの始まり', idx >= 0 ? 0 : -1) +
+    '<button type="button" class="now-more" onclick="nowShowAll(this)">きょうの全部を見る ▾</button>' +
+    '<div id="now-rest" hidden>' + dayPageHTML(day, false) + '</div></div>';
+}
+function nowShowAll(btn) {
+  var r = document.getElementById('now-rest'); if (!r) return;
+  r.hidden = !r.hidden;
+  btn.textContent = r.hidden ? 'きょうの全部を見る ▾' : 'たたむ ▴';
+  if (!r.hidden) wxApply();
+}
+/* 旅行中は1分ごとに最上段（時計・次の予定）を描き直し、行が進んだらフォーカスも更新する */
 function tickNowStrip() {
   var today = tripDayToday(); var el = document.getElementById('now-strip');
   if (!today || !el) return;
   el.outerHTML = nowStripHTML(today);
+  var f = document.getElementById('now-focus');
+  if (f && parseInt(f.getAttribute('data-idx'), 10) !== dayNowIndex(today)) f.outerHTML = nowFocusHTML(today);
   wxApply();
 }
 function renderToc() {
@@ -690,6 +710,7 @@ function openDay(n) {
   var day = TRIP.days[n-1];
   document.getElementById('pane-toc').innerHTML = dayPageHTML(day, true);
   wxApply();
+  _dsDay = day; daySticky(true);
   window.scrollTo(0, 0);
 }
 function renderStub(id, name, detail) {
@@ -702,20 +723,49 @@ function renderStub(id, name, detail) {
 
 /* ---- ナビ ---- */
 function show(id) {
-  if (id === 'read') id = readSub;
   var isRead = isReadId(id);
   if (isRead) { readSub = id; try { localStorage.setItem('read_sub_v1', id); } catch(e) {} }
   current = id;
   PANES.forEach(function(p){
     document.getElementById('pane-' + p).classList.toggle('on', p === id);
   });
+  /* 読み物のサブページは「‹ 読む」で入口に戻る（階層は 下タブ → ページ の2段まで） */
   var rb = document.getElementById('readbar');
   rb.hidden = !isRead;
-  if (isRead) rb.innerHTML = READ_SUB.map(function(s){
-    return '<button type="button" class="' + (s[0]===id?'on':'') + '" onclick="show(\'' + s[0] + '\')">' + s[1] + '</button>';
-  }).join('');
+  if (isRead) rb.innerHTML = '<button type="button" class="back" onclick="show(\'read\')">‹ 読む</button>';
+  daySticky(id === 'toc');
   renderIdx();
   window.scrollTo(0, 0);
+}
+/* 「読む」の入口：3つの読み物への大きな扉 */
+var READ_CARDS = [
+  ['news',  'DAILY MAG',   '雑誌「南十字星」', '毎朝届く、この街のミニ雑誌。きょうの号と過去号'],
+  ['guide', 'FIELD GUIDE', '旅の手引き',       '出発日と帰国日の動き・現地の作法・もしもの手順・指差し英語・入口の予行演習'],
+  ['info',  'REFERENCE',   '情報',             '換算・緊急連絡先・宿の住所・交通・予算・参考リンク']
+];
+function renderRead() {
+  var host = document.getElementById('pane-read'); if (!host) return;
+  host.innerHTML = '<div class="ch-head"><div class="ch-eyebrow">READING</div><div class="ch-h1">読む</div>' +
+    '<div class="ch-sub">手帳に挟んだ読み物。移動中や夜に</div></div><div class="read-cards">' +
+    READ_CARDS.map(function(c){
+      return '<button type="button" class="read-card" onclick="show(\'' + c[0] + '\')">' +
+        '<span class="rc-body"><span class="rc-k">' + c[1] + '</span><span class="rc-t">' + c[2] + '</span>' +
+        '<span class="rc-d">' + c[3] + '</span></span><span class="rc-c">›</span></button>';
+    }).join('') + '</div>';
+}
+/* 日ページの追従見出し：見出しが画面から消えている間だけ上に出す */
+var _dsObs = null, _dsDay = null;
+function daySticky(on) {
+  var ds = document.getElementById('day-sticky'); if (!ds) return;
+  if (_dsObs) { _dsObs.disconnect(); _dsObs = null; }
+  ds.hidden = true;
+  var ph = document.querySelector('#pane-toc .page-head');
+  if (!on || !ph || !_dsDay || !('IntersectionObserver' in window)) return;
+  ds.innerHTML = '<b>' + _dsDay.n + '日目</b>' + _dsDay.date + ' ' + _dsDay.wd + '曜日 — ' + _dsDay.title;
+  _dsObs = new IntersectionObserver(function(es){
+    var e = es[0]; ds.hidden = e.isIntersecting || e.boundingClientRect.top > 0;
+  }, { threshold:0 });
+  _dsObs.observe(ph);
 }
 function renderIdx() {
   document.getElementById('idx').innerHTML = NAV.map(function(n){
@@ -743,6 +793,7 @@ function renderIdx() {
   safe(renderGuidePage);
   safe(renderInfoPage);
   safe(initNews);
+  safe(renderRead);
   safe(renderIdx);
   /* ディープリンク: #toc / #map / #prep / #read / #news / #guide / #info / #day1〜#day7 */
   safe(function(){

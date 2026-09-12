@@ -495,7 +495,7 @@ function renderMapPage() {
     h += '<div class="area-tabs gmode"><button class="' + (useG?'on':'') + '" onclick="setMapMode(\'auto\')">Googleマップ</button>' +
          '<button class="' + (useG?'':'on') + '" onclick="setMapMode(\'svg\')">模式図</button></div>';
   } else {
-    h += '<div class="gkey"><div class="sec-hint">Googleマップで見るには、有効化リンク（またはキー）をここに貼り付けて保存。ホーム画面のアプリはSafariと記憶が別なので、こちらでも一度だけ必要です。オフラインでは模式図が出ます。</div>' +
+    h += '<div class="gkey"><div class="sec-hint">Googleマップで見るには、有効化リンクかキーを貼り付けて保存（ホーム画面版は別途一度だけ）。オフラインでは模式図。</div>' +
          '<div class="gkey-row"><input class="gkey-in" id="gkey-in" type="text" placeholder="有効化リンクかキーを貼り付け" autocapitalize="off" autocorrect="off" spellcheck="false">' +
          '<button type="button" class="only-left" onclick="saveGmapKey()">保存</button></div></div>';
   }

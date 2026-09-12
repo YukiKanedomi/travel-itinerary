@@ -10,8 +10,8 @@
  * 旧世代（tabi-shiori-v* / tabi-techo-v*）は一度だけ掃除する。
  * /v1/ のアーカイブ（tabi-shiori-arch-*）には触れない。
  */
-const CACHE = 'tabi-techo-root-v28';
-const V = '28'; // index.html の ?v= と揃える
+const CACHE = 'tabi-techo-root-v29';
+const V = '29'; // index.html の ?v= と揃える
 /* 必須シェル：1つでも取得に失敗したらインストール自体を失敗させる（約1MB） */
 const CORE = [
   './',
