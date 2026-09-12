@@ -533,7 +533,7 @@ function renderMapPage() {
       '<div style="margin-top:3px"><span class="ml-day">' + s.day + '</span></div>' +
       '<div style="margin-top:3px">' + openStatus(s.name) + '</div>' +
       (s.tip ? '<div class="ml-tip">' + s.tip + '</div>' : '') + '</div>' +
-      '<a class="ml-go" href="' + s.map + '" target="_blank" rel="noopener">MAP</a></div>';
+      '<a class="ml-go" href="' + s.map + '" target="_blank" rel="noopener">地図で開く</a></div>';
   });
   h += '</div>';
   host.innerHTML = h;
