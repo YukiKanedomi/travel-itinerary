@@ -60,6 +60,14 @@ body {
 
 .pane { display:none; padding:0 0 8px; }
 .pane.on { display:block; }
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes pane-in { from { opacity:0; transform:translateY(4px); } to { opacity:1; transform:none; } }
+  @keyframes flip-l { from { opacity:.3; transform:translateX(36px); } to { opacity:1; transform:none; } }
+  @keyframes flip-r { from { opacity:.3; transform:translateX(-36px); } to { opacity:1; transform:none; } }
+  .pane.on { animation:pane-in .16s ease-out; }
+  .pane.on.flip-l { animation:flip-l .24s ease-out; }
+  .pane.on.flip-r { animation:flip-r .24s ease-out; }
+}
 
 /* ── ページ見出し（日付欄） ── */
 .page-head { padding:20px 18px 10px 26px; border-bottom:2.5px solid var(--ink); position:relative; }
@@ -124,8 +132,10 @@ body {
 .chev { align-self:center; flex-shrink:0; padding:8px 2px 8px 10px; font-size:13px; color:var(--ink-soft);
   transition:transform .2s; }
 .lrow.open .chev { transform:rotate(180deg); }
-.lmore { display:none; margin:9px 0 3px 62px; padding-left:10px; border-left:2px solid var(--paper-dim); }
-.lrow.open .lmore { display:block; }
+.lmore { display:grid; grid-template-rows:0fr; margin-left:62px; padding-left:10px; border-left:2px solid var(--paper-dim); transition:grid-template-rows .22s ease; }
+.lmore-in { overflow:hidden; min-height:0; }
+.lrow.open .lmore { grid-template-rows:1fr; }
+.lrow.open .lmore-in { padding:9px 0 3px; }
 .lstep { display:flex; gap:8px; font-size:13px; color:var(--ink-soft); line-height:1.7; padding:2px 0; }
 .lstep .n { font-family:var(--mono); font-size:12px; color:var(--red); flex-shrink:0; padding-top:3px; width:12px; }
 .ltip { font-size:13px; color:var(--ink-soft); line-height:1.65; padding:3px 0 2px; }
@@ -256,7 +266,12 @@ body {
 .ns-l { font-size:11px; letter-spacing:.16em; font-weight:700; color:var(--red); flex-shrink:0; }
 .ns-t { font-family:var(--mono); font-size:13px; font-weight:600; flex-shrink:0; }
 .ns-h { font-size:13px; font-weight:700; flex:1; min-width:0; line-height:1.4; }
-.ns-left { font-size:13px; font-weight:700; color:var(--red); white-space:nowrap; }
+.ns-left { font-size:13px; font-weight:700; color:var(--ink-soft); white-space:nowrap; }
+.ns-left.near { color:#B07A1A; }
+.ns-left.soon { color:var(--red); }
+.ns-off { display:none; margin-left:auto; font-size:11px; font-weight:700; letter-spacing:.06em; color:var(--paper-hi); background:var(--ink-soft); border-radius:8px; padding:1px 8px; align-self:center; }
+body.offline .ns-off { display:inline-block; }
+body.offline .ns-wx { display:none; }
 .ns-btns { display:flex; gap:8px; margin-top:9px; }
 .ns-btns .lbtn { max-width:none; font-family:inherit; cursor:pointer; }
 .lbtn.warn { border-color:var(--red); color:var(--red); }
@@ -301,7 +316,7 @@ body {
 /* 文字入力中はソフトキーボードが固定要素を画面中央あたりまで押し上げるので、その間は隠す */
 body:has(input:focus) .idx, body:has(textarea:focus) .idx { display:none; }
 </style>
-<!-- ?v= はキャッシュずれ対策。sw.js の CACHE と一緒に上げる --><link rel="stylesheet" href="pages.css?v=31">
+<!-- ?v= はキャッシュずれ対策。sw.js の CACHE と一緒に上げる --><link rel="stylesheet" href="pages.css?v=32">
 </head>
 <body>
 <div class="holes"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
@@ -328,14 +343,14 @@ body:has(input:focus) .idx, body:has(textarea:focus) .idx { display:none; }
   <div class="sv-hint">ドラッグで見回す・道路の矢印で進む。実際の景色とは季節や工事で違うことがあります</div>
 </div>
 
-<script src="trip.js?v=31"></script>
-<script src="map.js?v=31"></script>
-<script src="prep.js?v=31"></script>
-<script src="guide.js?v=31"></script>
-<script src="info.js?v=31"></script>
-<script src="news.js?v=31"></script>
-<script src="wx.js?v=31"></script>
-<script src="docs.js?v=31"></script>
+<script src="trip.js?v=32"></script>
+<script src="map.js?v=32"></script>
+<script src="prep.js?v=32"></script>
+<script src="guide.js?v=32"></script>
+<script src="info.js?v=32"></script>
+<script src="news.js?v=32"></script>
+<script src="wx.js?v=32"></script>
+<script src="docs.js?v=32"></script>
 <script>
 /* ============ 旅の手帳 v2 — シェル ============ */
 /* 下部タブは5つ。「読む」は雑誌・手引き・情報の3面をまとめ、上部の小見出しで切り替える */
@@ -397,7 +412,7 @@ function stubHTML(v, alt, tapeCls) {
 function stubFold(el) { el.parentNode.classList.toggle('open'); }
 function rowExtras(r) {
   if (!r.steps && !r.tips && !r.map && !r.web && !r.sv) return '';
-  var m = '<div class="lmore">';
+  var m = '<div class="lmore"><div class="lmore-in">';
   (r.steps || []).forEach(function(s, i){
     m += '<div class="lstep"><span class="n">' + (i+1) + '</span><span>' + s + '</span></div>';
   });
@@ -412,7 +427,7 @@ function rowExtras(r) {
     if (r.web) m += '<a class="lbtn web" href="' + r.web + '" target="_blank" rel="noopener">公式サイト</a>';
     m += '</div>';
   }
-  return m + '</div>';
+  return m + '</div></div>';
 }
 function toggleLrow(el) { el.classList.toggle('open'); }
 function ledgerHTML(rows, title, nowIdx) {
@@ -442,7 +457,7 @@ function picksHTML(keys) {
   return h + '</div></div>';
 }
 function dayPageHTML(day, withBack) {
-  var h = withBack ? '<button class="back" onclick="renderToc()">‹ 旅程の目次へ</button>' : '';
+  var h = withBack ? '<button class="back" onclick="renderToc(true)">‹ 旅程の目次へ</button>' : '';
   var wxLoc = WX_DAY_LOC[day.n];
   h += '<div class="page-head">' +
     '<div class="ph-wx"><span class="t">' + day.wx.t + '</span><br>' + day.wx.note +
@@ -469,9 +484,10 @@ function dayPageHTML(day, withBack) {
     (prev ? '<button onclick="gotoDay(' + prev.n + ')"><span class="pl">‹ DAY ' + prev.n + '</span><span class="pt2">' + prev.title + '</span></button>' : '<span class="sp"></span>') +
     (next ? '<button class="nx" onclick="gotoDay(' + next.n + ')"><span class="pl">DAY ' + next.n + ' ›</span><span class="pt2">' + next.title + '</span></button>' : '<span class="sp"></span>') +
     '</div>';
+  h += '<div class="pill-row">' + shareBtnHTML(day.n, 'この日の予定を送る') + '</div>';
   return h;
 }
-function gotoDay(n) { show('toc'); openDay(n); }
+function gotoDay(n) { var f = _fromPop; _fromPop = true; show('toc'); _fromPop = f; openDay(n); }
 
 /* ---- 入口の予行演習（Street View 360°）。地図と同じキーで動く ---- */
 var svPano = null;
@@ -580,12 +596,12 @@ function nowStripHTML(day) {
   var h = '<div class="now-strip" id="now-strip"><div class="ns-top">' +
     '<span class="ns-clock">' + fmtMin(day.n === 1 ? now : au.min) + '</span>' +
     '<span class="ns-sub">' + (day.n === 1 ? '日本時間' : '現地時間・日本は ' + fmtMin((au.min - 60 + 1440) % 1440)) + '</span>' +
-    (loc ? '<span class="ns-wx" data-wx-now="' + loc + '"></span>' : '') + '</div>';
+    (loc ? '<span class="ns-wx" data-wx-now="' + loc + '"></span>' : '') + '<span class="ns-off">オフライン</span></div>';
   if (next) {
-    var left = next.m - now;
+    var left = next.m - now, lcls = left <= 15 ? ' soon' : (left <= 60 ? ' near' : '');
     h += '<div class="ns-next"><span class="ns-l">次の予定</span><span class="ns-t">' + next.r.t + '</span>' +
       '<span class="ns-h">' + next.r.h + '</span>' +
-      '<span class="ns-left">' + (left >= 60 ? 'あと' + Math.floor(left / 60) + '時間' + (left % 60 ? left % 60 + '分' : '') : 'あと' + left + '分') + '</span></div>';
+      '<span class="ns-left' + lcls + '">' + (left >= 60 ? 'あと' + Math.floor(left / 60) + '時間' + (left % 60 ? left % 60 + '分' : '') : 'あと' + left + '分') + '</span></div>';
   } else {
     h += '<div class="ns-next"><span class="ns-l">次の予定</span><span class="ns-h">きょうの予定はすべて終了。おつかれさまでした</span></div>';
   }
@@ -630,7 +646,7 @@ function renderNow() {
   var host = document.getElementById('pane-now');
   var today = tripDayToday();
   if (today) {
-    host.innerHTML = nowStripHTML(today) + nowFocusHTML(today) + nightBtnHTML();
+    host.innerHTML = nowStripHTML(today) + nowFocusHTML(today) + nightBtnHTML(shareBtnHTML(today.n, 'きょうの予定を送る'));
     wxApply();
     return;
   }
@@ -691,8 +707,10 @@ function tickNowStrip() {
   if (f && parseInt(f.getAttribute('data-idx'), 10) !== dayNowIndex(today)) f.outerHTML = nowFocusHTML(today);
   wxApply();
 }
-function renderToc() {
+function renderToc(push) {
   var host = document.getElementById('pane-toc');
+  _dsDay = null; daySticky(false);
+  if (push) navPush({ pane:'toc' }, '#toc');
   var h = '<div class="toc-head"><div class="toc-eyebrow">ITINERARY</div>' +
     '<div class="toc-h1">' + TRIP.title + '</div>' +
     '<div class="toc-range mono">' + TRIP.range + '</div></div>' +
@@ -724,6 +742,7 @@ function openDay(n) {
   document.getElementById('pane-toc').innerHTML = dayPageHTML(day, true);
   wxApply();
   _dsDay = day; daySticky(true);
+  navPush({ pane:'toc', day:n }, '#day' + n);
   window.scrollTo(0, 0);
 }
 function renderStub(id, name, detail) {
@@ -738,6 +757,7 @@ function renderStub(id, name, detail) {
 function show(id) {
   var isRead = isReadId(id);
   if (isRead) { readSub = id; try { localStorage.setItem('read_sub_v1', id); } catch(e) {} }
+  scrollPos[current] = window.scrollY;
   current = id;
   PANES.forEach(function(p){
     document.getElementById('pane-' + p).classList.toggle('on', p === id);
@@ -748,8 +768,42 @@ function show(id) {
   if (isRead) rb.innerHTML = '<button type="button" class="back" onclick="show(\'read\')">‹ 読む</button>';
   daySticky(id === 'toc');
   renderIdx();
-  window.scrollTo(0, 0);
+  navPush({ pane:id }, '#' + id);
+  /* タブは前回のスクロール位置に戻る（ネイティブのタブと同じ作法） */
+  window.scrollTo(0, scrollPos[id] || 0);
 }
+/* ---- 履歴：タブ切替と日ページを履歴に積み、端末の「戻る」（スワイプ）で前の画面に戻れるようにする ---- */
+var scrollPos = {}, _fromPop = false;
+function navPush(state, hash) {
+  if (_fromPop) return;
+  try { (history.state ? history.pushState : history.replaceState).call(history, state, '', hash); } catch(e) {}
+}
+window.addEventListener('popstate', function(e){
+  var st = e.state || { pane:(location.hash.replace('#','') || 'now') };
+  _fromPop = true;
+  try {
+    if (st.day) { show('toc'); openDay(st.day); }
+    else { if (st.pane === 'toc') renderToc(false); show(PANES.indexOf(st.pane) >= 0 ? st.pane : 'now'); }
+  } catch(err) {}
+  _fromPop = false;
+});
+/* ---- きょうの予定を送る（Web Share。使えない端末はコピー） ---- */
+function dayShareText(day) {
+  var lines = ['【' + day.n + '日目 ' + day.date + '（' + day.wd + '）】' + day.title];
+  day.sched.forEach(function(r){ lines.push(r.t + ' ' + String(r.h).replace(/<[^>]+>/g, '') + (r.hard ? '【時間厳守】' : '')); });
+  var ht = (day.n >= 2 && day.n <= 6) ? TRIP.hotels[day.n <= 3 ? 0 : 1] : null;
+  if (ht) lines.push('宿：' + ht.name + ' / ' + ht.addr);
+  lines.push('— 旅の手帳 https://yukikanedomi.github.io/travel-itinerary/#day' + day.n);
+  return lines.join('\n');
+}
+function shareDay(n) {
+  var text = dayShareText(TRIP.days[n - 1]);
+  if (navigator.share) { navigator.share({ text:text }).catch(function(){}); return; }
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(function(){ if (typeof toast === 'function') toast('この日の予定をコピーしました'); });
+  }
+}
+function shareBtnHTML(n, label) { return '<button type="button" class="pill-btn" onclick="shareDay(' + n + ')">' + label + '</button>'; }
 /* 「読む」の入口：3つの読み物への大きな扉 */
 var READ_CARDS = [
   ['news',  'DAILY MAG',   '雑誌「南十字星」', '毎朝届く、この街のミニ雑誌。きょうの号と過去号'],
@@ -780,7 +834,7 @@ function toggleNight() {
   Array.prototype.forEach.call(document.querySelectorAll('.night-btn'), function(b){ b.textContent = nightBtnLabel(); });
 }
 function nightBtnLabel() { return nightEffective() ? '昼の手帳に戻す' : '夜の手帳にする'; }
-function nightBtnHTML() { return '<div class="night-row"><button type="button" class="night-btn" onclick="toggleNight()">' + nightBtnLabel() + '</button></div>'; }
+function nightBtnHTML(extra) { return '<div class="pill-row">' + (extra || '') + '<button type="button" class="pill-btn night-btn" onclick="toggleNight()">' + nightBtnLabel() + '</button></div>'; }
 /* 日ページの追従見出し：見出しが画面から消えている間だけ上に出す */
 var _dsObs = null, _dsDay = null;
 function daySticky(on) {
@@ -813,6 +867,27 @@ function renderIdx() {
       try { localStorage.setItem('gmaps_key', m[1]); } catch(e){}
       history.replaceState(null, '', location.pathname + '#map');
     }
+  });
+  /* オフラインの表示（帯のバッジ。地図は元から模式図に切り替わる） */
+  safe(function(){
+    function setOnline(){ document.body.classList.toggle('offline', navigator.onLine === false); }
+    window.addEventListener('online', setOnline); window.addEventListener('offline', setOnline); setOnline();
+  });
+  /* 日ページは左右スワイプで前後の日へ（手帳のページめくり） */
+  safe(function(){
+    var pt = document.getElementById('pane-toc'), sx = 0, sy = 0, t0 = 0;
+    pt.addEventListener('touchstart', function(e){ var t = e.touches[0]; sx = t.clientX; sy = t.clientY; t0 = Date.now(); }, { passive:true });
+    pt.addEventListener('touchend', function(e){
+      if (!_dsDay) return;
+      var t = e.changedTouches[0], dx = t.clientX - sx, dy = t.clientY - sy;
+      if (Date.now() - t0 > 600 || Math.abs(dx) < 70 || Math.abs(dy) > 50) return;
+      if (e.target.closest && e.target.closest('.mapframe, .gmap, .sv-pano, input, textarea')) return;
+      var n = _dsDay.n + (dx < 0 ? 1 : -1);
+      if (n < 1 || n > TRIP.days.length) return;
+      pt.classList.remove('flip-l', 'flip-r');
+      openDay(n);
+      pt.classList.add(dx < 0 ? 'flip-l' : 'flip-r');
+    }, { passive:true });
   });
   safe(renderNow);
   safe(renderToc);
