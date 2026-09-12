@@ -11,7 +11,8 @@ const [url, out] = process.argv.slice(2);
 if (!url || !out) { console.error('usage: node scripts/fetch-press-image.mjs <url> <assets/press/xx.jpg>'); process.exit(1); }
 
 const u = new URL(url);
-if (u.hostname !== 'upload.wikimedia.org') { console.error('REJECT: 許可されていないホスト ' + u.hostname); process.exit(1); }
+const ALLOWED_HOSTS = ['upload.wikimedia.org', 'thumb.wikimedia.org'];
+if (!ALLOWED_HOSTS.includes(u.hostname)) { console.error('REJECT: 許可されていないホスト ' + u.hostname); process.exit(1); }
 const rel = normalize(out).replace(/\\/g, '/');
 if (!rel.startsWith('assets/press/')) { console.error('REJECT: 保存先は assets/press/ 配下のみ'); process.exit(1); }
 
