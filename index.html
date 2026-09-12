@@ -145,7 +145,7 @@ body {
 .scrap img { width:100%; height:120px; object-fit:cover; display:block;
   filter:saturate(.92) contrast(.98); border:1px solid rgba(90,75,50,.12); }
 .scrap.tall img { height:150px; }
-.scrap .cap { position:absolute; bottom:4px; left:10px; right:10px; font-size:12px; color:var(--ink-faint);
+.scrap .cap { position:absolute; bottom:4px; left:10px; right:10px; font-size:12px; color:var(--ink-soft);
   letter-spacing:.06em; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 .scrap .tape { top:-8px; right:22px; left:auto; transform:rotate(-40deg); width:68px; height:19px; }
 .scrap.l .tape { right:auto; left:20px; transform:rotate(38deg); }
@@ -177,9 +177,9 @@ body {
 .fusen::after { content:""; position:absolute; right:0; bottom:0; width:24px; height:24px;
   background:linear-gradient(315deg, var(--paper) 0 5px, rgba(90,75,50,.22) 6px, rgba(255,255,255,.5) 11px, rgba(255,255,255,0) 20px);
   border-radius:0 0 2px 0; }
-.fusen:nth-child(3n)   { transform:rotate(-1.4deg); }
-.fusen:nth-child(3n+1) { transform:rotate(1deg); }
-.fusen:nth-child(3n+2) { transform:rotate(-.6deg); }
+.fusen:nth-child(3n)   { transform:rotate(-1deg); }
+.fusen:nth-child(3n+1) { transform:rotate(.7deg); }
+.fusen:nth-child(3n+2) { transform:rotate(-.4deg); }
 .fusen:nth-child(even) { margin-top:5px; }
 .g-cafe  { --f:#F0E0A6; } .g-food { --f:#EFD2BB; }
 .g-sight { --f:#D5E0BE; } .g-view { --f:#C8D9E2; }
@@ -289,7 +289,7 @@ body {
 /* 文字入力中はソフトキーボードが固定要素を画面中央あたりまで押し上げるので、その間は隠す */
 body:has(input:focus) .idx, body:has(textarea:focus) .idx { display:none; }
 </style>
-<!-- ?v= はキャッシュずれ対策。sw.js の CACHE と一緒に上げる --><link rel="stylesheet" href="pages.css?v=29">
+<!-- ?v= はキャッシュずれ対策。sw.js の CACHE と一緒に上げる --><link rel="stylesheet" href="pages.css?v=30">
 </head>
 <body>
 <div class="holes"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
@@ -316,14 +316,14 @@ body:has(input:focus) .idx, body:has(textarea:focus) .idx { display:none; }
   <div class="sv-hint">ドラッグで見回す・道路の矢印で進む。実際の景色とは季節や工事で違うことがあります</div>
 </div>
 
-<script src="trip.js?v=29"></script>
-<script src="map.js?v=29"></script>
-<script src="prep.js?v=29"></script>
-<script src="guide.js?v=29"></script>
-<script src="info.js?v=29"></script>
-<script src="news.js?v=29"></script>
-<script src="wx.js?v=29"></script>
-<script src="docs.js?v=29"></script>
+<script src="trip.js?v=30"></script>
+<script src="map.js?v=30"></script>
+<script src="prep.js?v=30"></script>
+<script src="guide.js?v=30"></script>
+<script src="info.js?v=30"></script>
+<script src="news.js?v=30"></script>
+<script src="wx.js?v=30"></script>
+<script src="docs.js?v=30"></script>
 <script>
 /* ============ 旅の手帳 v2 — シェル ============ */
 /* 下部タブは5つ。「読む」は雑誌・手引き・情報の3面をまとめ、上部の小見出しで切り替える */
