@@ -75,7 +75,34 @@ var INFO_LINKS = [
   { cat:'旅行記・観光モデル', rows:[
     { t:'メルボルン＆シドニー 旅行記（2025）', n:'実際の周遊レポート', u:'https://aya-littlefish.com/australia-melbourne-2025-1/' },
     { t:'初の海外一人旅 シドニー&メルボルン', n:'初心者目線の体験談（フォートラベル）', u:'https://4travel.jp/travelogue/11829671' },
-    { t:'メルボルン観光スポット28選（2026）', n:'定番の見どころ一覧', u:'https://www.traveldonkey.jp/blog/australia/melbourne/12253/' } ] }
+    { t:'メルボルン観光スポット28選（2026）', n:'定番の見どころ一覧', u:'https://www.traveldonkey.jp/blog/australia/melbourne/12253/' } ] },
+  { cat:'フライト・空港の体験記', rows:[
+    { t:'JL773 成田→メルボルン 搭乗記（2026年3月・787-8 エコノミー）', n:'同じ便・同じ機材。座席間隔・機内食・到着までの流れ', u:'https://tanukineko.net/archives/19893' },
+    { t:'JAL プレミアムエコノミー搭乗記（シドニー→日本）', n:'帰りの座席クラスの感触。2012年と古いが座席の広さの参考に', u:'https://4travel.jp/travelogue/10852634' },
+    { t:'シドニー空港 TRS の実際の手順（2026年3月）', n:'QR・パスポート・搭乗券・レシート提示で1〜2分。写真付き', u:'https://holding-blog.com/entry/aus-tax-refund-at-syd-airport/' },
+    { t:'TRS 免税手続き 写真付きガイド（2026年4月）', n:'アプリ登録からカウンターの場所まで', u:'https://aqua-tourdesk.com/trs/' },
+    { t:'ヴァージン・オーストラリア 国内線 搭乗記', n:'チェックインの混み方・座席の印象（2021年）', u:'https://noelstravels.com/virgin-australia/' } ] },
+  { cat:'ホテルの宿泊記', rows:[
+    { t:'インターコンチネンタル メルボルン ザ・リアルト 宿泊記（2024年9月）', n:'客室・バスタブ・立地の実感', u:'https://tabinekohotel.com/intercontinental-melbourne/' },
+    { t:'同ホテルの旅行記一覧（フォートラベル）', n:'複数の宿泊者の写真とコメント', u:'https://4travel.jp/os_hotel-10175121/travelogue' },
+    { t:'リッジス ワールドスクエア 宿泊記', n:'部屋の広さ・Museum駅から徒歩4分の立地', u:'https://ameblo.jp/ratarata-82/entry-12966955502.html' },
+    { t:'同ホテルの旅行記一覧（フォートラベル）', n:'複数の宿泊者の写真とコメント', u:'https://4travel.jp/os_hotel-10231316/travelogue' } ] },
+  { cat:'ブルーマウンテンズ ツアー参加記', rows:[
+    { t:'ブルーマウンテン バスツアー参加記（2025年6月）', n:'リッジス前7:25集合の日本語ツアー。エコーポイント→シーニックワールド→ルーラの1日', u:'https://4travel.jp/travelogue/11991154' } ] },
+  { cat:'メルボルンの体験記', rows:[
+    { t:'Lune（CBD店）で世界一のクロワッサン（2026年3月）', n:'平日10時で約10分待ち。食感の感想', u:'https://ray-globallife.com/lune-croissant-melbourne/' },
+    { t:'Lune（フィッツロイ本店）訪問記', n:'行列の波と味の感想', u:'https://ameblo.jp/sakura2006yayoi/entry-12964619371.html' },
+    { t:'Chin Chin 訪問記（2020年）', n:'カウンター20分・テーブル1時間待ちの実例。料理と会計の目安', u:'https://www.takemachelin.com/2020/03/chin-chin.html' },
+    { t:'クイーンビクトリア・マーケット散策（2025年9月）', n:'ソーセージ・Mörk のホットチョコ・ドーナツ屋の行列', u:'https://www.oukakreuz.com/entry/melbourne-queenvictoriamarket' },
+    { t:'クイーンビクトリアマーケット食べ歩き（2024年2月）', n:'在住者目線。バクラヴァとスリランカカレー', u:'https://ameblo.jp/melbourne-diary/entry-12841095958.html' },
+    { t:'メルボルンで食べたもの・食費（2025年10月）', n:'1日約5,000円の実例。ホットジャムドーナツ等', u:'https://akaruikimochide.hatenablog.com/entry/2025/10/15/174534' },
+    { t:'メルボルン旅行記 Day3 フィッツロイ＆カールトン（2025年3月）', n:'路地のストリートアートとカフェ', u:'https://note.com/jpnhanna/n/n3e0af0a699e8' },
+    { t:'年末年始メルボルン 州立図書館＆セントキルダ（2025年12月）', n:'図書館の混み具合、トラムで夕日を見に', u:'https://4travel.jp/travelogue/12031298' } ] },
+  { cat:'シドニーの体験記', rows:[
+    { t:'シドニーに行ったら OPERA BAR へ（2024年5月）', n:'昼と夜の使い分け、料理の感想', u:'https://note.com/blackjunjun/n/n03ddcf4c23a7' },
+    { t:'オペラハウスの麓の絶景バー OPERA BAR', n:'行き方（下のコンコース）・夕日の時間帯・QR注文', u:'https://sydneytales.com/opera-bar/' },
+    { t:'フェリーでマンリーワーフへ（2025年5月）', n:'サーキュラーキーからの移動記録', u:'https://ameblo.jp/newstail/entry-12916721127.html' },
+    { t:'マンリービーチ完全攻略22選（2025年12月）', n:'フェリーからの眺め・食事・歩き方', u:'https://yutravel.blog/manlybeach/' } ] }
 ];
 
 function renderInfoPage(){
