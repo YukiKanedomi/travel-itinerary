@@ -317,7 +317,7 @@ body.offline .ns-wx { display:none; }
 /* 文字入力中はソフトキーボードが固定要素を画面中央あたりまで押し上げるので、その間は隠す */
 body:has(input:focus) .idx, body:has(textarea:focus) .idx { display:none; }
 </style>
-<!-- ?v= はキャッシュずれ対策。sw.js の CACHE と一緒に上げる --><link rel="stylesheet" href="pages.css?v=34">
+<!-- ?v= はキャッシュずれ対策。sw.js の CACHE と一緒に上げる --><link rel="stylesheet" href="pages.css?v=35">
 </head>
 <body>
 <div class="holes"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
@@ -341,17 +341,17 @@ body:has(input:focus) .idx, body:has(textarea:focus) .idx { display:none; }
   <div class="sv-head"><span class="sv-t" id="sv-title"></span><button type="button" class="sv-close" onclick="closeSV()">閉じる</button></div>
   <div class="sv-pano" id="sv-pano"></div>
   <div class="sv-msg" id="sv-msg"></div>
-  <div class="sv-hint">ドラッグで見回す・道路の矢印で進む。実際の景色とは季節や工事で違うことがあります</div>
+  <div class="sv-hint" id="sv-hint">ドラッグで見回す・道路の矢印で進む。実際の景色とは季節や工事で違うことがあります</div>
 </div>
 
-<script src="trip.js?v=34"></script>
-<script src="map.js?v=34"></script>
-<script src="prep.js?v=34"></script>
-<script src="guide.js?v=34"></script>
-<script src="info.js?v=34"></script>
-<script src="news.js?v=34"></script>
-<script src="wx.js?v=34"></script>
-<script src="docs.js?v=34"></script>
+<script src="trip.js?v=35"></script>
+<script src="map.js?v=35"></script>
+<script src="prep.js?v=35"></script>
+<script src="guide.js?v=35"></script>
+<script src="info.js?v=35"></script>
+<script src="news.js?v=35"></script>
+<script src="wx.js?v=35"></script>
+<script src="docs.js?v=35"></script>
 <script>
 /* ============ 旅の手帳 v2 — シェル ============ */
 /* 下部タブは5つ。「読む」は雑誌・手引き・情報の3面をまとめ、上部の小見出しで切り替える */
@@ -423,7 +423,7 @@ function rowExtras(r) {
   });
   if (r.map || r.web || r.sv) {
     m += '<div class="lbtns">';
-    if (r.sv) m += '<button class="lbtn sv" onclick="openSV(' + r.sv.lat + ',' + r.sv.lng + ',\'' + r.sv.label + '\')">入口を見る 360°</button>';
+    if (r.sv) m += '<button class="lbtn sv" onclick=\'openSV(' + svArgs(r.sv) + ')\'>入口を見る 360°</button>';
     if (r.map) m += '<a class="lbtn" href="' + r.map + '" target="_blank" rel="noopener">Google マップ</a>';
     if (r.web) m += '<a class="lbtn web" href="' + r.web + '" target="_blank" rel="noopener">公式サイト</a>';
     m += '</div>';
@@ -491,6 +491,11 @@ function dayPageHTML(day, withBack) {
 function gotoDay(n) { var f = _fromPop; _fromPop = true; show('toc'); _fromPop = f; openDay(n); }
 
 /* ---- 入口の予行演習（Street View 360°）。地図と同じキーで動く ---- */
+/* ボタンの onclick 用に引数を組む（ラベル・note は JSON 文字列で渡す） */
+function svArgs(sv){
+  var j = function(s){ return JSON.stringify(String(s || '')).replace(/'/g, '&#39;'); };
+  return sv.lat + ',' + sv.lng + ',' + j(sv.label) + ',' + (sv.from ? JSON.stringify(sv.from) : 'null') + ',' + j(sv.note);
+}
 var svPano = null;
 function svHeading(a, b){
   var r = Math.PI / 180, dLon = (b.lng - a.lng) * r;
@@ -498,7 +503,7 @@ function svHeading(a, b){
   var x = Math.cos(a.lat * r) * Math.sin(b.lat * r) - Math.sin(a.lat * r) * Math.cos(b.lat * r) * Math.cos(dLon);
   return (Math.atan2(y, x) * 180 / Math.PI + 360) % 360;
 }
-function openSV(lat, lng, label){
+function openSV(lat, lng, label, from, note){
   var v = document.getElementById('sv-viewer'), msg = document.getElementById('sv-msg');
   document.getElementById('sv-title').textContent = label;
   document.getElementById('sv-pano').innerHTML = '';
@@ -506,12 +511,16 @@ function openSV(lat, lng, label){
   if (typeof gmapKey !== 'function' || !gmapKey()) { msg.textContent = 'Googleマップの有効化が必要です（地図タブでキーを貼り付け）'; return; }
   if (navigator.onLine === false) { msg.textContent = 'オンラインのときに見られます'; return; }
   msg.textContent = '読み込み中…';
+  var hint = document.getElementById('sv-hint');
+  if (hint) hint.textContent = note || 'ドラッグで見回す・道路の矢印で進む。実際の景色とは季節や工事で違うことがあります';
   loadGmaps().then(function(){
+    /* from: 路上のこの点の近くでパノラマを探し、lat/lng（入口）の方を向く。無ければ入口の近くで探す */
     var target = new google.maps.LatLng(lat, lng);
+    var seek = from ? new google.maps.LatLng(from.lat, from.lng) : target;
     /* 一般投稿の球体写真（屋内・真っ黒になりがち）は避け、Google公式の撮影分だけを探す（OUTDOOR指定では投稿写真が混ざった）。近くに無ければ半径を広げる */
-    var svc = new google.maps.StreetViewService(), radii = [150, 400], i = 0;
+    var svc = new google.maps.StreetViewService(), radii = from ? [60, 150, 400] : [150, 400], i = 0;
     function tryNext(){
-      svc.getPanorama({ location:target, radius:radii[i], preference:'nearest', source:(google.maps.StreetViewSource && google.maps.StreetViewSource.GOOGLE) || 'google' }, function(data, st){
+      svc.getPanorama({ location:(from && i === 0) ? seek : target, radius:radii[i], preference:'nearest', source:(google.maps.StreetViewSource && google.maps.StreetViewSource.GOOGLE) || 'google' }, function(data, st){
         if (st !== 'OK' || !data || !data.location) {
           if (++i < radii.length) return tryNext();
           msg.textContent = 'この地点はストリートビュー未対応です'; return;

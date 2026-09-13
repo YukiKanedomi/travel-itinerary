@@ -10,7 +10,7 @@ var GUIDE_GO = [
   { t:'14:54', h:'成田T2着 → まず3階でWi-Fi受取', d:'「J WiFi & Mobile」カウンター（07:00-21:00）。予約メール提示・約5分',
     steps:[ '混んでいたら「法人会員優先レーン」のメールを係員に見せる',
       'ルーターとモバイルバッテリーは手荷物のカバンへ（預け入れ禁止）' ] },
-  { t:'15:15', h:'JALカウンターで荷物を預ける', d:'パスポートを出すだけ。搭乗券はWalletのQRでOK', sv:{ lat:35.77325, lng:140.38759, label:'成田空港 第2ターミナル（出発階の車寄せ）' },
+  { t:'15:15', h:'JALカウンターで荷物を預ける', d:'パスポートを出すだけ。搭乗券はWalletのQRでOK', sv:{ lat:35.77325, lng:140.38759, label:'成田空港 第2ターミナル（出発階の車寄せ）', note:'3階出発階の車寄せ。N\'EX を降りて上がると、この車寄せの内側（ロビー）に出る。JAL のカウンターはロビー中央寄り' },
     tips:[ 'オンラインチェックイン済なら「荷物預けのみ」の列が速い',
       '聞かれるのはほぼ一つ「モバイルバッテリーは預け入れに入っていませんか？」→「入っていません」' ] },
   { t:'15:40', h:'身軽になったら自由時間（17:00まで）', d:'4階展望デッキ（無料）→ IASSラウンジ（保安検査前のエリア）。最後の日本食は検査後の制限エリアで',
@@ -237,13 +237,15 @@ var GUIDE_PHRASES = [
 
 /* ---- 入口の予行演習（Street View）。旅程の行の sv に加えて、行に紐づかない地点 ---- */
 var SV_EXTRA = [
-  { when:'9/21', label:'サザンクロス駅 Collins St側の出口（SkyBus降車後）', lat:-37.8180, lng:144.9536 },
-  { when:'9/25', label:'サーキュラー・キー 3番埠頭（マンリー行きフェリー）', lat:-33.8613, lng:151.2105 }
+  { when:'9/21', label:'サザンクロス駅 Collins St側の出口（SkyBus降車後）', lat:-37.8180, lng:144.9536,
+    note:'波打つ屋根の下のガラス面が駅の Collins St 側入口。SkyBus はこの駅の Spencer St 側に着く。ここを背にして Collins St を東へ5分でホテル' },
+  { when:'9/25', label:'サーキュラー・キー 3番埠頭（マンリー行きフェリー）', lat:-33.86095, lng:151.21080, from:{ lat:-33.86125, lng:151.21090 },
+    note:'駅の改札を抜けて海側の屋根の下へ。緑の看板 Wharf 4 のすぐ左隣が Wharf 3（マンリー行き）。Opal はタッチで乗れる' }
 ];
 function svPoints(){
   var out = [];
-  GUIDE_GO.forEach(function(r){ if (r.sv) out.push({ when:'9/20 ' + r.t, label:r.sv.label, lat:r.sv.lat, lng:r.sv.lng }); });
-  TRIP.days.forEach(function(d){ d.sched.forEach(function(r){ if (r.sv) out.push({ when:d.date + ' ' + r.t, label:r.sv.label, lat:r.sv.lat, lng:r.sv.lng }); }); });
+  GUIDE_GO.forEach(function(r){ if (r.sv) out.push({ when:'9/20 ' + r.t, label:r.sv.label, lat:r.sv.lat, lng:r.sv.lng, from:r.sv.from, note:r.sv.note }); });
+  TRIP.days.forEach(function(d){ d.sched.forEach(function(r){ if (r.sv) out.push({ when:d.date + ' ' + r.t, label:r.sv.label, lat:r.sv.lat, lng:r.sv.lng, from:r.sv.from, note:r.sv.note }); }); });
   SV_EXTRA.forEach(function(p){ out.push(p); });
   return out;
 }
@@ -318,7 +320,7 @@ function renderGuidePage() {
   h += '<div class="ledger" style="margin-top:8px">';
   svPoints().forEach(function(p){
     h += '<div class="lrow"><div class="lmain"><div class="t">' + p.when.replace(' ', '<br>') + '</div><div class="body"><div class="h">' + p.label + '</div>' +
-      '<div class="lbtns"><button class="lbtn sv" onclick="openSV(' + p.lat + ',' + p.lng + ',\'' + p.label + '\')">入口を見る 360°</button></div></div></div></div>';
+      '<div class="lbtns"><button class="lbtn sv" onclick=\'openSV(' + svArgs(p) + ')\'>入口を見る 360°</button></div></div></div></div>';
   });
   h += '</div>';
 
