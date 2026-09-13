@@ -3,7 +3,7 @@
     "paper": "南十字星",
     "en": "THE SOUTHERN CROSS",
     "sub": "まいにち届く、旅のミニマガジン",
-    "currentNo": 66
+    "currentNo": 67
   },
   "issues": [
     {
@@ -4757,6 +4757,63 @@
         }
       ],
       "memo": "この号は準備タブ「1週間前」ToDoの『試しパッキングして荷物はかりで計量』にまるごと効きます。モバイルバッテリーは機内持込のリュックへ、出発前夜には満タン充電を——編集部も来週さっそく荷物はかりを買いに行きます。"
+    },
+    {
+      "no": 67,
+      "date": "2026-09-14",
+      "wd": "月",
+      "theme": "ニュース",
+      "title": "石畳が、舞台に変わる金曜日——ロックス、アート＆カルチャー月間のいま",
+      "lead": "DAY6、11:30に歩く予定のロックス地区。実はいま9月まるごと「Unlock The Rocks Art & Culture Month」という月間イベントの真っ最中です。屋台がひしめく金曜のマーケットは手帳にも控えてありますが、日が暮れてからの路地には、もう一つの顔が用意されているようです。",
+      "photos": [
+        {
+          "src": "assets/press/67-1.jpg",
+          "cap": "ロックスの路地に立つ屋台マーケット。金曜10〜15時、DAY6の11:30に通りかかる予定",
+          "credit": "Returned dude12345 / CC0 (Wikimedia)"
+        }
+      ],
+      "body": [
+        {
+          "h": null,
+          "p": "「ロックス」と聞くと、石畳と歴史的建造物が並ぶ観光地というイメージが強いかもしれませんが、9月はいつもと少し違う顔を見せています。The Rocksエリアが主催する「Unlock The Rocks Art & Culture Month」が9月1日から30日まで丸ごと1か月間開催中で、路地や広場、歴史的建物が次々とステージに早変わりしているのです。日曜には絵画や織物のワークショップ、レコード掘りの市、先住民文化を祝う「Blak Markets」なども開かれていて、プログラムのほとんどが無料というのも太っ腹。観光客が素通りしがちな裏路地に、地元の人たちの手作りイベントがぎっしり詰まった1か月のようです。"
+        },
+        {
+          "h": "金曜は、マーケットだけじゃないらしい",
+          "p": "DAY6の付箋にもすでに控えてある「ロックス・フードマーケット」（金曜10〜15時、屋台の串焼きや餃子で有名）は、実はこの月間プログラムの一部でもあります。ただ面白いのは、日が沈んでからのラインナップ。The Rocks Discovery Museumでは、地元のコミュニティラジオ局fbi.radioとのコラボ企画「Unscripted」が金曜夜に開かれているようで、DJが音楽を流すなか、閉館後の博物館を歩きながら地元の若手ミュージシャンやクリエイターの生トークを聞けるという、ちょっと不思議な組み合わせのイベントです。<b>これとは別に、コメディや詩の即興ライブ「Unfiltered」も金曜夜の常連メニュー</b>とのことで、観光地の路地裏が夜だけこっそり小劇場に変身する仕掛けになっているようです。9月25日にも同じ枠が続いているかは公式サイトでの直前確認が要りますが、ディナー前に少し時間が余ったら覗いてみる価値はありそうです。"
+        },
+        {
+          "h": "二人が発つ翌日、街は一番賑わう",
+          "p": "月間の締めくくりとして用意されているのが、9月26〜27日の「Unbound: Street Performance Festival」。巨大な人形が練り歩くパレードや空中アクロバット、ミラーボールの下で踊るダンスパーティーまで繰り出す、この1か月でいちばん賑やかな週末になる予定です。屋台の数も普段のマーケットより増えるようで、地元の紹介記事もこの週末を月間のクライマックスとして扱っています。ただ残念ながら、ふたりが羽田行きのJL52に乗り込むのはまさにその26日の朝。空港行きのUberに揺られている頃、街の反対側では巨大な人形が練り歩き始めている——そう考えると、なんとも間の悪い、けれど旅らしいすれ違いです。"
+        },
+        {
+          "h": null,
+          "p": "とはいえ、25日の昼から夕方にかけてのロックスも、屋台の煙とマーケットの喧騒でじゅうぶん賑やかなはずです。QVBへ向かう前の1時間、少しだけ路地の奥を覗いてみると、いつもの観光ルートでは見えない「月間中だけの顔」に出会えるかもしれません。"
+        }
+      ],
+      "spots": [
+        {
+          "name": "The Rocks Discovery Museum",
+          "area": "ロックス",
+          "g": "sight",
+          "tip": "Art & Culture Month中、金曜夜にfbi.radio Unscripted等が開催される会場。入館無料",
+          "map": "https://maps.google.com/?q=The+Rocks+Discovery+Museum+Sydney"
+        }
+      ],
+      "sources": [
+        {
+          "t": "Unlock The Rocks Art & Culture Month（The Rocks公式）",
+          "u": "https://www.therocks.com/whats-on/campaigns/unlock-the-rocks-art-and-culture"
+        },
+        {
+          "t": "Art and Culture Month in The Rocks | City of Sydney - What's On",
+          "u": "https://whatson.cityofsydney.nsw.gov.au/events/art-and-culture-month-in-the-rocks"
+        },
+        {
+          "t": "fbi.radio's Unscripted heads to The Rocks for Art and Culture Month (RadioInfo Australia)",
+          "u": "https://radioinfo.com.au/news/fbi-radios-unscripted-heads-to-the-rocks-for-art-and-culture-month/"
+        }
+      ],
+      "memo": "DAY6（9/25）11:30〜13:00のロックス地区散策にそのまま効きます。マーケットは予定通り楽しみつつ、そのあとの時間が余ったらDiscovery Museum方面へ足を伸ばすのもあり。ただし金曜夜プログラムがその週まで続くかは要現地確認です。"
     }
   ]
 }

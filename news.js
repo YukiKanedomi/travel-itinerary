@@ -12,6 +12,10 @@ function nEsc(s) {
   return String(s == null ? '' : s)
     .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
+/* 本文用: エスケープした上で <b>強調</b> だけ許可（蛍光マーカー表示） */
+function nEscBody(s) {
+  return nEsc(s).replace(/&lt;b&gt;/g, '<b>').replace(/&lt;\/b&gt;/g, '</b>');
+}
 
 function newsDaysLeft(dateStr) {
   var d = Math.ceil((new Date('2026-09-20T00:00:00+09:00') - new Date(dateStr + 'T06:00:00+09:00')) / 86400000);
@@ -41,7 +45,7 @@ function mgSheetHTML(m, issue) {
   var mid = photos[1] ? Math.ceil(paras.length / 2) : -1;
   paras.forEach(function(b, i) {
     if (b.h) h += '<div><span class="mg-h">' + nEsc(b.h) + '</span></div>';
-    h += '<p class="mg-p">' + nEsc(b.p) + '</p>';
+    h += '<p class="mg-p">' + nEscBody(b.p) + '</p>';
     if (i + 1 === mid) h += '</div>' + mgPhotoHTML(photos[1], true) + '<div class="mg-body">';
   });
   h += '</div>';
