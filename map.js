@@ -14,7 +14,7 @@ var SPOTS = [
   { area:'mel', name:'ビクトリア州立図書館', en:['328 Swanston St, Melbourne'], day:'DAY 3 観光（無料）', map:'https://maps.google.com/?q=State+Library+Victoria+Melbourne', web:'https://www.slv.vic.gov.au/', x:175, y:172, order:9, lat:-37.80977, lng:144.96554, move:'tram', legMin:10, tip:'荘厳なドーム閲覧室。上階ギャラリーも必見' },
   // SYDNEY CBD
   { area:'syd', name:'リッジス ワールド スクエア', en:['Rydges World Square — 389 Pitt Street'], day:'DAY 4〜6 ホテル', map:'https://maps.google.com/?q=389+Pitt+Street+Sydney', web:'https://www.rydges.com/accommodation/sydney-nsw/world-square-sydney-cbd/', x:152, y:212, order:1, lat:-33.87715, lng:151.20755, hot:true, tip:'CBD中心の好立地。Coles直結' },
-  { area:'syd', name:'Ume Burger', en:['Darling Square — 35 Tumbalong Blvd'], day:'DAY 4 ディナー（気軽）', map:'https://maps.google.com/?q=Ume+Burger+Darling+Square+Sydney', web:'https://umeburger.com/', x:88, y:178, order:2, lat:-33.87834, lng:151.20213, move:'walk', legMin:12, tip:'和風グルメバーガー。貝なしでOK' },
+  { area:'syd', name:'Ume Burger', en:['Darling Exchange, 1 Little Pier St (Darling Square)'], day:'DAY 4 ディナー（気軽）', map:'https://maps.google.com/?q=Ume+Burger+Darling+Square+Sydney', web:'https://umeburger.com/', x:88, y:178, order:2, lat:-33.87834, lng:151.20213, move:'walk', legMin:12, tip:'和風グルメバーガー。貝なしでOK' },
   { area:'syd', name:'ヒルトン シドニー（ツアー集合）', en:['Hilton Sydney — 488 George Street'], day:'DAY 5 集合 8:25（5分前厳守）', map:'https://maps.google.com/?q=Hilton+Sydney+488+George+Street', x:150, y:166, order:3, lat:-33.87182, lng:151.2076, move:'walk', legMin:9, hot:true, tip:'DAY5集合場所。8:25・5分前厳守！' },
   { area:'syd', name:'The Grounds of the City', en:['500 George Street, Sydney'], day:'DAY 6 朝食', map:'https://maps.google.com/?q=The+Grounds+of+the+City+Sydney', web:'https://thegrounds.com.au/', x:126, y:156, order:4, lat:-33.87264, lng:151.20761, move:'walk', legMin:2, tip:'緑あふれる人気カフェ' },
   { area:'syd', name:'ロイヤルボタニカルガーデン', en:['Mrs Macquaries Rd, Sydney'], day:'DAY 6 観光（無料）', map:'https://maps.google.com/?q=Royal+Botanic+Garden+Sydney', web:'https://www.rbgsyd.nsw.gov.au/', x:228, y:104, order:5, lat:-33.86277, lng:151.21571, move:'walk', legMin:15, tip:'湾沿いの広大な植物園。入園無料' },
@@ -140,22 +140,22 @@ var MAP_GEO = {
 
 /* 営業時間（0=日〜6=土 / all:共通 / 24h:終日 / 値なし=休み）※目安 */
 var SPOT_HOURS = {
-  'クイーンビクトリアマーケット': { 2:'6:00-15:00', 4:'6:00-15:00', 5:'6:00-17:00', 6:'6:00-15:00', 0:'9:00-16:00', note:'月・水は定休' },
+  'クイーンビクトリアマーケット': { 2:'6:00-15:00', 4:'6:00-15:00', 5:'6:00-15:00', 6:'6:00-15:00', 0:'9:00-16:00', note:'月・水は定休' },
   'ビクトリア州立図書館': { all:'10:00-18:00' },
   'ブロック・アーケード': { 1:'9:00-18:00',2:'9:00-18:00',3:'9:00-18:00',4:'9:00-18:00',5:'9:00-18:00',6:'9:00-17:00',0:'10:00-17:00' },
-  'Lune Croissanterie CBD': { all:'7:30-15:00' },
+  'Lune Croissanterie CBD': { 1:'7:30-17:00',2:'7:30-17:00',3:'7:30-17:00',4:'7:30-17:00',5:'7:30-17:00',6:'8:00-17:00',0:'8:00-17:00', note:'売り切れ次第終了' },
   'Chin Chin': { all:'11:00-23:00' },
   'Il Solito Posto': { 1:'12:00-22:00',2:'12:00-22:00',3:'12:00-22:00',4:'12:00-22:00',5:'12:00-22:00',6:'17:30-22:00', note:'日曜休のことあり' },
   'カールトン庭園・王立展示館': { all:'24h', note:'庭園は終日（館内見学は別）' },
   'ホージア・レーン': { all:'24h' },
-  'The Grounds of the City': { all:'7:00-16:00' },
+  'The Grounds of the City': { 1:'7:00-21:00',2:'7:00-21:00',3:'7:00-21:00',4:'7:00-21:00',5:'7:00-21:00',6:'8:00-21:30',0:'8:00-17:00' },
   'ロイヤルボタニカルガーデン': { all:'7:00-18:30', note:'門は季節で変動' },
   'ミセス・マッコリーズ・ポイント': { all:'24h' },
   'ロックス地区': { all:'24h', note:'各店舗の時間は別' },
   'The Glenmore Hotel': { all:'11:00-24:00' },
   'クイーンビクトリアビルディング': { 1:'9:00-18:00',2:'9:00-18:00',3:'9:00-18:00',4:'9:00-21:00',5:'9:00-18:00',6:'9:00-18:00',0:'11:00-17:00' },
-  'Opera Bar': { all:'11:00-24:00' },
-  'Ume Burger': { all:'11:00-21:00' },
+  'Opera Bar': { all:'10:00-24:00' },
+  'Ume Burger': { 1:'11:30-14:30',2:'11:30-14:30',3:'11:30-21:00',4:'11:30-21:00',5:'11:30-21:00',6:'11:30-21:00',0:'11:30-20:00', note:'14:30-16:30は休憩。月・火は昼のみ' },
   'フェザーデール動物園': { all:'9:00-16:00' },
   'シーニックワールド': { all:'9:00-17:00' },
   'エコーポイント展望台': { all:'24h' }
