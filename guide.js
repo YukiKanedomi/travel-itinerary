@@ -41,7 +41,7 @@ var GUIDE_GO = [
     steps:[ '停留所はT1・T3・T4の前。T2の出口から案内板に沿って隣へ。KKdayのQRバウチャー（PDF・大人2）を係員に見せる',
       '乗車時にQRをスキャン。スーツケースは車内ラックへ',
       '駅からホテルは徒歩5分：Collins Stを東へ1ブロック、King St先の右側' ],
-    tips:[ '控え：Uber $60〜75（Rideshareの案内板へ）／タクシー $90〜', '図解：券売機とタッチ改札は誌面27頁' ] },
+    tips:[ '控え：Uber $60〜75（Rideshareの案内板へ）／タクシー $90〜', '図解：SkyBusとタッチ改札は誌面27頁' ] },
   { t:'7:45', h:'ホテル着 — 荷物を預けて街へ', d:'チェックインは15時。"Can I leave my luggage until check-in?"',
     tips:[ '言えなくてもスーツケースを指させば伝わる', 'ホテルの目の前がもう無料トラムゾーン', '図解：チェックインとデポジットは誌面28頁' ] }
 ];
@@ -202,8 +202,6 @@ var GUIDE_PHRASES = [
     ['Can we sit here?', 'ここ座っていい？'] ] },
   { title:'レストラン', rows:[
     ['A table for two, please.', '2人です'],
-    ["No shellfish or crustaceans, please. I don't eat them.", '貝・甲殻類は抜いてください（苦手なので）'],
-    ['(If allergic) I have a shellfish allergy.', '本当にアレルギーの場合だけこちら'],
     ['Is this spicy? Mild, please.', 'これ辛い？ 辛くしないで'],
     ['Could we have the bill, please?', 'お会計をお願いします'],
     ['Can I pay here?', 'ここで払えますか？'],

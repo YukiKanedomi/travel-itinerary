@@ -81,7 +81,7 @@ var TRIP = {
 
   days: [
     { n:1, date:'9/20', wd:'日', title:'成田を発って、南半球へ',
-      wx:{ t:'日本 20°C前後', note:'機内は冷える。羽織りを' },
+      wx:{ t:'関東 21–24°C・雨', note:'台風の雨。傘は手荷物に。機内は冷えるので羽織りを' },
       photo:'assets/day1.jpg', cap:'いってきます — NRT 18:40発',
       voucher:null,
       sched:[
@@ -90,10 +90,10 @@ var TRIP = {
             '10:53発の新宿行きに乗車（橋本始発・乗換なし）',
             '11:38 新宿着。京王線改札を出てJR南口方面へ',
             'N\'EXまで30分の余裕。スーツケース連れでもゆっくり。N\'EXは5・6番線',
-            'この40分で昼食（南口改札内のコンビニで十分）とトイレを済ませる。次に落ち着いて食べられるのは成田の16時' ],
+            'この30分でトイレと飲み物を。昼食は成田に着いて荷物を預けたあと（14時ごろ）' ],
           tips:[
             'N\'EXの指定席は購入済み（チケットレス・25号 10号車2番A/B）。当日券売機に並ばない',
-            '逃したら10:49発の快速（新宿11:44着）か11:0x発。N\'EXは12:38発（27号）にも空席あり',
+            '逃したら11:01発（新宿11:53着・調布で乗換）か11:14発の直通（11:59着）。N\'EXまで10分前後しかないので、無理そうなら12:38発（27号）に変更',
             '京王が止まったら控え：JR横浜線で横浜へ → N\'EX横浜発（4,370円）' ] },
         { t:'12:08', h:'N\'EX 25号 新宿発 → 空港第2ビル', d:'約75分・空港第2ビル 13:23着でT2直結。指定席 10号車 2番A/B（変更済み）',
           tips:[
@@ -132,7 +132,7 @@ var TRIP = {
       picks:[] },
 
     { n:2, date:'9/21', wd:'月', title:'メルボルン到着、カフェの街へ',
-      wx:{ t:'メルボルン 9–18°C', note:'天気が変わりやすい。羽織り＋折りたたみ傘' },
+      wx:{ t:'メルボルン 10–16°C', note:'予報：くもり時々小雨。羽織り＋折りたたみ傘' },
       photo:'assets/day2.jpg', cap:'Hosier Lane — 日々変わる壁画の路地',
       photo2:'assets/scrap-laneway.jpg', cap2:'路地のカフェ文化——この街の日常へ',
       voucher:null,
@@ -177,11 +177,11 @@ var TRIP = {
           map:'https://maps.google.com/?q=Chin+Chin+Flinders+Lane+Melbourne', web:'https://chinchin.melbourne/' },
         { t:'21:00', h:'ホテル帰着', d:'長旅の最初の夜。ゆっくり休んで' }
       ],
-      memo:'フラットホワイト発祥の地。初日の一杯をぜひ。VICは9/21から学校休暇に入るので、観光地は家族連れで少し混む。',
+      memo:'フラットホワイト発祥の地。初日の一杯をぜひ。VICは9/19から学校休暇に入っているので、観光地は家族連れで少し混む。',
       picks:['degraves','centrepl','hwlane','emporium','grilld','schnitz','gyg','rolld','colesfed','ngv','hutong','patricia','brunetti','hardware','lune','pidapipo'] },
 
     { n:3, date:'9/22', wd:'火', title:'マーケットと世界遺産と図書館',
-      wx:{ t:'メルボルン 9–18°C', note:'朝晩冷える。重ね着で調整' },
+      wx:{ t:'メルボルン 7–17°C', note:'予報：晴れ。朝は冷える。重ね着で調整' },
       photo:'assets/day3.jpg', cap:'State Library Victoria — ドームの閲覧室',
       photo2:'assets/scrap-qvm.jpg', cap2:'Queen Victoria Market — 1878年から続く市場',
       voucher:null,
@@ -205,7 +205,7 @@ var TRIP = {
       picks:['ngv','stkilda','brighton','cumulus','udon','lord','rolld','patricia','brunetti','adk','borek','lune'] },
 
     { n:4, date:'9/23', wd:'水', title:'メルボルンの朝、シドニーの夜',
-      wx:{ t:'シドニー 12–21°C', note:'日中は過ごしやすい陽気' },
+      wx:{ t:'メルボルン 7–21°C → シドニー 15–22°C', note:'予報：メルボルンは晴れ。シドニーは夜ににわか雨の可能性' },
       photo:'assets/day4.jpg', cap:'Darling Harbour — シドニー最初の夜',
       voucher:null,
       sched:[
@@ -222,7 +222,7 @@ var TRIP = {
             '受託荷物を預ける（Choiceプランなら1人1個無料）',
             '保安検査を通過してゲートで待機（出発30分前目安）' ],
           tips:[
-            'オンラインチェックインは公式アプリ/Webで24時間前から。並ばずに済む',
+            'オンラインチェックインは公式アプリ/Webで48時間前から。並ばずに済む',
             'Uberの運転手には「T3, Virgin Australia」と伝える',
             '機内持ち込みは8kg以内のバッグ1個＋座席下の小物1個' ] },
         { t:'16:00', h:'VA859 シドニーへ', d:'1時間25分のショートホップ' },
@@ -251,7 +251,7 @@ var TRIP = {
       picks:['chatthai','spice','chinatown','messina','pieface'] },
 
     { n:5, date:'9/24', wd:'木', title:'ブルーマウンテンズと動物たちの日',
-      wx:{ t:'カトゥーンバ 5–14°C', note:'山は市内より5〜8°C低い。しっかり防寒' },
+      wx:{ t:'カトゥーンバ 9–19°C', note:'予報：くもり・にわか雨の可能性。展望台は風が冷たい。防寒と雨具' },
       photo:'assets/day5.jpg', cap:'Three Sisters, Blue Mountains',
       photo2:'assets/scrap-koala.jpg', cap2:'ユーカリの木の上の住人に、会いに行く',
       voucher:{ kicker:'JTB DAY TOUR — VOUCHER', name:'世界遺産ブルーマウンテンズ＆動物園（日本語ガイド）',
@@ -295,7 +295,7 @@ var TRIP = {
       picks:[] },
 
     { n:6, date:'9/25', wd:'金', title:'ハーバーの街を歩き尽くす最終日',
-      wx:{ t:'シドニー 13–21°C', note:'散策日和。帽子と日焼け止めを' },
+      wx:{ t:'シドニー 14–23°C', note:'予報：晴れ。散策日和。帽子と日焼け止めを' },
       photo:'assets/day6.jpg', cap:'The Rocks — 金曜はマーケットの日',
       photo2:'assets/scrap-opera.jpg', cap2:'Sydney Opera House — 最後の夜の舞台',
       voucher:null,
@@ -320,7 +320,7 @@ var TRIP = {
       picks:['manly','bondi','watsons','barangaroo','operatour','bourke','messina','singleo','grounds_alex','harrys','pancakes','rocksmkt','larenai','pieface'] },
 
     { n:7, date:'9/26', wd:'土', title:'南十字星に手を振って、帰国',
-      wx:{ t:'シドニー 13–21°C', note:'朝は冷える。一枚羽織って' },
+      wx:{ t:'シドニー 15–26°C', note:'予報：晴れて風強め。朝は一枚羽織って' },
       photo:'assets/day7.jpg', cap:'また来るね、オーストラリア',
       voucher:null,
       sched:[
