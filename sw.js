@@ -10,8 +10,8 @@
  * 旧世代（tabi-shiori-v* / tabi-techo-v*）は一度だけ掃除する。
  * /v1/ のアーカイブ（tabi-shiori-arch-*）には触れない。
  */
-const CACHE = 'tabi-techo-root-v47';
-const V = '47'; // index.html の ?v= と揃える
+const CACHE = 'tabi-techo-root-v48';
+const V = '48'; // index.html の ?v= と揃える
 /* 必須シェル：1つでも取得に失敗したらインストール自体を失敗させる（約1MB） */
 const CORE = [
   './',
@@ -21,6 +21,7 @@ const CORE = [
   './map.js?v=' + V,
   './prep.js?v=' + V,
   './guide.js?v=' + V,
+  './en.js?v=' + V,
   './info.js?v=' + V,
   './news.js?v=' + V,
   './wx.js?v=' + V,
