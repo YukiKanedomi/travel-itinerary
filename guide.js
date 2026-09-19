@@ -194,6 +194,61 @@ var GUIDE_SOS = [
 
 /* ---- 指差し英語（読み上げなくてよい。見せるだけで通じる短文） ---- */
 var GUIDE_PHRASES = [
+  { title:'まずこれだけ — 10語で乗り切る', rows:[
+    ['This one, please.', 'これください（指さしながら。メニューも商品も全部これ）'],
+    ['Two, please.', '2つ／2人で（人数も個数もこれ）'],
+    ['Yes, please. / No, thanks.', 'はい、お願いします／いいえ、結構です'],
+    ['Sorry?', 'え、もう一度？（聞き返しはこれ一語。Pardonより自然）'],
+    ["That's all, thanks.", '以上です（注文の締め。これを言うと会計に進む）'],
+    ['Card, please.', 'カードで'],
+    ['Excuse me.', 'すみません（呼びかけ・通してほしいとき）'],
+    ['Just looking, thanks.', '見てるだけです（店員が寄ってきたら）'],
+    ["I'm good, thanks.", '大丈夫です（何か勧められて断るとき）'],
+    ['Thanks so much.', 'ありがとう（Thank you より軽くて日常的）'] ] },
+  { title:'相槌・返事 — これで会話がつながる', rows:[
+    ['Yeah. / Yep.', 'うん（Yes より自然。返事の8割はこれ）'],
+    ['Sure.', 'いいよ／もちろん'],
+    ['No worries.', '気にしないで／どういたしまして（豪州の万能語。言われたら笑顔で Thanks）'],
+    ['Sounds good.', 'いいね（何か提案されたとき）'],
+    ['Oh, nice!', 'へえ、いいですね'],
+    ['Really?', 'ほんとに？'],
+    ['Got it.', '分かりました'],
+    ['Maybe later.', 'また後で（やんわり断る）'],
+    ['Cheers.', 'ありがとう／じゃあね（会計や別れ際に一言）'],
+    ['You too.', 'あなたもね（Have a good day と言われたら）'] ] },
+  { title:'こう聞かれる — こう答える', rows:[
+    ["How are you? / How's it going? — Good, thanks.", '店員の挨拶。答えは一言でいい。聞き返さなくてよい'],
+    ['Have here or takeaway? — Have here.', '店内か持ち帰りか。カフェで必ず聞かれる'],
+    ["Anything else? — That's all, thanks.", 'ほかには？ → 以上です'],
+    ['Do you want a bag? — No, thanks.', '袋いる？（有料）。エコバッグがあれば No'],
+    ['Do you have Flybuys? / a rewards card? — No.', 'ポイントカードある？ Coles・Woolworths で毎回聞かれる'],
+    ["Tap when you're ready.", '端末にカードをかざしてOKの合図。何も言わずにタッチ'],
+    ['Do you have a booking? — No, just two.', '予約は？ → 2人で飛び込みです'],
+    ['Is everything OK? — Yes, lovely, thanks.', '食事中に必ず来る。lovely は豪州でよく使う「おいしい」'],
+    ["Still working on that? — Yes, still going. / No, I'm done.", '皿を下げていい？ → まだ食べます／終わりました'],
+    ['Which milk? — Regular, please.', 'ミルクの種類（オーツ・アーモンド等）。普通の牛乳なら regular か full cream'],
+    ['Together or separate? — Together, please.', '会計は一緒？別々？ → 一緒で'],
+    ['Any allergies? — No.', 'アレルギーは？'],
+    ['Where are you from? — Japan.', 'どこから？'],
+    ['First time in Australia? — Yes, first time!', '初めて？ ここから会話が弾む'],
+    ['Anything to declare? — Yes, snacks and medicine.', '検疫。申告するものは？ → お菓子と薬'] ] },
+  { title:'聞き取れなかったとき', rows:[
+    ['Sorry, once more?', 'もう一回いいですか'],
+    ['Slowly, please.', 'ゆっくりお願いします'],
+    ['Sorry, my English is not great.', '英語が得意でなくて。言うと相手がゆっくり話してくれる'],
+    ['Can you show me?', '見せて／指さして教えて（場所・商品・画面）'],
+    ['Is it this one?', 'これですか？（指さして確認）'] ] },
+  { title:'オージー語ミニ辞典 — 聞こえたらこれ', rows:[
+    ['No worries', '大丈夫・どういたしまして・気にしないで'],
+    ['Ta', 'ありがとう（超カジュアル）'],
+    ['Mate', '相手への呼びかけ。言われても親しみの印'],
+    ['Brekkie / Arvo', '朝食／午後'],
+    ['Heaps', 'たくさん（heaps good＝めっちゃいい）'],
+    ['Reckon', '思う（I reckon＝〜だと思う）'],
+    ['Maccas', 'マクドナルド'],
+    ['Bottle-o', '酒屋（スーパーでは酒を売っていない）'],
+    ['Sunnies / Thongs', 'サングラス／ビーチサンダル（下着ではない）'],
+    ['Lovely / Gorgeous', 'すてき・おいしい・いい天気。褒め言葉の万能語'] ] },
   { title:'カフェ', rows:[
     ['A flat white, please.', 'フラットホワイトを1つ'],
     ['Two flat whites, have here.', 'フラットホワイト2つ、店内で'],
@@ -312,7 +367,7 @@ function renderGuidePage() {
   });
 
   h += '<div class="sec-h jmp-t" id="jg-en">— 指差し英語 —</div>';
-  h += '<div class="sec-hint">読み上げなくても、この画面を見せれば通じる短文。タップで開く。</div>';
+  h += '<div class="sec-hint">乗り切る3原則：①指さして This one ②分からなければ Sorry? ③最後に Thanks。読み上げなくても、この画面を見せれば通じる。タップで開く。</div>';
   GUIDE_PHRASES.forEach(function(k){
     var m = '';
     k.rows.forEach(function(r){ m += '<div class="gd-ph"><div class="en">' + r[0] + '</div><div class="ja">' + r[1] + '</div></div>'; });
