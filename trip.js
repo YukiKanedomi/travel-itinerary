@@ -172,7 +172,7 @@ var TRIP = {
         { t:'13:00', h:'ランチ — Il Solito Posto', d:'Collins St東端・地下の隠れ家イタリアン。パスタ・リゾット・モクテル', sv:{ lat:-37.8131, lng:144.9725, label:'Il Solito Posto（113 Collins St・George Parade側の地下入口）', note:'George Parade 側。木の壁のロビーが入口で、階段で地下へ降りる。左隣の車路は駐車場なので入らない' },
           map:'https://maps.google.com/?q=Il+Solito+Posto+113+Collins+Street+Melbourne', web:'https://ilsolitoposto.com.au/',
           tips:[ '疲れていたら気軽な代案でよい。下の付箋に候補を入れてある（Degraves St・Hardware Lane・フードコート・チェーン・Coles で買って Federation Square）。どれも「地図で開く」付き' ] },
-        { t:'15:00', h:'チェックイン＆仮眠（最重要）', d:'欲張って観光を続けないこと。バスタブ＋1〜2時間の仮眠。明日からの体力はここで決まる' },
+        { t:'15:00', h:'チェックイン＆仮眠（最重要）', d:'欲張って観光を続けないこと。シャワー＋1〜2時間の仮眠（17時にアラーム）。明日からの体力はここで決まる' },
         { t:'18:00', h:'ディナー — Chin Chin', d:'モダンタイの人気店。予約せずウォークインで。17:30に着くと待ちが短く、回転は早い。辛さ調整可（mildで）', sv:{ lat:-37.81561, lng:144.97038, label:'Chin Chin（125 Flinders Lane）', from:{ lat:-37.81546, lng:144.97035 }, note:'Flinders Lane の南側。赤レンガの J.HIGSON & SONS の建物で、アーチの上に白い CHIN CHIN の看板。手前にテラス席。17:30 の早め入りが確実' },
           map:'https://maps.google.com/?q=Chin+Chin+Flinders+Lane+Melbourne', web:'https://chinchin.melbourne/' },
         { t:'21:00', h:'ホテル帰着', d:'長旅の最初の夜。ゆっくり休んで' }
@@ -196,7 +196,7 @@ var TRIP = {
           tips:['ドームの上階回廊（Level 5・6）は改修で閉鎖中（9/10時点）。見下ろしの写真は撮れない前提で','La Trobe St側の入口（Entry 2）とカフェも改装中で閉鎖。Swanston St側の正面から入る'],
           map:'https://maps.google.com/?q=State+Library+Victoria+Melbourne', web:'https://www.slv.vic.gov.au/' },
         { t:'13:00', h:'ランチ — フィッツロイ or CBD', d:'オープンエアのカフェか、CBDのビストロで' },
-        { t:'15:00', h:'5つ星ホテルを満喫', d:'ラウンジ・プール・バスタブ。完全自由日の醍醐味' },
+        { t:'15:00', h:'5つ星ホテルを満喫', d:'屋内温水プール・サウナ・ジム。完全自由日の醍醐味（部屋はシャワーのみ）' },
         { t:'18:00', h:'ディナー — Cumulus Inc.', d:'モダンオージーの人気店。予約せずウォークインで。17:45の早め入りが確実（ウォークイン歓迎の店）',
           map:'https://maps.google.com/?q=Cumulus+Inc+45+Flinders+Lane+Melbourne', web:'https://www.cumulusinc.com.au/' },
         { t:'21:00', h:'ホテル帰着', d:'明日は移動日。VA859のオンラインチェックイン（48時間前から・座席24A/24B）を済ませて早めに就寝' }
