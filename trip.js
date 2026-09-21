@@ -195,14 +195,14 @@ var TRIP = {
         { t:'12:30', h:'ビクトリア州立図書館', d:'荘厳なドーム閲覧室（無料）。入口はSwanston St側から',
           tips:['ドームの上階回廊（Level 5・6）は改修で閉鎖中（9/10時点）。見下ろしの写真は撮れない前提で','La Trobe St側の入口（Entry 2）とカフェも改装中で閉鎖。Swanston St側の正面から入る'],
           map:'https://maps.google.com/?q=State+Library+Victoria+Melbourne', web:'https://www.slv.vic.gov.au/' },
-        { t:'13:00', h:'ランチ — フィッツロイ or CBD', d:'オープンエアのカフェか、CBDのビストロで' },
+        { t:'13:00', h:'ランチ — ライゴンSt か フィッツロイ', d:'カールトン庭園から北へ10分のイタリア人街で昼食 → 午後はフィッツロイ（Brunswick St・Gertrude St）を散策。付箋に地図あり' },
         { t:'15:00', h:'5つ星ホテルを満喫', d:'屋内温水プール・サウナ・ジム。完全自由日の醍醐味（部屋はシャワーのみ）' },
         { t:'18:00', h:'ディナー — Cumulus Inc.', d:'モダンオージーの人気店。予約せずウォークインで。17:45の早め入りが確実（ウォークイン歓迎の店）',
           map:'https://maps.google.com/?q=Cumulus+Inc+45+Flinders+Lane+Melbourne', web:'https://www.cumulusinc.com.au/' },
         { t:'21:00', h:'ホテル帰着', d:'明日は移動日。VA859のオンラインチェックイン（48時間前から・座席24A/24B）を済ませて早めに就寝' }
       ],
       memo:'メルボルンは「1日で四季」の街。ウインドブレーカーをバッグに。',
-      picks:['ngv','stkilda','brighton','cumulus','udon','lord','rolld','patricia','brunetti','adk','borek','lune'] },
+      picks:['fitzroy','lygon','ngv','stkilda','brighton','cumulus','udon','lord','rolld','patricia','brunetti','adk','borek','lune'] },
 
     { n:4, date:'9/23', wd:'水', title:'メルボルンの朝、シドニーの夜',
       wx:{ t:'メルボルン 7–21°C → シドニー 15–22°C', note:'予報：メルボルンは晴れ。シドニーは夜ににわか雨の可能性' },
@@ -360,6 +360,8 @@ var TRIP = {
 /* 寄り道候補（付箋）。genre: sight=観光 / cafe=カフェ / food=たべる / view=絶景 */
 var PICKS = {
   ngv:      { g:'sight', lat:-37.82291, lng:144.96865, name:'NGV（ビクトリア国立美術館）', tip:'入場無料の大型美術館。雨天・時間調整の切り札', map:'https://maps.google.com/?q=National+Gallery+of+Victoria' },
+  fitzroy:  { g:'sight', lat:-37.79920, lng:144.97830, name:'フィッツロイ（Brunswick St・Gertrude St）', tip:'古着・雑貨・カフェ・壁画の街。Collins Stから11番トラムで15分（ゾーン外・タッチ必要）。Lune本店は119 Rose St', map:'https://maps.google.com/?q=Brunswick+Street+Fitzroy+Melbourne' },
+  lygon:    { g:'food', lat:-37.79950, lng:144.96700, name:'ライゴン・ストリート（カールトン）', tip:'イタリア人街。カールトン庭園から北へ10分。Brunetti本店とジェラート', map:'https://maps.google.com/?q=Lygon+Street+Carlton+Melbourne' },
   stkilda:  { g:'view', lat:-37.86467, lng:144.96892, name:'セント・キルダ桟橋', tip:'日没後に野生のリトルペンギン。トラム96で30分', map:'https://maps.google.com/?q=St+Kilda+Pier+Melbourne' },
   brighton: { g:'view', lat:-37.92071, lng:144.98751, name:'ブライトンのバスボックス', tip:'カラフルな海の家。晴れた午前が順光', map:'https://maps.google.com/?q=Brighton+Bathing+Boxes' },
   cumulus:  { g:'food', lat:-37.81493, lng:144.97311, name:'Cumulus Inc.', tip:'朝〜夜まで使えるモダンオージー', map:'https://maps.google.com/?q=Cumulus+Inc+Melbourne' },
