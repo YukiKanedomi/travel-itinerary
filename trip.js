@@ -212,10 +212,14 @@ var TRIP = {
       photo:'assets/day4.jpg', cap:'Darling Harbour — シドニー最初の夜',
       voucher:null,
       sched:[
-        { t:'8:40', h:'チェックアウト → 荷物をフロントに預ける', d:'デポジット解除を確認。身軽になってからマーケットへ（戻ってからのチェックアウトより動きが一本になる）' },
-        { t:'9:00', h:'サウスメルボルンマーケット', d:'QVよりローカルでおしゃれ。デリと雑貨（水曜営業）。Uberで約10分',
-          map:'https://maps.google.com/?q=South+Melbourne+Market', web:'https://www.southmelbournemarket.com.au/' },
-        { t:'11:30', h:'メルボルン最後のランチ', d:'フリンダーズ・レーンで締めの一皿' },
+        { t:'8:30', h:'朝食 — ホテル周辺で', d:'向かいの Amie（クロワッサン）か、徒歩2分の The Grain Store（ブランチの名店）、5分の Higher Ground（元発電所の大型カフェ）',
+          map:'https://maps.google.com/?q=The+Grain+Store+517+Flinders+Lane+Melbourne' },
+        { t:'9:30', h:'ホテルでのんびり・荷造りの仕上げ', d:'屋内温水プールとサウナ、または部屋で。モバイルバッテリー・ルーター・iPad は手荷物側へ' },
+        { t:'11:00', h:'チェックアウト → 荷物をフロントに預ける', d:'半券をもらう。デポジットの解除を確認' },
+        { t:'11:15', h:'周辺をふらっと散策', d:'ANZ Gothic Bank（380 Collins St・1887年の営業フロアが無料で見られる）、Immigration Museum（旧税関）、サザンクロス駅の波打つ屋根と Docklands の水辺。どれも徒歩10分以内',
+          map:'https://maps.google.com/?q=ANZ+Gothic+Bank+380+Collins+Street+Melbourne',
+          tips:[ 'サウスメルボルン・マーケットに気が向いたら付箋から。Uberで10分、水曜は営業日' ] },
+        { t:'12:00', h:'メルボルン最後のランチ', d:'The Grain Store か Collins St のカフェで軽く' },
         { t:'13:00', h:'ホテルで荷物を受け取り、Uberで空港へ', d:'約35〜40分。13:15発なら14:00前に着く' },
         { t:'14:15', h:'T3でチェックイン（ヴァージン専用）', d:'T4はJetstar等なので注意',
           map:'https://maps.google.com/?q=Melbourne+Airport+Terminal+3', web:'https://www.virginaustralia.com/',
@@ -251,7 +255,7 @@ var TRIP = {
           map:'https://maps.google.com/?q=Circular+Quay+Sydney' }
       ],
       memo:'VA859が遅れたら夕食はColes調達で部屋ごはんに切替もOK。夜景は明日以降でも見られる——無理をしない。',
-      picks:['chatthai','spice','chinatown','messina','pieface'] },
+      picks:['smm','chatthai','spice','chinatown','messina','pieface'] },
 
     { n:5, date:'9/24', wd:'木', title:'ブルーマウンテンズと動物たちの日',
       wx:{ t:'カトゥーンバ 9–19°C', note:'予報：くもり・にわか雨の可能性。展望台は風が冷たい。防寒と雨具' },
@@ -362,6 +366,7 @@ var TRIP = {
 
 /* 寄り道候補（付箋）。genre: sight=観光 / cafe=カフェ / food=たべる / view=絶景 */
 var PICKS = {
+  smm:      { g:'food', lat:-37.83210, lng:144.95610, name:'サウスメルボルン・マーケット', tip:'QVよりローカルでおしゃれ。デリと雑貨。水・金・土・日営業。ホテルからUberで10分', map:'https://maps.google.com/?q=South+Melbourne+Market' },
   ngv:      { g:'sight', lat:-37.82291, lng:144.96865, name:'NGV（ビクトリア国立美術館）', tip:'入場無料の大型美術館。雨天・時間調整の切り札', map:'https://maps.google.com/?q=National+Gallery+of+Victoria' },
   fitzroy:  { g:'sight', lat:-37.79920, lng:144.97830, name:'フィッツロイ（Brunswick St・Gertrude St）', tip:'古着・雑貨・カフェ・壁画の街。Collins Stから11番トラムで15分（ゾーン外・タッチ必要）。Lune本店は119 Rose St', map:'https://maps.google.com/?q=Brunswick+Street+Fitzroy+Melbourne' },
   lygon:    { g:'food', lat:-37.79950, lng:144.96700, name:'ライゴン・ストリート（カールトン）', tip:'イタリア人街。カールトン庭園から北へ10分。Brunetti本店とジェラート', map:'https://maps.google.com/?q=Lygon+Street+Carlton+Melbourne' },
