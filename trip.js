@@ -197,9 +197,12 @@ var TRIP = {
           map:'https://maps.google.com/?q=State+Library+Victoria+Melbourne', web:'https://www.slv.vic.gov.au/' },
         { t:'13:00', h:'ランチ — ライゴンSt か フィッツロイ', d:'カールトン庭園から北へ10分のイタリア人街で昼食 → 午後はフィッツロイ（Brunswick St・Gertrude St）を散策。付箋に地図あり' },
         { t:'15:00', h:'5つ星ホテルを満喫', d:'屋内温水プール・サウナ・ジム。完全自由日の醍醐味（部屋はシャワーのみ）' },
-        { t:'18:00', h:'ディナー — Cumulus Inc.', d:'モダンオージーの人気店。予約せずウォークインで。17:45の早め入りが確実（ウォークイン歓迎の店）',
+        { t:'17:30', h:'早めのディナー — Cumulus Inc. か Chin Chin', d:'どちらも Flinders Lane で劇場から徒歩5分。ウォークイン、早め入りで待たずに座れる',
           map:'https://maps.google.com/?q=Cumulus+Inc+45+Flinders+Lane+Melbourne', web:'https://www.cumulusinc.com.au/' },
-        { t:'21:00', h:'ホテル帰着', d:'明日は移動日。VA859のオンラインチェックイン（48時間前から・座席24A/24B）を済ませて早めに就寝' }
+        { t:'19:30', h:'Monty Python\'s Spamalot — Athenaeum Theatre', d:'188 Collins St（Town Hall のトラム停の目の前）。2時間15分・休憩あり・21:45終演。チケットは Ticketmaster か劇場窓口（18:00〜）',
+          map:'https://maps.google.com/?q=Athenaeum+Theatre+188+Collins+Street+Melbourne', web:'https://www.athenaeumtheatre.com.au/shows/monty-python',
+          tips:[ '映画「ホーリー・グレイル」のミュージカル版。殺人ウサギ・「ニッ！」の騎士・ココナッツの馬。最後の Always Look on the Bright Side of Life は客席も口笛で参加', 'ロビーのバーで買った飲み物は客席に持ち込める' ] },
+        { t:'22:00', h:'ホテル帰着', d:'Collins St のトラムで10分。明日は移動日。VA859のオンラインチェックイン（16:00から可・座席24A/24B）が済んでいるか確認して、荷造りを8割まで' }
       ],
       memo:'メルボルンは「1日で四季」の街。ウインドブレーカーをバッグに。',
       picks:['fitzroy','lygon','ngv','stkilda','brighton','cumulus','udon','lord','rolld','patricia','brunetti','adk','borek','lune'] },
