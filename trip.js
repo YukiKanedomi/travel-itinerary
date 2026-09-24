@@ -72,7 +72,7 @@ var TRIP = {
       day:4, map:'https://maps.google.com/?q=389+Pitt+Street+Sydney',
       web:'https://www.rydges.com/accommodation/sydney-nsw/world-square-sydney-cbd/',
       ex:[
-        '朝食はロビー階の Amber Restaurant、6:30〜10:30 のビュッフェ。部屋番号を言うだけ（最終日は6:15発なので食べられない。前夜にColesでパンを）',
+        '朝食はロビー階の Amber Restaurant、6:30〜10:30 のビュッフェ。部屋番号を言うだけ（最終日は5:40発なので食べられない。前夜にColesでパンを）',
         '備品：ドライヤー・アイロンあり／スリッパ・バスローブ・無料の水はなし。給水機は12・16・19・20階の39号室前',
         'Wi-Fiは「Rydges Guest」（パスワードは部屋の案内カード）。ジムは21階 6:00〜22:00、コインランドリーは12・21階（洗濯5ドル・乾燥5ドル、カードタップ）',
         'チェックアウトはロビーの Express Checkout ボックスにキーを入れるだけでも可（最終日の早朝出発向き）',
