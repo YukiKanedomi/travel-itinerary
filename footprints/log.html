@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#EFE6DA">
+<title>旅の記録 — オーストラリア 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&family=Inter+Tight:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+/* ============ 旅の記録 — 紙と雲（足跡と同じ装丁） ============ */
+:root{
+  --paper:#EFE6DA; --cloud:#F6EFE5; --cloud2:#F7E3D6; --ink:#3A3532; --dim:#9A8E84; --mid:#5E554E; --acc:#D8907A; --line:rgba(58,53,50,.16);
+  --sans:"Zen Kaku Gothic New","Hiragino Kaku Gothic ProN",sans-serif; --serif:"Shippori Mincho","Hiragino Mincho ProN",serif; --en:"Inter Tight",var(--sans);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;transition:background 1.2s ease;min-height:100vh}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+a{color:inherit}
+#sky{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+#sky svg{position:absolute;left:-10%;top:0;width:120%;height:100%}
+#sky .c1{fill:var(--cloud);transition:fill 1.2s}
+#sky .c2{fill:var(--cloud2);opacity:.9;transition:fill 1.2s}
+@media (prefers-reduced-motion:no-preference){
+  #sky .drift{animation:drift 90s ease-in-out infinite alternate}
+  #sky .drift.slow{animation-duration:140s;animation-direction:alternate-reverse}
+  @keyframes drift{from{transform:translateX(0)}to{transform:translateX(-6%)}}
+}
+header{position:sticky;top:0;z-index:20;padding:calc(12px + env(safe-area-inset-top)) 20px 10px;display:flex;justify-content:space-between;align-items:center;gap:12px;
+  background:linear-gradient(180deg,var(--paper) 70%,transparent);transition:background 1.2s}
+.wm{font-family:var(--en);font-weight:300;font-size:10.5px;letter-spacing:.2em;color:var(--dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+#days{display:flex;gap:4px;font-family:var(--en);font-size:11px;color:var(--dim);flex:none}
+#days button{padding:2px 7px;border-radius:12px;letter-spacing:.02em;transition:background .3s,color .3s}
+#days button.on{color:var(--ink);background:rgba(255,255,255,.85)}
+main{position:relative;z-index:10;max-width:560px;margin:0 auto;padding:18px 22px calc(60px + env(safe-area-inset-bottom))}
+.head{margin:26px 0 30px}
+.head small{display:block;font-family:var(--en);font-weight:300;font-size:12px;letter-spacing:.28em;color:var(--dim)}
+.head .date{font-family:var(--en);font-weight:300;font-size:52px;line-height:1;letter-spacing:-.03em;margin-top:8px}
+.head .date b{font-weight:500}
+.head h1{font-weight:500;font-size:19px;line-height:1.5;letter-spacing:.02em;margin-top:12px;font-feature-settings:"palt";text-wrap:balance}
+.head .lead{font-family:var(--serif);font-size:12.5px;line-height:1.9;letter-spacing:.06em;color:var(--mid);margin-top:10px}
+.sec{margin:34px 0 0}
+.sec h2{font-family:var(--en);font-weight:400;font-size:11px;letter-spacing:.3em;color:var(--dim);text-transform:uppercase}
+.sec h2 b{display:block;font-family:var(--sans);font-weight:500;font-size:17px;letter-spacing:.02em;color:var(--ink);margin-top:4px;text-transform:none;font-feature-settings:"palt"}
+.sec h3{font-weight:500;font-size:14px;margin:18px 0 4px;letter-spacing:.02em}
+.p{position:relative;padding:14px 0 14px 0;border-top:1px solid var(--line);font-size:14px;line-height:1.95;letter-spacing:.01em;color:var(--ink);font-weight:400}
+.p:first-of-type{border-top:0}
+.p .t{display:block;font-family:var(--en);font-weight:400;font-size:11px;letter-spacing:.16em;color:var(--acc);margin-bottom:2px}
+.p b{font-weight:700}
+.p.sub{padding-left:16px;font-size:13.5px;color:var(--mid)}
+.p.sub::before{content:"";position:absolute;left:4px;top:24px;width:4px;height:4px;border-radius:50%;background:var(--dim)}
+.strip{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.strip button{width:calc((100% - 18px) / 4);aspect-ratio:1;border-radius:8px;overflow:hidden;background:rgba(255,255,255,.4);box-shadow:0 6px 16px -8px rgba(90,70,50,.4);position:relative}
+.strip button img{width:100%;height:100%;object-fit:cover;display:block;opacity:0;transition:opacity .5s}
+.strip button img.in{opacity:1}
+.strip button.wide{width:calc((100% - 6px) / 2);aspect-ratio:4/3}
+.plain{margin-top:8px}
+.plain .p{border-top:0;padding:4px 0}
+.note{font-family:var(--serif);font-size:12.5px;line-height:1.9;letter-spacing:.06em;color:var(--mid)}
+.pager{display:flex;justify-content:space-between;gap:12px;margin:46px 0 0;border-top:1px solid var(--line);padding-top:16px}
+.pager a{text-decoration:none;font-size:12.5px;color:var(--mid);line-height:1.6;max-width:48%}
+.pager a small{display:block;font-family:var(--en);font-size:10px;letter-spacing:.2em;color:var(--dim)}
+.pager a.nx{text-align:right;margin-left:auto}
+.fp{display:block;margin:32px 0 0;padding:16px 18px;border-radius:14px;background:rgba(255,255,255,.55);text-decoration:none;box-shadow:0 10px 30px -18px rgba(90,70,50,.5)}
+.fp small{display:block;font-family:var(--en);font-size:10px;letter-spacing:.26em;color:var(--dim)}
+.fp span{display:block;font-weight:500;font-size:16px;margin-top:2px}
+.fp em{display:block;font-style:normal;font-family:var(--serif);font-size:12px;color:var(--mid);letter-spacing:.06em;margin-top:2px}
+#lb{position:fixed;inset:0;z-index:60;background:#111;display:none;align-items:center;justify-content:center;flex-direction:column;gap:10px;padding:16px}
+#lb.on{display:flex}
+#lb img{max-width:100%;max-height:82vh;border-radius:4px}
+#lb .c{font-family:var(--en);font-size:10.5px;letter-spacing:.2em;color:#CFC7B8}
+#veil{position:fixed;inset:0;z-index:30;background:var(--paper);opacity:0;pointer-events:none;transition:opacity .45s}
+#veil.on{opacity:1}
+#lock{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;padding:24px;background:var(--paper)}
+#lock[hidden]{display:none}
+.lk{width:100%;max-width:320px;text-align:center}
+.lk .wm{display:block;margin-bottom:12px}
+.lk h2{font-weight:500;font-size:28px;letter-spacing:.04em}
+.lk p{font-family:var(--serif);font-size:12.5px;letter-spacing:.08em;color:var(--mid);margin-top:8px;line-height:1.8}
+.lk input{display:block;width:100%;margin:26px 0 0;font:500 18px var(--en);letter-spacing:.06em;padding:10px 4px;border:0;border-bottom:1px solid var(--ink);background:transparent;color:var(--ink);outline:none;text-align:center;border-radius:0}
+.lk button{margin-top:18px;width:100%;padding:13px;border-radius:26px;background:var(--ink);color:#fff;font-weight:500;letter-spacing:.14em}
+.lk .msg{min-height:20px;margin-top:10px;font-size:12px;color:var(--acc)}
+.lk a{display:inline-block;margin-top:18px;font-family:var(--en);font-size:11px;letter-spacing:.2em;color:var(--dim);text-decoration:none}
+#loading{position:fixed;inset:0;z-index:50;display:flex;align-items:center;justify-content:center;font-family:var(--en);font-size:11px;letter-spacing:.3em;color:var(--dim);background:var(--paper);transition:opacity .5s;pointer-events:none}
+#loading.off{opacity:0}
+</style>
+</head>
+<body>
+<div id="sky"><svg viewBox="0 0 430 932" preserveAspectRatio="none">
+<g class="drift"><path class="c1" d="M-40 120 C40 90 120 140 190 110 C260 80 320 130 470 96 L470 0 L-40 0 Z"/></g>
+<g class="drift slow"><path class="c2" d="M-40 520 C60 480 140 560 230 520 C320 480 380 540 470 500 L470 640 C380 660 300 610 220 650 C140 690 60 640 -40 660 Z"/></g>
+<g class="drift"><path class="c1" d="M-40 820 C80 780 160 850 250 810 C330 775 390 830 470 800 L470 932 L-40 932 Z"/></g>
+</svg></div>
+<header><span class="wm" id="wm">TRAVEL LOG</span><div id="days"></div></header>
+<main id="main"></main>
+<div id="lb" onclick="this.classList.remove('on')"><img id="lb-img" alt=""><div class="c" id="lb-cap"></div></div>
+<div id="veil"></div>
+<div id="loading">OPENING</div>
+<div id="lock" hidden><form class="lk" onsubmit="return lockSubmit(event)"><span class="wm">TRAVEL LOG</span><h2>旅の記録</h2><p>合言葉で開きます。<br>一度開けば、この端末では次から入力なしで。</p>
+<input id="lock-pw" type="password" autocomplete="current-password" autocapitalize="off" spellcheck="false" placeholder="合言葉"><button type="submit" id="lock-btn">開く</button><div class="msg" id="lock-msg"></div><a href="../">‹ 旅の手帳へ</a></form></div>
+
+<script src="../vault.js?v=62"></script>
+<script>
+Vault.base('../');
+var PAPER = {
+  '0920': ['#EDE7DF', '#F5F1EB', '#F3E6DE'], '0921': ['#E9E7E0', '#F3F1EA', '#F0E8DD'], '0922': ['#EEE7DC', '#F6F0E6', '#F6E3D6'],
+  '0923': ['#E6E9EC', '#F0F2F4', '#F5E7DF'], '0924': ['#EFE6DA', '#F6EFE5', '#F7E3D6'], '0925': ['#E4E9EE', '#EFF2F5', '#F3E4DC'], '0926': ['#E9E6E3', '#F3F0EC', '#F1E4DC']
+};
+var DAY_NO = { '0920': 1, '0921': 2, '0922': 3, '0923': 4, '0924': 5, '0925': 6, '0926': 7 };
+var MON = { '09': 'Sep' };
+var $ = function (id) { return document.getElementById(id); };
+var files = [], cur = null, curFile = null;
+function esc(s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+function fileKeys(f) { var m = /_(\d{4})(?:-(\d{4}))?_/.exec(f.name); if (!m) return []; if (!m[2]) return [m[1]]; var out = [], a = +m[1].slice(2), b = +m[2].slice(2); for (var d = a; d <= b; d++) out.push(m[1].slice(0, 2) + ('0' + d).slice(-2)); return out; }
+function fileFor(key) { for (var i = 0; i < files.length; i++) if (fileKeys(files[i]).indexOf(key) >= 0) return files[i]; return null; }
+/* 行内：**太字**。IMG の番号は本文から抜き、写真の帯にする */
+function pullImgs(text) {
+  var nums = [];
+  var t = text.replace(/IMG_(\d{4})((?:[〜・、]\d{4})*)/g, function (m, first, rest) {
+    var parts = [first].concat(rest.match(/\d{4}/g) || []); var seps = rest.replace(/\d{4}/g, '').split('');
+    var prev = +first; nums.push(first);
+    parts.slice(1).forEach(function (n, i) { if (seps[i] === '〜') { for (var k = prev + 1; k <= +n; k++) nums.push(String(k)); } else nums.push(n); prev = +n; });
+    return '';
+  });
+  t = t.replace(/[、，]\s*[）)]/g, '）').replace(/[（(]\s*[、，]/g, '（').replace(/[（(]\s*[）)]/g, '').replace(/[、，]{2,}/g, '、').replace(/[、，]\s*$/g, '').replace(/[（(]([^（）()]*)[、，]\s*[）)]/g, '（$1）');
+  t = t.replace(/\s*[、，]?\s*(\d{1,2}:\d{2})\s*[）)]/g, '）').replace(/[（(]\s*[）)]/g, '');
+  return { text: t.trim(), nums: nums };
+}
+function inline(s) { return esc(s).replace(/\*\*([^*]+)\*\*/g, '<b>$1</b>'); }
+function timeLead(s) { var m = /^((?:\d{1,2}:\d{2})(?:\s*[〜～]\s*\d{1,2}:\d{2})?)\s+/.exec(s); return m ? { t: m[1].replace(/\s/g, ''), rest: s.slice(m[0].length) } : { t: '', rest: s }; }
+function stripHTML(nums) {
+  if (!nums.length) return '';
+  var seen = {}, out = nums.filter(function (n) { if (seen[n]) return false; seen[n] = 1; return true; });
+  return '<div class="strip">' + out.map(function (n) { return '<button type="button" data-n="' + n + '" aria-label="写真"><img alt="" loading="lazy"></button>'; }).join('') + '</div>';
+}
+function render(f, key) {
+  var lines = f.md.split(/\r?\n/), h = '', i = 0, title = '', inSec = false, inTable = false, skipSec = false;
+  var lead = [];
+  for (; i < lines.length; i++) {
+    var l = lines[i];
+    if (/^\|/.test(l)) { inTable = true; continue; } else if (inTable && !l.trim()) { inTable = false; continue; } else if (inTable) continue;
+    var m;
+    if ((m = /^#\s+(.*)$/.exec(l))) { title = m[1].replace(/^旅の記録\s*—\s*/, ''); continue; }
+    if (/^---+\s*$/.test(l)) { continue; }
+    if ((m = /^##\s+(.*)$/.exec(l))) {
+      if (inSec) h += '</section>';
+      var t = m[1]; skipSec = /写真の索引/.test(t);
+      if (skipSec) { inSec = false; continue; }
+      var parts = t.split(/\s*—\s*/); var en = '', jp = t;
+      if (/^9\/\d+/.test(t)) { en = t.replace(/（.*$/, '').replace('9/', 'SEP '); jp = t.replace(/^[^）]*）\s*/, ''); }
+      else if (parts.length > 1) { en = parts[0]; jp = parts.slice(1).join(' — '); }
+      var anchor = (m2 = /^9\/(\d+)/.exec(t)) ? ' id="d09' + ('0' + m2[1]).slice(-2) + '"' : '';
+      h += '<section class="sec"' + anchor + '><h2>' + esc(en) + '<b>' + esc(jp) + '</b></h2>'; inSec = true; continue;
+    }
+    if (skipSec) continue;
+    if ((m = /^###\s+(.*)$/.exec(l))) { h += '<h3>' + inline(m[1]) + '</h3>'; continue; }
+    if ((m = /^(\s*)[-*]\s+(.*)$/.exec(l))) {
+      var sub = m[1].length >= 2, r = pullImgs(m[2]), tl = timeLead(r.text);
+      h += '<div class="p' + (sub ? ' sub' : '') + '">' + (tl.t ? '<span class="t">' + esc(tl.t) + '</span>' : '') + inline(tl.rest) + stripHTML(r.nums) + '</div>';
+      continue;
+    }
+    if (!l.trim()) continue;
+    if (!inSec) { lead.push(l.trim()); continue; }
+    var r2 = pullImgs(l.trim()); h += '<div class="p note">' + inline(r2.text) + stripHTML(r2.nums) + '</div>';
+  }
+  if (inSec) h += '</section>';
+  var keys = fileKeys(f), first = keys[0], last = keys[keys.length - 1];
+  var dateBig = keys.length > 1 ? (+first.slice(2)) + '–' + (+last.slice(2)) + ' <b>' + MON[first.slice(0, 2)] + '</b>' : (+first.slice(2)) + ' <b>' + MON[first.slice(0, 2)] + '</b>';
+  var dayLbl = keys.length > 1 ? 'DAY ' + ('0' + DAY_NO[first]).slice(-2) + '–' + ('0' + DAY_NO[last]).slice(-2) : 'DAY ' + ('0' + DAY_NO[first]).slice(-2);
+  var head = '<div class="head"><small>TRAVEL LOG · ' + dayLbl + '</small><div class="date">' + dateBig + '</div><h1>' +
+    inline(title.replace(/^\d{1,2}\/\d{1,2}（.）\s*/, '').replace(/（\d{4}-\d{2}-\d{2}〜\d{2}）\s*$/, '').replace(/^([^。]+)。/, '$1　')) + '</h1></div>';
+  var idx = files.indexOf(f), prev = files[idx - 1], next = files[idx + 1];
+  var pager = '<div class="pager">' + (prev ? '<a href="#' + fileKeys(prev)[0] + '"><small>PREVIOUS</small>' + esc(fileTitle(prev)) + '</a>' : '<span></span>') +
+    (next ? '<a class="nx" href="#' + fileKeys(next)[0] + '"><small>NEXT</small>' + esc(fileTitle(next)) + '</a>' : '') + '</div>';
+  var fp = '<a class="fp" href="./#' + (key || first) + '"><small>PHOTO FOOTPRINTS</small><span>この日の写真の足跡</span><em>撮った場所と時間で、写真を一枚ずつたどる</em></a>';
+  $('main').innerHTML = head + h + fp + pager;
+  $('wm').textContent = 'LOG · ' + dayLbl;
+  loadStrips();
+}
+function fileTitle(f) { return (f.md.split('\n')[0] || '').replace(/^#\s*旅の記録\s*—\s*/, '').replace(/^\d{1,2}\/\d{1,2}（.）\s*/, '').replace(/（\d{4}-\d{2}-\d{2}〜\d{2}）\s*$/, ''); }
+/* 写真の帯：見えたら金庫から 300px を入れる */
+var sio = null;
+function loadStrips() {
+  if (sio) sio.disconnect();
+  sio = new IntersectionObserver(function (es) {
+    es.forEach(function (e) {
+      if (!e.isIntersecting) return; var b = e.target; sio.unobserve(b);
+      var n = b.getAttribute('data-n'), im = b.querySelector('img');
+      Vault.photo(n).then(function (p) { if (!p) { b.style.display = 'none'; return; } im.src = p.img; im.onload = function () { im.classList.add('in'); if (im.naturalWidth > im.naturalHeight * 1.2 && b.parentNode.children.length <= 2) b.classList.add('wide'); }; }).catch(function () { b.style.display = 'none'; });
+    });
+  }, { rootMargin: '300px 0px' });
+  Array.prototype.forEach.call(document.querySelectorAll('.strip button'), function (b) { sio.observe(b); });
+}
+$('main').addEventListener('click', function (e) {
+  var b = e.target.closest('.strip button'); if (!b) return;
+  var n = b.getAttribute('data-n'); $('lb-img').removeAttribute('src'); $('lb-cap').textContent = ''; $('lb').classList.add('on');
+  Vault.photoURL(n).then(function (u) { if (u) $('lb-img').src = u; return Vault.photo(n); }).then(function (p) { if (p) $('lb-cap').textContent = p.t.slice(6) + ' · ' + String(p.p || '').split(/[,，（(]/)[0]; });
+});
+function paper(key) {
+  var p = PAPER[key] || PAPER['0924'];
+  document.documentElement.style.setProperty('--paper', p[0]); document.documentElement.style.setProperty('--cloud', p[1]); document.documentElement.style.setProperty('--cloud2', p[2]);
+  document.querySelector('meta[name=theme-color]').setAttribute('content', p[0]);
+}
+function renderDays() {
+  var keys = []; files.forEach(function (f) { keys = keys.concat(fileKeys(f)); });
+  $('days').innerHTML = keys.map(function (k) { return '<button type="button" data-k="' + k + '" class="' + (k === cur ? 'on' : '') + '">' + (+k.slice(2)) + '</button>'; }).join('');
+}
+function open(key, scroll) {
+  var f = fileFor(key); if (!f) return;
+  var same = f === curFile; cur = key; curFile = f; paper(key); renderDays();
+  if (!same) { $('veil').classList.add('on'); setTimeout(function () { render(f, key); window.scrollTo(0, 0); var a = $('d' + key); if (a && fileKeys(f).length > 1 && fileKeys(f)[0] !== key) a.scrollIntoView({ block: 'start' }); $('veil').classList.remove('on'); $('loading').classList.add('off'); }, 200); }
+  else { var a2 = $('d' + key); if (a2) a2.scrollIntoView({ behavior: 'smooth', block: 'start' }); else window.scrollTo({ top: 0, behavior: 'smooth' }); }
+  try { history.replaceState(null, '', '#' + key); } catch (e) {}
+}
+$('days').addEventListener('click', function (e) { var b = e.target.closest('button[data-k]'); if (b) open(b.getAttribute('data-k')); });
+window.addEventListener('hashchange', function () { var k = location.hash.replace('#', '').slice(0, 4); if (/^\d{4}$/.test(k)) open(k); });
+function start() {
+  Vault.load('journal').then(function (j) {
+    files = j.files.slice().sort(function (a, b) { return a.name < b.name ? -1 : 1; });
+    var want = location.hash.replace('#', '').slice(0, 4);
+    open(fileFor(want) ? want : fileKeys(files[files.length - 1])[0]);
+  }).catch(function () { $('loading').textContent = 'OPEN FAILED'; });
+}
+function lockSubmit(e) {
+  e.preventDefault();
+  var pw = $('lock-pw').value, msg = $('lock-msg'), btn = $('lock-btn');
+  if (!pw.trim()) { msg.textContent = '合言葉を入れてください'; return false; }
+  btn.disabled = true; msg.textContent = '確かめています…';
+  Vault.unlock(pw).then(function (ok) { btn.disabled = false; if (ok) { $('lock').hidden = true; start(); } else { msg.textContent = '合言葉が違います'; $('lock-pw').select(); } })
+    .catch(function () { btn.disabled = false; msg.textContent = 'オンラインで開き直してください'; });
+  return false;
+}
+(function init() {
+  var m = /[#&]pw=([^&]+)/.exec(location.hash);
+  if (m) { var pw = decodeURIComponent(m[1]); var d = (/[#&]d=(\d{4})/.exec(location.hash) || [])[1]; history.replaceState(null, '', location.pathname + (d ? '#' + d : ''));
+    Vault.unlock(pw).then(function (ok) { if (ok) start(); else { $('lock').hidden = false; $('loading').classList.add('off'); } }); return; }
+  if (!Vault.hasKey()) { $('lock').hidden = false; $('loading').classList.add('off'); return; }
+  Vault.verify().then(function (ok) { if (ok) start(); else { Vault.forget(); $('lock').hidden = false; $('loading').classList.add('off'); } });
+})();
+</script>
+</body>
+</html>

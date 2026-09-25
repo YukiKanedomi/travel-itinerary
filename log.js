@@ -63,7 +63,7 @@ function logFileMeta(f) {
 function renderLogPage() {
   var host = document.getElementById('pane-log'); if (!host) return;
   var head = '<div class="ch-head"><div class="ch-eyebrow">TRAVEL LOG</div><div class="ch-h1">旅の記録</div>' +
-    '<div class="ch-sub">写真を見ながら書いた、日ごとの記録。IMG 番号を押すと写真が開きます</div></div>';
+    '<div class="ch-sub">写真を見ながら書いた日ごとの記録と、写真の足跡。紙と雲の別の画面で開きます</div></div>';
   if (!LOG) {
     host.innerHTML = head + '<div class="stub-page"><div class="t1">金庫を開いています…</div><div class="t2">初回は少し時間がかかります</div></div>';
     Vault.load('journal').then(function (j) { LOG = j; renderLogPage(); }).catch(function (e) {
@@ -71,28 +71,15 @@ function renderLogPage() {
     });
     return;
   }
-  var files = LOG.files.slice();
-  if (logOpen !== null && files[logOpen]) {
-    var f = files[logOpen], meta = logFileMeta(f);
-    var h = '<button class="back" onclick="logBack()">‹ 記録の一覧へ</button>' +
-      '<div class="log-sheet"><div class="tape b"></div><div class="log-date mono">' + logEsc(meta.date) + '</div>' + logMd(f.md) + '</div>';
-    var prev = files[logOpen - 1], next = files[logOpen + 1];
-    h += '<div class="pager">' +
-      (prev ? '<button onclick="logOpenFile(' + (logOpen - 1) + ')"><span class="pl">‹ 前の日</span><span class="pt2">' + logEsc(logFileMeta(prev).title) + '</span></button>' : '<span class="sp"></span>') +
-      (next ? '<button class="nx" onclick="logOpenFile(' + (logOpen + 1) + ')"><span class="pl">次の日 ›</span><span class="pt2">' + logEsc(logFileMeta(next).title) + '</span></button>' : '<span class="sp"></span>') +
-      '</div>';
-    host.innerHTML = h;
-    return;
-  }
   var h2 = head + '<div class="toc-list">';
-  files.forEach(function (f, i) {
-    var meta = logFileMeta(f);
-    h2 += '<button class="trow-idx log-row" onclick="logOpenFile(' + i + ')"><span class="n mono">' + logEsc(meta.date) + '</span>' +
-      '<span class="b"><div class="tt">' + logEsc(meta.title) + '</div></span><span class="arw">›</span></button>';
+  LOG.files.slice().sort(function (a, b) { return a.name < b.name ? -1 : 1; }).forEach(function (f) {
+    var meta = logFileMeta(f), key = (/_(\d{4})/.exec(f.name) || [])[1] || '';
+    h2 += '<a class="trow-idx log-row" href="footprints/log.html#' + key + '"><span class="n mono">' + logEsc(meta.date) + '</span>' +
+      '<span class="b"><div class="tt">' + logEsc(meta.title) + '</div></span><span class="arw">›</span></a>';
   });
   h2 += '</div>';
   h2 += '<a class="log-fp" href="footprints/"><span class="fp-body"><span class="rc-k">PHOTO FOOTPRINTS</span><span class="rc-t">写真の足跡</span>' +
-    '<span class="rc-d">撮った場所と時間で旅をたどる、写真の地図。別の画面で開きます</span></span><span class="rc-c">›</span></a>';
+    '<span class="rc-d">撮った場所と時間で旅をたどる、写真の地図</span></span><span class="rc-c">›</span></a>';
   h2 += '<div class="hours-note">記録と写真は暗号化して保存しています。合言葉を知っている端末だけが開けます。</div>' +
     '<div class="pill-row"><button type="button" class="pill-btn" onclick="lockForget()">この端末の合言葉を忘れる</button></div>';
   host.innerHTML = h2;

@@ -132,7 +132,7 @@ footer{position:fixed;left:0;right:0;bottom:0;z-index:20;padding:0 20px calc(18p
 
 <header>
   <div id="stops"></div>
-  <div class="bar"><span class="wm" id="wm">PHOTO FOOTPRINTS</span><div id="days"></div></div>
+  <div class="bar"><a class="wm" id="wm" href="log.html" style="text-decoration:none">PHOTO FOOTPRINTS</a><div id="days"></div></div>
 </header>
 
 <main id="feed"></main>
@@ -151,7 +151,7 @@ footer{position:fixed;left:0;right:0;bottom:0;z-index:20;padding:0 20px calc(18p
 <input id="lock-pw" type="password" autocomplete="current-password" autocapitalize="off" spellcheck="false" placeholder="合言葉"><button type="submit" id="lock-btn">開く</button><div class="msg" id="lock-msg"></div><a href="../">‹ 旅の手帳へ</a></form></div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script src="../vault.js?v=61"></script>
+<script src="../vault.js?v=62"></script>
 <script>
 Vault.base('../');
 window.addEventListener('error', function (e) { var l = document.getElementById('loading'); if (l) { l.textContent = 'ERROR: ' + (e.message || e); l.classList.remove('off'); } });
@@ -194,7 +194,7 @@ function renderStops() {
 function renderFeed() {
   var h = '';
   items.forEach(function (x, i) {
-    h += '<section class="page" data-i="' + i + '"><figure class="ph" id="ph' + i + '"><img src="' + x.img + '" alt="" data-n="' + x.n + '"><span class="n">IMG_' + x.n + '</span></figure></section>';
+    h += '<section class="page" data-i="' + i + '"><figure class="ph" id="ph' + i + '"><img src="' + x.img + '" alt="" data-n="' + x.n + '"></figure></section>';
   });
   $('feed').innerHTML = h;
   Array.prototype.forEach.call(document.querySelectorAll('#feed img'), function (im) {
@@ -236,7 +236,7 @@ function setIdx(i, scroll) {
     setTimeout(function () {
       $('h-time').textContent = x.t.slice(6) + ' · ' + ('DAY ' + ('0' + DAY_NO[cur]).slice(-2));
       $('h-place').textContent = shortPlace(x.p);
-      $('h-sub').textContent = subPlace(x.p) || ('IMG_' + x.n);
+      $('h-sub').textContent = subPlace(x.p) || '';
       b.classList.remove('swap');
     }, 180);
   }
@@ -270,7 +270,7 @@ function renderMaps() {
   bigPins.forEach(function (m) { big.removeLayer(m); }); bigPins = [];
   items.forEach(function (x, i) {
     var m = L.marker([x.lat, x.lng], { icon: pinIcon(false) }).addTo(big);
-    m.bindPopup('<img src="' + x.img + '" alt="" onclick="jumpTo(' + i + ')"><div class="c">IMG_' + x.n + ' · ' + x.t.slice(6) + '</div>', { closeButton: false, offset: [0, -6] });
+    m.bindPopup('<img src="' + x.img + '" alt="" onclick="jumpTo(' + i + ')"><div class="c">' + x.t.slice(6) + ' · ' + esc(shortPlace(x.p)) + '</div>', { closeButton: false, offset: [0, -6] });
     bigPins.push(m);
   });
 }
@@ -295,7 +295,7 @@ function openDay(d, keepIdx) {
       var p = PAPER[d] || PAPER['0924'];
       document.documentElement.style.setProperty('--paper', p[0]); document.documentElement.style.setProperty('--cloud', p[1]); document.documentElement.style.setProperty('--cloud2', p[2]);
       document.querySelector('meta[name=theme-color]').setAttribute('content', p[0]);
-      $('wm').textContent = 'FOOTPRINTS · DAY ' + ('0' + DAY_NO[d]).slice(-2);
+      $('wm').textContent = 'FOOTPRINTS · DAY ' + ('0' + DAY_NO[d]).slice(-2) + ' · 記録 ›'; $('wm').href = 'log.html#' + d;
       renderDays(); renderStops(); renderFeed(); renderLine(); renderMaps();
       $('feed').scrollTop = 0;
       setIdx(0, false);
