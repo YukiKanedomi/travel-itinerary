@@ -77,7 +77,7 @@ footer{position:fixed;left:0;right:0;bottom:0;z-index:20;padding:0 20px calc(18p
 #line i.on{width:11px;height:11px;top:-1px;opacity:1;background:var(--acc);transform:translateX(-5px);transition:left .25s}
 #line .l{position:absolute;top:12px;font-family:var(--en);font-size:9px;letter-spacing:.2em;color:var(--dim);transform:translateX(-50%)}
 .foot{display:flex;justify-content:space-between;align-items:baseline;margin-top:8px}
-#count{font-family:var(--en);font-weight:300;font-size:10px;letter-spacing:.24em;color:var(--dim);text-align:right;line-height:1.7;margin-left:auto}
+#count{font-family:var(--en);font-weight:300;font-size:10px;letter-spacing:.2em;color:var(--dim);text-align:right;line-height:1.7;margin-left:auto;min-width:0;max-width:62%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .foot .hint{font-family:var(--en);font-weight:300;font-size:9.5px;letter-spacing:.2em;color:var(--dim)}
 /* 雲の形の地図の窓 */
 #mini{pointer-events:auto;position:relative;flex:none;width:176px;height:112px;overflow:hidden;background:#fff;cursor:pointer;transition:transform .3s;
@@ -140,7 +140,7 @@ footer{position:fixed;left:0;right:0;bottom:0;z-index:20;padding:0 20px calc(18p
 <footer>
   <div class="big" id="big"><div class="txt"><small id="h-time">—</small><h1 id="h-place">—</h1><em id="h-sub"></em></div><div id="mini" title="一日の地図を開く"></div></div>
   <div id="line"></div>
-  <div class="foot"><span class="hint">TAP MAP · ALL PINS　TAP PHOTO · FULL</span><div id="count"></div></div>
+  <div class="foot"><span class="hint">TAP MAP · TAP PHOTO</span><div id="count"></div></div>
 </footer>
 
 <div id="mapfull"><div id="bigmap"></div><div class="mf-top"><span class="wm" id="mf-title">DAY 05 · ALL PINS</span><button id="mfclose" type="button">CLOSE</button></div><div class="mf-tip">ピンを押すと写真。線では結びません。</div></div>
@@ -151,7 +151,7 @@ footer{position:fixed;left:0;right:0;bottom:0;z-index:20;padding:0 20px calc(18p
 <input id="lock-pw" type="password" autocomplete="current-password" autocapitalize="off" spellcheck="false" placeholder="合言葉"><button type="submit" id="lock-btn">開く</button><div class="msg" id="lock-msg"></div><a href="../">‹ 旅の手帳へ</a></form></div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script src="../vault.js?v=62"></script>
+<script src="../vault.js?v=63"></script>
 <script>
 Vault.base('../');
 window.addEventListener('error', function (e) { var l = document.getElementById('loading'); if (l) { l.textContent = 'ERROR: ' + (e.message || e); l.classList.remove('off'); } });
@@ -163,7 +163,7 @@ var PAPER = {
 };
 var DAY_NO = { '0920': 1, '0921': 2, '0922': 3, '0923': 4, '0924': 5, '0925': 6, '0926': 7 };
 var $ = function (id) { return document.getElementById(id); };
-var man = null, days = [], cur = null, items = [], stops = [], idx = -1, mini = null, big = null, miniPins = [], bigPins = [], io = null, seeking = false;
+var pendingN = null, man = null, days = [], cur = null, items = [], stops = [], idx = -1, mini = null, big = null, miniPins = [], bigPins = [], io = null, seeking = false;
 
 function esc(s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;'); }
 function shortPlace(p) { p = String(p || ''); var s = p.split(/[,，（(]/)[0].trim(); return s || '—'; }
@@ -298,7 +298,8 @@ function openDay(d, keepIdx) {
       $('wm').textContent = 'FOOTPRINTS · DAY ' + ('0' + DAY_NO[d]).slice(-2) + ' · 記録 ›'; $('wm').href = 'log.html#' + d;
       renderDays(); renderStops(); renderFeed(); renderLine(); renderMaps();
       $('feed').scrollTop = 0;
-      setIdx(0, false);
+      var pi = 0; if (pendingN) { items.forEach(function (x, i) { if (x.n === pendingN) pi = i; }); pendingN = null; }
+      setIdx(pi, pi ? 'auto' : false);
       try { history.replaceState(null, '', '#' + d); } catch (e) {}
       $('veil').classList.remove('on');
       $('loading').classList.add('off');
@@ -311,7 +312,7 @@ function start() {
   Vault.manifest().then(function (m) {
     man = m;
     days = m.parts.filter(function (p) { return p.id.indexOf('photos-') === 0; }).map(function (p) { return p.id.slice(7); }).sort();
-    var want = (location.hash.replace('#', '') || '').slice(0, 4);
+    var hh = location.hash.replace('#', ''), want = hh.slice(0, 4); var pm = /^\d{4}-(\d{4})/.exec(hh); if (pm) pendingN = pm[1]; if (want && want !== cur) { cur = null; items = []; }
     openDay(days.indexOf(want) >= 0 ? want : days[days.length - 1]);
   });
 }
@@ -352,7 +353,7 @@ function lockSubmit(e) {
 (function init() {
   var m = /[#&]pw=([^&]+)/.exec(location.hash);
   if (m) {
-    var pw = decodeURIComponent(m[1]); var d = (/[#&]d=(\d{4})/.exec(location.hash) || [])[1];
+    var pw = decodeURIComponent(m[1]); var d = (/[#&]d=(\d{4}(?:-\d{4})?)/.exec(location.hash) || [])[1]; if (d && d.length > 4) pendingN = d.slice(5);
     history.replaceState(null, '', location.pathname + (d ? '#' + d : ''));
     Vault.unlock(pw).then(function (ok) { if (ok) start(); else { $('lock').hidden = false; $('loading').classList.add('off'); } }).catch(function () { $('lock').hidden = false; $('loading').classList.add('off'); });
     return;

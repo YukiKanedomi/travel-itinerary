@@ -349,7 +349,7 @@ body.locked main, body.locked .idx, body.locked .holes, body.locked #day-sticky 
 .lightbox img { max-width:96vw; max-height:78vh; border-radius:4px; box-shadow:0 8px 30px rgba(0,0,0,.5); filter:none; }
 .lightbox .lb-cap { color:#EEE6D8; font-size:13px; text-align:center; }
 </style>
-<!-- ?v= はキャッシュずれ対策。sw.js の CACHE と一緒に上げる --><link rel="stylesheet" href="pages.css?v=62">
+<!-- ?v= はキャッシュずれ対策。sw.js の CACHE と一緒に上げる --><link rel="stylesheet" href="pages.css?v=63">
 </head>
 <body>
 <div class="holes"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
@@ -396,17 +396,17 @@ body.locked main, body.locked .idx, body.locked .holes, body.locked #day-sticky 
   <div class="sv-hint" id="sv-hint">ドラッグで見回す・道路の矢印で進む。実際の景色とは季節や工事で違うことがあります</div>
 </div>
 
-<script src="vault.js?v=62"></script>
-<script src="trip.js?v=62"></script>
-<script src="map.js?v=62"></script>
-<script src="prep.js?v=62"></script>
-<script src="en.js?v=62"></script>
-<script src="guide.js?v=62"></script>
-<script src="info.js?v=62"></script>
-<script src="news.js?v=62"></script>
-<script src="wx.js?v=62"></script>
-<script src="docs.js?v=62"></script>
-<script src="log.js?v=62"></script>
+<script src="vault.js?v=63"></script>
+<script src="trip.js?v=63"></script>
+<script src="map.js?v=63"></script>
+<script src="prep.js?v=63"></script>
+<script src="en.js?v=63"></script>
+<script src="guide.js?v=63"></script>
+<script src="info.js?v=63"></script>
+<script src="news.js?v=63"></script>
+<script src="wx.js?v=63"></script>
+<script src="docs.js?v=63"></script>
+<script src="log.js?v=63"></script>
 <script>
 /* ============ 旅の手帳 v2 — シェル ============ */
 /* 下部タブは5つ。「読む」は雑誌・手引き・情報の3面をまとめ、上部の小見出しで切り替える */
@@ -875,13 +875,16 @@ var READ_CARDS = [
   ['guide', 'FIELD GUIDE', '旅の手引き',       '出発日と帰国日の動き・現地の作法・もしもの手順・入口の予行演習・誌面'],
   ['en',    'TRAVEL ENGLISH', '旅の英語',      '10語で乗り切る・相槌のニュアンス・こう聞かれたらこう答える・オージー語'],
   ['info',  'REFERENCE',   '情報',             '換算・緊急連絡先・宿の住所・交通・予算・参考リンク'],
-  ['log',   'TRAVEL LOG',  '旅の記録',         '写真を見ながら書いた日ごとの記録と、写真の足跡マップ']
+  ['log',   'TRAVEL LOG',  '旅の記録',         '七日間の記録と、写真の足跡。紙と雲の画面で開きます']
 ];
 function renderRead() {
   var host = document.getElementById('pane-read'); if (!host) return;
   host.innerHTML = '<div class="ch-head"><div class="ch-eyebrow">READING</div><div class="ch-h1">読む</div>' +
     '<div class="ch-sub">手帳に挟んだ読み物。移動中や夜に</div></div><div class="read-cards">' +
     READ_CARDS.map(function(c){
+      if (c[0] === 'log') return '<a class="read-card" href="footprints/log.html">' +
+        '<span class="rc-body"><span class="rc-k">' + c[1] + '</span><span class="rc-t">' + c[2] + '</span>' +
+        '<span class="rc-d">' + c[3] + '</span></span><span class="rc-c">›</span></a>';
       return '<button type="button" class="read-card" onclick="show(\'' + c[0] + '\')">' +
         '<span class="rc-body"><span class="rc-k">' + c[1] + '</span><span class="rc-t">' + c[2] + '</span>' +
         '<span class="rc-d">' + c[3] + '</span></span><span class="rc-c">›</span></button>';
