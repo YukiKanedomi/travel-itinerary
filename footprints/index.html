@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#EFE6DA">
+<title>写真の足跡 — オーストラリア 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&family=Inter+Tight:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<style>
+/* ============ 写真の足跡 — 紙と雲 ============
+ * 紙色は日ごとに変わる。雲はゆっくり流れる。写真は一枚ずつ、縦スクロールでめくる。
+ * 地図は左下の雲の窓。押すと一日の全ピンが開く。線では結ばない。 */
+:root{
+  --paper:#EFE6DA; --cloud:#F6EFE5; --cloud2:#F7E3D6; --ink:#3A3532; --dim:#9A8E84; --mid:#5E554E; --acc:#D8907A;
+  --sans:"Zen Kaku Gothic New","Hiragino Kaku Gothic ProN",sans-serif; --serif:"Shippori Mincho","Hiragino Mincho ProN",serif; --en:"Inter Tight",var(--sans);
+  --top:96px; --bottom:250px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;overflow:hidden;transition:background 1.2s ease}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+/* 空と雲（奥の層） */
+#sky{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+#sky svg{position:absolute;left:-10%;top:0;width:120%;height:100%}
+#sky .c1{fill:var(--cloud);transition:fill 1.2s}
+#sky .c2{fill:var(--cloud2);opacity:.9;transition:fill 1.2s}
+@media (prefers-reduced-motion:no-preference){
+  #sky .drift{animation:drift 90s ease-in-out infinite alternate}
+  #sky .drift.slow{animation-duration:140s;animation-direction:alternate-reverse}
+  @keyframes drift{from{transform:translateX(0)}to{transform:translateX(-6%)}}
+}
+/* 上：停留所の帯と日付 */
+header{position:fixed;left:0;right:0;top:0;z-index:20;padding:calc(12px + env(safe-area-inset-top)) 0 0;
+  background:linear-gradient(180deg,var(--paper) 62%,transparent);transition:background 1.2s}
+#stops{display:flex;gap:22px;padding:0 20px;overflow-x:auto;scrollbar-width:none;white-space:nowrap;font-size:11.5px;letter-spacing:.12em;color:var(--dim);font-weight:500}
+#stops::-webkit-scrollbar{display:none}
+#stops button{flex:none;padding:2px 0;border-bottom:1px solid transparent;letter-spacing:inherit;transition:color .3s,border-color .3s}
+#stops button b{font-weight:500;color:inherit}
+#stops button small{font-family:var(--en);font-weight:400;font-size:10px;margin-left:6px;letter-spacing:.08em}
+#stops button.on{color:var(--ink);border-bottom-color:var(--ink)}
+.bar{display:flex;justify-content:space-between;align-items:center;padding:14px 20px 8px}
+.wm{font-family:var(--en);font-weight:300;font-size:10.5px;letter-spacing:.22em;color:var(--dim);white-space:nowrap}
+#days{display:flex;gap:6px;font-family:var(--en);font-size:11px;color:var(--dim)}
+#days button{padding:2px 7px;border-radius:12px;letter-spacing:.02em;transition:background .3s,color .3s}
+#days button.on{color:var(--ink);background:rgba(255,255,255,.85)}
+/* 写真の帯（中の層） */
+#feed{position:fixed;inset:0;z-index:10;overflow-y:auto;scroll-snap-type:y mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+#feed::-webkit-scrollbar{display:none}
+.page{height:100vh;height:100dvh;scroll-snap-align:start;scroll-snap-stop:always;display:flex;align-items:center;justify-content:center;padding:var(--top) 20px var(--bottom)}
+.ph{position:relative;width:min(300px, calc(100vw - 64px));aspect-ratio:3/4;max-height:100%;border-radius:14px;overflow:hidden;background:rgba(255,255,255,.35);
+  box-shadow:0 40px 60px -30px rgba(90,70,50,.45),0 10px 24px rgba(90,70,50,.14);
+  transform:scale(.94) translateY(10px);opacity:.55;transition:transform .7s cubic-bezier(.2,.7,.2,1),opacity .7s}
+.ph.land{aspect-ratio:4/3;width:min(340px, calc(100vw - 40px))}
+.page.on .ph{transform:none;opacity:1}
+.ph img{width:100%;height:100%;object-fit:cover;display:block}
+.ph .n{position:absolute;left:12px;top:10px;font-family:var(--en);font-weight:400;font-size:9.5px;letter-spacing:.2em;color:#fff;opacity:.9;text-shadow:0 1px 4px rgba(0,0,0,.4)}
+.ph.full{position:fixed;inset:0;width:auto;aspect-ratio:auto;border-radius:0;z-index:60;background:#111;box-shadow:none}
+.ph.full img{object-fit:contain}
+/* 下：地名・時間の線・雲の地図（手前の層） */
+footer{position:fixed;left:0;right:0;bottom:0;z-index:20;padding:0 20px calc(18px + env(safe-area-inset-bottom));pointer-events:none;
+  background:linear-gradient(0deg,var(--paper) 55%,transparent);transition:background 1.2s}
+.big{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;min-height:118px}
+.big .txt{min-width:0;flex:1}
+.big small{display:block;font-family:var(--en);font-weight:300;font-size:12.5px;letter-spacing:.28em;color:var(--dim);margin-bottom:8px}
+.big h1{font-weight:500;font-size:clamp(24px,8.2vw,36px);line-height:1.08;letter-spacing:-.01em;color:var(--ink);font-feature-settings:"palt";text-wrap:balance;
+  transition:opacity .35s,transform .35s}
+.big em{display:block;font-style:normal;font-family:var(--serif);font-size:12.5px;letter-spacing:.1em;margin-top:10px;color:var(--mid);line-height:1.7;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;transition:opacity .35s .08s,transform .35s .08s}
+.big.swap h1,.big.swap em{opacity:0;transform:translateY(8px)}
+#fullbtn{pointer-events:auto;flex:none;width:46px;height:46px;border-radius:50%;background:var(--ink);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--en);font-weight:300;font-size:18px;transition:transform .25s}
+#fullbtn:active{transform:scale(.94)}
+#line{pointer-events:auto;position:relative;height:30px;margin-top:14px;touch-action:none;cursor:pointer}
+#line::before{content:"";position:absolute;left:0;right:0;top:4px;height:1px;background:rgba(58,53,50,.25)}
+#line i{position:absolute;top:3px;width:3px;height:3px;border-radius:50%;background:var(--ink);opacity:.4;transform:translateX(-1px)}
+#line i.on{width:11px;height:11px;top:-1px;opacity:1;background:var(--acc);transform:translateX(-5px);transition:left .25s}
+#line .l{position:absolute;top:12px;font-family:var(--en);font-size:9px;letter-spacing:.2em;color:var(--dim);transform:translateX(-50%)}
+.foot{display:flex;justify-content:space-between;align-items:flex-end;margin-top:6px}
+#count{font-family:var(--en);font-weight:300;font-size:10px;letter-spacing:.24em;color:var(--dim);text-align:right;line-height:1.7;margin-left:auto}
+/* 雲の形の地図の窓 */
+#mini{pointer-events:auto;position:relative;width:150px;height:84px;overflow:hidden;background:#fff;cursor:pointer;transition:transform .3s;
+  -webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1' preserveAspectRatio='none'%3E%3Cpath d='M.16.92 C.05.92 0 .82 .03 .72 C.05.62 .13.6 .2.62 C.2.45 .32.33 .45.36 C.52.2 .74.2 .8.36 C.92.33 1 .45 .98.58 C1.03.7 .97.85 .85.88 C.76.97 .62.95 .55.9 C.45.98 .3.98 .16.92 Z'/%3E%3C/svg%3E");mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1' preserveAspectRatio='none'%3E%3Cpath d='M.16.92 C.05.92 0 .82 .03 .72 C.05.62 .13.6 .2.62 C.2.45 .32.33 .45.36 C.52.2 .74.2 .8.36 C.92.33 1 .45 .98.58 C1.03.7 .97.85 .85.88 C.76.97 .62.95 .55.9 C.45.98 .3.98 .16.92 Z'/%3E%3C/svg%3E");-webkit-mask-size:100% 100%;mask-size:100% 100%;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat}
+#mini:active{transform:scale(.97)}
+#mini .leaflet-container{background:#F4F1EC}
+#mini .leaflet-tile-pane{filter:grayscale(1) brightness(1.08) contrast(.85);opacity:.6}
+#mini .leaflet-control-container{display:none}
+/* 一日の地図（全面） */
+#mapfull{position:fixed;inset:0;z-index:40;background:var(--paper);opacity:0;visibility:hidden;transition:opacity .4s,visibility .4s}
+#mapfull.on{opacity:1;visibility:visible}
+#bigmap{position:absolute;inset:0}
+#bigmap .leaflet-tile-pane{filter:grayscale(.9) saturate(.5) brightness(1.06) contrast(.88)}
+#bigmap .leaflet-control-attribution{font-size:9px;background:rgba(255,255,255,.7)}
+.mf-top{position:absolute;left:0;right:0;top:0;z-index:500;padding:calc(14px + env(safe-area-inset-top)) 20px 12px;display:flex;justify-content:space-between;align-items:center;
+  background:linear-gradient(180deg,var(--paper) 40%,transparent);pointer-events:none}
+.mf-top .wm{color:var(--mid)}
+#mfclose{pointer-events:auto;font-family:var(--en);font-size:12px;letter-spacing:.2em;color:var(--ink);padding:6px 12px;border-radius:14px;background:rgba(255,255,255,.85)}
+.mf-tip{position:absolute;left:20px;right:20px;bottom:calc(20px + env(safe-area-inset-bottom));z-index:500;font-size:11px;letter-spacing:.08em;color:var(--mid);text-align:center;pointer-events:none}
+.pin{width:10px;height:10px;border-radius:50%;background:var(--ink);border:2px solid #fff;box-shadow:0 1px 3px rgba(0,0,0,.25);opacity:.85}
+.pin.on{width:16px;height:16px;background:var(--acc);opacity:1;box-shadow:0 0 0 6px rgba(216,144,122,.25),0 1px 4px rgba(0,0,0,.3)}
+.leaflet-popup-content-wrapper{border-radius:10px;box-shadow:0 10px 30px rgba(90,70,50,.25)}
+.leaflet-popup-content{margin:6px}.leaflet-popup-content img{width:160px;display:block;border-radius:6px;cursor:pointer}
+.leaflet-popup-content .c{font-family:var(--en);font-size:10px;letter-spacing:.1em;color:var(--dim);margin-top:5px}
+/* 日付の切替の紙のフェード */
+#veil{position:fixed;inset:0;z-index:30;background:var(--paper);opacity:0;pointer-events:none;transition:opacity .45s}
+#veil.on{opacity:1}
+/* 鍵（合言葉） */
+#lock{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;padding:24px;background:var(--paper)}
+#lock[hidden]{display:none}
+.lk{width:100%;max-width:320px;text-align:center}
+.lk .wm{display:block;margin-bottom:12px}
+.lk h2{font-weight:500;font-size:28px;letter-spacing:.04em}
+.lk p{font-family:var(--serif);font-size:12.5px;letter-spacing:.08em;color:var(--mid);margin-top:8px;line-height:1.8}
+.lk input{display:block;width:100%;margin:26px 0 0;font:500 18px var(--en);letter-spacing:.06em;padding:10px 4px;border:0;border-bottom:1px solid var(--ink);background:transparent;color:var(--ink);outline:none;text-align:center;border-radius:0}
+.lk button{margin-top:18px;width:100%;padding:13px;border-radius:26px;background:var(--ink);color:#fff;font-weight:500;letter-spacing:.14em}
+.lk .msg{min-height:20px;margin-top:10px;font-size:12px;color:var(--acc)}
+.lk a{display:inline-block;margin-top:18px;font-family:var(--en);font-size:11px;letter-spacing:.2em;color:var(--dim);text-decoration:none}
+#loading{position:fixed;inset:0;z-index:50;display:flex;align-items:center;justify-content:center;font-family:var(--en);font-size:11px;letter-spacing:.3em;color:var(--dim);background:var(--paper);transition:opacity .5s;pointer-events:none}
+#loading.off{opacity:0}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute"><defs><clipPath id="cloudclip" clipPathUnits="objectBoundingBox">
+<path d="M.16.92 C.05.92 0 .82 .03 .72 C.05.62 .13.6 .2.62 C.2.45 .32.33 .45.36 C.52.2 .74.2 .8.36 C.92.33 1 .45 .98.58 C1.03.7 .97.85 .85.88 C.76.97 .62.95 .55.9 C.45.98 .3.98 .16.92 Z"/></clipPath></defs></svg>
+<div id="sky"><svg viewBox="0 0 430 932" preserveAspectRatio="none">
+<g class="drift"><path class="c1" d="M-40 120 C40 90 120 140 190 110 C260 80 320 130 470 96 L470 0 L-40 0 Z"/></g>
+<g class="drift slow"><path class="c2" d="M-40 520 C60 480 140 560 230 520 C320 480 380 540 470 500 L470 640 C380 660 300 610 220 650 C140 690 60 640 -40 660 Z"/></g>
+<g class="drift"><path class="c1" d="M-40 820 C80 780 160 850 250 810 C330 775 390 830 470 800 L470 932 L-40 932 Z"/></g>
+<ellipse class="c2" cx="380" cy="330" rx="90" ry="60" opacity=".5"/>
+</svg></div>
+
+<header>
+  <div id="stops"></div>
+  <div class="bar"><span class="wm" id="wm">PHOTO FOOTPRINTS</span><div id="days"></div></div>
+</header>
+
+<main id="feed"></main>
+
+<footer>
+  <div class="big" id="big"><div class="txt"><small id="h-time">—</small><h1 id="h-place">—</h1><em id="h-sub"></em></div><button id="fullbtn" type="button" aria-label="写真を大きく">→</button></div>
+  <div id="line"></div>
+  <div class="foot"><div id="mini"></div><div id="count"></div></div>
+</footer>
+
+<div id="mapfull"><div id="bigmap"></div><div class="mf-top"><span class="wm" id="mf-title">DAY 05 · ALL PINS</span><button id="mfclose" type="button">CLOSE</button></div><div class="mf-tip">ピンを押すと写真。線では結びません。</div></div>
+<div id="veil"></div>
+<div id="loading">OPENING</div>
+
+<div id="lock" hidden><form class="lk" onsubmit="return lockSubmit(event)"><span class="wm">PHOTO FOOTPRINTS</span><h2>写真の足跡</h2><p>合言葉で開きます。<br>一度開けば、この端末では次から入力なしで。</p>
+<input id="lock-pw" type="password" autocomplete="current-password" autocapitalize="off" spellcheck="false" placeholder="合言葉"><button type="submit" id="lock-btn">開く</button><div class="msg" id="lock-msg"></div><a href="../">‹ 旅の手帳へ</a></form></div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="../vault.js?v=61"></script>
+<script>
+Vault.base('../');
+window.addEventListener('error', function (e) { var l = document.getElementById('loading'); if (l) { l.textContent = 'ERROR: ' + (e.message || e); l.classList.remove('off'); } });
+window.addEventListener('unhandledrejection', function (e) { var l = document.getElementById('loading'); if (l) { l.textContent = 'ERROR: ' + (e.reason && e.reason.message || e.reason); l.classList.remove('off'); } });
+/* 日ごとの紙の色 */
+var PAPER = {
+  '0920': ['#EDE7DF', '#F5F1EB', '#F3E6DE'], '0921': ['#E9E7E0', '#F3F1EA', '#F0E8DD'], '0922': ['#EEE7DC', '#F6F0E6', '#F6E3D6'],
+  '0923': ['#E6E9EC', '#F0F2F4', '#F5E7DF'], '0924': ['#EFE6DA', '#F6EFE5', '#F7E3D6'], '0925': ['#E4E9EE', '#EFF2F5', '#F3E4DC']
+};
+var DAY_NO = { '0920': 1, '0921': 2, '0922': 3, '0923': 4, '0924': 5, '0925': 6, '0926': 7 };
+var $ = function (id) { return document.getElementById(id); };
+var man = null, days = [], cur = null, items = [], stops = [], idx = -1, mini = null, big = null, miniPins = [], bigPins = [], io = null, seeking = false;
+
+function esc(s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;'); }
+function shortPlace(p) { p = String(p || ''); var s = p.split(/[,，（(]/)[0].trim(); return s || '—'; }
+function subPlace(p) { p = String(p || ''); var m = p.match(/[（(]([^）)]+)[）)]/); var rest = p.split(/[,，]/).slice(1).map(function (t) { return t.trim(); }).filter(Boolean); if (m) rest.unshift(m[1]); return rest.join('、'); }
+function mins(t) { var m = /(\d\d):(\d\d)$/.exec(t); return m ? (+m[1]) * 60 + (+m[2]) : 0; }
+
+/* 停留所：地名が続く区間をひとまとまりに。1 枚だけの区間は前に吸収 */
+function buildStops(list) {
+  var out = [];
+  list.forEach(function (x, i) {
+    var name = shortPlace(x.p);
+    var last = out[out.length - 1];
+    if (last && last.name === name) { last.end = i; last.n++; return; }
+    out.push({ name: name, start: i, end: i, n: 1, t: x.t.slice(6) });
+  });
+  var merged = [];
+  out.forEach(function (s) { var l = merged[merged.length - 1]; if (s.n < 2 && l) { l.end = s.end; l.n += s.n; } else merged.push(s); });
+  return merged;
+}
+function stopOf(i) { for (var k = 0; k < stops.length; k++) if (i >= stops[k].start && i <= stops[k].end) return k; return -1; }
+
+function renderDays() {
+  $('days').innerHTML = days.map(function (d) { return '<button type="button" data-day="' + d + '" class="' + (d === cur ? 'on' : '') + '">' + (+d.slice(2)) + '</button>'; }).join('');
+}
+function renderStops() {
+  $('stops').innerHTML = stops.map(function (s, k) { return '<button type="button" data-k="' + k + '"><b>' + esc(s.name) + '</b><small>' + s.t + '</small></button>'; }).join('');
+}
+function renderFeed() {
+  var h = '';
+  items.forEach(function (x, i) {
+    h += '<section class="page" data-i="' + i + '"><figure class="ph" id="ph' + i + '"><img src="' + x.img + '" alt="" data-n="' + x.n + '"><span class="n">IMG_' + x.n + '</span></figure></section>';
+  });
+  $('feed').innerHTML = h;
+  Array.prototype.forEach.call(document.querySelectorAll('#feed img'), function (im) {
+    im.addEventListener('load', function () { if (im.naturalWidth > im.naturalHeight) im.parentNode.classList.add('land'); }, { once: true });
+  });
+  if (io) io.disconnect();
+  io = new IntersectionObserver(function (es) {
+    es.forEach(function (e) { if (e.isIntersecting && e.intersectionRatio >= .6) setIdx(+e.target.getAttribute('data-i'), false); });
+  }, { root: $('feed'), threshold: [.6] });
+  Array.prototype.forEach.call(document.querySelectorAll('.page'), function (p) { io.observe(p); });
+}
+function renderLine() {
+  var h = '';
+  var t0 = 6 * 60, t1 = 23 * 60;
+  items.forEach(function (x, i) { h += '<i data-i="' + i + '" style="left:' + ((mins(x.t) - t0) / (t1 - t0) * 100).toFixed(2) + '%"></i>'; });
+  [8, 12, 16, 20].forEach(function (hh) { h += '<span class="l" style="left:' + ((hh * 60 - t0) / (t1 - t0) * 100).toFixed(1) + '%">' + ('0' + hh).slice(-2) + '</span>'; });
+  $('line').innerHTML = h;
+}
+/* 720px の写真に差し替える（いまの前後 2 枚） */
+function upgrade(i) {
+  for (var k = i - 1; k <= i + 2; k++) {
+    (function (k) {
+      var x = items[k]; if (!x) return;
+      var im = document.querySelector('#ph' + k + ' img'); if (!im || im.getAttribute('data-big')) return;
+      im.setAttribute('data-big', '1');
+      Vault.photoURL(x.n).then(function (u) { if (u) im.src = u; }).catch(function () {});
+    })(k);
+  }
+}
+function setIdx(i, scroll) {
+  if (i < 0 || i >= items.length) return;
+  var changed = i !== idx; idx = i;
+  var x = items[i];
+  Array.prototype.forEach.call(document.querySelectorAll('.page.on'), function (p) { p.classList.remove('on'); });
+  var pg = document.querySelector('.page[data-i="' + i + '"]'); if (pg) pg.classList.add('on');
+  if (scroll && pg) pg.scrollIntoView({ behavior: scroll === 'smooth' ? 'smooth' : 'auto', block: 'start' });
+  if (changed) {
+    var b = $('big'); b.classList.add('swap');
+    setTimeout(function () {
+      $('h-time').textContent = x.t.slice(6) + ' · ' + ('DAY ' + ('0' + DAY_NO[cur]).slice(-2));
+      $('h-place').textContent = shortPlace(x.p);
+      $('h-sub').textContent = subPlace(x.p) || ('IMG_' + x.n);
+      b.classList.remove('swap');
+    }, 180);
+  }
+  $('count').innerHTML = (i + 1) + ' / ' + items.length + '<br>' + esc((stops[stopOf(i)] || {}).name || '').toUpperCase();
+  var on = document.querySelector('#line i.on'); if (on) on.classList.remove('on');
+  var li = document.querySelector('#line i[data-i="' + i + '"]'); if (li) li.classList.add('on');
+  var k = stopOf(i);
+  Array.prototype.forEach.call(document.querySelectorAll('#stops button'), function (btn, j) {
+    btn.classList.toggle('on', j === k);
+    if (j === k) btn.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' });
+  });
+  if (mini) { mini.panTo([x.lat, x.lng], { animate: true, duration: .6 }); miniPins.forEach(function (m, j) { m.setIcon(pinIcon(j === i)); m.setZIndexOffset(j === i ? 1000 : 0); }); }
+  if (big && $('mapfull').classList.contains('on')) bigPins.forEach(function (m, j) { m.setIcon(pinIcon(j === i)); m.setZIndexOffset(j === i ? 1000 : 0); });
+  upgrade(i);
+}
+function pinIcon(on) { return L.divIcon({ className: '', html: '<div class="pin' + (on ? ' on' : '') + '"></div>', iconSize: [16, 16], iconAnchor: [8, 8] }); }
+function tiles() { return L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '© OpenStreetMap' }); }
+function renderMaps() {
+  if (!mini) {
+    mini = L.map('mini', { zoomControl: false, attributionControl: false, dragging: false, scrollWheelZoom: false, doubleClickZoom: false, touchZoom: false, boxZoom: false, keyboard: false, tap: false });
+    tiles().addTo(mini); mini.setView([-33.87, 151.2], 14);
+    $('mini').addEventListener('click', openMap);
+  }
+  miniPins.forEach(function (m) { mini.removeLayer(m); }); miniPins = [];
+  items.forEach(function (x) { miniPins.push(L.marker([x.lat, x.lng], { icon: pinIcon(false), interactive: false }).addTo(mini)); });
+  if (!big) {
+    big = L.map('bigmap', { zoomControl: false });
+    tiles().addTo(big);
+    $('mfclose').addEventListener('click', closeMap);
+  }
+  bigPins.forEach(function (m) { big.removeLayer(m); }); bigPins = [];
+  items.forEach(function (x, i) {
+    var m = L.marker([x.lat, x.lng], { icon: pinIcon(false) }).addTo(big);
+    m.bindPopup('<img src="' + x.img + '" alt="" onclick="jumpTo(' + i + ')"><div class="c">IMG_' + x.n + ' · ' + x.t.slice(6) + '</div>', { closeButton: false, offset: [0, -6] });
+    bigPins.push(m);
+  });
+}
+function openMap() {
+  $('mapfull').classList.add('on'); $('mf-title').textContent = 'DAY ' + ('0' + DAY_NO[cur]).slice(-2) + ' · ' + items.length + ' PINS';
+  setTimeout(function () {
+    big.invalidateSize();
+    big.fitBounds(L.latLngBounds(items.map(function (x) { return [x.lat, x.lng]; })).pad(.12));
+    bigPins.forEach(function (m, j) { m.setIcon(pinIcon(j === idx)); m.setZIndexOffset(j === idx ? 1000 : 0); });
+  }, 50);
+}
+function closeMap() { $('mapfull').classList.remove('on'); big.closePopup(); }
+function jumpTo(i) { closeMap(); setIdx(i, 'smooth'); }
+
+/* 日を開く */
+function openDay(d, keepIdx) {
+  if (d === cur && items.length) return;
+  $('veil').classList.add('on');
+  Vault.load('photos-' + d).then(function (part) {
+    setTimeout(function () {
+      cur = d; items = part.items; stops = buildStops(items); idx = -1;
+      var p = PAPER[d] || PAPER['0924'];
+      document.documentElement.style.setProperty('--paper', p[0]); document.documentElement.style.setProperty('--cloud', p[1]); document.documentElement.style.setProperty('--cloud2', p[2]);
+      document.querySelector('meta[name=theme-color]').setAttribute('content', p[0]);
+      $('wm').textContent = 'PHOTO FOOTPRINTS · DAY ' + ('0' + DAY_NO[d]).slice(-2);
+      renderDays(); renderStops(); renderFeed(); renderLine(); renderMaps();
+      $('feed').scrollTop = 0;
+      setIdx(0, false);
+      try { history.replaceState(null, '', '#' + d); } catch (e) {}
+      $('veil').classList.remove('on');
+      $('loading').classList.add('off');
+    }, 200);
+  }).catch(function (e) {
+    $('loading').textContent = 'OPEN FAILED'; $('loading').classList.remove('off');
+  });
+}
+function start() {
+  Vault.manifest().then(function (m) {
+    man = m;
+    days = m.parts.filter(function (p) { return p.id.indexOf('photos-') === 0; }).map(function (p) { return p.id.slice(7); }).sort();
+    var want = (location.hash.replace('#', '') || '').slice(0, 4);
+    openDay(days.indexOf(want) >= 0 ? want : days[days.length - 1]);
+  });
+}
+/* 操作 */
+$('days').addEventListener('click', function (e) { var b = e.target.closest('button[data-day]'); if (b) openDay(b.getAttribute('data-day')); });
+$('stops').addEventListener('click', function (e) { var b = e.target.closest('button[data-k]'); if (b) setIdx(stops[+b.getAttribute('data-k')].start, 'smooth'); });
+$('fullbtn').addEventListener('click', function () { var ph = $('ph' + idx); if (ph) ph.classList.toggle('full'); });
+$('feed').addEventListener('click', function (e) { var ph = e.target.closest('.ph.full'); if (ph) ph.classList.remove('full'); });
+(function () {
+  var line = $('line');
+  function seek(ev) {
+    var r = line.getBoundingClientRect(), x = (ev.touches ? ev.touches[0].clientX : ev.clientX) - r.left, f = Math.max(0, Math.min(1, x / r.width));
+    var t = 6 * 60 + f * (17 * 60), best = 0, bd = 1e9;
+    items.forEach(function (it, i) { var d = Math.abs(mins(it.t) - t); if (d < bd) { bd = d; best = i; } });
+    if (best !== idx) setIdx(best, 'auto');
+  }
+  line.addEventListener('pointerdown', function (ev) { seeking = true; line.setPointerCapture(ev.pointerId); seek(ev); });
+  line.addEventListener('pointermove', function (ev) { if (seeking) seek(ev); });
+  line.addEventListener('pointerup', function () { seeking = false; });
+  line.addEventListener('pointercancel', function () { seeking = false; });
+})();
+document.addEventListener('keydown', function (e) {
+  if (e.key === 'ArrowDown' || e.key === 'ArrowRight') setIdx(idx + 1, 'smooth');
+  if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') setIdx(idx - 1, 'smooth');
+  if (e.key === 'Escape') { closeMap(); var ph = document.querySelector('.ph.full'); if (ph) ph.classList.remove('full'); }
+});
+/* 鍵 */
+function lockSubmit(e) {
+  e.preventDefault();
+  var pw = $('lock-pw').value, msg = $('lock-msg'), btn = $('lock-btn');
+  if (!pw.trim()) { msg.textContent = '合言葉を入れてください'; return false; }
+  btn.disabled = true; msg.textContent = '確かめています…';
+  Vault.unlock(pw).then(function (ok) {
+    btn.disabled = false;
+    if (ok) { $('lock').hidden = true; start(); } else { msg.textContent = '合言葉が違います'; $('lock-pw').select(); }
+  }).catch(function () { btn.disabled = false; msg.textContent = 'オンラインで開き直してください'; });
+  return false;
+}
+(function init() {
+  var m = /[#&]pw=([^&]+)/.exec(location.hash);
+  if (m) {
+    var pw = decodeURIComponent(m[1]); var d = (/[#&]d=(\d{4})/.exec(location.hash) || [])[1];
+    history.replaceState(null, '', location.pathname + (d ? '#' + d : ''));
+    Vault.unlock(pw).then(function (ok) { if (ok) start(); else { $('lock').hidden = false; $('loading').classList.add('off'); } }).catch(function () { $('lock').hidden = false; $('loading').classList.add('off'); });
+    return;
+  }
+  if (!Vault.hasKey()) { $('lock').hidden = false; $('loading').classList.add('off'); return; }
+  Vault.verify().then(function (ok) { if (ok) start(); else { Vault.forget(); $('lock').hidden = false; $('loading').classList.add('off'); } });
+})();
+</script>
+</body>
+</html>

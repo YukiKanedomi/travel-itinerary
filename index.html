@@ -316,11 +316,61 @@ body.offline .ns-wx { display:none; }
   box-shadow:0 2px 6px rgba(90,75,50,.18); }
 /* 文字入力中はソフトキーボードが固定要素を画面中央あたりまで押し上げるので、その間は隠す */
 body:has(input:focus) .idx, body:has(textarea:focus) .idx { display:none; }
+/* ── 金庫の鍵（合言葉の扉） ── */
+.lock { position:fixed; inset:0; z-index:5000; background:var(--paper);
+  background-image:radial-gradient(ellipse 900px 600px at 20% -10%, rgba(255,255,255,.55), transparent 60%),
+    repeating-linear-gradient(93deg, rgba(160,140,110,.035) 0 2px, transparent 2px 5px);
+  display:flex; align-items:center; justify-content:center; padding:24px; }
+.lock[hidden] { display:none; }
+body.locked main, body.locked .idx, body.locked .holes, body.locked #day-sticky { visibility:hidden; }
+.lock-book { width:100%; max-width:340px; background:var(--paper-hi); border:1px solid var(--edge); border-radius:10px 14px 14px 10px;
+  box-shadow:0 12px 30px rgba(90,75,50,.22), 0 2px 6px rgba(90,75,50,.14); padding:34px 26px 26px; position:relative; }
+.lock-book::before { content:""; position:absolute; left:0; top:0; bottom:0; width:10px; border-radius:10px 0 0 10px;
+  background:repeating-linear-gradient(0deg, transparent 0 14px, var(--paper-dim) 14px 16px); }
+.lock-strap { position:absolute; right:-6px; top:28px; width:40px; height:80px; border-radius:6px;
+  background:linear-gradient(90deg, #6B4E33, #8B6A48 40%, #6B4E33); box-shadow:0 2px 6px rgba(0,0,0,.25); }
+.lock-strap::after { content:""; position:absolute; left:50%; top:50%; width:12px; height:12px; margin:-6px 0 0 -6px; border-radius:50%; background:#D9C08A; box-shadow:inset 0 1px 2px rgba(0,0,0,.4); }
+.lock-eyebrow { font-size:11px; letter-spacing:.3em; color:var(--red); font-weight:700; }
+.lock-title { font-family:"Zen Old Mincho",serif; font-size:34px; font-weight:900; line-height:1.15; margin-top:4px; }
+.lock-sub { font-size:13px; color:var(--ink-faint); margin-top:2px; }
+.lock-form { margin-top:22px; }
+.lock-l { display:block; font-size:12px; letter-spacing:.16em; color:var(--ink-faint); font-weight:700; }
+#lock-pw { display:block; width:100%; margin-top:6px; font:600 18px var(--mono); letter-spacing:.06em; padding:10px 10px;
+  border:0; border-bottom:2px solid var(--ink); background:transparent; color:var(--ink); outline:none; border-radius:0; }
+#lock-pw:focus { border-bottom-color:var(--red); }
+.lock-btn { margin-top:16px; width:100%; font-family:inherit; font-size:15px; font-weight:800; letter-spacing:.06em; padding:12px;
+  background:var(--ink); color:var(--paper-hi); border:0; border-radius:6px; cursor:pointer; }
+.lock-btn:disabled { opacity:.5; }
+.lock-msg { min-height:20px; margin-top:8px; font-size:13px; color:var(--red); font-weight:700; }
+.lock-note { margin-top:14px; font-size:12px; color:var(--ink-faint); line-height:1.7; }
+/* ── 写真の拡大（記録タブ） ── */
+.lightbox { position:fixed; inset:0; z-index:4000; background:rgba(20,15,10,.92); display:none; align-items:center; justify-content:center; flex-direction:column; gap:10px; padding:16px; }
+.lightbox.on { display:flex; }
+.lightbox img { max-width:96vw; max-height:78vh; border-radius:4px; box-shadow:0 8px 30px rgba(0,0,0,.5); filter:none; }
+.lightbox .lb-cap { color:#EEE6D8; font-size:13px; text-align:center; }
 </style>
-<!-- ?v= はキャッシュずれ対策。sw.js の CACHE と一緒に上げる --><link rel="stylesheet" href="pages.css?v=60">
+<!-- ?v= はキャッシュずれ対策。sw.js の CACHE と一緒に上げる --><link rel="stylesheet" href="pages.css?v=61">
 </head>
 <body>
 <div class="holes"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+
+<!-- 金庫の鍵（合言葉）。端末に鍵が無いときだけ手帳の上にかぶせる -->
+<div id="lock" class="lock" hidden>
+  <div class="lock-book">
+    <div class="lock-strap"></div>
+    <div class="lock-eyebrow">TRAVEL NOTEBOOK</div>
+    <div class="lock-title">旅の手帳</div>
+    <div class="lock-sub">オーストラリアの七日間</div>
+    <form class="lock-form" onsubmit="return lockSubmit(event)">
+      <label class="lock-l" for="lock-pw">合言葉</label>
+      <input id="lock-pw" type="password" autocomplete="current-password" inputmode="latin" autocapitalize="off" spellcheck="false">
+      <button type="submit" class="lock-btn" id="lock-btn">手帳を開く</button>
+      <div class="lock-msg" id="lock-msg"></div>
+    </form>
+    <div class="lock-note">一度開けば、この端末では次から入力なしで開きます。</div>
+  </div>
+</div>
+<div id="lightbox" class="lightbox" onclick="lbClose()"><img id="lb-img" alt=""><div class="lb-cap" id="lb-cap"></div></div>
 
 <main>
   <div class="readbar" id="readbar" hidden></div>
@@ -333,6 +383,7 @@ body:has(input:focus) .idx, body:has(textarea:focus) .idx { display:none; }
   <section id="pane-guide" class="pane"></section>
   <section id="pane-en" class="pane"></section>
   <section id="pane-info" class="pane"></section>
+  <section id="pane-log" class="pane"></section>
 </main>
 
 <div class="day-sticky" id="day-sticky" hidden></div>
@@ -345,15 +396,17 @@ body:has(input:focus) .idx, body:has(textarea:focus) .idx { display:none; }
   <div class="sv-hint" id="sv-hint">ドラッグで見回す・道路の矢印で進む。実際の景色とは季節や工事で違うことがあります</div>
 </div>
 
-<script src="trip.js?v=60"></script>
-<script src="map.js?v=60"></script>
-<script src="prep.js?v=60"></script>
-<script src="en.js?v=60"></script>
-<script src="guide.js?v=60"></script>
-<script src="info.js?v=60"></script>
-<script src="news.js?v=60"></script>
-<script src="wx.js?v=60"></script>
-<script src="docs.js?v=60"></script>
+<script src="vault.js?v=61"></script>
+<script src="trip.js?v=61"></script>
+<script src="map.js?v=61"></script>
+<script src="prep.js?v=61"></script>
+<script src="en.js?v=61"></script>
+<script src="guide.js?v=61"></script>
+<script src="info.js?v=61"></script>
+<script src="news.js?v=61"></script>
+<script src="wx.js?v=61"></script>
+<script src="docs.js?v=61"></script>
+<script src="log.js?v=61"></script>
 <script>
 /* ============ 旅の手帳 v2 — シェル ============ */
 /* 下部タブは5つ。「読む」は雑誌・手引き・情報の3面をまとめ、上部の小見出しで切り替える */
@@ -364,8 +417,8 @@ var NAV = [
   { id:'prep', label:'準備' },
   { id:'read', label:'読む' }
 ];
-var READ_SUB = [ ['news','雑誌'], ['guide','手引き'], ['en','英語'], ['info','情報'] ];
-var PANES = ['now','toc','read','news','map','prep','guide','en','info'];
+var READ_SUB = [ ['news','雑誌'], ['guide','手引き'], ['en','英語'], ['info','情報'], ['log','記録'] ];
+var PANES = ['now','toc','read','news','map','prep','guide','en','info','log'];
 var current = 'now';
 var readSub = 'news';
 try { readSub = localStorage.getItem('read_sub_v1') || 'news'; } catch(e) {}
@@ -821,7 +874,8 @@ var READ_CARDS = [
   ['news',  'DAILY MAG',   '雑誌「南十字星」', '毎朝届く、この街のミニ雑誌。きょうの号と過去号'],
   ['guide', 'FIELD GUIDE', '旅の手引き',       '出発日と帰国日の動き・現地の作法・もしもの手順・入口の予行演習・誌面'],
   ['en',    'TRAVEL ENGLISH', '旅の英語',      '10語で乗り切る・相槌のニュアンス・こう聞かれたらこう答える・オージー語'],
-  ['info',  'REFERENCE',   '情報',             '換算・緊急連絡先・宿の住所・交通・予算・参考リンク']
+  ['info',  'REFERENCE',   '情報',             '換算・緊急連絡先・宿の住所・交通・予算・参考リンク'],
+  ['log',   'TRAVEL LOG',  '旅の記録',         '写真を見ながら書いた日ごとの記録と、写真の足跡マップ']
 ];
 function renderRead() {
   var host = document.getElementById('pane-read'); if (!host) return;
@@ -869,6 +923,41 @@ function renderIdx() {
   }).join('');
 }
 
+/* ---- 金庫の鍵（合言葉）。鍵が端末に無い／合わないときだけ手帳の上にかぶせる ---- */
+function lockShow(on) {
+  var el = document.getElementById('lock'); if (!el) return;
+  el.hidden = !on; document.body.classList.toggle('locked', !!on);
+  if (on) setTimeout(function(){ var i = document.getElementById('lock-pw'); if (i) i.focus(); }, 50);
+}
+function lockInit() {
+  if (!window.Vault || !window.crypto || !crypto.subtle) return;
+  /* #pw=合言葉 を付けて開くと入力なしで解錠し、URL からは消す（Googleマップのキーと同じ作法） */
+  var m = /[#&]pw=([^&]+)/.exec(location.hash), lo = /log-(\d)/.exec(location.hash);
+  if (m) {
+    var pw = decodeURIComponent(m[1]);
+    history.replaceState(null, '', location.pathname + '#log');
+    lockShow(true);
+    Vault.unlock(pw).then(function(ok){ if (ok) { lockShow(false); LOG = null; logOpen = lo ? parseInt(lo[1], 10) : null; renderLogPage(); show('log'); } });
+    return;
+  }
+  if (!Vault.hasKey()) { lockShow(true); return; }
+  /* 鍵はあるが金庫が更新されている可能性 → 裏で検算し、合わなければ鍵をかける */
+  Vault.verify().then(function(ok){ if (!ok && navigator.onLine !== false) { Vault.forget(); lockShow(true); } });
+}
+function lockSubmit(e) {
+  e.preventDefault();
+  var pw = document.getElementById('lock-pw').value, msg = document.getElementById('lock-msg'), btn = document.getElementById('lock-btn');
+  if (!pw.trim()) { msg.textContent = '合言葉を入れてください'; return false; }
+  btn.disabled = true; msg.textContent = '確かめています…';
+  Vault.unlock(pw).then(function(ok){
+    btn.disabled = false;
+    if (ok) { msg.textContent = ''; lockShow(false); if (typeof renderLogPage === 'function') { LOG = null; renderLogPage(); } }
+    else { msg.textContent = '合言葉が違います'; document.getElementById('lock-pw').select(); }
+  }).catch(function(){ btn.disabled = false; msg.textContent = 'オンラインで開き直してください'; });
+  return false;
+}
+function lockForget() { Vault.forget(); LOG = null; logOpen = null; if (typeof renderLogPage === 'function') renderLogPage(); lockShow(true); }
+
 /* ---- init ---- */
 (function(){
   function safe(f){ try{ f(); }catch(e){ if(window.console) console.warn(e); } }
@@ -909,13 +998,17 @@ function renderIdx() {
   safe(renderGuidePage);
   safe(renderEnPage);
   safe(renderInfoPage);
+  safe(function(){ if (Vault.hasKey()) renderLogPage(); });
   safe(initNews);
   safe(renderRead);
   safe(renderIdx);
+  safe(lockInit);
   /* ディープリンク: #toc / #map / #prep / #read / #news / #guide / #en / #info / #day1〜#day7 */
   safe(function(){
     var m = /^#day([1-7])$/.exec(location.hash);
     if (m) { show('toc'); openDay(parseInt(m[1],10)); return; }
+    var lm = /^#log-(\d)$/.exec(location.hash);
+    if (lm) { logOpen = parseInt(lm[1],10); if (typeof renderLogPage === 'function') renderLogPage(); show('log'); return; }
     var id = location.hash.replace('#','');
     show(PANES.indexOf(id) >= 0 || id === 'read' ? id : 'now');
   });

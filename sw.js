@@ -10,8 +10,8 @@
  * 旧世代（tabi-shiori-v* / tabi-techo-v*）は一度だけ掃除する。
  * /v1/ のアーカイブ（tabi-shiori-arch-*）には触れない。
  */
-const CACHE = 'tabi-techo-root-v60';
-const V = '60'; // index.html の ?v= と揃える
+const CACHE = 'tabi-techo-root-v61';
+const V = '61'; // index.html の ?v= と揃える
 /* 必須シェル：1つでも取得に失敗したらインストール自体を失敗させる（約1MB） */
 const CORE = [
   './',
@@ -26,6 +26,8 @@ const CORE = [
   './news.js?v=' + V,
   './wx.js?v=' + V,
   './docs.js?v=' + V,
+  './vault.js?v=' + V,
+  './log.js?v=' + V,
   './articles.json',
   './manifest.webmanifest',
   './assets/app-icon-180.png', './assets/app-icon-192.png', './assets/app-icon-512.png'
@@ -86,7 +88,8 @@ self.addEventListener('fetch', function (e) {
   var isNav = req.mode === 'navigate' ||
               url.pathname.endsWith('/') ||
               url.pathname.endsWith('index.html') ||
-              url.pathname.endsWith('articles.json'); // 朝刊は network-first（毎朝更新されるため）
+              url.pathname.endsWith('articles.json') || // 朝刊は network-first（毎朝更新されるため）
+              url.pathname.endsWith('vault/manifest.json'); // 金庫の目録も network-first（暗号文はハッシュ名で cache-first）
 
   if (isNav) {
     e.respondWith(
