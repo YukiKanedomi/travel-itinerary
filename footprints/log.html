@@ -7,7 +7,7 @@
 <title>旅の記録 — オーストラリア 2026</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&family=Inter+Tight:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="vendor/leaflet.css">
 <style>
 /* ============ 旅の記録 — 紙と雲 ============
  * 扉（七日の一覧）と、日ごとの記録。スクロールで時間帯の光が変わり、写真がゆっくり寄ってくる。 */
@@ -30,6 +30,9 @@ a{color:inherit}
   @keyframes drift{from{transform:translateX(0)}to{transform:translateX(-6%)}}
 }
 #prog{position:fixed;left:0;top:0;height:2px;width:0;background:var(--acc);z-index:30;transition:width .15s linear}
+#totop{position:fixed;right:16px;bottom:calc(18px + env(safe-area-inset-bottom));z-index:25;display:flex;align-items:center;gap:7px;padding:10px 15px 10px 13px;border-radius:24px;background:var(--ink);color:#fff;font-size:12px;letter-spacing:.1em;text-decoration:none;box-shadow:0 12px 26px -12px rgba(0,0,0,.5);opacity:0;transform:translateY(12px);pointer-events:none;transition:opacity .3s,transform .3s}
+#totop.on{opacity:1;transform:none;pointer-events:auto}
+#totop i{display:block;width:7px;height:7px;border-left:1.5px solid #fff;border-top:1.5px solid #fff;transform:rotate(45deg) translateY(2px)}
 header{position:sticky;top:0;z-index:20;padding:calc(12px + env(safe-area-inset-top)) 20px 10px;display:flex;justify-content:space-between;align-items:center;gap:12px;
   background:linear-gradient(180deg,var(--paper) 70%,transparent);transition:background 1.6s}
 .wm{font-family:var(--en);font-weight:300;font-size:10.5px;letter-spacing:.2em;color:var(--dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;text-decoration:none}
@@ -186,6 +189,7 @@ main{position:relative;z-index:10;max-width:560px;margin:0 auto;padding:18px 22p
 </svg></div>
 <div id="prog"></div>
 <header><a class="wm" id="wm" href="log.html">TRAVEL LOG</a><span id="now"></span><div id="days"></div></header>
+<a id="totop" href="log.html" aria-label="扉へ戻る"><i></i>扉へ</a>
 <main id="main"></main>
 <div id="lb" onclick="this.classList.remove('on')"><img id="lb-img" alt=""><div class="c" id="lb-cap"></div></div>
 <div id="veil"></div>
@@ -193,8 +197,8 @@ main{position:relative;z-index:10;max-width:560px;margin:0 auto;padding:18px 22p
 <div id="lock" hidden><form class="lk" onsubmit="return lockSubmit(event)"><span class="wm">TRAVEL LOG</span><h2>旅の記録</h2><p>合言葉で開きます。<br>一度開けば、この端末では次から入力なしで。</p>
 <input id="lock-pw" type="password" autocomplete="current-password" autocapitalize="off" spellcheck="false" placeholder="合言葉"><button type="submit" id="lock-btn">開く</button><div class="msg" id="lock-msg"></div><a href="../">‹ 旅の手帳へ</a></form></div>
 
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script src="../vault.js?v=65"></script>
+<script src="vendor/leaflet.js"></script>
+<script src="../vault.js?v=66"></script>
 <script>
 Vault.base('../');
 /* 日ごとの紙。TONE は時間帯ごとの雲の色（朝→昼→午後→夕方→夜） */
@@ -205,10 +209,10 @@ var PAPER = {
 var TONE = { morning: ['#F8F3EA', '#F6E6D8'], noon: ['#F9F7F1', '#EEF0EA'], afternoon: ['#F7EFE0', '#F3E2C8'], evening: ['#F3E4E0', '#E9D3D6'], night: ['#DDE0E6', '#CFD3DC'] };
 var DAY_NO = { '0920': 1, '0921': 2, '0922': 3, '0923': 4, '0924': 5, '0925': 6, '0926': 7 };
 var DAY_TITLE = { '0920': '成田から、夜の便で', '0921': 'メルボルン、路地とアーケード', '0922': '市場、庭園、図書館、劇場', '0923': 'メルボルンからシドニーへ', '0924': 'ブルーマウンテンズ', '0925': 'シドニー最終日', '0926': '帰国' };
-var HERO = { '0920': '1539', '0921': '1596', '0922': '1738', '0923': '1861', '0924': '2013', '0925': '2290', '0926': '2371' };
+var HERO = { '0920': '1539', '0921': '1596', '0922': '1738', '0923': '1860', '0924': '2013', '0925': '2290', '0926': '2371' };
 var $ = function (id) { return document.getElementById(id); };
 var files = [], cur = null, curFile = null, allKeys = [];
-function esc(s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+function esc(s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
 function fileKeys(f) { var m = /_(\d{4})(?:-(\d{4}))?_/.exec(f.name); if (!m) return []; if (!m[2]) return [m[1]]; var out = [], a = +m[1].slice(2), b = +m[2].slice(2); for (var d = a; d <= b; d++) out.push(m[1].slice(0, 2) + ('0' + d).slice(-2)); return out; }
 function fileFor(key) { for (var i = 0; i < files.length; i++) if (fileKeys(files[i]).indexOf(key) >= 0) return files[i]; return null; }
 function fileTitle(f) { return (f.md.split('\n')[0] || '').replace(/^#\s*旅の記録\s*—\s*/, '').replace(/^\d{1,2}\/\d{1,2}（.）\s*/, '').replace(/（\d{4}-\d{2}-\d{2}〜\d{2}）\s*$/, ''); }
@@ -339,6 +343,11 @@ function renderAll() {
 }
 /* スクロール：写真の出現、扉絵の視差、時間帯の光、いまの時刻 */
 var revObs = null, secObs = null, nowObs = null, imgs = [];
+var pinMap = null;
+function pinOf(n) {
+  if (!pinMap) pinMap = Vault.load('pins').then(function (o) { var mm = {}; (o.pins || []).forEach(function (x) { mm[x.n] = x; }); return mm; });
+  return pinMap.then(function (mm) { return mm[String(n)] || null; });
+}
 function bindScroll() {
   if (revObs) revObs.disconnect(); if (secObs) secObs.disconnect(); if (nowObs) nowObs.disconnect();
   imgs = Array.prototype.slice.call(document.querySelectorAll('.hero button, .dayc, .fpbig, .head.hp'));
@@ -347,7 +356,7 @@ function bindScroll() {
       if (!e.isIntersecting) return; var el = e.target; el.classList.add('in'); revObs.unobserve(el);
       var im = el.querySelector('img'); var n = el.getAttribute('data-n') || (im && im.getAttribute('data-n'));
       if (!im || !n) return;
-      Vault.photo(n).then(function (p) { if (!p) { el.style.display = 'none'; return; } el.setAttribute('data-t', p.t.slice(6)); el.setAttribute('data-d', p.t.slice(0, 5)); im.src = p.img; im.onload = function () { im.classList.add('ld'); if (im.naturalHeight > im.naturalWidth * 1.15 && el.closest('.hero') && el.closest('.hero').classList.contains('n1')) el.classList.add('tall'); }; return Vault.photoURL(n); })
+      pinOf(n).then(function (p) { if (!p) { if (el.classList.contains('head')) el.classList.remove('hp'); else el.style.display = 'none'; return null; } el.setAttribute('data-t', p.t); el.setAttribute('data-d', p.d.slice(0, 2) + '/' + p.d.slice(2)); im.onload = function () { im.classList.add('ld'); if (im.naturalHeight > im.naturalWidth * 1.15 && el.closest('.hero') && el.closest('.hero').classList.contains('n1')) el.classList.add('tall'); }; return Vault.photoURL(n); })
         .then(function (u) { if (u) im.src = u; }).catch(function () {});
     });
   }, { rootMargin: '200px 0px' });
@@ -382,6 +391,7 @@ function onScroll() {
     ticking = false;
     var vh = window.innerHeight, sh = document.documentElement.scrollHeight - vh;
     $('prog').style.width = (sh > 0 ? Math.min(100, window.scrollY / sh * 100) : 0) + '%';
+    $('totop').classList.toggle('on', window.scrollY > 700);
     imgs.forEach(function (el) {
       var im = el.querySelector('img'); if (!im || !im.classList.contains('ld')) return;
       var r = el.getBoundingClientRect(); if (r.bottom < 0 || r.top > vh) return;
@@ -394,7 +404,7 @@ window.addEventListener('scroll', onScroll, { passive: true });
 $('main').addEventListener('click', function (e) {
   var b = e.target.closest('.hero button'); if (!b) return;
   var n = b.getAttribute('data-n'); $('lb-img').removeAttribute('src'); $('lb-cap').textContent = ''; $('lb').classList.add('on');
-  Vault.photoURL(n).then(function (u) { if (u) $('lb-img').src = u; return Vault.photo(n); }).then(function (p) { if (p) $('lb-cap').textContent = p.t.slice(6) + ' · ' + String(p.p || '').split(/[,，（(]/)[0]; });
+  Vault.photoURL(n).then(function (u) { if (u) $('lb-img').src = u; return pinOf(n); }).then(function (p) { if (p) $('lb-cap').textContent = p.t + ' · ' + (p.p || ''); });
 });
 function paper(key) {
   var p = PAPER[key] || PAPER['0924'];
@@ -406,12 +416,16 @@ function renderDays() {
 }
 function route() {
   var key = location.hash.replace('#', '').slice(0, 4);
-  if (!rendered) { paper('0924'); renderDays(); renderAll(); $('loading').classList.add('off'); }
+  var first = !rendered;
+  if (first) { paper('0924'); renderDays(); renderAll(); $('loading').classList.add('off'); }
   var a = /^\d{4}$/.test(key) ? $('d' + key) : null;
-  if (a) { var y = a.getBoundingClientRect().top + window.scrollY - 64; window.scrollTo({ top: y, behavior: rendered ? 'smooth' : 'auto' }); }
+  if (a) { var y = a.getBoundingClientRect().top + window.scrollY - 64; window.scrollTo({ top: y, behavior: first ? 'auto' : 'smooth' }); }
   else if (!key) window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 window.addEventListener('hashchange', route);
+function toTop(e) { e.preventDefault(); try { history.replaceState(null, '', location.pathname); } catch (x) {} window.scrollTo({ top: 0, behavior: 'smooth' }); }
+$('totop').addEventListener('click', toTop);
+$('wm').addEventListener('click', toTop);
 function start() {
   Vault.load('journal').then(function (j) {
     files = j.files.filter(function (f) { return fileKeys(f).length > 0; }).sort(function (a, b) { return a.name < b.name ? -1 : 1; });

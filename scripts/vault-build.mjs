@@ -30,8 +30,10 @@ const baseKey = await subtle.importKey('raw', new TextEncoder().encode(pw), 'PBK
 const key = await subtle.deriveKey({ name: 'PBKDF2', salt, iterations: ITER, hash: 'SHA-256' }, baseKey,
   { name: 'AES-GCM', length: 256 }, false, ['encrypt']);
 
+/* IV は内容から決める（同じ内容→同じ暗号文→同じファイル名）。作り直しても変わらない写真は
+ * 端末のキャッシュがそのまま効く。同じ鍵で同じ平文が同じ暗号文になるだけで、秘密は増えない */
 async function encrypt(bytes) {
-  const iv = randomBytes(12);
+  const iv = createHash('sha256').update(salt).update(bytes).digest().subarray(0, 12);
   const ct = new Uint8Array(await subtle.encrypt({ name: 'AES-GCM', iv }, key, bytes));
   const out = new Uint8Array(12 + ct.length); out.set(iv, 0); out.set(ct, 12);
   return out;

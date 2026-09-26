@@ -7,7 +7,7 @@
 <title>写真の足跡 — オーストラリア 2026</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&family=Inter+Tight:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="vendor/leaflet.css">
 <style>
 /* ============ 写真の足跡 — 紙と雲 ============
  * 紙色は日ごとに変わる。雲はゆっくり流れる。写真は一枚ずつ、縦スクロールでめくる。
@@ -44,7 +44,8 @@ header{position:fixed;left:0;right:0;top:0;z-index:20;padding:calc(12px + env(sa
 .bar{display:flex;justify-content:space-between;align-items:center;padding:14px 20px 8px}
 .wm{font-family:var(--en);font-weight:300;font-size:10.5px;letter-spacing:.2em;color:var(--dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
 #days{display:flex;gap:6px;font-family:var(--en);font-size:11px;color:var(--dim)}
-#days button{padding:2px 7px;border-radius:12px;letter-spacing:.02em;transition:background .3s,color .3s}
+#days button{position:relative;padding:2px 7px;border-radius:12px;letter-spacing:.02em;transition:background .3s,color .3s}
+#days button::before{content:"";position:absolute;inset:-9px -3px}
 #days button.on{color:var(--ink);background:rgba(255,255,255,.85)}
 /* 写真の帯（中の層） */
 #feed{position:fixed;inset:0;z-index:10;overflow-y:auto;overscroll-behavior:contain;padding-bottom:14vh;scrollbar-width:none;-webkit-overflow-scrolling:touch}
@@ -62,6 +63,7 @@ header{position:fixed;left:0;right:0;top:0;z-index:20;padding:calc(12px + env(sa
 .ph.full .cap{bottom:calc(16px + env(safe-area-inset-bottom));font-size:13px}
 .ph.full{position:fixed;inset:0;width:auto;aspect-ratio:auto;border-radius:0;z-index:60;background:#111;box-shadow:none}
 .ph.full img{object-fit:contain}
+body.full header,body.full footer,body.full #hint{visibility:hidden}
 /* 下：地名・時間の線・雲の地図（手前の層） */
 footer{position:fixed;left:0;right:0;bottom:0;z-index:20;padding:0 20px calc(18px + env(safe-area-inset-bottom));pointer-events:none;
   background:linear-gradient(0deg,var(--paper) 55%,transparent);transition:background 1.2s}
@@ -162,8 +164,8 @@ footer{position:fixed;left:0;right:0;bottom:0;z-index:20;padding:0 20px calc(18p
 <div id="lock" hidden><form class="lk" onsubmit="return lockSubmit(event)"><span class="wm">PHOTO FOOTPRINTS</span><h2>写真の足跡</h2><p>合言葉で開きます。<br>一度開けば、この端末では次から入力なしで。</p>
 <input id="lock-pw" type="password" autocomplete="current-password" autocapitalize="off" spellcheck="false" placeholder="合言葉"><button type="submit" id="lock-btn">開く</button><div class="msg" id="lock-msg"></div><a href="../">‹ 旅の手帳へ</a></form></div>
 
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script src="../vault.js?v=65"></script>
+<script src="vendor/leaflet.js"></script>
+<script src="../vault.js?v=66"></script>
 <script>
 Vault.base('../');
 window.addEventListener('error', function (e) { var l = document.getElementById('loading'); if (l) { l.textContent = 'ERROR: ' + (e.message || e); l.classList.remove('off'); } });
@@ -171,13 +173,13 @@ window.addEventListener('unhandledrejection', function (e) { var l = document.ge
 /* 日ごとの紙の色 */
 var PAPER = {
   '0920': ['#EDE7DF', '#F5F1EB', '#F3E6DE'], '0921': ['#E9E7E0', '#F3F1EA', '#F0E8DD'], '0922': ['#EEE7DC', '#F6F0E6', '#F6E3D6'],
-  '0923': ['#E6E9EC', '#F0F2F4', '#F5E7DF'], '0924': ['#EFE6DA', '#F6EFE5', '#F7E3D6'], '0925': ['#E4E9EE', '#EFF2F5', '#F3E4DC']
+  '0923': ['#E6E9EC', '#F0F2F4', '#F5E7DF'], '0924': ['#EFE6DA', '#F6EFE5', '#F7E3D6'], '0925': ['#E4E9EE', '#EFF2F5', '#F3E4DC'], '0926': ['#E9E6E3', '#F3F0EC', '#F1E4DC']
 };
 var DAY_NO = { '0920': 1, '0921': 2, '0922': 3, '0923': 4, '0924': 5, '0925': 6, '0926': 7 };
 var $ = function (id) { return document.getElementById(id); };
 var CAP = {}, pendingN = null, man = null, days = [], cur = null, items = [], stops = [], idx = -1, mini = null, big = null, miniPins = [], bigPins = [], io = null, seeking = false;
 
-function esc(s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;'); }
+function esc(s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;'); }
 function shortPlace(p) { p = String(p || ''); var s = p.split(/[,，（(]/)[0].trim(); return s || '—'; }
 function subPlace(p) { p = String(p || ''); var m = p.match(/[（(]([^）)]+)[）)]/); var rest = p.split(/[,，]/).slice(1).map(function (t) { return t.trim(); }).filter(Boolean); if (m) rest.unshift(m[1]); return rest.join('、'); }
 function mins(t) { var m = /(\d\d):(\d\d)$/.exec(t); return m ? (+m[1]) * 60 + (+m[2]) : 0; }
@@ -206,7 +208,7 @@ function renderStops() {
 function renderFeed() {
   var h = '';
   items.forEach(function (x, i) {
-    h += '<section class="page" data-i="' + i + '"><figure class="ph" id="ph' + i + '" data-n="' + x.n + '"><img src="' + x.img + '" alt="" data-n="' + x.n + '">' + (CAP[x.n] ? '<span class="cap">' + esc(CAP[x.n]) + '</span>' : '') + '</figure></section>';
+    h += '<section class="page" data-i="' + i + '"><figure class="ph" id="ph' + i + '" data-n="' + x.n + '"><img src="' + x.img + '" alt="" loading="lazy" decoding="async" data-n="' + x.n + '">' + (CAP[x.n] ? '<span class="cap">' + esc(CAP[x.n]) + '</span>' : '') + '</figure></section>';
   });
   $('feed').innerHTML = h;
   Array.prototype.forEach.call(document.querySelectorAll('#feed img'), function (im) {
@@ -298,13 +300,18 @@ function closeMap() { $('mapfull').classList.remove('on'); big.closePopup(); }
 function jumpTo(i) { closeMap(); setIdx(i, 'smooth'); }
 
 /* 日を開く */
+var openSeq = 0;
 function openDay(d, keepIdx) {
   if (d === cur && items.length) return;
   if (days.indexOf(d) < 0) return;
   $('veil').classList.add('on');
+  var seq = ++openSeq;
   Vault.load('photos-' + d).then(function (part) {
+    if (seq !== openSeq) return;
     setTimeout(function () {
+      if (seq !== openSeq) return;
       cur = d; items = part.items; stops = buildStops(items); idx = -1;
+      var keep = {}; items.forEach(function (x) { keep[x.n] = 1; }); Vault.release(keep);
       var p = PAPER[d] || PAPER['0924'];
       document.documentElement.style.setProperty('--paper', p[0]); document.documentElement.style.setProperty('--cloud', p[1]); document.documentElement.style.setProperty('--cloud2', p[2]);
       document.querySelector('meta[name=theme-color]').setAttribute('content', p[0]);
@@ -316,10 +323,12 @@ function openDay(d, keepIdx) {
       try { if (location.hash) history.replaceState(null, '', location.pathname); } catch (e) {}
       $('veil').classList.remove('on');
       $('loading').classList.add('off');
+      var di = days.indexOf(d); [days[di + 1], days[di - 1]].forEach(function (k) { if (k) setTimeout(function () { Vault.load('photos-' + k).catch(function () {}); }, 1500); });
       var seen = false; try { seen = !!localStorage.getItem('fp_hint_v1'); } catch (e) {}
       if (!seen) setTimeout(function () { $('hint').classList.add('on'); }, 900);
     }, 200);
   }).catch(function (e) {
+    if (seq !== openSeq) return;
     $('loading').textContent = 'OPEN FAILED'; $('loading').classList.remove('off');
   });
 }
@@ -358,7 +367,7 @@ $('play').addEventListener('click', function () {
   playT = setInterval(function () { if (idx >= items.length - 1) { playStop(); return; } setIdx(idx + 1, 'smooth'); }, 1200);
 });
 $('feed').addEventListener('touchstart', function () { if (playT) playStop(); }, { passive: true });
-$('feed').addEventListener('click', function (e) { var ph = e.target.closest('.ph'); if (!ph) return; if (ph.classList.contains('full')) ph.classList.remove('full'); else if (ph.id === 'ph' + idx) ph.classList.add('full'); });
+$('feed').addEventListener('click', function (e) { var ph = e.target.closest('.ph'); if (!ph) return; if (ph.classList.contains('full')) { ph.classList.remove('full'); document.body.classList.remove('full'); } else if (ph.id === 'ph' + idx) { ph.classList.add('full'); document.body.classList.add('full'); } });
 (function () {
   var line = $('line');
   function seek(ev) {
@@ -389,7 +398,7 @@ document.addEventListener('keydown', function (e) {
   if (e.key === 'ArrowUp') setIdx(idx - 1, 'smooth');
   if (e.key === 'ArrowRight') stepDay(1);
   if (e.key === 'ArrowLeft') stepDay(-1);
-  if (e.key === 'Escape') { closeMap(); var ph = document.querySelector('.ph.full'); if (ph) ph.classList.remove('full'); }
+  if (e.key === 'Escape') { closeMap(); var ph = document.querySelector('.ph.full'); if (ph) { ph.classList.remove('full'); document.body.classList.remove('full'); } }
 });
 /* 鍵 */
 function lockSubmit(e) {

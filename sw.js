@@ -10,8 +10,9 @@
  * 旧世代（tabi-shiori-v* / tabi-techo-v*）は一度だけ掃除する。
  * /v1/ のアーカイブ（tabi-shiori-arch-*）には触れない。
  */
-const CACHE = 'tabi-techo-root-v65';
-const V = '65'; // index.html の ?v= と揃える
+const CACHE = 'tabi-techo-root-v66';
+const VCACHE = 'tabi-vault-v1'; /* 金庫の暗号文（ハッシュ名・不変）。版を上げても消さない */
+const V = '66'; // index.html の ?v= と揃える
 /* 必須シェル：1つでも取得に失敗したらインストール自体を失敗させる（約1MB） */
 const CORE = [
   './',
@@ -34,6 +35,7 @@ const CORE = [
 ];
 /* 任意コンテンツ：1枚ずつ取得し、失敗してもインストールは成功させる（写真・誌面・挿絵 約16MB） */
 const OPTIONAL = [
+  './footprints/', './footprints/index.html', './footprints/log.html', './footprints/vendor/leaflet.js', './footprints/vendor/leaflet.css',
   './assets/day1.jpg', './assets/day2.jpg', './assets/day3.jpg', './assets/day4.jpg',
   './assets/day5.jpg', './assets/day6.jpg', './assets/day7.jpg',
   './assets/scrap-laneway.jpg', './assets/scrap-qvm.jpg', './assets/scrap-koala.jpg', './assets/scrap-opera.jpg',
@@ -67,7 +69,7 @@ self.addEventListener('activate', function (e) {
   e.waitUntil(
     caches.keys().then(function (keys) {
       return Promise.all(keys.filter(function (k) {
-        if (k === CACHE) return false;
+        if (k === CACHE || k === VCACHE) return false;
         return k.indexOf('tabi-techo-root-') === 0 ||   // 自分の旧世代
                k.indexOf('tabi-shiori-v') === 0 ||       // 旧ルートアプリの残骸
                k.indexOf('tabi-techo-v') === 0;          // 旧 /v2/ の残骸
@@ -90,6 +92,21 @@ self.addEventListener('fetch', function (e) {
               url.pathname.endsWith('index.html') ||
               url.pathname.endsWith('articles.json') || // 朝刊は network-first（毎朝更新されるため）
               url.pathname.endsWith('vault/manifest.json'); // 金庫の目録も network-first（暗号文はハッシュ名で cache-first）
+
+  var isVault = url.pathname.indexOf('/vault/') !== -1 && !url.pathname.endsWith('manifest.json');
+  if (isVault) {
+    e.respondWith(
+      caches.open(VCACHE).then(function (c) {
+        return c.match(req).then(function (cached) {
+          return cached || fetch(req).then(function (res) {
+            if (res && res.ok) { var cp = res.clone(); e.waitUntil(c.put(req, cp)); }
+            return res;
+          });
+        });
+      })
+    );
+    return;
+  }
 
   if (isNav) {
     e.respondWith(

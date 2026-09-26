@@ -5,7 +5,7 @@
  * 別ディレクトリのページからは Vault.base('../') のように金庫の場所を指定する。
  */
 var Vault = (function () {
-  var base = '', man = null, key = null, cache = {}, KEY = 'vault_key_v1';
+  var base = '', man = null, key = null, cache = {}, pending = {}, KEY = 'vault_key_v1';
   function b64d(s) { var b = atob(s), u = new Uint8Array(b.length); for (var i = 0; i < b.length; i++) u[i] = b.charCodeAt(i); return u; }
   function b64e(u) { var s = ''; for (var i = 0; i < u.length; i++) s += String.fromCharCode(u[i]); return btoa(s); }
   function manifest() {
@@ -58,7 +58,8 @@ var Vault = (function () {
   /* 金庫の一区画（'journal' / 'photos-0924' など）を復号して JSON で返す */
   function load(id) {
     if (cache[id]) return Promise.resolve(cache[id]);
-    return Promise.all([manifest(), loadKey()]).then(function (a) {
+    if (pending[id]) return pending[id]; /* 取得中なら同じ約束を返す（並行呼び出しで二重に取らない） */
+    pending[id] = Promise.all([manifest(), loadKey()]).then(function (a) {
       var m = a[0], k = a[1], p = null;
       m.parts.forEach(function (x) { if (x.id === id) p = x; });
       if (!p) throw new Error('no part ' + id);
@@ -70,9 +71,10 @@ var Vault = (function () {
         return dec(k, u.slice(0, 12), u.slice(12));
       }).then(function (buf) {
         var o = JSON.parse(new TextDecoder().decode(buf));
-        cache[id] = o; return o;
+        cache[id] = o; delete pending[id]; return o;
       });
-    });
+    }).catch(function (e) { delete pending[id]; throw e; });
+    return pending[id];
   }
   /* IMG 番号 → その写真が入っている区画の id */
   function partOf(n) { return manifest().then(function (m) { var d = m.index && m.index[String(n)]; return d ? 'photos-' + d : null; }); }
@@ -83,11 +85,11 @@ var Vault = (function () {
     });
   }
   /* 720px の写真 1 枚を復号して blob: URL で返す（同じ写真は使い回す） */
-  var urls = {};
+  var urls = {}; /* n → blob: URL の約束（取得中も同じ約束を共有する） */
   function photoURL(n) {
     n = String(n);
-    if (urls[n]) return Promise.resolve(urls[n]);
-    return Promise.all([manifest(), loadKey()]).then(function (a) {
+    if (urls[n]) return urls[n];
+    urls[n] = Promise.all([manifest(), loadKey()]).then(function (a) {
       var m = a[0], k = a[1], f = m.photos && m.photos[n];
       if (!f) return null;
       return fetch(base + 'vault/p/' + f).then(function (r) {
@@ -97,10 +99,18 @@ var Vault = (function () {
         var u = new Uint8Array(buf);
         return dec(k, u.slice(0, 12), u.slice(12));
       }).then(function (buf) {
-        urls[n] = URL.createObjectURL(new Blob([buf], { type: m.ptype || 'image/jpeg' }));
-        return urls[n];
+        return URL.createObjectURL(new Blob([buf], { type: m.ptype || 'image/jpeg' }));
       });
+    }).catch(function (e) { delete urls[n]; throw e; });
+    return urls[n];
+  }
+  /* keep に無い写真の blob: URL を解放する（日を替えたときにメモリを返す） */
+  function release(keep) {
+    Object.keys(urls).forEach(function (n) {
+      if (keep && keep[n]) return;
+      var pr = urls[n]; delete urls[n];
+      pr.then(function (u) { if (u) URL.revokeObjectURL(u); }).catch(function () {});
     });
   }
-  return { base: function (b) { base = b; }, manifest: manifest, hasKey: hasKey, unlock: unlock, verify: verify, forget: forget, load: load, partOf: partOf, photo: photo, photoURL: photoURL };
+  return { base: function (b) { base = b; }, manifest: manifest, hasKey: hasKey, unlock: unlock, verify: verify, forget: forget, load: load, partOf: partOf, photo: photo, photoURL: photoURL, release: release };
 })();
