@@ -53,7 +53,12 @@ main{position:relative;z-index:10;max-width:560px;margin:0 auto;padding:18px 22p
 #pinmap{height:300px;background:#F4F1EC}
 #pinmap .leaflet-tile-pane{filter:grayscale(.9) saturate(.5) brightness(1.06) contrast(.88)}
 #pinmap .leaflet-control-attribution{font-size:8.5px;background:rgba(255,255,255,.6)}
-.pin{width:7px;height:7px;border-radius:50%;background:var(--ink);opacity:.55;border:1px solid #fff}
+.pin{width:8px;height:8px;border-radius:50%;background:var(--c,var(--ink));opacity:.8;border:1.5px solid #fff;box-shadow:0 1px 2px rgba(0,0,0,.2);transition:opacity .4s,transform .4s}
+.pin.dim{opacity:.12;transform:scale(.7)}
+.tmap .cap .dz{display:flex;gap:4px;flex-wrap:wrap}
+.tmap .cap .dz button{font-family:var(--en);font-size:10.5px;letter-spacing:.06em;color:var(--mid);padding:3px 0;width:34px;border-radius:12px;background:rgba(255,255,255,.7);position:relative}
+.tmap .cap .dz button::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--c);margin-right:4px;vertical-align:1px}
+.tmap .cap .dz button.on{background:var(--ink);color:#fff}
 .pin.big{width:11px;height:11px;background:var(--acc);opacity:.95;border:2px solid #fff;box-shadow:0 1px 3px rgba(0,0,0,.25)}
 .tmap .cap{display:flex;flex-direction:column;gap:8px;padding:8px 12px 10px;font-family:var(--en);font-size:9.5px;letter-spacing:.2em;color:var(--dim)}
 .tmap .cap .z{display:flex;gap:4px;flex-wrap:wrap}
@@ -175,7 +180,7 @@ main{position:relative;z-index:10;max-width:560px;margin:0 auto;padding:18px 22p
 <input id="lock-pw" type="password" autocomplete="current-password" autocapitalize="off" spellcheck="false" placeholder="合言葉"><button type="submit" id="lock-btn">開く</button><div class="msg" id="lock-msg"></div><a href="../">‹ 旅の手帳へ</a></form></div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script src="../vault.js?v=63"></script>
+<script src="../vault.js?v=64"></script>
 <script>
 Vault.base('../');
 /* 日ごとの紙。TONE は時間帯ごとの雲の色（朝→昼→午後→夕方→夜） */
@@ -265,7 +270,7 @@ function dayHTML(f) {
   return '<article class="day">' + head + h + fp + '</article>';
 }
 function tripMapHTML() {
-  return '<div class="tmap" id="tmap"><div id="pinmap"></div><div class="cap"><span id="pincount">…</span><div class="z"><button type="button" data-z="all" class="on">全体</button><button type="button" data-z="mel">メルボルン</button><button type="button" data-z="syd">シドニー</button><button type="button" data-z="bm">ブルーマウンテンズ</button></div></div></div>';
+  return '<div class="tmap" id="tmap"><div id="pinmap"></div><div class="cap"><span id="pincount">…</span><div class="dz" id="dz"></div><div class="z"><button type="button" data-z="all" class="on">全体</button><button type="button" data-z="mel">メルボルン</button><button type="button" data-z="syd">シドニー</button><button type="button" data-z="bm">ブルーマウンテンズ</button></div></div></div>';
 }
 var pinmap = null;
 function initPinMap() {
@@ -273,15 +278,28 @@ function initPinMap() {
   pinmap = L.map('pinmap', { zoomControl: false, attributionControl: true, scrollWheelZoom: false });
   L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '© OpenStreetMap' }).addTo(pinmap);
   pinmap.setView([-35.9, 148.2], 5);
+  var DC = { '0920': '#9A8E84', '0921': '#5B8FB9', '0922': '#5FA88C', '0923': '#C48A3F', '0924': '#8F7BC7', '0925': '#D8907A', '0926': '#3A3532' };
+  var markers = [];
   Vault.load('pins').then(function (o) {
-    var pins = o.pins || [], bounds = [];
+    var pins = o.pins || [], bounds = [], dset = {};
     pins.forEach(function (x) {
       if (x.lat > -20) return; /* 日本で撮ったものは外す */
       bounds.push([x.lat, x.lng]);
-      var m = L.marker([x.lat, x.lng], { icon: L.divIcon({ className: '', html: '<div class="pin"></div>', iconSize: [8, 8], iconAnchor: [4, 4] }) }).addTo(pinmap);
+      dset[x.d] = 1;
+      var m = L.marker([x.lat, x.lng], { icon: L.divIcon({ className: '', html: '<div class="pin" data-d="' + x.d + '" style="--c:' + (DC[x.d] || '#3A3532') + '"></div>', iconSize: [8, 8], iconAnchor: [4, 4] }) }).addTo(pinmap); markers.push(m);
       m.bindPopup('<b>' + esc(x.p || '') + '</b><br>' + '9/' + (+x.d.slice(2)) + ' ' + esc(x.t) + '<a href="./#' + x.d + '-' + x.n + '">OPEN IN FOOTPRINTS ›</a>', { closeButton: false });
     });
     $('pincount').textContent = bounds.length + ' PHOTOS · ' + 'MEL & SYD';
+    var ds = Object.keys(dset).sort();
+    $('dz').innerHTML = '<button type="button" data-day="" class="on" style="--c:transparent">ALL</button>' + ds.map(function (k) { return '<button type="button" data-day="' + k + '" style="--c:' + (DC[k] || '#3A3532') + '">' + (+k.slice(2)) + '</button>'; }).join('');
+    $('dz').addEventListener('click', function (e) {
+      var b = e.target.closest('button[data-day]'); if (!b) return;
+      var day = b.getAttribute('data-day');
+      Array.prototype.forEach.call($('dz').querySelectorAll('button'), function (x) { x.classList.toggle('on', x === b); });
+      Array.prototype.forEach.call($('pinmap').querySelectorAll('.pin'), function (el) { el.classList.toggle('dim', !!day && el.getAttribute('data-d') !== day); });
+      if (day) { var bb = []; pins.forEach(function (x) { if (x.d === day && x.lat < -20) bb.push([x.lat, x.lng]); }); if (bb.length) pinmap.flyToBounds(L.latLngBounds(bb).pad(.15), { duration: .8 }); }
+      else pinmap.flyToBounds(L.latLngBounds(bounds).pad(.08), { duration: .8 });
+    });
     if (bounds.length) pinmap.fitBounds(L.latLngBounds(bounds).pad(.08));
     var Z = { all: null, mel: [[-37.87, 144.93], [-37.78, 145.0]], syd: [[-33.9, 151.17], [-33.84, 151.23]], bm: [[-33.76, 150.27], [-33.68, 150.35]] };
     $('tmap').addEventListener('click', function (e) {

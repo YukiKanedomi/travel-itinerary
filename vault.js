@@ -97,7 +97,7 @@ var Vault = (function () {
         var u = new Uint8Array(buf);
         return dec(k, u.slice(0, 12), u.slice(12));
       }).then(function (buf) {
-        urls[n] = URL.createObjectURL(new Blob([buf], { type: 'image/jpeg' }));
+        urls[n] = URL.createObjectURL(new Blob([buf], { type: m.ptype || 'image/jpeg' }));
         return urls[n];
       });
     });

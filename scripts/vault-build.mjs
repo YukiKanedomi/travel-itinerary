@@ -53,6 +53,7 @@ const journal = { files: mdFiles.map(f => ({ name: f, md: readFileSync(join(JOUR
 }
 /* 写真（日ごとの一覧＝300px サムネイル入り JSON と、1 枚ずつの 720px JPEG） */
 const index = {}, photos = {};
+let ptype = 'image/jpeg';
 const pDir = join(outDir, 'p');
 mkdirSync(pDir, { recursive: true });
 for (const f of readdirSync(pDir)) if (f.endsWith('.enc')) unlinkSync(join(pDir, f));
@@ -64,9 +65,10 @@ if (PHOTO_JSON) {
     (byDay[day] = byDay[day] || []).push(r);
     index[r.n] = day.replace('/', '');
     if (r.big) {
-      const m = /^data:image\/jpeg;base64,(.+)$/.exec(r.big);
+      const m = /^data:(image\/(?:jpeg|avif));base64,(.+)$/.exec(r.big);
       if (m) {
-        const enc = await encrypt(Buffer.from(m[1], 'base64'));
+        ptype = m[1];
+        const enc = await encrypt(Buffer.from(m[2], 'base64'));
         const file = r.n + '.' + hash8(enc) + '.enc';
         writeFileSync(join(pDir, file), enc);
         photos[r.n] = file;
@@ -100,7 +102,7 @@ const manifest = {
   v: 1, built: new Date().toISOString(),
   kdf: { salt: salt.toString('base64'), iter: ITER, hash: 'SHA-256' },
   check: { iv: Buffer.from(chk.slice(0, 12)).toString('base64'), ct: Buffer.from(chk.slice(12)).toString('base64') },
-  parts, index, photos
+  parts, index, photos, ptype
 };
 writeFileSync(join(outDir, 'manifest.json'), JSON.stringify(manifest));
 console.log('vault:', parts.map(p => `${p.id} ${(p.bytes / 1e6).toFixed(2)}MB (${p.count})`).join(', '));

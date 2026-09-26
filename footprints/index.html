@@ -57,6 +57,9 @@ header{position:fixed;left:0;right:0;top:0;z-index:20;padding:calc(12px + env(sa
 .page.on .ph{transform:none;opacity:1}
 .ph img{width:100%;height:100%;object-fit:cover;display:block}
 .ph .n{position:absolute;left:12px;top:10px;font-family:var(--en);font-weight:400;font-size:9.5px;letter-spacing:.2em;color:#fff;opacity:.9;text-shadow:0 1px 4px rgba(0,0,0,.4)}
+.ph .cap{position:absolute;left:12px;right:12px;bottom:10px;font-family:var(--serif);font-size:11.5px;letter-spacing:.08em;line-height:1.5;color:#fff;text-shadow:0 1px 8px rgba(0,0,0,.65);opacity:0;transition:opacity .6s .25s}
+.page.on .ph .cap{opacity:.95}
+.ph.full .cap{bottom:calc(16px + env(safe-area-inset-bottom));font-size:13px}
 .ph.full{position:fixed;inset:0;width:auto;aspect-ratio:auto;border-radius:0;z-index:60;background:#111;box-shadow:none}
 .ph.full img{object-fit:contain}
 /* 下：地名・時間の線・雲の地図（手前の層） */
@@ -71,7 +74,12 @@ footer{position:fixed;left:0;right:0;bottom:0;z-index:20;padding:0 20px calc(18p
   overflow:hidden;transition:opacity .35s .08s,transform .35s .08s}
 .big.swap h1,.big.swap em{opacity:0;transform:translateY(8px)}
 .ph{cursor:pointer}
-#line{pointer-events:auto;position:relative;height:30px;margin-top:14px;touch-action:none;cursor:pointer}
+.linerow{display:flex;align-items:flex-start;gap:10px;margin-top:14px}
+#play{pointer-events:auto;flex:none;width:26px;height:26px;border-radius:50%;background:var(--ink);position:relative;margin-top:-9px;transition:transform .2s}
+#play:active{transform:scale(.92)}
+#play i{position:absolute;left:10px;top:7px;width:0;height:0;border-left:8px solid #fff;border-top:6px solid transparent;border-bottom:6px solid transparent}
+#play.on i{left:8px;top:7px;width:10px;height:12px;border:0;border-left:3px solid #fff;border-right:3px solid #fff}
+#line{pointer-events:auto;position:relative;flex:1;height:30px;touch-action:none;cursor:pointer}
 #line::before{content:"";position:absolute;left:0;right:0;top:4px;height:1px;background:rgba(58,53,50,.25)}
 #line i{position:absolute;top:3px;width:3px;height:3px;border-radius:50%;background:var(--ink);opacity:.4;transform:translateX(-1px)}
 #line i.on{width:11px;height:11px;top:-1px;opacity:1;background:var(--acc);transform:translateX(-5px);transition:left .25s}
@@ -143,7 +151,7 @@ footer{position:fixed;left:0;right:0;bottom:0;z-index:20;padding:0 20px calc(18p
 
 <footer>
   <div class="big" id="big"><div class="txt"><small id="h-time">—</small><h1 id="h-place">—</h1><em id="h-sub"></em></div><div id="mini" title="一日の地図を開く"></div></div>
-  <div id="line"></div>
+  <div class="linerow"><button id="play" type="button" aria-label="一日を流す"><i></i></button><div id="line"></div></div>
   <div class="foot"><span class="hint">TAP MAP · TAP PHOTO</span><div id="count"></div></div>
 </footer>
 
@@ -155,7 +163,7 @@ footer{position:fixed;left:0;right:0;bottom:0;z-index:20;padding:0 20px calc(18p
 <input id="lock-pw" type="password" autocomplete="current-password" autocapitalize="off" spellcheck="false" placeholder="合言葉"><button type="submit" id="lock-btn">開く</button><div class="msg" id="lock-msg"></div><a href="../">‹ 旅の手帳へ</a></form></div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script src="../vault.js?v=63"></script>
+<script src="../vault.js?v=64"></script>
 <script>
 Vault.base('../');
 window.addEventListener('error', function (e) { var l = document.getElementById('loading'); if (l) { l.textContent = 'ERROR: ' + (e.message || e); l.classList.remove('off'); } });
@@ -167,7 +175,7 @@ var PAPER = {
 };
 var DAY_NO = { '0920': 1, '0921': 2, '0922': 3, '0923': 4, '0924': 5, '0925': 6, '0926': 7 };
 var $ = function (id) { return document.getElementById(id); };
-var pendingN = null, man = null, days = [], cur = null, items = [], stops = [], idx = -1, mini = null, big = null, miniPins = [], bigPins = [], io = null, seeking = false;
+var CAP = {}, pendingN = null, man = null, days = [], cur = null, items = [], stops = [], idx = -1, mini = null, big = null, miniPins = [], bigPins = [], io = null, seeking = false;
 
 function esc(s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;'); }
 function shortPlace(p) { p = String(p || ''); var s = p.split(/[,，（(]/)[0].trim(); return s || '—'; }
@@ -198,7 +206,7 @@ function renderStops() {
 function renderFeed() {
   var h = '';
   items.forEach(function (x, i) {
-    h += '<section class="page" data-i="' + i + '"><figure class="ph" id="ph' + i + '"><img src="' + x.img + '" alt="" data-n="' + x.n + '"></figure></section>';
+    h += '<section class="page" data-i="' + i + '"><figure class="ph" id="ph' + i + '" data-n="' + x.n + '"><img src="' + x.img + '" alt="" data-n="' + x.n + '">' + (CAP[x.n] ? '<span class="cap">' + esc(CAP[x.n]) + '</span>' : '') + '</figure></section>';
   });
   $('feed').innerHTML = h;
   Array.prototype.forEach.call(document.querySelectorAll('#feed img'), function (im) {
@@ -315,10 +323,16 @@ function openDay(d, keepIdx) {
     $('loading').textContent = 'OPEN FAILED'; $('loading').classList.remove('off');
   });
 }
+function loadCaps() {
+  return Vault.load('journal').then(function (j) {
+    (j.files || []).forEach(function (f) { var re = /!\[([^\]]*)\]\(IMG_(\d{4})\)/g, m; while ((m = re.exec(f.md))) CAP[m[2]] = m[1]; });
+  }).catch(function () {});
+}
 function start() {
   Vault.manifest().then(function (m) {
     man = m;
     days = m.parts.filter(function (p) { return p.id.indexOf('photos-') === 0; }).map(function (p) { return p.id.slice(7); }).sort();
+    loadCaps().then(function () { Array.prototype.forEach.call(document.querySelectorAll('.ph[data-n]'), function (ph) { var c = CAP[ph.getAttribute('data-n')]; if (c && !ph.querySelector('.cap')) ph.insertAdjacentHTML('beforeend', '<span class="cap">' + esc(c) + '</span>'); }); });
     var hh = location.hash.replace('#', ''), want = hh.slice(0, 4); var pm = /^\d{4}-(\d{4})/.exec(hh); if (pm) pendingN = pm[1]; if (want && want !== cur) { cur = null; items = []; }
     openDay(days.indexOf(want) >= 0 ? want : days[days.length - 1]);
   });
@@ -336,6 +350,14 @@ $('feed').addEventListener('scroll', function () {
   }, 140);
 }, { passive: true });
 $('feed').addEventListener('scroll', function () { var h = $('hint'); if (h.classList.contains('on')) { h.classList.remove('on'); try { localStorage.setItem('fp_hint_v1', '1'); } catch (e) {} } }, { passive: true });
+var playT = null;
+function playStop() { if (playT) { clearInterval(playT); playT = null; } $('play').classList.remove('on'); }
+$('play').addEventListener('click', function () {
+  if (playT) { playStop(); return; }
+  $('play').classList.add('on');
+  playT = setInterval(function () { if (idx >= items.length - 1) { playStop(); return; } setIdx(idx + 1, 'smooth'); }, 1200);
+});
+$('feed').addEventListener('touchstart', function () { if (playT) playStop(); }, { passive: true });
 $('feed').addEventListener('click', function (e) { var ph = e.target.closest('.ph'); if (!ph) return; if (ph.classList.contains('full')) ph.classList.remove('full'); else if (ph.id === 'ph' + idx) ph.classList.add('full'); });
 (function () {
   var line = $('line');
