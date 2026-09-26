@@ -52,12 +52,12 @@ header{position:fixed;left:0;right:0;top:0;z-index:20;padding:calc(12px + env(sa
 #days button::before{content:"";position:absolute;inset:-9px -3px}
 #days button.on{color:var(--ink);background:rgba(255,255,255,.85)}
 /* 写真の帯（中の層）。頁の高さは全部同じ（写真の箱＋すき間）。上の帯ぶんだけ最初に空ける */
-#feed{position:fixed;inset:0;z-index:10;overflow-y:auto;overflow-anchor:none;overscroll-behavior:contain;padding:var(--top) 0 calc(100vh - var(--top));padding-bottom:calc(100dvh - var(--top));scrollbar-width:none;-webkit-overflow-scrolling:touch}
+#feed{position:fixed;inset:0;z-index:10;overflow-y:auto;overflow-anchor:none;overscroll-behavior:contain;scroll-snap-type:y mandatory;scroll-padding-top:var(--top);padding:var(--top) 0 calc(100vh - var(--top));padding-bottom:calc(100dvh - var(--top));scrollbar-width:none;-webkit-overflow-scrolling:touch}
 #feed::-webkit-scrollbar{display:none}
-.page{position:relative;height:calc(var(--ph) + var(--gap));display:flex;align-items:flex-start;justify-content:center;padding:0 24px}
+.page{position:relative;height:calc(var(--ph) + var(--gap));display:flex;align-items:flex-start;justify-content:center;padding:0 24px;scroll-snap-align:start;content-visibility:auto;contain-intrinsic-size:auto 100% calc(var(--ph) + var(--gap))}
 .ph{position:relative;height:var(--ph);aspect-ratio:3/4;max-width:100%;border-radius:14px;overflow:hidden;background:rgba(255,255,255,.35);cursor:pointer;
   box-shadow:0 10px 24px rgba(90,70,50,.14);-webkit-touch-callout:none;
-  transform:scale(.96) translateY(8px);opacity:.5;transition:transform .7s cubic-bezier(.2,.7,.2,1),opacity .7s,box-shadow .7s}
+  transform:scale(.97) translateY(6px);opacity:.62;transition:transform .45s cubic-bezier(.2,.7,.2,1),opacity .45s,box-shadow .45s}
 .ph.land{aspect-ratio:4/3;height:auto;width:100%;margin-top:calc(var(--ph) * .1)}
 .page.on .ph{transform:none;opacity:1;box-shadow:0 40px 60px -30px rgba(90,70,50,.45),0 10px 24px rgba(90,70,50,.14)}
 .ph img{width:100%;height:100%;object-fit:cover;display:block;-webkit-touch-callout:none;pointer-events:none}
@@ -426,13 +426,13 @@ function start() {
 $('days').addEventListener('click', function (e) { var b = e.target.closest('button[data-day]'); if (b) gotoDay(b.getAttribute('data-day')); });
 $('stops').addEventListener('click', function (e) { var b = e.target.closest('button[data-k]'); if (b) setIdx(gOf(cur, stops[+b.getAttribute('data-k')].start), 'smooth'); });
 var settleT = null, lastY = 0, lastTs = 0, vel = 0, raf = 0, touching = false;
+/* 寄せるのはブラウザの scroll-snap に任せる（iPhone の慣性のまま止まる）。止まったら重い更新だけ */
 function settle() {
   if (settleT) { clearTimeout(settleT); settleT = null; }
   if (touching) return;
-  var f = $('feed'), h = pageH(), g = Math.max(0, Math.min(PAGES.length - 1, Math.round(f.scrollTop / h))), target = g * h;
-  if (Math.abs(f.scrollTop - target) > 2) f.scrollTo({ top: target, behavior: 'smooth' });
-  else { vel = 0; heavy(); }
+  vel = 0; heavy();
 }
+$('feed').addEventListener('scrollend', settle);
 $('feed').addEventListener('scroll', function () {
   var f = $('feed'), now = performance.now(); vel = Math.abs(f.scrollTop - lastY) / Math.max(1, now - lastTs); lastY = f.scrollTop; lastTs = now;
   if (!raf) raf = requestAnimationFrame(function () { raf = 0; var g = Math.max(0, Math.min(PAGES.length - 1, Math.round(f.scrollTop / pageH()))); if (g !== idx) setIdx(g, false); });
