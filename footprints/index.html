@@ -19,6 +19,21 @@
   --ph:min(calc(100vh - var(--top) - var(--bottom)), calc((100vw - 48px) * 4 / 3));
   --ph:min(calc(100dvh - var(--top) - var(--bottom)), calc((100vw - 48px) * 4 / 3));
 }
+html.dark{--ink:#EDE6DD;--dim:#8A837B;--mid:#BDB4A9}
+html.dark #days button.on{background:rgba(255,255,255,.14)}
+html.dark #wm{background:rgba(255,255,255,.12);box-shadow:none}
+html.dark .ph{background:rgba(255,255,255,.07)}
+html.dark #mini{background:#232120;box-shadow:0 10px 24px -14px rgba(0,0,0,.8),0 0 0 1px rgba(255,255,255,.12)}
+html.dark #mini .leaflet-container,html.dark #bigmap{background:#232120}
+html.dark #mini .leaflet-tile-pane,html.dark #bigmap .leaflet-tile-pane{filter:invert(1) hue-rotate(180deg) grayscale(1) brightness(.72) contrast(.9)}
+html.dark #bigmap .leaflet-control-attribution{background:rgba(0,0,0,.5);color:#999}
+html.dark #play i{border-left-color:#1E1C1A;border-right-color:#1E1C1A}
+html.dark #play:not(.on) i{border-left-color:#1E1C1A;border-top-color:transparent;border-bottom-color:transparent}
+html.dark #mfclose{background:rgba(255,255,255,.14)}
+html.dark .pin{border-color:#1E1C1A}
+html.dark .leaflet-popup-content-wrapper,html.dark .leaflet-popup-tip{background:#2A2624;color:var(--ink)}
+html.dark .lk button{color:#1E1C1A}
+html.dark .dv .d,html.dark .dv h2{color:var(--ink)}
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%}
 body{background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;overflow:hidden;transition:background 1.2s ease;touch-action:manipulation;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none}
@@ -58,7 +73,7 @@ header{position:fixed;left:0;right:0;top:0;z-index:20;padding:calc(12px + env(sa
 .ph{position:relative;height:var(--ph);aspect-ratio:3/4;max-width:100%;border-radius:14px;overflow:hidden;background:rgba(255,255,255,.35);cursor:pointer;
   box-shadow:0 10px 24px rgba(90,70,50,.14);-webkit-touch-callout:none;
   transform:scale(.97) translateY(6px);opacity:.62;transition:transform .45s cubic-bezier(.2,.7,.2,1),opacity .45s,box-shadow .45s}
-.ph.land{aspect-ratio:4/3;height:auto;width:100%;margin-top:calc(var(--ph) * .1)}
+.ph.land{aspect-ratio:4/3;height:auto;width:100%;margin-top:calc((var(--ph) - (100vw - 48px) * .75) / 2)}
 .page.on .ph{transform:none;opacity:1;box-shadow:0 40px 60px -30px rgba(90,70,50,.45),0 10px 24px rgba(90,70,50,.14)}
 .ph img{width:100%;height:100%;object-fit:cover;display:block;-webkit-touch-callout:none;pointer-events:none}
 .ph.hc::after{content:"";position:absolute;left:0;right:0;bottom:0;height:46%;background:linear-gradient(180deg,rgba(0,0,0,0),rgba(0,0,0,.28) 40%,rgba(0,0,0,.6));opacity:0;transition:opacity .6s .25s;pointer-events:none}
@@ -83,6 +98,8 @@ body.full #fnum{display:block}
 .dv .d b{font-weight:400}
 .dv h2{font-weight:500;font-size:16px;letter-spacing:.06em;color:var(--ink)}
 .dv em{display:block;font-style:normal;font-family:var(--en);font-size:10px;letter-spacing:.3em;color:var(--dim);margin-top:14px}
+.dv .dvl{display:inline-block;margin-top:22px;padding:8px 16px;border-radius:17px;font-size:12px;letter-spacing:.08em;color:var(--ink);text-decoration:none;background:rgba(255,255,255,.7)}
+html.dark .dv .dvl{background:rgba(255,255,255,.12)}
 .dv i{display:block;width:1px;height:26px;background:var(--dim);margin:22px auto 0;opacity:.5}
 /* 下：地名・時間の線・地図の窓（手前の層） */
 footer{position:fixed;left:0;right:0;bottom:0;z-index:20;padding:0 20px calc(18px + env(safe-area-inset-bottom));pointer-events:none;
@@ -182,12 +199,20 @@ footer{position:fixed;left:0;right:0;bottom:0;z-index:20;padding:0 20px calc(18p
 <input id="lock-pw" type="password" autocomplete="current-password" autocapitalize="off" spellcheck="false" placeholder="合言葉"><button type="submit" id="lock-btn">開く</button><div class="msg" id="lock-msg"></div><a href="../">‹ 旅の手帳へ</a></form></div>
 
 <script src="vendor/leaflet.js"></script>
-<script src="../vault.js?v=70"></script>
+<script src="../vault.js?v=71"></script>
 <script>
 Vault.base('../');
 window.addEventListener('error', function (e) { var l = document.getElementById('loading'); if (l) { l.textContent = 'ERROR: ' + (e.message || e); l.classList.remove('off'); } });
 window.addEventListener('unhandledrejection', function (e) { var l = document.getElementById('loading'); if (l) { l.textContent = 'ERROR: ' + (e.reason && e.reason.message || e.reason); l.classList.remove('off'); } });
 /* 日ごとの紙の色 */
+var PAPER_DARK = {
+  '0920': ['#1F1D1B', '#26231F', '#2B2521'], '0921': ['#1C1D1B', '#23241F', '#2A2622'], '0922': ['#201D19', '#28241E', '#2E2621'],
+  '0923': ['#1A1D20', '#212528', '#2B2622'], '0924': ['#211D19', '#29241E', '#2F2622'], '0925': ['#191D21', '#202529', '#2A2522'], '0926': ['#1D1C1B', '#24221F', '#2A2521']
+};
+/* 夜の紙：端末の設定がダークなら紙を暗くする */
+var DARKQ = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null, DARK = !!(DARKQ && DARKQ.matches);
+document.documentElement.classList.toggle('dark', DARK);
+function pal(key) { var t = DARK ? PAPER_DARK : PAPER; return t[key] || t['0924']; }
 var PAPER = {
   '0920': ['#EDE7DF', '#F5F1EB', '#F3E6DE'], '0921': ['#E9E7E0', '#F3F1EA', '#F0E8DD'], '0922': ['#EEE7DC', '#F6F0E6', '#F6E3D6'],
   '0923': ['#E6E9EC', '#F0F2F4', '#F5E7DF'], '0924': ['#EFE6DA', '#F6EFE5', '#F7E3D6'], '0925': ['#E4E9EE', '#EFF2F5', '#F3E4DC'], '0926': ['#E9E6E3', '#F3F0EC', '#F1E4DC']
@@ -237,7 +262,7 @@ function renderSkeleton() {
   days.forEach(function (d) {
     var info = DAYS[d];
     info.off = g;
-    h += '<section class="page dv" data-g="' + g + '" data-d="' + d + '"><div class="dv"><div class="in"><small>' + dayNo(d) + '</small><div class="d">' + (+d.slice(0, 2)) + '<b>/' + (+d.slice(2)) + '</b></div><h2>' + esc(DAY_TITLE[d] || '') + '</h2><em>' + WD[d] + '曜日 · ' + info.count + ' PHOTOS</em><i></i></div></div></section>';
+    h += '<section class="page dv" data-g="' + g + '" data-d="' + d + '"><div class="dv"><div class="in"><small>' + dayNo(d) + '</small><div class="d">' + (+d.slice(0, 2)) + '<b>/' + (+d.slice(2)) + '</b></div><h2>' + esc(DAY_TITLE[d] || '') + '</h2><em>' + WD[d] + '曜日 · ' + info.count + ' PHOTOS</em><a class="dvl" href="log.html#' + d + '">この日の記録を読む ›</a><i></i></div></div></section>';
     PAGES.push({ d: d, k: -1 }); g++;
     for (var k = 0; k < info.count; k++) { h += '<section class="page" data-g="' + g + '" data-d="' + d + '" data-k="' + k + '"><figure class="ph" id="ph' + g + '"><img alt="" loading="lazy" decoding="async"></figure></section>'; PAGES.push({ d: d, k: k }); g++; }
   });
@@ -288,12 +313,16 @@ function upgrade(g) {
   }
 }
 /* 日が変わる：紙の色、停留所、時間の線、地図。遠い日の 720px は手放す */
+function applyPaper(d) {
+  var p = pal(d);
+  document.documentElement.style.setProperty('--paper', p[0]); document.documentElement.style.setProperty('--cloud', p[1]); document.documentElement.style.setProperty('--cloud2', p[2]);
+  document.querySelector('meta[name=theme-color]').setAttribute('content', p[0]);
+}
+if (DARKQ && DARKQ.addEventListener) DARKQ.addEventListener('change', function (e) { DARK = e.matches; document.documentElement.classList.toggle('dark', DARK); if (cur) applyPaper(cur); });
 function switchDay(d) {
   if (d === cur) return;
   cur = d; items = parts[d] || []; stops = buildStops(items);
-  var p = PAPER[d] || PAPER['0924'];
-  document.documentElement.style.setProperty('--paper', p[0]); document.documentElement.style.setProperty('--cloud', p[1]); document.documentElement.style.setProperty('--cloud2', p[2]);
-  document.querySelector('meta[name=theme-color]').setAttribute('content', p[0]);
+  applyPaper(d);
   renderDays(); renderStops(); renderLine(); renderMaps();
 }
 function setIdx(g, scroll) {
