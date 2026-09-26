@@ -47,16 +47,13 @@ header{position:fixed;left:0;right:0;top:0;z-index:20;padding:calc(12px + env(sa
 #days button{padding:2px 7px;border-radius:12px;letter-spacing:.02em;transition:background .3s,color .3s}
 #days button.on{color:var(--ink);background:rgba(255,255,255,.85)}
 /* 写真の帯（中の層） */
-#feed{position:fixed;inset:0;z-index:10;overflow-y:auto;scroll-snap-type:y proximity;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+#feed{position:fixed;inset:0;z-index:10;overflow-y:auto;scroll-snap-type:y mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch}
 #feed::-webkit-scrollbar{display:none}
-.page{position:relative;height:100vh;height:100dvh;scroll-snap-align:start;scroll-snap-stop:normal;display:flex;align-items:center;justify-content:center;padding:var(--top) 20px var(--bottom)}
+.page{position:relative;height:100vh;height:100dvh;scroll-snap-align:start;scroll-snap-stop:always;display:flex;align-items:center;justify-content:center;padding:var(--top) 20px var(--bottom)}
 .ph{position:relative;width:min(300px, calc(100vw - 64px));aspect-ratio:3/4;max-height:100%;border-radius:14px;overflow:hidden;background:rgba(255,255,255,.35);
   box-shadow:0 40px 60px -30px rgba(90,70,50,.45),0 10px 24px rgba(90,70,50,.14);
   transform:scale(.94) translateY(10px);opacity:.55;transition:transform .7s cubic-bezier(.2,.7,.2,1),opacity .7s}
 .ph.land{aspect-ratio:4/3;width:min(340px, calc(100vw - 40px))}
-.nx{position:absolute;left:50%;transform:translateX(-50%);width:min(268px, calc(100vw - 96px));height:26px;border-radius:12px 12px 0 0;overflow:hidden;opacity:0;transition:opacity .5s;pointer-events:none;box-shadow:0 -6px 18px -10px rgba(90,70,50,.35)}
-.nx img{width:100%;display:block;filter:brightness(.96)}
-.page.on .nx{opacity:.85}
 .page.on .ph{transform:none;opacity:1}
 .ph img{width:100%;height:100%;object-fit:cover;display:block}
 .ph .n{position:absolute;left:12px;top:10px;font-family:var(--en);font-weight:400;font-size:9.5px;letter-spacing:.2em;color:#fff;opacity:.9;text-shadow:0 1px 4px rgba(0,0,0,.4)}
@@ -201,7 +198,7 @@ function renderStops() {
 function renderFeed() {
   var h = '';
   items.forEach(function (x, i) {
-    h += '<section class="page" data-i="' + i + '"><figure class="ph" id="ph' + i + '"><img src="' + x.img + '" alt="" data-n="' + x.n + '"></figure>' + (items[i + 1] ? '<div class="nx" id="nx' + i + '"><img alt=""></div>' : '') + '</section>';
+    h += '<section class="page" data-i="' + i + '"><figure class="ph" id="ph' + i + '"><img src="' + x.img + '" alt="" data-n="' + x.n + '"></figure></section>';
   });
   $('feed').innerHTML = h;
   Array.prototype.forEach.call(document.querySelectorAll('#feed img'), function (im) {
@@ -222,7 +219,6 @@ function renderLine() {
 }
 /* 720px の写真に差し替える（いまの前後 2 枚） */
 function upgrade(i) {
-  for (var k = i - 1; k <= i + 2; k++) { var nxe = $('nx' + k); if (nxe && items[k + 1]) { var ni = nxe.querySelector('img'); if (!ni.getAttribute('src')) ni.src = items[k + 1].img; var ph0 = $('ph' + k); if (ph0) { nxe.style.top = (ph0.offsetTop + ph0.offsetHeight + 10) + 'px'; } } }
   for (var k = i - 1; k <= i + 2; k++) {
     (function (k) {
       var x = items[k]; if (!x) return;

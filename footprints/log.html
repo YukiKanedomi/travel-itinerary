@@ -45,6 +45,19 @@ main{position:relative;z-index:10;max-width:560px;margin:0 auto;padding:18px 22p
 .cover .ttl b{font-weight:500}
 .cover h1{font-weight:500;font-size:17px;letter-spacing:.06em;margin-top:12px}
 .cover .lead{font-family:var(--serif);font-size:12.5px;line-height:1.9;letter-spacing:.06em;color:var(--mid);margin-top:8px}
+/* 旅の地図：豪州の輪郭と、日ごとの点が順に灯る */
+.tmap{position:relative;margin:22px 0 6px;border-radius:16px;background:rgba(255,255,255,.42);padding:14px 12px 10px;box-shadow:0 20px 40px -30px rgba(90,70,50,.5)}
+.tmap svg{display:block;width:100%;height:auto}
+.tmap .land{fill:rgba(255,255,255,.75);stroke:var(--dim);stroke-width:.9;stroke-linejoin:round}
+.tmap .route{fill:none;stroke:var(--ink);stroke-width:1.2;stroke-dasharray:3 4;stroke-dashoffset:0;opacity:0;transition:opacity 1s .9s}
+.tmap.in .route{opacity:.55}
+.tmap .pt{opacity:0;transform:scale(.4);transform-origin:center;transform-box:fill-box;transition:opacity .5s,transform .6s cubic-bezier(.2,.7,.2,1)}
+.tmap.in .pt{opacity:1;transform:none}
+.tmap .pt circle{fill:var(--acc);stroke:#fff;stroke-width:2}
+.tmap .pt text{font-family:var(--en);font-size:9.5px;letter-spacing:.14em;fill:var(--mid)}
+.tmap .pt text.jp{font-family:var(--sans);font-size:10.5px;letter-spacing:.04em;fill:var(--ink);font-weight:500}
+.tmap .jp0{font-family:var(--en);font-size:8.5px;letter-spacing:.2em;fill:var(--dim)}
+.tmap .cap{display:flex;justify-content:space-between;margin-top:8px;font-family:var(--en);font-size:9.5px;letter-spacing:.2em;color:var(--dim)}
 .dayc{display:block;position:relative;margin:26px 0 0;border-radius:16px;overflow:hidden;text-decoration:none;aspect-ratio:4/3;background:rgba(255,255,255,.4);
   box-shadow:0 40px 60px -32px rgba(90,70,50,.5),0 10px 24px rgba(90,70,50,.12);transform:translateY(24px) scale(.97);opacity:0;transition:transform .9s cubic-bezier(.2,.7,.2,1),opacity .9s}
 .dayc.in{transform:none;opacity:1}
@@ -99,7 +112,7 @@ main{position:relative;z-index:10;max-width:560px;margin:0 auto;padding:18px 22p
 .pager a{text-decoration:none;font-size:12.5px;color:var(--mid);line-height:1.6;max-width:48%}
 .pager a small{display:block;font-family:var(--en);font-size:10px;letter-spacing:.2em;color:var(--dim)}
 .pager a.nx{text-align:right;margin-left:auto}
-.fp{display:block;margin:32px 0 0;padding:16px 18px;border-radius:14px;background:rgba(255,255,255,.55);text-decoration:none;box-shadow:0 10px 30px -18px rgba(90,70,50,.5)}
+.fp{display:block;margin:18px 0 8px;padding:16px 18px;border-radius:14px;background:rgba(255,255,255,.55);text-decoration:none;box-shadow:0 10px 30px -18px rgba(90,70,50,.5)}
 .fp small{display:block;font-family:var(--en);font-size:10px;letter-spacing:.26em;color:var(--dim)}
 .fp span{display:block;font-weight:500;font-size:16px;margin-top:2px}
 .fp em{display:block;font-style:normal;font-family:var(--serif);font-size:12px;color:var(--mid);letter-spacing:.06em;margin-top:2px}
@@ -234,17 +247,34 @@ function renderDay(f, key) {
   $('wm').textContent = 'LOG · ' + dayLbl;
   bindScroll();
 }
+function tripMapHTML() {
+  var pts = [[142.5,-10.7],[145.8,-16.9],[146.8,-19.3],[149.2,-21.1],[150.5,-23.4],[153.2,-25],[153.1,-27.5],[153.6,-28.6],[153.1,-30.3],[151.8,-32.9],[151.2,-33.9],[150.9,-34.4],[150,-37.1],[149.9,-37.5],[148,-37.9],[146.4,-39.1],[145,-38],[143.5,-38.9],[141.6,-38.4],[140.7,-38],[139.8,-36.8],[138.5,-35],[137.5,-35.5],[135.9,-34.7],[133.7,-32.1],[131,-31.5],[128.9,-31.7],[121.9,-33.9],[117.9,-35],[115.1,-34.4],[115.8,-32],[114.6,-28.8],[113.4,-26],[114.1,-21.9],[118.6,-20.3],[122.2,-18],[123.6,-17.3],[126,-14],[128.1,-15.5],[130.8,-12.4],[136.7,-12.2],[136.8,-12.3],[139.5,-17.6],[141.5,-15]];
+  var tas = [[144.7,-40.7],[148.3,-40.9],[148,-43.2],[146.5,-43.6],[145.2,-42]];
+  function P(c) { return ((c[0] - 113) * 10).toFixed(1) + ',' + ((-10 - c[1]) * 10).toFixed(1); }
+  var mel = P([144.96, -37.81]), bm = P([150.31, -33.73]), syd = P([151.21, -33.87]);
+  var route = 'M' + mel + ' Q ' + P([148.5, -34.2]) + ' ' + syd;
+  return '<div class="tmap" id="tmap"><svg viewBox="0 0 470 352" role="img" aria-label="旅の地図">' +
+    '<path class="land" d="M' + pts.map(P).join(' L') + ' Z"/><path class="land" d="M' + tas.map(P).join(' L') + ' Z"/>' +
+    '<path class="route" d="' + route + '"/>' +
+    '<g class="pt" style="transition-delay:.3s"><circle cx="' + mel.split(',')[0] + '" cy="' + mel.split(',')[1] + '" r="5"/><text x="' + (+mel.split(',')[0] - 8) + '" y="' + (+mel.split(',')[1] + 22) + '" class="jp" text-anchor="end">メルボルン</text><text x="' + (+mel.split(',')[0] - 8) + '" y="' + (+mel.split(',')[1] + 34) + '" text-anchor="end">SEP 21–23</text></g>' +
+    '<g class="pt" style="transition-delay:.9s"><circle cx="' + bm.split(',')[0] + '" cy="' + bm.split(',')[1] + '" r="3.5"/><text x="' + (+bm.split(',')[0] - 10) + '" y="' + (+bm.split(',')[1] - 8) + '" class="jp" text-anchor="end">ブルーマウンテンズ</text><text x="' + (+bm.split(',')[0] - 10) + '" y="' + (+bm.split(',')[1] + 4) + '" text-anchor="end">SEP 24</text></g>' +
+    '<g class="pt" style="transition-delay:.6s"><circle cx="' + syd.split(',')[0] + '" cy="' + syd.split(',')[1] + '" r="5"/><text x="' + (+syd.split(',')[0] + 12) + '" y="' + (+syd.split(',')[1] + 4) + '" class="jp">シドニー</text><text x="' + (+syd.split(',')[0] + 12) + '" y="' + (+syd.split(',')[1] + 16) + '">SEP 23–26</text></g>' +
+    '<text x="450" y="22" class="jp0" text-anchor="end">TOKYO ↑ SEP 20 · 26</text>' +
+    '</svg><div class="cap"><span>AUSTRALIA · 7 DAYS</span><span>MEL → SYD</span></div></div>';
+}
 function renderCover() {
   var h = '<div class="cover"><small>TRAVEL LOG</small><div class="ttl">Australia <b>2026</b></div><h1>七日間の記録</h1><div class="lead">メルボルンからシドニーへ。写真を見ながら書いた、日ごとの記録。</div></div>';
+  h += tripMapHTML();
+  h += '<a class="fp" href="./"><small>PHOTO FOOTPRINTS</small><span>写真の足跡</span><em>撮った場所と時間で、写真を一枚ずつたどる</em></a>';
   allKeys.forEach(function (k) {
     var hero = HERO[k];
     h += '<a class="dayc' + (hero ? '' : ' nop') + '" href="#' + k + '">' + (hero ? '<img alt="" data-n="' + hero + '">' : '') +
       '<div class="tx"><small>DAY ' + ('0' + DAY_NO[k]).slice(-2) + '</small><b>' + (+k.slice(2)) + ' Sep</b><span>' + esc(DAY_TITLE[k] || '') + '</span></div></a>';
   });
-  h += '<a class="fp" href="./"><small>PHOTO FOOTPRINTS</small><span>写真の足跡</span><em>撮った場所と時間で、写真を一枚ずつたどる</em></a>';
   h += '<div class="foot"><button type="button" onclick="Vault.forget();location.reload()">FORGET PASSPHRASE ON THIS DEVICE</button></div>';
   $('main').innerHTML = h; $('wm').textContent = 'TRAVEL LOG'; $('now').classList.remove('on');
   bindScroll();
+  setTimeout(function () { var m = $('tmap'); if (m) m.classList.add('in'); }, 250);
 }
 /* スクロール：写真の出現、扉絵の視差、時間帯の光、いまの時刻 */
 var revObs = null, secObs = null, nowObs = null, imgs = [];
