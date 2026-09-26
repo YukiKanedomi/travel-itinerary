@@ -15,7 +15,7 @@
 :root{
   --paper:#EFE6DA; --cloud:#F6EFE5; --cloud2:#F7E3D6; --ink:#3A3532; --dim:#9A8E84; --mid:#5E554E; --acc:#D8907A;
   --sans:"Zen Kaku Gothic New","Hiragino Kaku Gothic ProN",sans-serif; --serif:"Shippori Mincho","Hiragino Mincho ProN",serif; --en:"Inter Tight",var(--sans);
-  --top:92px; --bottom:296px;
+  --top:92px; --bottom:262px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%}
@@ -49,11 +49,11 @@ header{position:fixed;left:0;right:0;top:0;z-index:20;padding:calc(12px + env(sa
 /* 写真の帯（中の層） */
 #feed{position:fixed;inset:0;z-index:10;overflow-y:auto;overscroll-behavior:contain;padding-bottom:14vh;scrollbar-width:none;-webkit-overflow-scrolling:touch}
 #feed::-webkit-scrollbar{display:none}
-.page{position:relative;height:86vh;height:86dvh;display:flex;align-items:center;justify-content:center;padding:var(--top) 20px var(--bottom)}
-.ph{position:relative;width:min(300px, calc(100vw - 64px));aspect-ratio:3/4;max-height:100%;border-radius:14px;overflow:hidden;background:rgba(255,255,255,.35);
+.page{position:relative;height:76vh;height:76dvh;display:flex;align-items:center;justify-content:center;padding:var(--top) 20px var(--bottom)}
+.ph{position:relative;width:min(272px, calc(100vw - 80px));aspect-ratio:3/4;max-height:100%;border-radius:14px;overflow:hidden;background:rgba(255,255,255,.35);
   box-shadow:0 40px 60px -30px rgba(90,70,50,.45),0 10px 24px rgba(90,70,50,.14);
   transform:scale(.94) translateY(10px);opacity:.55;transition:transform .7s cubic-bezier(.2,.7,.2,1),opacity .7s}
-.ph.land{aspect-ratio:4/3;width:min(340px, calc(100vw - 40px))}
+.ph.land{aspect-ratio:4/3;width:min(330px, calc(100vw - 48px))}
 .page.on .ph{transform:none;opacity:1}
 .ph img{width:100%;height:100%;object-fit:cover;display:block}
 .ph .n{position:absolute;left:12px;top:10px;font-family:var(--en);font-weight:400;font-size:9.5px;letter-spacing:.2em;color:#fff;opacity:.9;text-shadow:0 1px 4px rgba(0,0,0,.4)}
@@ -65,7 +65,7 @@ header{position:fixed;left:0;right:0;top:0;z-index:20;padding:calc(12px + env(sa
 /* 下：地名・時間の線・雲の地図（手前の層） */
 footer{position:fixed;left:0;right:0;bottom:0;z-index:20;padding:0 20px calc(18px + env(safe-area-inset-bottom));pointer-events:none;
   background:linear-gradient(0deg,var(--paper) 55%,transparent);transition:background 1.2s}
-.big{display:flex;justify-content:space-between;align-items:flex-end;gap:14px;min-height:124px}
+.big{display:flex;justify-content:space-between;align-items:flex-end;gap:14px;min-height:104px}
 .big .txt{min-width:0;flex:1}
 .big small{display:block;font-family:var(--en);font-weight:300;font-size:12px;letter-spacing:.24em;color:var(--dim);margin-bottom:6px;white-space:nowrap}
 .big h1{font-weight:500;font-size:clamp(21px,6.6vw,29px);line-height:1.18;letter-spacing:-.01em;color:var(--ink);font-feature-settings:"palt";
@@ -88,7 +88,7 @@ footer{position:fixed;left:0;right:0;bottom:0;z-index:20;padding:0 20px calc(18p
 #count{font-family:var(--en);font-weight:300;font-size:10px;letter-spacing:.2em;color:var(--dim);text-align:right;line-height:1.7;margin-left:auto;min-width:0;max-width:62%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .foot .hint{font-family:var(--en);font-weight:300;font-size:9.5px;letter-spacing:.2em;color:var(--dim)}
 /* 雲の形の地図の窓 */
-#mini{pointer-events:auto;position:relative;flex:none;width:176px;height:112px;overflow:hidden;background:#fff;cursor:pointer;transition:transform .3s;border-radius:14px;box-shadow:0 10px 24px -14px rgba(90,70,50,.5),0 0 0 1px rgba(255,255,255,.8)}
+#mini{pointer-events:auto;position:relative;flex:none;width:168px;height:96px;overflow:hidden;background:#fff;cursor:pointer;transition:transform .3s;border-radius:14px;box-shadow:0 10px 24px -14px rgba(90,70,50,.5),0 0 0 1px rgba(255,255,255,.8)}
 #mini:active{transform:scale(.97)}
 #mini .leaflet-container{background:#F4F1EC}
 #mini .leaflet-tile-pane{filter:grayscale(1) brightness(1.08) contrast(.85);opacity:.6}
@@ -313,7 +313,7 @@ function openDay(d, keepIdx) {
       $('feed').scrollTop = 0;
       var pi = 0; if (pendingN) { items.forEach(function (x, i) { if (x.n === pendingN) pi = i; }); pendingN = null; }
       setIdx(pi, pi ? 'auto' : false);
-      try { history.replaceState(null, '', '#' + d); } catch (e) {}
+      try { if (location.hash) history.replaceState(null, '', location.pathname); } catch (e) {}
       $('veil').classList.remove('on');
       $('loading').classList.add('off');
       var seen = false; try { seen = !!localStorage.getItem('fp_hint_v1'); } catch (e) {}
