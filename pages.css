@@ -477,3 +477,6 @@
 .log-fp .rc-c { font-size:22px; color:var(--ink-faint); }
 
 a.read-card { text-decoration:none; color:inherit; }
+
+/* 下タブの「記録」はリンク（紙と雲の記録ページへ） */
+.idx a.idx-link { text-decoration:none; }

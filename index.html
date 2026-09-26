@@ -308,7 +308,7 @@ body.offline .ns-wx { display:none; }
     var(--paper);
   border-top:1.5px solid var(--edge);
   box-shadow:0 -5px 16px rgba(90,75,50,.16); }
-.idx button { flex:1; text-align:center; padding:11px 0 12px; font-family:inherit; cursor:pointer;
+.idx button, .idx a.idx-link { flex:1; text-align:center; padding:11px 0 12px; font-family:inherit; cursor:pointer; text-decoration:none; display:block;
   font-size:12.5px; font-weight:700; letter-spacing:.06em;
   color:var(--ink-faint); background:var(--paper-dim); border:1px solid var(--edge);
   border-radius:8px 8px 3px 3px; box-shadow:0 1px 2px rgba(90,75,50,.1); }
@@ -349,7 +349,7 @@ body.locked main, body.locked .idx, body.locked .holes, body.locked #day-sticky 
 .lightbox img { max-width:96vw; max-height:78vh; border-radius:4px; box-shadow:0 8px 30px rgba(0,0,0,.5); filter:none; }
 .lightbox .lb-cap { color:#EEE6D8; font-size:13px; text-align:center; }
 </style>
-<!-- ?v= はキャッシュずれ対策。sw.js の CACHE と一緒に上げる --><link rel="stylesheet" href="pages.css?v=64">
+<!-- ?v= はキャッシュずれ対策。sw.js の CACHE と一緒に上げる --><link rel="stylesheet" href="pages.css?v=65">
 </head>
 <body>
 <div class="holes"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
@@ -396,30 +396,30 @@ body.locked main, body.locked .idx, body.locked .holes, body.locked #day-sticky 
   <div class="sv-hint" id="sv-hint">ドラッグで見回す・道路の矢印で進む。実際の景色とは季節や工事で違うことがあります</div>
 </div>
 
-<script src="vault.js?v=64"></script>
-<script src="trip.js?v=64"></script>
-<script src="map.js?v=64"></script>
-<script src="prep.js?v=64"></script>
-<script src="en.js?v=64"></script>
-<script src="guide.js?v=64"></script>
-<script src="info.js?v=64"></script>
-<script src="news.js?v=64"></script>
-<script src="wx.js?v=64"></script>
-<script src="docs.js?v=64"></script>
-<script src="log.js?v=64"></script>
+<script src="vault.js?v=65"></script>
+<script src="trip.js?v=65"></script>
+<script src="map.js?v=65"></script>
+<script src="prep.js?v=65"></script>
+<script src="en.js?v=65"></script>
+<script src="guide.js?v=65"></script>
+<script src="info.js?v=65"></script>
+<script src="news.js?v=65"></script>
+<script src="wx.js?v=65"></script>
+<script src="docs.js?v=65"></script>
+<script src="log.js?v=65"></script>
 <script>
 /* ============ 旅の手帳 v2 — シェル ============ */
 /* 下部タブは5つ。「読む」は雑誌・手引き・情報の3面をまとめ、上部の小見出しで切り替える */
 var NAV = [
-  { id:'now',  label:'いま' },
   { id:'toc',  label:'旅程' },
   { id:'map',  label:'地図' },
   { id:'prep', label:'準備' },
-  { id:'read', label:'読む' }
+  { id:'read', label:'読む' },
+  { id:'log',  label:'記録', href:'footprints/log.html' }
 ];
 var READ_SUB = [ ['news','雑誌'], ['guide','手引き'], ['en','英語'], ['info','情報'], ['log','記録'] ];
 var PANES = ['now','toc','read','news','map','prep','guide','en','info','log'];
-var current = 'now';
+var current = 'toc';
 var readSub = 'news';
 try { readSub = localStorage.getItem('read_sub_v1') || 'news'; } catch(e) {}
 function isReadId(id){ return READ_SUB.some(function(s){ return s[0] === id; }); }
@@ -844,11 +844,11 @@ function navPush(state, hash) {
   try { (history.state ? history.pushState : history.replaceState).call(history, state, '', hash); } catch(e) {}
 }
 window.addEventListener('popstate', function(e){
-  var st = e.state || { pane:(location.hash.replace('#','') || 'now') };
+  var st = e.state || { pane:(location.hash.replace('#','') || 'toc') };
   _fromPop = true;
   try {
     if (st.day) { show('toc'); openDay(st.day); }
-    else { if (st.pane === 'toc') renderToc(false); show(PANES.indexOf(st.pane) >= 0 ? st.pane : 'now'); }
+    else { if (st.pane === 'toc') renderToc(false); show(PANES.indexOf(st.pane) >= 0 ? st.pane : 'toc'); }
   } catch(err) {}
   _fromPop = false;
 });
@@ -921,6 +921,7 @@ function daySticky(on) {
 }
 function renderIdx() {
   document.getElementById('idx').innerHTML = NAV.map(function(n){
+    if (n.href) return '<a class="idx-link" href="' + n.href + '">' + n.label + '</a>';
     var on = n.id === current || (n.id === 'read' && isReadId(current));
     return '<button class="' + (on?'on':'') + '" onclick="show(\'' + n.id + '\')">' + n.label + '</button>';
   }).join('');
@@ -1013,7 +1014,7 @@ function lockForget() { Vault.forget(); LOG = null; logOpen = null; if (typeof r
     var lm = /^#log-(\d)$/.exec(location.hash);
     if (lm) { logOpen = parseInt(lm[1],10); if (typeof renderLogPage === 'function') renderLogPage(); show('log'); return; }
     var id = location.hash.replace('#','');
-    show(PANES.indexOf(id) >= 0 || id === 'read' ? id : 'now');
+    show(PANES.indexOf(id) >= 0 || id === 'read' ? id : 'toc');
   });
   /* 「いま」のToDoチェック（委任） */
   safe(function(){

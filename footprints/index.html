@@ -47,9 +47,9 @@ header{position:fixed;left:0;right:0;top:0;z-index:20;padding:calc(12px + env(sa
 #days button{padding:2px 7px;border-radius:12px;letter-spacing:.02em;transition:background .3s,color .3s}
 #days button.on{color:var(--ink);background:rgba(255,255,255,.85)}
 /* 写真の帯（中の層） */
-#feed{position:fixed;inset:0;z-index:10;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+#feed{position:fixed;inset:0;z-index:10;overflow-y:auto;overscroll-behavior:contain;padding-bottom:14vh;scrollbar-width:none;-webkit-overflow-scrolling:touch}
 #feed::-webkit-scrollbar{display:none}
-.page{position:relative;height:100vh;height:100dvh;display:flex;align-items:center;justify-content:center;padding:var(--top) 20px var(--bottom)}
+.page{position:relative;height:86vh;height:86dvh;display:flex;align-items:center;justify-content:center;padding:var(--top) 20px var(--bottom)}
 .ph{position:relative;width:min(300px, calc(100vw - 64px));aspect-ratio:3/4;max-height:100%;border-radius:14px;overflow:hidden;background:rgba(255,255,255,.35);
   box-shadow:0 40px 60px -30px rgba(90,70,50,.45),0 10px 24px rgba(90,70,50,.14);
   transform:scale(.94) translateY(10px);opacity:.55;transition:transform .7s cubic-bezier(.2,.7,.2,1),opacity .7s}
@@ -163,7 +163,7 @@ footer{position:fixed;left:0;right:0;bottom:0;z-index:20;padding:0 20px calc(18p
 <input id="lock-pw" type="password" autocomplete="current-password" autocapitalize="off" spellcheck="false" placeholder="合言葉"><button type="submit" id="lock-btn">開く</button><div class="msg" id="lock-msg"></div><a href="../">‹ 旅の手帳へ</a></form></div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script src="../vault.js?v=64"></script>
+<script src="../vault.js?v=65"></script>
 <script>
 Vault.base('../');
 window.addEventListener('error', function (e) { var l = document.getElementById('loading'); if (l) { l.textContent = 'ERROR: ' + (e.message || e); l.classList.remove('off'); } });
@@ -334,7 +334,7 @@ function start() {
     days = m.parts.filter(function (p) { return p.id.indexOf('photos-') === 0; }).map(function (p) { return p.id.slice(7); }).sort();
     loadCaps().then(function () { Array.prototype.forEach.call(document.querySelectorAll('.ph[data-n]'), function (ph) { var c = CAP[ph.getAttribute('data-n')]; if (c && !ph.querySelector('.cap')) ph.insertAdjacentHTML('beforeend', '<span class="cap">' + esc(c) + '</span>'); }); });
     var hh = location.hash.replace('#', ''), want = hh.slice(0, 4); var pm = /^\d{4}-(\d{4})/.exec(hh); if (pm) pendingN = pm[1]; if (want && want !== cur) { cur = null; items = []; }
-    openDay(days.indexOf(want) >= 0 ? want : days[days.length - 1]);
+    openDay(days.indexOf(want) >= 0 ? want : days[0]);
   });
 }
 /* 操作 */
@@ -345,7 +345,7 @@ $('feed').addEventListener('scroll', function () {
   var f = $('feed'), now = performance.now(); vel = Math.abs(f.scrollTop - lastY) / Math.max(1, now - lastTs); lastY = f.scrollTop; lastTs = now;
   if (settleT) clearTimeout(settleT);
   settleT = setTimeout(function () {
-    var h = f.clientHeight, i = Math.round(f.scrollTop / h), target = i * h;
+    var pg = f.querySelector('.page'), h = pg ? pg.offsetHeight : f.clientHeight, i = Math.round(f.scrollTop / h), target = i * h;
     if (Math.abs(f.scrollTop - target) > 2) f.scrollTo({ top: target, behavior: 'smooth' });
   }, 140);
 }, { passive: true });
