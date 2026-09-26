@@ -47,16 +47,16 @@ header{position:fixed;left:0;right:0;top:0;z-index:20;padding:calc(12px + env(sa
 #days button{padding:2px 7px;border-radius:12px;letter-spacing:.02em;transition:background .3s,color .3s}
 #days button.on{color:var(--ink);background:rgba(255,255,255,.85)}
 /* 写真の帯（中の層） */
-#ghost{position:fixed;left:50%;z-index:8;width:min(300px, calc(100vw - 64px));aspect-ratio:3/4;border-radius:14px;overflow:hidden;background:rgba(255,255,255,.35);transform:translate(-50%,0) scale(.92);opacity:0;transition:opacity .4s;pointer-events:none;box-shadow:0 20px 40px -24px rgba(90,70,50,.35)}
-#ghost img{width:100%;height:100%;object-fit:cover;display:block}
-#ghost.on{opacity:.75}
-#feed{position:fixed;inset:0;z-index:10;overflow-y:auto;scroll-snap-type:y mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+#feed{position:fixed;inset:0;z-index:10;overflow-y:auto;scroll-snap-type:y proximity;scrollbar-width:none;-webkit-overflow-scrolling:touch}
 #feed::-webkit-scrollbar{display:none}
-.page{height:100vh;height:100dvh;scroll-snap-align:start;scroll-snap-stop:normal;display:flex;align-items:center;justify-content:center;padding:var(--top) 20px var(--bottom)}
+.page{position:relative;height:100vh;height:100dvh;scroll-snap-align:start;scroll-snap-stop:normal;display:flex;align-items:center;justify-content:center;padding:var(--top) 20px var(--bottom)}
 .ph{position:relative;width:min(300px, calc(100vw - 64px));aspect-ratio:3/4;max-height:100%;border-radius:14px;overflow:hidden;background:rgba(255,255,255,.35);
   box-shadow:0 40px 60px -30px rgba(90,70,50,.45),0 10px 24px rgba(90,70,50,.14);
   transform:scale(.94) translateY(10px);opacity:.55;transition:transform .7s cubic-bezier(.2,.7,.2,1),opacity .7s}
 .ph.land{aspect-ratio:4/3;width:min(340px, calc(100vw - 40px))}
+.nx{position:absolute;left:50%;transform:translateX(-50%);width:min(268px, calc(100vw - 96px));height:26px;border-radius:12px 12px 0 0;overflow:hidden;opacity:0;transition:opacity .5s;pointer-events:none;box-shadow:0 -6px 18px -10px rgba(90,70,50,.35)}
+.nx img{width:100%;display:block;filter:brightness(.96)}
+.page.on .nx{opacity:.85}
 .page.on .ph{transform:none;opacity:1}
 .ph img{width:100%;height:100%;object-fit:cover;display:block}
 .ph .n{position:absolute;left:12px;top:10px;font-family:var(--en);font-weight:400;font-size:9.5px;letter-spacing:.2em;color:#fff;opacity:.9;text-shadow:0 1px 4px rgba(0,0,0,.4)}
@@ -83,8 +83,7 @@ footer{position:fixed;left:0;right:0;bottom:0;z-index:20;padding:0 20px calc(18p
 #count{font-family:var(--en);font-weight:300;font-size:10px;letter-spacing:.2em;color:var(--dim);text-align:right;line-height:1.7;margin-left:auto;min-width:0;max-width:62%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .foot .hint{font-family:var(--en);font-weight:300;font-size:9.5px;letter-spacing:.2em;color:var(--dim)}
 /* 雲の形の地図の窓 */
-#mini{pointer-events:auto;position:relative;flex:none;width:176px;height:112px;overflow:hidden;background:#fff;cursor:pointer;transition:transform .3s;
-  -webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1' preserveAspectRatio='none'%3E%3Cpath d='M.16.92 C.05.92 0 .82 .03 .72 C.05.62 .13.6 .2.62 C.2.45 .32.33 .45.36 C.52.2 .74.2 .8.36 C.92.33 1 .45 .98.58 C1.03.7 .97.85 .85.88 C.76.97 .62.95 .55.9 C.45.98 .3.98 .16.92 Z'/%3E%3C/svg%3E");mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1' preserveAspectRatio='none'%3E%3Cpath d='M.16.92 C.05.92 0 .82 .03 .72 C.05.62 .13.6 .2.62 C.2.45 .32.33 .45.36 C.52.2 .74.2 .8.36 C.92.33 1 .45 .98.58 C1.03.7 .97.85 .85.88 C.76.97 .62.95 .55.9 C.45.98 .3.98 .16.92 Z'/%3E%3C/svg%3E");-webkit-mask-size:100% 100%;mask-size:100% 100%;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat}
+#mini{pointer-events:auto;position:relative;flex:none;width:176px;height:112px;overflow:hidden;background:#fff;cursor:pointer;transition:transform .3s;border-radius:14px;box-shadow:0 10px 24px -14px rgba(90,70,50,.5),0 0 0 1px rgba(255,255,255,.8)}
 #mini:active{transform:scale(.97)}
 #mini .leaflet-container{background:#F4F1EC}
 #mini .leaflet-tile-pane{filter:grayscale(1) brightness(1.08) contrast(.85);opacity:.6}
@@ -142,7 +141,6 @@ footer{position:fixed;left:0;right:0;bottom:0;z-index:20;padding:0 20px calc(18p
   <div class="bar"><a class="wm" id="wm" href="log.html" style="text-decoration:none">PHOTO FOOTPRINTS</a><div id="days"></div></div>
 </header>
 
-<div id="ghost"><img alt=""></div>
 <main id="feed"></main>
 <div id="hint">SCROLL<i></i></div>
 
@@ -203,7 +201,7 @@ function renderStops() {
 function renderFeed() {
   var h = '';
   items.forEach(function (x, i) {
-    h += '<section class="page" data-i="' + i + '"><figure class="ph" id="ph' + i + '"><img src="' + x.img + '" alt="" data-n="' + x.n + '"></figure></section>';
+    h += '<section class="page" data-i="' + i + '"><figure class="ph" id="ph' + i + '"><img src="' + x.img + '" alt="" data-n="' + x.n + '"></figure>' + (items[i + 1] ? '<div class="nx" id="nx' + i + '"><img alt=""></div>' : '') + '</section>';
   });
   $('feed').innerHTML = h;
   Array.prototype.forEach.call(document.querySelectorAll('#feed img'), function (im) {
@@ -224,6 +222,7 @@ function renderLine() {
 }
 /* 720px の写真に差し替える（いまの前後 2 枚） */
 function upgrade(i) {
+  for (var k = i - 1; k <= i + 2; k++) { var nxe = $('nx' + k); if (nxe && items[k + 1]) { var ni = nxe.querySelector('img'); if (!ni.getAttribute('src')) ni.src = items[k + 1].img; var ph0 = $('ph' + k); if (ph0) { nxe.style.top = (ph0.offsetTop + ph0.offsetHeight + 10) + 'px'; } } }
   for (var k = i - 1; k <= i + 2; k++) {
     (function (k) {
       var x = items[k]; if (!x) return;
@@ -260,14 +259,6 @@ function setIdx(i, scroll) {
   if (mini) { mini.panTo([x.lat, x.lng], { animate: true, duration: .6 }); miniPins.forEach(function (m, j) { m.setIcon(pinIcon(j === i)); m.setZIndexOffset(j === i ? 1000 : 0); }); }
   if (big && $('mapfull').classList.contains('on')) bigPins.forEach(function (m, j) { m.setIcon(pinIcon(j === i)); m.setZIndexOffset(j === i ? 1000 : 0); });
   upgrade(i);
-  ghost(i);
-}
-function ghost(i) {
-  var g = $('ghost'), nx = items[i + 1], ph = $('ph' + i);
-  if (!nx || !ph) { g.classList.remove('on'); return; }
-  var r = ph.getBoundingClientRect();
-  g.style.top = (r.top + 30) + 'px'; g.style.width = r.width + 'px'; g.style.height = r.height + 'px';
-  g.querySelector('img').src = nx.img; g.classList.add('on');
 }
 function pinIcon(on) { return L.divIcon({ className: '', html: '<div class="pin' + (on ? ' on' : '') + '"></div>', iconSize: [16, 16], iconAnchor: [8, 8] }); }
 function tiles() { return L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '© OpenStreetMap' }); }
