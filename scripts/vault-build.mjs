@@ -83,6 +83,14 @@ if (PHOTO_JSON) {
     writeFileSync(join(outDir, file), enc);
     parts.push({ id, file, bytes: enc.length, count: items.length, label: day });
   }
+  /* 全写真のピン（扉の地図用。小さいので 1 区画） */
+  {
+    const pins = recs.map(r => ({ n: r.n, d: r.t.slice(0, 5).replace('/', ''), t: r.t.slice(6), lat: +(+r.lat).toFixed(5), lng: +(+r.lng).toFixed(5), p: String(r.p || '').split(/[,，（(]/)[0] }));
+    const enc = await encrypt(new TextEncoder().encode(JSON.stringify({ pins })));
+    const file = 'pins.' + hash8(enc) + '.enc';
+    writeFileSync(join(outDir, file), enc);
+    parts.push({ id: 'pins', file, bytes: enc.length, count: pins.length, label: 'pins' });
+  }
   for (const f of readdirSync(pDir)) big += (readFileSync(join(pDir, f))).length;
   console.log('photos/p:', Object.keys(photos).length, 'files', (big / 1e6).toFixed(1) + 'MB');
 }
