@@ -10,12 +10,14 @@
 <link rel="stylesheet" href="vendor/leaflet.css">
 <style>
 /* ============ 写真の足跡 — 紙と雲 ============
- * 紙色は日ごとに変わる。雲はゆっくり流れる。写真は一枚ずつ、縦スクロールでめくる。
- * 地図は左下の雲の窓。押すと一日の全ピンが開く。線では結ばない。 */
+ * 七日分の写真を一本の縦スクロールに。紙色は日が変わるたびに変わり、雲はゆっくり流れる。
+ * 写真は上下の帯のあいだいっぱいに一枚ずつ。日の境には余白の頁。地図は右下の窓、押すと一日の全ピン。線では結ばない。 */
 :root{
   --paper:#EFE6DA; --cloud:#F6EFE5; --cloud2:#F7E3D6; --ink:#3A3532; --dim:#9A8E84; --mid:#5E554E; --acc:#D8907A;
   --sans:"Zen Kaku Gothic New","Hiragino Kaku Gothic ProN",sans-serif; --serif:"Shippori Mincho","Hiragino Mincho ProN",serif; --en:"Inter Tight",var(--sans);
-  --top:92px; --bottom:262px;
+  --top:calc(92px + env(safe-area-inset-top)); --bottom:calc(258px + env(safe-area-inset-bottom)); --gap:14px;
+  --ph:min(calc(100vh - var(--top) - var(--bottom)), calc((100vw - 48px) * 4 / 3));
+  --ph:min(calc(100dvh - var(--top) - var(--bottom)), calc((100vw - 48px) * 4 / 3));
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%}
@@ -47,27 +49,36 @@ header{position:fixed;left:0;right:0;top:0;z-index:20;padding:calc(12px + env(sa
 #days button{position:relative;padding:2px 7px;border-radius:12px;letter-spacing:.02em;transition:background .3s,color .3s}
 #days button::before{content:"";position:absolute;inset:-9px -3px}
 #days button.on{color:var(--ink);background:rgba(255,255,255,.85)}
-/* 写真の帯（中の層） */
-#feed{position:fixed;inset:0;z-index:10;overflow-y:auto;overscroll-behavior:contain;padding-bottom:14vh;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+/* 写真の帯（中の層）。頁の高さは全部同じ（写真の箱＋すき間）。上の帯ぶんだけ最初に空ける */
+#feed{position:fixed;inset:0;z-index:10;overflow-y:auto;overscroll-behavior:contain;padding:var(--top) 0 calc(100vh - var(--top));padding-bottom:calc(100dvh - var(--top));scrollbar-width:none;-webkit-overflow-scrolling:touch}
 #feed::-webkit-scrollbar{display:none}
-.page{position:relative;height:76vh;height:76dvh;display:flex;align-items:center;justify-content:center;padding:var(--top) 20px var(--bottom)}
-.ph{position:relative;width:min(272px, calc(100vw - 80px));aspect-ratio:3/4;max-height:100%;border-radius:14px;overflow:hidden;background:rgba(255,255,255,.35);
+.page{position:relative;height:calc(var(--ph) + var(--gap));display:flex;align-items:flex-start;justify-content:center;padding:0 24px}
+.ph{position:relative;height:var(--ph);aspect-ratio:3/4;max-width:100%;border-radius:14px;overflow:hidden;background:rgba(255,255,255,.35);cursor:pointer;
   box-shadow:0 40px 60px -30px rgba(90,70,50,.45),0 10px 24px rgba(90,70,50,.14);
-  transform:scale(.94) translateY(10px);opacity:.55;transition:transform .7s cubic-bezier(.2,.7,.2,1),opacity .7s}
-.ph.land{aspect-ratio:4/3;width:min(330px, calc(100vw - 48px))}
+  transform:scale(.96) translateY(8px);opacity:.5;transition:transform .7s cubic-bezier(.2,.7,.2,1),opacity .7s}
+.ph.land{aspect-ratio:4/3;height:auto;width:100%;margin-top:calc(var(--ph) * .1)}
 .page.on .ph{transform:none;opacity:1}
 .ph img{width:100%;height:100%;object-fit:cover;display:block}
-.ph .n{position:absolute;left:12px;top:10px;font-family:var(--en);font-weight:400;font-size:9.5px;letter-spacing:.2em;color:#fff;opacity:.9;text-shadow:0 1px 4px rgba(0,0,0,.4)}
-.ph .cap{position:absolute;left:12px;right:12px;bottom:10px;font-family:var(--serif);font-size:11.5px;letter-spacing:.08em;line-height:1.5;color:#fff;text-shadow:0 1px 8px rgba(0,0,0,.65);opacity:0;transition:opacity .6s .25s}
+.ph .cap{position:absolute;left:14px;right:14px;bottom:12px;font-family:var(--serif);font-size:12px;letter-spacing:.08em;line-height:1.5;color:#fff;text-shadow:0 1px 8px rgba(0,0,0,.65);opacity:0;transition:opacity .6s .25s}
 .page.on .ph .cap{opacity:.95}
 .ph.full .cap{bottom:calc(16px + env(safe-area-inset-bottom));font-size:13px}
-.ph.full{position:fixed;inset:0;width:auto;aspect-ratio:auto;border-radius:0;z-index:60;background:#111;box-shadow:none}
+.ph.full{position:fixed;inset:0;width:auto;height:auto;margin:0;aspect-ratio:auto;border-radius:0;z-index:60;background:#111;box-shadow:none}
 .ph.full img{object-fit:contain}
 body.full header,body.full footer,body.full #hint{visibility:hidden}
-/* 下：地名・時間の線・雲の地図（手前の層） */
+/* 日の境の余白の頁 */
+.page.dv{align-items:center}
+.dv .in{text-align:center;opacity:.35;transform:translateY(10px);transition:opacity .8s,transform .8s}
+.page.on .dv .in,.page.dv.on .in{opacity:1;transform:none}
+.dv small{display:block;font-family:var(--en);font-weight:300;font-size:11px;letter-spacing:.34em;color:var(--dim)}
+.dv .d{font-family:var(--en);font-weight:300;font-size:58px;letter-spacing:-.03em;line-height:1;margin:14px 0 12px;color:var(--ink)}
+.dv .d b{font-weight:400}
+.dv h2{font-weight:500;font-size:16px;letter-spacing:.06em;color:var(--ink)}
+.dv em{display:block;font-style:normal;font-family:var(--en);font-size:10px;letter-spacing:.3em;color:var(--dim);margin-top:14px}
+.dv i{display:block;width:1px;height:26px;background:var(--dim);margin:22px auto 0;opacity:.5}
+/* 下：地名・時間の線・地図の窓（手前の層） */
 footer{position:fixed;left:0;right:0;bottom:0;z-index:20;padding:0 20px calc(18px + env(safe-area-inset-bottom));pointer-events:none;
   background:linear-gradient(0deg,var(--paper) 55%,transparent);transition:background 1.2s}
-.big{display:flex;justify-content:space-between;align-items:flex-end;gap:14px;min-height:104px}
+.big{display:flex;justify-content:space-between;align-items:flex-end;gap:14px;min-height:100px}
 .big .txt{min-width:0;flex:1}
 .big small{display:block;font-family:var(--en);font-weight:300;font-size:12px;letter-spacing:.24em;color:var(--dim);margin-bottom:6px;white-space:nowrap}
 .big h1{font-weight:500;font-size:clamp(21px,6.6vw,29px);line-height:1.18;letter-spacing:-.01em;color:var(--ink);font-feature-settings:"palt";
@@ -75,7 +86,6 @@ footer{position:fixed;left:0;right:0;bottom:0;z-index:20;padding:0 20px calc(18p
 .big em{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;font-style:normal;font-family:var(--serif);font-size:12px;letter-spacing:.08em;margin-top:8px;color:var(--mid);line-height:1.6;
   overflow:hidden;transition:opacity .35s .08s,transform .35s .08s}
 .big.swap h1,.big.swap em{opacity:0;transform:translateY(8px)}
-.ph{cursor:pointer}
 .linerow{display:flex;align-items:flex-start;gap:10px;margin-top:14px}
 #play{pointer-events:auto;flex:none;width:26px;height:26px;border-radius:50%;background:var(--ink);position:relative;margin-top:-9px;transition:transform .2s}
 #play:active{transform:scale(.92)}
@@ -89,7 +99,7 @@ footer{position:fixed;left:0;right:0;bottom:0;z-index:20;padding:0 20px calc(18p
 .foot{display:flex;justify-content:space-between;align-items:baseline;margin-top:8px}
 #count{font-family:var(--en);font-weight:300;font-size:10px;letter-spacing:.2em;color:var(--dim);text-align:right;line-height:1.7;margin-left:auto;min-width:0;max-width:62%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .foot .hint{font-family:var(--en);font-weight:300;font-size:9.5px;letter-spacing:.2em;color:var(--dim)}
-/* 雲の形の地図の窓 */
+/* 地図の窓 */
 #mini{pointer-events:auto;position:relative;flex:none;width:168px;height:96px;overflow:hidden;background:#fff;cursor:pointer;transition:transform .3s;border-radius:14px;box-shadow:0 10px 24px -14px rgba(90,70,50,.5),0 0 0 1px rgba(255,255,255,.8)}
 #mini:active{transform:scale(.97)}
 #mini .leaflet-container{background:#F4F1EC}
@@ -111,7 +121,6 @@ footer{position:fixed;left:0;right:0;bottom:0;z-index:20;padding:0 20px calc(18p
 .leaflet-popup-content-wrapper{border-radius:10px;box-shadow:0 10px 30px rgba(90,70,50,.25)}
 .leaflet-popup-content{margin:6px}.leaflet-popup-content img{width:160px;display:block;border-radius:6px;cursor:pointer}
 .leaflet-popup-content .c{font-family:var(--en);font-size:10px;letter-spacing:.1em;color:var(--dim);margin-top:5px}
-/* 日付の切替の紙のフェード */
 #hint{position:fixed;left:50%;bottom:calc(var(--bottom) + 14px);z-index:25;transform:translateX(-50%);font-family:var(--en);font-size:9.5px;letter-spacing:.3em;color:var(--dim);display:flex;flex-direction:column;align-items:center;gap:4px;pointer-events:none;opacity:0;transition:opacity .6s}
 #hint.on{opacity:1}
 #hint i{display:block;width:1px;height:22px;background:var(--dim);animation:hint 1.6s ease-in-out infinite}
@@ -134,8 +143,6 @@ footer{position:fixed;left:0;right:0;bottom:0;z-index:20;padding:0 20px calc(18p
 </style>
 </head>
 <body>
-<svg width="0" height="0" style="position:absolute"><defs><clipPath id="cloudclip" clipPathUnits="objectBoundingBox">
-<path d="M.16.92 C.05.92 0 .82 .03 .72 C.05.62 .13.6 .2.62 C.2.45 .32.33 .45.36 C.52.2 .74.2 .8.36 C.92.33 1 .45 .98.58 C1.03.7 .97.85 .85.88 C.76.97 .62.95 .55.9 C.45.98 .3.98 .16.92 Z"/></clipPath></defs></svg>
 <div id="sky"><svg viewBox="0 0 430 932" preserveAspectRatio="none">
 <g class="drift"><path class="c1" d="M-40 120 C40 90 120 140 190 110 C260 80 320 130 470 96 L470 0 L-40 0 Z"/></g>
 <g class="drift slow"><path class="c2" d="M-40 520 C60 480 140 560 230 520 C320 480 380 540 470 500 L470 640 C380 660 300 610 220 650 C140 690 60 640 -40 660 Z"/></g>
@@ -153,7 +160,7 @@ footer{position:fixed;left:0;right:0;bottom:0;z-index:20;padding:0 20px calc(18p
 
 <footer>
   <div class="big" id="big"><div class="txt"><small id="h-time">—</small><h1 id="h-place">—</h1><em id="h-sub"></em></div><div id="mini" title="一日の地図を開く"></div></div>
-  <div class="linerow"><button id="play" type="button" aria-label="一日を流す"><i></i></button><div id="line"></div></div>
+  <div class="linerow"><button id="play" type="button" aria-label="流す"><i></i></button><div id="line"></div></div>
   <div class="foot"><span class="hint">TAP MAP · TAP PHOTO</span><div id="count"></div></div>
 </footer>
 
@@ -165,7 +172,7 @@ footer{position:fixed;left:0;right:0;bottom:0;z-index:20;padding:0 20px calc(18p
 <input id="lock-pw" type="password" autocomplete="current-password" autocapitalize="off" spellcheck="false" placeholder="合言葉"><button type="submit" id="lock-btn">開く</button><div class="msg" id="lock-msg"></div><a href="../">‹ 旅の手帳へ</a></form></div>
 
 <script src="vendor/leaflet.js"></script>
-<script src="../vault.js?v=67"></script>
+<script src="../vault.js?v=68"></script>
 <script>
 Vault.base('../');
 window.addEventListener('error', function (e) { var l = document.getElementById('loading'); if (l) { l.textContent = 'ERROR: ' + (e.message || e); l.classList.remove('off'); } });
@@ -176,13 +183,20 @@ var PAPER = {
   '0923': ['#E6E9EC', '#F0F2F4', '#F5E7DF'], '0924': ['#EFE6DA', '#F6EFE5', '#F7E3D6'], '0925': ['#E4E9EE', '#EFF2F5', '#F3E4DC'], '0926': ['#E9E6E3', '#F3F0EC', '#F1E4DC']
 };
 var DAY_NO = { '0920': 1, '0921': 2, '0922': 3, '0923': 4, '0924': 5, '0925': 6, '0926': 7 };
+var DAY_TITLE = { '0920': '成田から、夜の便で', '0921': 'メルボルン、路地とアーケード', '0922': '市場、庭園、図書館、劇場', '0923': 'メルボルンからシドニーへ', '0924': 'ブルーマウンテンズ', '0925': 'シドニー最終日', '0926': '帰国' };
+var WD = { '0920': '日', '0921': '月', '0922': '火', '0923': '水', '0924': '木', '0925': '金', '0926': '土' };
 var $ = function (id) { return document.getElementById(id); };
-var CAP = {}, pendingN = null, man = null, days = [], cur = null, items = [], stops = [], idx = -1, mini = null, big = null, miniPins = [], bigPins = [], io = null, seeking = false;
+/* 頁の並び：日ごとに「余白の頁 1 つ ＋ 写真の枚数」。全頁が同じ高さなので、位置は割り算で分かる */
+var CAP = {}, pendingN = null, man = null, days = [], DAYS = {}, PAGES = [], parts = {};
+var cur = null, items = [], stops = [], idx = -1, mini = null, big = null, miniPins = [], bigPins = [], seeking = false;
 
 function esc(s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;'); }
 function shortPlace(p) { p = String(p || ''); var s = p.split(/[,，（(]/)[0].trim(); return s || '—'; }
 function subPlace(p) { p = String(p || ''); var m = p.match(/[（(]([^）)]+)[）)]/); var rest = p.split(/[,，]/).slice(1).map(function (t) { return t.trim(); }).filter(Boolean); if (m) rest.unshift(m[1]); return rest.join('、'); }
 function mins(t) { var m = /(\d\d):(\d\d)$/.exec(t); return m ? (+m[1]) * 60 + (+m[2]) : 0; }
+function dayNo(d) { return 'DAY ' + ('0' + DAY_NO[d]).slice(-2); }
+function pageH() { var pg = document.querySelector('.page'); return pg ? pg.offsetHeight : 500; }
+function gOf(d, k) { return DAYS[d].off + 1 + k; }
 
 /* 停留所：地名が続く区間をひとまとまりに。1 枚だけの区間は前に吸収 */
 function buildStops(list) {
@@ -205,20 +219,27 @@ function renderDays() {
 function renderStops() {
   $('stops').innerHTML = stops.map(function (s, k) { return '<button type="button" data-k="' + k + '"><b>' + esc(s.name) + '</b><small>' + s.t + '</small></button>'; }).join('');
 }
-function renderFeed() {
-  var h = '';
-  items.forEach(function (x, i) {
-    h += '<section class="page" data-i="' + i + '"><figure class="ph" id="ph' + i + '" data-n="' + x.n + '"><img src="' + x.img + '" alt="" loading="lazy" decoding="async" data-n="' + x.n + '">' + (CAP[x.n] ? '<span class="cap">' + esc(CAP[x.n]) + '</span>' : '') + '</figure></section>';
+/* 全頁の骨組み。写真はあとから区画が届いた順に流し込む */
+function renderSkeleton() {
+  var h = '', g = 0;
+  days.forEach(function (d) {
+    var info = DAYS[d];
+    info.off = g;
+    h += '<section class="page dv" data-g="' + g + '" data-d="' + d + '"><div class="dv"><div class="in"><small>' + dayNo(d) + '</small><div class="d">' + (+d.slice(0, 2)) + '<b>/' + (+d.slice(2)) + '</b></div><h2>' + esc(DAY_TITLE[d] || '') + '</h2><em>' + WD[d] + '曜日 · ' + info.count + ' PHOTOS</em><i></i></div></div></section>';
+    PAGES.push({ d: d, k: -1 }); g++;
+    for (var k = 0; k < info.count; k++) { h += '<section class="page" data-g="' + g + '" data-d="' + d + '" data-k="' + k + '"><figure class="ph" id="ph' + g + '"><img alt="" loading="lazy" decoding="async"></figure></section>'; PAGES.push({ d: d, k: k }); g++; }
   });
   $('feed').innerHTML = h;
-  Array.prototype.forEach.call(document.querySelectorAll('#feed img'), function (im) {
-    im.addEventListener('load', function () { if (im.naturalWidth > im.naturalHeight) im.parentNode.classList.add('land'); }, { once: true });
+}
+function fillDay(d) {
+  var list = parts[d];
+  list.forEach(function (x, k) {
+    var g = gOf(d, k), ph = $('ph' + g); if (!ph) return;
+    var im = ph.querySelector('img'); ph.setAttribute('data-n', x.n); im.setAttribute('data-n', x.n);
+    im.addEventListener('load', function () { if (im.naturalWidth > im.naturalHeight) ph.classList.add('land'); }, { once: true });
+    im.src = x.img;
+    if (CAP[x.n] && !ph.querySelector('.cap')) ph.insertAdjacentHTML('beforeend', '<span class="cap">' + esc(CAP[x.n]) + '</span>');
   });
-  if (io) io.disconnect();
-  io = new IntersectionObserver(function (es) {
-    es.forEach(function (e) { if (e.isIntersecting && e.intersectionRatio >= .5) setIdx(+e.target.getAttribute('data-i'), false); });
-  }, { root: $('feed'), threshold: [.5] });
-  Array.prototype.forEach.call(document.querySelectorAll('.page'), function (p) { io.observe(p); });
 }
 function renderLine() {
   var h = '';
@@ -228,43 +249,61 @@ function renderLine() {
   $('line').innerHTML = h;
 }
 /* 720px の写真に差し替える（いまの前後 2 枚） */
-function upgrade(i) {
-  for (var k = i - 1; k <= i + 2; k++) {
-    (function (k) {
-      var x = items[k]; if (!x) return;
-      var im = document.querySelector('#ph' + k + ' img'); if (!im || im.getAttribute('data-big')) return;
+function upgrade(g) {
+  for (var q = g - 1; q <= g + 2; q++) {
+    (function (q) {
+      var pg = PAGES[q]; if (!pg || pg.k < 0 || !parts[pg.d]) return;
+      var x = parts[pg.d][pg.k], im = document.querySelector('#ph' + q + ' img'); if (!x || !im || im.getAttribute('data-big')) return;
       im.setAttribute('data-big', '1');
       Vault.photoURL(x.n).then(function (u) { if (u) im.src = u; }).catch(function () {});
-    })(k);
+    })(q);
   }
 }
-function setIdx(i, scroll) {
-  if (i < 0 || i >= items.length) return;
-  var changed = i !== idx; idx = i;
-  var x = items[i];
+/* 日が変わる：紙の色、停留所、時間の線、地図。遠い日の 720px は手放す */
+function switchDay(d) {
+  if (d === cur) return;
+  cur = d; items = parts[d] || []; stops = buildStops(items);
+  var p = PAPER[d] || PAPER['0924'];
+  document.documentElement.style.setProperty('--paper', p[0]); document.documentElement.style.setProperty('--cloud', p[1]); document.documentElement.style.setProperty('--cloud2', p[2]);
+  document.querySelector('meta[name=theme-color]').setAttribute('content', p[0]);
+  $('wm').textContent = dayNo(d) + ' · 記録 ›'; $('wm').href = 'log.html#' + d;
+  renderDays(); renderStops(); renderLine(); renderMaps();
+  var di = days.indexOf(d), keep = {};
+  [days[di - 1], d, days[di + 1]].forEach(function (k) { if (k && parts[k]) parts[k].forEach(function (x) { keep[x.n] = 1; }); });
+  Array.prototype.forEach.call(document.querySelectorAll('#feed img[data-big]'), function (im) {
+    var n = im.getAttribute('data-n'); if (keep[n]) return;
+    var pg = PAGES[+im.closest('.page').getAttribute('data-g')]; var x = parts[pg.d] && parts[pg.d][pg.k]; if (x) im.src = x.img; im.removeAttribute('data-big');
+  });
+  Vault.release(keep);
+}
+function setIdx(g, scroll) {
+  if (g < 0 || g >= PAGES.length) return;
+  var changed = g !== idx; idx = g;
+  var pg = PAGES[g], d = pg.d, k = pg.k, x = parts[d] && k >= 0 ? parts[d][k] : null;
+  switchDay(d);
   Array.prototype.forEach.call(document.querySelectorAll('.page.on'), function (p) { p.classList.remove('on'); });
-  var pg = document.querySelector('.page[data-i="' + i + '"]'); if (pg) pg.classList.add('on');
-  if (scroll && pg) pg.scrollIntoView({ behavior: scroll === 'smooth' ? 'smooth' : 'auto', block: 'start' });
+  var el = document.querySelector('.page[data-g="' + g + '"]'); if (el) el.classList.add('on');
+  if (scroll) $('feed').scrollTo({ top: g * pageH(), behavior: scroll === 'smooth' ? 'smooth' : 'auto' });
   if (changed) {
     var b = $('big'); b.classList.add('swap');
     setTimeout(function () {
-      $('h-time').textContent = x.t.slice(6) + ' · ' + ('DAY ' + ('0' + DAY_NO[cur]).slice(-2));
-      $('h-place').textContent = shortPlace(x.p);
-      $('h-sub').textContent = subPlace(x.p) || '';
+      if (x) { $('h-time').textContent = x.t.slice(6) + ' · ' + dayNo(d); $('h-place').textContent = shortPlace(x.p); $('h-sub').textContent = subPlace(x.p) || ''; }
+      else if (k < 0) { $('h-time').textContent = dayNo(d); $('h-place').textContent = (+d.slice(0, 2)) + '/' + (+d.slice(2)) + '（' + WD[d] + '）'; $('h-sub').textContent = DAY_TITLE[d] || ''; }
+      else { $('h-time').textContent = dayNo(d); $('h-place').textContent = '…'; $('h-sub').textContent = '写真を開いています'; }
       b.classList.remove('swap');
     }, 180);
   }
-  $('count').innerHTML = (i + 1) + ' / ' + items.length + '<br>' + esc((stops[stopOf(i)] || {}).name || '').toUpperCase();
+  $('count').innerHTML = (k >= 0 ? (k + 1) + ' / ' + (DAYS[d].count) : '—') + '<br>' + esc(x ? ((stops[stopOf(k)] || {}).name || '') : '').toUpperCase();
   var on = document.querySelector('#line i.on'); if (on) on.classList.remove('on');
-  var li = document.querySelector('#line i[data-i="' + i + '"]'); if (li) li.classList.add('on');
-  var k = stopOf(i);
+  var li = document.querySelector('#line i[data-i="' + k + '"]'); if (li) li.classList.add('on');
+  var s = stopOf(k);
   Array.prototype.forEach.call(document.querySelectorAll('#stops button'), function (btn, j) {
-    btn.classList.toggle('on', j === k);
-    if (j === k) btn.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' });
+    btn.classList.toggle('on', j === s);
+    if (j === s) btn.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' });
   });
-  if (mini) { mini.panTo([x.lat, x.lng], { animate: vel < 1.5, duration: .5 }); miniPins.forEach(function (m, j) { m.setIcon(pinIcon(j === i)); m.setZIndexOffset(j === i ? 1000 : 0); }); }
-  if (big && $('mapfull').classList.contains('on')) bigPins.forEach(function (m, j) { m.setIcon(pinIcon(j === i)); m.setZIndexOffset(j === i ? 1000 : 0); });
-  upgrade(i);
+  if (mini && x) { mini.panTo([x.lat, x.lng], { animate: vel < 1.5, duration: .5 }); miniPins.forEach(function (m, j) { m.setIcon(pinIcon(j === k)); m.setZIndexOffset(j === k ? 1000 : 0); }); }
+  if (big && $('mapfull').classList.contains('on')) bigPins.forEach(function (m, j) { m.setIcon(pinIcon(j === k)); m.setZIndexOffset(j === k ? 1000 : 0); });
+  upgrade(g);
 }
 function pinIcon(on) { return L.divIcon({ className: '', html: '<div class="pin' + (on ? ' on' : '') + '"></div>', iconSize: [16, 16], iconAnchor: [8, 8] }); }
 function tiles() { return L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '© OpenStreetMap' }); }
@@ -282,56 +321,48 @@ function renderMaps() {
     $('mfclose').addEventListener('click', closeMap);
   }
   bigPins.forEach(function (m) { big.removeLayer(m); }); bigPins = [];
-  items.forEach(function (x, i) {
+  items.forEach(function (x, k) {
     var m = L.marker([x.lat, x.lng], { icon: pinIcon(false) }).addTo(big);
-    m.bindPopup('<img src="' + x.img + '" alt="" onclick="jumpTo(' + i + ')"><div class="c">' + x.t.slice(6) + ' · ' + esc(shortPlace(x.p)) + '</div>', { closeButton: false, offset: [0, -6] });
+    m.bindPopup('<img src="' + x.img + '" alt="" onclick="jumpTo(' + gOf(cur, k) + ')"><div class="c">' + x.t.slice(6) + ' · ' + esc(shortPlace(x.p)) + '</div>', { closeButton: false, offset: [0, -6] });
     bigPins.push(m);
   });
 }
 function openMap() {
-  $('mapfull').classList.add('on'); $('mf-title').textContent = 'DAY ' + ('0' + DAY_NO[cur]).slice(-2) + ' · ' + items.length + ' PINS';
+  if (!items.length) return;
+  $('mapfull').classList.add('on'); $('mf-title').textContent = dayNo(cur) + ' · ' + items.length + ' PINS';
+  var k = PAGES[idx] ? PAGES[idx].k : -1;
   setTimeout(function () {
     big.invalidateSize();
     big.fitBounds(L.latLngBounds(items.map(function (x) { return [x.lat, x.lng]; })).pad(.12));
-    bigPins.forEach(function (m, j) { m.setIcon(pinIcon(j === idx)); m.setZIndexOffset(j === idx ? 1000 : 0); });
+    bigPins.forEach(function (m, j) { m.setIcon(pinIcon(j === k)); m.setZIndexOffset(j === k ? 1000 : 0); });
   }, 50);
 }
 function closeMap() { $('mapfull').classList.remove('on'); big.closePopup(); }
-function jumpTo(i) { closeMap(); setIdx(i, 'smooth'); }
+function jumpTo(g) { closeMap(); setIdx(g, 'auto'); }
 
-/* 日を開く */
-var openSeq = 0;
-function openDay(d, keepIdx) {
-  if (d === cur && items.length) return;
-  if (days.indexOf(d) < 0) return;
-  $('veil').classList.add('on');
-  var seq = ++openSeq;
-  Vault.load('photos-' + d).then(function (part) {
-    if (seq !== openSeq) return;
-    setTimeout(function () {
-      if (seq !== openSeq) return;
-      cur = d; items = part.items; stops = buildStops(items); idx = -1;
-      var keep = {}; items.forEach(function (x) { keep[x.n] = 1; }); Vault.release(keep);
-      var p = PAPER[d] || PAPER['0924'];
-      document.documentElement.style.setProperty('--paper', p[0]); document.documentElement.style.setProperty('--cloud', p[1]); document.documentElement.style.setProperty('--cloud2', p[2]);
-      document.querySelector('meta[name=theme-color]').setAttribute('content', p[0]);
-      $('wm').textContent = 'FOOTPRINTS · DAY ' + ('0' + DAY_NO[d]).slice(-2) + ' · 記録 ›'; $('wm').href = 'log.html#' + d;
-      renderDays(); renderStops(); renderFeed(); renderLine(); renderMaps();
-      $('feed').scrollTop = 0;
-      var pi = 0; if (pendingN) { items.forEach(function (x, i) { if (x.n === pendingN) pi = i; }); pendingN = null; }
-      setIdx(pi, pi ? 'auto' : false);
-      try { if (location.hash) history.replaceState(null, '', location.pathname); } catch (e) {}
-      $('veil').classList.remove('on');
-      $('loading').classList.add('off');
-      var di = days.indexOf(d); [days[di + 1], days[di - 1]].forEach(function (k) { if (k) setTimeout(function () { Vault.load('photos-' + k).catch(function () {}); }, 1500); });
-      var seen = false; try { seen = !!localStorage.getItem('fp_hint_v1'); } catch (e) {}
-      if (!seen) setTimeout(function () { $('hint').classList.add('on'); }, 900);
-    }, 200);
-  }).catch(function (e) {
-    if (seq !== openSeq) return;
-    $('loading').textContent = 'OPEN FAILED'; $('loading').classList.remove('off');
+/* 区画を順に開く：まず今いる日、次にその前後、あとは順番に */
+function loadDay(d) {
+  if (parts[d]) return Promise.resolve(parts[d]);
+  return Vault.load('photos-' + d).then(function (part) {
+    parts[d] = part.items; fillDay(d);
+    if (d === cur) { items = parts[d]; stops = buildStops(items); renderStops(); renderLine(); renderMaps(); setIdx(idx, false); }
+    return parts[d];
   });
 }
+function loadAll(first) {
+  var i = days.indexOf(first), order = [first];
+  for (var s = 1; s < days.length; s++) { if (days[i + s]) order.push(days[i + s]); if (days[i - s]) order.push(days[i - s]); }
+  return order.slice(1).reduce(function (p, d) { return p.then(function () { return loadDay(d); }); }, Promise.resolve());
+}
+/* 日へ飛ぶ（日付の数字・横スワイプ・← →） */
+function gotoDay(d, fx) {
+  if (days.indexOf(d) < 0) return;
+  if (fx) swipeFx(fx);
+  setIdx(DAYS[d].off + 1, 'auto');
+}
+function stepDay(dir) { var i = days.indexOf(cur) + dir; if (i < 0 || i >= days.length) return; gotoDay(days[i], dir); }
+function swipeFx(dir) { var f = $('feed'); f.style.transition = 'transform .25s ease, opacity .25s'; f.style.transform = 'translateX(' + (dir > 0 ? -28 : 28) + 'px)'; f.style.opacity = '.4'; setTimeout(function () { f.style.transition = 'transform .35s cubic-bezier(.2,.7,.2,1), opacity .35s'; f.style.transform = 'none'; f.style.opacity = '1'; }, 260); }
+
 function loadCaps() {
   return Vault.load('journal').then(function (j) {
     (j.files || []).forEach(function (f) { var re = /!\[([^\]]*)\]\(IMG_(\d{4})\)/g, m; while ((m = re.exec(f.md))) CAP[m[2]] = m[1]; });
@@ -340,21 +371,34 @@ function loadCaps() {
 function start() {
   Vault.manifest().then(function (m) {
     man = m;
-    days = m.parts.filter(function (p) { return p.id.indexOf('photos-') === 0; }).map(function (p) { return p.id.slice(7); }).sort();
-    loadCaps().then(function () { Array.prototype.forEach.call(document.querySelectorAll('.ph[data-n]'), function (ph) { var c = CAP[ph.getAttribute('data-n')]; if (c && !ph.querySelector('.cap')) ph.insertAdjacentHTML('beforeend', '<span class="cap">' + esc(c) + '</span>'); }); });
-    var hh = location.hash.replace('#', ''), want = hh.slice(0, 4); var pm = /^\d{4}-(\d{4})/.exec(hh); if (pm) pendingN = pm[1]; if (want && want !== cur) { cur = null; items = []; }
-    openDay(days.indexOf(want) >= 0 ? want : days[0]);
-  });
+    m.parts.forEach(function (p) { if (p.id.indexOf('photos-') === 0) { var d = p.id.slice(7); days.push(d); DAYS[d] = { count: p.count || 0, off: 0 }; } });
+    days.sort();
+    var hh = location.hash.replace('#', ''), want = hh.slice(0, 4); var pm = /^\d{4}-(\d{4})/.exec(hh); if (pm) pendingN = pm[1];
+    if (days.indexOf(want) < 0) want = days[0];
+    try { if (location.hash) history.replaceState(null, '', location.pathname); } catch (e) {}
+    return loadCaps().then(function () {
+      renderSkeleton();
+      return loadDay(want);
+    }).then(function () {
+      var k = 0; if (pendingN) { parts[want].forEach(function (x, i) { if (x.n === pendingN) k = i; }); pendingN = null; }
+      setIdx(k ? gOf(want, k) : DAYS[want].off + (days.indexOf(want) === 0 ? 1 : 0), 'auto');
+      $('loading').classList.add('off');
+      var seen = false; try { seen = !!localStorage.getItem('fp_hint_v1'); } catch (e) {}
+      if (!seen) setTimeout(function () { $('hint').classList.add('on'); }, 900);
+      setTimeout(function () { loadAll(want); }, 800);
+    });
+  }).catch(function (e) { $('loading').textContent = 'OPEN FAILED'; $('loading').classList.remove('off'); });
 }
 /* 操作 */
-$('days').addEventListener('click', function (e) { var b = e.target.closest('button[data-day]'); if (b) openDay(b.getAttribute('data-day')); });
-$('stops').addEventListener('click', function (e) { var b = e.target.closest('button[data-k]'); if (b) setIdx(stops[+b.getAttribute('data-k')].start, 'smooth'); });
-var settleT = null, lastY = 0, lastTs = 0, vel = 0;
+$('days').addEventListener('click', function (e) { var b = e.target.closest('button[data-day]'); if (b) gotoDay(b.getAttribute('data-day')); });
+$('stops').addEventListener('click', function (e) { var b = e.target.closest('button[data-k]'); if (b) setIdx(gOf(cur, stops[+b.getAttribute('data-k')].start), 'smooth'); });
+var settleT = null, lastY = 0, lastTs = 0, vel = 0, raf = 0;
 $('feed').addEventListener('scroll', function () {
   var f = $('feed'), now = performance.now(); vel = Math.abs(f.scrollTop - lastY) / Math.max(1, now - lastTs); lastY = f.scrollTop; lastTs = now;
+  if (!raf) raf = requestAnimationFrame(function () { raf = 0; var g = Math.max(0, Math.min(PAGES.length - 1, Math.round(f.scrollTop / pageH()))); if (g !== idx) setIdx(g, false); });
   if (settleT) clearTimeout(settleT);
   settleT = setTimeout(function () {
-    var pg = f.querySelector('.page'), h = pg ? pg.offsetHeight : f.clientHeight, i = Math.round(f.scrollTop / h), target = i * h;
+    var h = pageH(), g = Math.max(0, Math.min(PAGES.length - 1, Math.round(f.scrollTop / h))), target = g * h;
     if (Math.abs(f.scrollTop - target) > 2) f.scrollTo({ top: target, behavior: 'smooth' });
   }, 140);
 }, { passive: true });
@@ -364,25 +408,24 @@ function playStop() { if (playT) { clearInterval(playT); playT = null; } $('play
 $('play').addEventListener('click', function () {
   if (playT) { playStop(); return; }
   $('play').classList.add('on');
-  playT = setInterval(function () { if (idx >= items.length - 1) { playStop(); return; } setIdx(idx + 1, 'smooth'); }, 1200);
+  playT = setInterval(function () { if (idx >= PAGES.length - 1) { playStop(); return; } setIdx(idx + 1, 'smooth'); }, 1200);
 });
 $('feed').addEventListener('touchstart', function () { if (playT) playStop(); }, { passive: true });
-$('feed').addEventListener('click', function (e) { var ph = e.target.closest('.ph'); if (!ph) return; if (ph.classList.contains('full')) { ph.classList.remove('full'); document.body.classList.remove('full'); } else if (ph.id === 'ph' + idx) { ph.classList.add('full'); document.body.classList.add('full'); } });
+$('feed').addEventListener('click', function (e) { var ph = e.target.closest('.ph'); if (!ph) return; if (ph.classList.contains('full')) { ph.classList.remove('full'); document.body.classList.remove('full'); } else if (ph.id === 'ph' + idx && ph.getAttribute('data-n')) { ph.classList.add('full'); document.body.classList.add('full'); } });
 (function () {
   var line = $('line');
   function seek(ev) {
+    if (!items.length) return;
     var r = line.getBoundingClientRect(), x = (ev.touches ? ev.touches[0].clientX : ev.clientX) - r.left, f = Math.max(0, Math.min(1, x / r.width));
     var t = 6 * 60 + f * (17 * 60), best = 0, bd = 1e9;
     items.forEach(function (it, i) { var d = Math.abs(mins(it.t) - t); if (d < bd) { bd = d; best = i; } });
-    if (best !== idx) setIdx(best, 'auto');
+    var g = gOf(cur, best); if (g !== idx) setIdx(g, 'auto');
   }
   line.addEventListener('pointerdown', function (ev) { seeking = true; line.setPointerCapture(ev.pointerId); seek(ev); });
   line.addEventListener('pointermove', function (ev) { if (seeking) seek(ev); });
   line.addEventListener('pointerup', function () { seeking = false; });
   line.addEventListener('pointercancel', function () { seeking = false; });
 })();
-function stepDay(dir) { var i = days.indexOf(cur) + dir; if (i < 0 || i >= days.length) return; swipeFx(dir); openDay(days[i]); }
-function swipeFx(dir) { var f = $('feed'); f.style.transition = 'transform .25s ease, opacity .25s'; f.style.transform = 'translateX(' + (dir > 0 ? -28 : 28) + 'px)'; f.style.opacity = '.4'; setTimeout(function () { f.style.transition = 'transform .35s cubic-bezier(.2,.7,.2,1), opacity .35s'; f.style.transform = 'none'; f.style.opacity = '1'; }, 260); }
 (function () {
   var sx = 0, sy = 0, t0 = 0, feed = $('feed');
   feed.addEventListener('touchstart', function (e) { var t = e.touches[0]; sx = t.clientX; sy = t.clientY; t0 = Date.now(); }, { passive: true });
@@ -400,6 +443,7 @@ document.addEventListener('keydown', function (e) {
   if (e.key === 'ArrowLeft') stepDay(-1);
   if (e.key === 'Escape') { closeMap(); var ph = document.querySelector('.ph.full'); if (ph) { ph.classList.remove('full'); document.body.classList.remove('full'); } }
 });
+window.addEventListener('resize', function () { if (idx >= 0) $('feed').scrollTo({ top: idx * pageH(), behavior: 'auto' }); });
 /* 鍵 */
 function lockSubmit(e) {
   e.preventDefault();
