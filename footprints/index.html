@@ -21,7 +21,7 @@
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%}
-body{background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;overflow:hidden;transition:background 1.2s ease}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;overflow:hidden;transition:background 1.2s ease;touch-action:manipulation;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none}
 button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 /* 空と雲（奥の層） */
 #sky{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
@@ -54,17 +54,21 @@ header{position:fixed;left:0;right:0;top:0;z-index:20;padding:calc(12px + env(sa
 #feed::-webkit-scrollbar{display:none}
 .page{position:relative;height:calc(var(--ph) + var(--gap));display:flex;align-items:flex-start;justify-content:center;padding:0 24px}
 .ph{position:relative;height:var(--ph);aspect-ratio:3/4;max-width:100%;border-radius:14px;overflow:hidden;background:rgba(255,255,255,.35);cursor:pointer;
-  box-shadow:0 40px 60px -30px rgba(90,70,50,.45),0 10px 24px rgba(90,70,50,.14);
-  transform:scale(.96) translateY(8px);opacity:.5;transition:transform .7s cubic-bezier(.2,.7,.2,1),opacity .7s}
+  box-shadow:0 10px 24px rgba(90,70,50,.14);-webkit-touch-callout:none;
+  transform:scale(.96) translateY(8px);opacity:.5;transition:transform .7s cubic-bezier(.2,.7,.2,1),opacity .7s,box-shadow .7s}
 .ph.land{aspect-ratio:4/3;height:auto;width:100%;margin-top:calc(var(--ph) * .1)}
-.page.on .ph{transform:none;opacity:1}
-.ph img{width:100%;height:100%;object-fit:cover;display:block}
+.page.on .ph{transform:none;opacity:1;box-shadow:0 40px 60px -30px rgba(90,70,50,.45),0 10px 24px rgba(90,70,50,.14)}
+.ph img{width:100%;height:100%;object-fit:cover;display:block;-webkit-touch-callout:none;pointer-events:none}
 .ph .cap{position:absolute;left:14px;right:14px;bottom:12px;font-family:var(--serif);font-size:12px;letter-spacing:.08em;line-height:1.5;color:#fff;text-shadow:0 1px 8px rgba(0,0,0,.65);opacity:0;transition:opacity .6s .25s}
 .page.on .ph .cap{opacity:.95}
 .ph.full .cap{bottom:calc(16px + env(safe-area-inset-bottom));font-size:13px}
 .ph.full{position:fixed;inset:0;width:auto;height:auto;margin:0;aspect-ratio:auto;border-radius:0;z-index:60;background:#111;box-shadow:none}
 .ph.full img{object-fit:contain}
 body.full header,body.full footer,body.full #hint{visibility:hidden}
+#fclose{position:fixed;right:16px;top:calc(14px + env(safe-area-inset-top));z-index:70;font-family:var(--en);font-size:12px;letter-spacing:.2em;color:#fff;padding:8px 14px;border-radius:16px;background:rgba(0,0,0,.45);display:none}
+body.full #fclose{display:block}
+#fnum{position:fixed;left:16px;top:calc(18px + env(safe-area-inset-top));z-index:70;font-family:var(--en);font-size:11px;letter-spacing:.2em;color:rgba(255,255,255,.75);display:none;pointer-events:none}
+body.full #fnum{display:block}
 /* 日の境の余白の頁 */
 .page.dv{align-items:center}
 .dv .in{text-align:center;opacity:.35;transform:translateY(10px);transition:opacity .8s,transform .8s}
@@ -157,6 +161,7 @@ footer{position:fixed;left:0;right:0;bottom:0;z-index:20;padding:0 20px calc(18p
 
 <main id="feed"></main>
 <div id="hint">SCROLL · SWIPE FOR DAYS<i></i></div>
+<button id="fclose" type="button">CLOSE</button><span id="fnum"></span>
 
 <footer>
   <div class="big" id="big"><div class="txt"><small id="h-time">—</small><h1 id="h-place">—</h1><em id="h-sub"></em></div><div id="mini" title="一日の地図を開く"></div></div>
@@ -172,7 +177,7 @@ footer{position:fixed;left:0;right:0;bottom:0;z-index:20;padding:0 20px calc(18p
 <input id="lock-pw" type="password" autocomplete="current-password" autocapitalize="off" spellcheck="false" placeholder="合言葉"><button type="submit" id="lock-btn">開く</button><div class="msg" id="lock-msg"></div><a href="../">‹ 旅の手帳へ</a></form></div>
 
 <script src="vendor/leaflet.js"></script>
-<script src="../vault.js?v=68"></script>
+<script src="../vault.js?v=69"></script>
 <script>
 Vault.base('../');
 window.addEventListener('error', function (e) { var l = document.getElementById('loading'); if (l) { l.textContent = 'ERROR: ' + (e.message || e); l.classList.remove('off'); } });
@@ -297,13 +302,19 @@ function setIdx(g, scroll) {
   var on = document.querySelector('#line i.on'); if (on) on.classList.remove('on');
   var li = document.querySelector('#line i[data-i="' + k + '"]'); if (li) li.classList.add('on');
   var s = stopOf(k);
-  Array.prototype.forEach.call(document.querySelectorAll('#stops button'), function (btn, j) {
-    btn.classList.toggle('on', j === s);
-    if (j === s) btn.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' });
-  });
-  if (mini && x) { mini.panTo([x.lat, x.lng], { animate: vel < 1.5, duration: .5 }); miniPins.forEach(function (m, j) { m.setIcon(pinIcon(j === k)); m.setZIndexOffset(j === k ? 1000 : 0); }); }
+  Array.prototype.forEach.call(document.querySelectorAll('#stops button'), function (btn, j) { btn.classList.toggle('on', j === s); });
+  if (vel < 1.2 || scroll) heavy(); else { if (heavyT) clearTimeout(heavyT); heavyT = setTimeout(heavy, 160); }
+}
+/* 止まってからでよい更新：帯の停留所を中央へ、地図を寄せる、720px に差し替える */
+var heavyT = null;
+function heavy() {
+  if (heavyT) { clearTimeout(heavyT); heavyT = null; }
+  var pg = PAGES[idx]; if (!pg) return;
+  var k = pg.k, x = parts[pg.d] && k >= 0 ? parts[pg.d][k] : null;
+  var on = document.querySelector('#stops button.on'); if (on) on.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' });
+  if (mini && x) { mini.panTo([x.lat, x.lng], { animate: true, duration: .5 }); miniPins.forEach(function (m, j) { m.setIcon(pinIcon(j === k)); m.setZIndexOffset(j === k ? 1000 : 0); }); }
   if (big && $('mapfull').classList.contains('on')) bigPins.forEach(function (m, j) { m.setIcon(pinIcon(j === k)); m.setZIndexOffset(j === k ? 1000 : 0); });
-  upgrade(g);
+  upgrade(idx);
 }
 function pinIcon(on) { return L.divIcon({ className: '', html: '<div class="pin' + (on ? ' on' : '') + '"></div>', iconSize: [16, 16], iconAnchor: [8, 8] }); }
 function tiles() { return L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '© OpenStreetMap' }); }
@@ -392,16 +403,23 @@ function start() {
 /* 操作 */
 $('days').addEventListener('click', function (e) { var b = e.target.closest('button[data-day]'); if (b) gotoDay(b.getAttribute('data-day')); });
 $('stops').addEventListener('click', function (e) { var b = e.target.closest('button[data-k]'); if (b) setIdx(gOf(cur, stops[+b.getAttribute('data-k')].start), 'smooth'); });
-var settleT = null, lastY = 0, lastTs = 0, vel = 0, raf = 0;
+var settleT = null, lastY = 0, lastTs = 0, vel = 0, raf = 0, touching = false;
+function settle() {
+  if (settleT) { clearTimeout(settleT); settleT = null; }
+  if (touching) return;
+  var f = $('feed'), h = pageH(), g = Math.max(0, Math.min(PAGES.length - 1, Math.round(f.scrollTop / h))), target = g * h;
+  if (Math.abs(f.scrollTop - target) > 2) f.scrollTo({ top: target, behavior: 'smooth' });
+  else { vel = 0; heavy(); }
+}
 $('feed').addEventListener('scroll', function () {
   var f = $('feed'), now = performance.now(); vel = Math.abs(f.scrollTop - lastY) / Math.max(1, now - lastTs); lastY = f.scrollTop; lastTs = now;
   if (!raf) raf = requestAnimationFrame(function () { raf = 0; var g = Math.max(0, Math.min(PAGES.length - 1, Math.round(f.scrollTop / pageH()))); if (g !== idx) setIdx(g, false); });
   if (settleT) clearTimeout(settleT);
-  settleT = setTimeout(function () {
-    var h = pageH(), g = Math.max(0, Math.min(PAGES.length - 1, Math.round(f.scrollTop / h))), target = g * h;
-    if (Math.abs(f.scrollTop - target) > 2) f.scrollTo({ top: target, behavior: 'smooth' });
-  }, 140);
+  settleT = setTimeout(settle, 140);
 }, { passive: true });
+$('feed').addEventListener('touchstart', function () { touching = true; }, { passive: true });
+$('feed').addEventListener('touchend', function () { touching = false; if (settleT) clearTimeout(settleT); settleT = setTimeout(settle, 160); }, { passive: true });
+$('feed').addEventListener('touchcancel', function () { touching = false; settleT = setTimeout(settle, 160); }, { passive: true });
 $('feed').addEventListener('scroll', function () { var h = $('hint'); if (h.classList.contains('on')) { h.classList.remove('on'); try { localStorage.setItem('fp_hint_v1', '1'); } catch (e) {} } }, { passive: true });
 var playT = null;
 function playStop() { if (playT) { clearInterval(playT); playT = null; } $('play').classList.remove('on'); }
@@ -411,7 +429,32 @@ $('play').addEventListener('click', function () {
   playT = setInterval(function () { if (idx >= PAGES.length - 1) { playStop(); return; } setIdx(idx + 1, 'smooth'); }, 1200);
 });
 $('feed').addEventListener('touchstart', function () { if (playT) playStop(); }, { passive: true });
-$('feed').addEventListener('click', function (e) { var ph = e.target.closest('.ph'); if (!ph) return; if (ph.classList.contains('full')) { ph.classList.remove('full'); document.body.classList.remove('full'); } else if (ph.id === 'ph' + idx && ph.getAttribute('data-n')) { ph.classList.add('full'); document.body.classList.add('full'); } });
+function fullOpen(g) {
+  var ph = $('ph' + g); if (!ph || !ph.getAttribute('data-n')) return;
+  var was = document.querySelector('.ph.full'); if (was) was.classList.remove('full');
+  ph.classList.add('full'); document.body.classList.add('full');
+  var pg = PAGES[g]; $('fnum').textContent = (pg.k + 1) + ' / ' + DAYS[pg.d].count;
+}
+function fullClose() { var ph = document.querySelector('.ph.full'); if (ph) ph.classList.remove('full'); document.body.classList.remove('full'); }
+function fullStep(dir) { var g = idx + dir; if (g < 0 || g >= PAGES.length) return; if (PAGES[g].k < 0) g += dir; if (g < 0 || g >= PAGES.length) return; setIdx(g, 'auto'); fullOpen(g); }
+$('fclose').addEventListener('click', fullClose);
+$('feed').addEventListener('click', function (e) {
+  var ph = e.target.closest('.ph'); if (!ph) return;
+  if (ph.classList.contains('full')) { fullClose(); return; }
+  var g = +ph.closest('.page').getAttribute('data-g');
+  if (g === idx) fullOpen(g); else setIdx(g, 'smooth');
+});
+(function () {
+  var sx = 0, sy = 0, t0 = 0, on = false;
+  document.addEventListener('touchstart', function (e) { on = document.body.classList.contains('full'); if (!on) return; var t = e.touches[0]; sx = t.clientX; sy = t.clientY; t0 = Date.now(); }, { passive: true });
+  document.addEventListener('touchend', function (e) {
+    if (!on || !document.body.classList.contains('full')) return;
+    var t = e.changedTouches[0], dx = t.clientX - sx, dy = t.clientY - sy;
+    if (Date.now() - t0 > 600) return;
+    if (Math.abs(dy) > 70 && Math.abs(dy) > Math.abs(dx) * 1.2) { fullClose(); return; }
+    if (Math.abs(dx) > 48 && Math.abs(dx) > Math.abs(dy) * 1.2) fullStep(dx < 0 ? 1 : -1);
+  }, { passive: true });
+})();
 (function () {
   var line = $('line');
   function seek(ev) {
@@ -431,7 +474,8 @@ $('feed').addEventListener('click', function (e) { var ph = e.target.closest('.p
   feed.addEventListener('touchstart', function (e) { var t = e.touches[0]; sx = t.clientX; sy = t.clientY; t0 = Date.now(); }, { passive: true });
   feed.addEventListener('touchend', function (e) {
     var t = e.changedTouches[0], dx = t.clientX - sx, dy = t.clientY - sy;
-    if (Date.now() - t0 > 700 || Math.abs(dx) < 64 || Math.abs(dy) > Math.abs(dx) * .6) return;
+    if (document.body.classList.contains('full')) return;
+    if (Date.now() - t0 > 500 || Math.abs(dx) < 80 || Math.abs(dy) > Math.abs(dx) * .5) return;
     if (e.target.closest && e.target.closest('#line, #mini, #stops, #days')) return;
     stepDay(dx < 0 ? 1 : -1);
   }, { passive: true });
@@ -441,7 +485,7 @@ document.addEventListener('keydown', function (e) {
   if (e.key === 'ArrowUp') setIdx(idx - 1, 'smooth');
   if (e.key === 'ArrowRight') stepDay(1);
   if (e.key === 'ArrowLeft') stepDay(-1);
-  if (e.key === 'Escape') { closeMap(); var ph = document.querySelector('.ph.full'); if (ph) { ph.classList.remove('full'); document.body.classList.remove('full'); } }
+  if (e.key === 'Escape') { closeMap(); fullClose(); }
 });
 window.addEventListener('resize', function () { if (idx >= 0) $('feed').scrollTo({ top: idx * pageH(), behavior: 'auto' }); });
 /* 鍵 */
