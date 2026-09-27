@@ -10,9 +10,9 @@
  * 旧世代（tabi-shiori-v* / tabi-techo-v*）は一度だけ掃除する。
  * /v1/ のアーカイブ（tabi-shiori-arch-*）には触れない。
  */
-const CACHE = 'tabi-techo-root-v72';
+const CACHE = 'tabi-techo-root-v74';
 const VCACHE = 'tabi-vault-v1'; /* 金庫の暗号文（ハッシュ名・不変）。版を上げても消さない */
-const V = '72'; // index.html の ?v= と揃える
+const V = '74'; // index.html の ?v= と揃える
 /* 必須シェル：1つでも取得に失敗したらインストール自体を失敗させる（約1MB） */
 const CORE = [
   './',
@@ -78,6 +78,20 @@ self.addEventListener('activate', function (e) {
   );
 });
 
+/* 新しい目録に無い暗号文を金庫のキャッシュから消す（写真を入れ替えたり合言葉を変えたりした後の掃除） */
+function pruneVault(res) {
+  return res.json().then(function (m) {
+    var keep = {};
+    (m.parts || []).forEach(function (p) { keep['/vault/' + p.file] = 1; });
+    Object.keys(m.photos || {}).forEach(function (n) { keep['/vault/p/' + m.photos[n]] = 1; });
+    return caches.open(VCACHE).then(function (c) {
+      return c.keys().then(function (ks) {
+        return Promise.all(ks.map(function (k) { var p = new URL(k.url).pathname, i = p.indexOf('/vault/'); if (i < 0 || keep[p.slice(i)]) return null; return c.delete(k); }));
+      });
+    });
+  }).catch(function () {});
+}
+
 self.addEventListener('fetch', function (e) {
   var req = e.request;
   if (req.method !== 'GET') return;
@@ -99,11 +113,11 @@ self.addEventListener('fetch', function (e) {
       caches.open(VCACHE).then(function (c) {
         return c.match(req).then(function (cached) {
           return cached || fetch(req).then(function (res) {
-            if (res && res.ok) { var cp = res.clone(); e.waitUntil(c.put(req, cp)); }
+            if (res && res.ok) { var cp = res.clone(); e.waitUntil(c.put(req, cp).catch(function () {})); }
             return res;
           });
         });
-      })
+      }).catch(function () { return fetch(req); })
     );
     return;
   }
@@ -114,20 +128,28 @@ self.addEventListener('fetch', function (e) {
         /* 404やエラーページはキャッシュしない。保存はイベント寿命に紐づける */
         if (res && res.ok) {
           var cp = res.clone();
-          e.waitUntil(caches.open(CACHE).then(function (c) { return c.put(req, cp); }));
+          e.waitUntil(caches.open(CACHE).then(function (c) { return c.put(req, cp); }).catch(function () {}));
+          if (url.pathname.endsWith('vault/manifest.json')) e.waitUntil(pruneVault(res.clone()));
         }
         return res;
       }).catch(function () {
-        return caches.match(req).then(function (r) { return r || caches.match('./index.html'); });
+        /* オフライン：検索文字列を無視して探し、足跡・記録は自分の HTML を返す */
+        return caches.match(req, { ignoreSearch: true }).then(function (r) {
+          if (r) return r;
+          var p = url.pathname;
+          if (p.indexOf('/footprints/log.html') !== -1) return caches.match('./footprints/log.html');
+          if (p.indexOf('/footprints/') !== -1) return caches.match('./footprints/index.html');
+          return caches.match('./index.html');
+        });
       })
     );
   } else {
     e.respondWith(
-      caches.match(req).then(function (cached) {
+      caches.match(req).catch(function () { return null; }).then(function (cached) {
         return cached || fetch(req).then(function (res) {
           if (res && (res.ok || res.type === 'opaque')) {
             var cp = res.clone();
-            e.waitUntil(caches.open(CACHE).then(function (c) { return c.put(req, cp); }));
+            e.waitUntil(caches.open(CACHE).then(function (c) { return c.put(req, cp); }).catch(function () {}));
           }
           return res;
         });

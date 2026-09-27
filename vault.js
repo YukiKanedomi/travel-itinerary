@@ -51,14 +51,21 @@ var Vault = (function () {
     });
   }
   /* 端末に保存した鍵が今の金庫に合うか（合言葉を変えた後の検知に使う） */
+  /* false は「鍵が合わない」だけ。目録が取れない・鍵が無いなどは reject（呼び出し側で鍵を消さない） */
   function verify() {
-    return Promise.all([manifest(), loadKey()]).then(function (a) { return check(a[1], a[0]); }).catch(function () { return false; });
+    return Promise.all([manifest(), loadKey()]).then(function (a) { return check(a[1], a[0]); });
   }
-  function forget() { key = null; cache = {}; try { localStorage.removeItem(KEY); } catch (e) {} }
+  var gen = 0;
+  function forget() {
+    key = null; cache = {}; pending = {}; gen++;
+    Object.keys(urls).forEach(function (n) { var pr = urls[n]; delete urls[n]; pr.then(function (u) { if (u) URL.revokeObjectURL(u); }).catch(function () {}); });
+    try { localStorage.removeItem(KEY); } catch (e) {}
+  }
   /* 金庫の一区画（'journal' / 'photos-0924' など）を復号して JSON で返す */
   function load(id) {
     if (cache[id]) return Promise.resolve(cache[id]);
     if (pending[id]) return pending[id]; /* 取得中なら同じ約束を返す（並行呼び出しで二重に取らない） */
+    var g0 = gen;
     pending[id] = Promise.all([manifest(), loadKey()]).then(function (a) {
       var m = a[0], k = a[1], p = null;
       m.parts.forEach(function (x) { if (x.id === id) p = x; });
@@ -70,6 +77,7 @@ var Vault = (function () {
         var u = new Uint8Array(buf);
         return dec(k, u.slice(0, 12), u.slice(12));
       }).then(function (buf) {
+        if (g0 !== gen) throw new Error('forgotten');
         var o = JSON.parse(new TextDecoder().decode(buf));
         cache[id] = o; delete pending[id]; return o;
       });
@@ -89,6 +97,7 @@ var Vault = (function () {
   function photoURL(n) {
     n = String(n);
     if (urls[n]) return urls[n];
+    var g1 = gen;
     urls[n] = Promise.all([manifest(), loadKey()]).then(function (a) {
       var m = a[0], k = a[1], f = m.photos && m.photos[n];
       if (!f) return null;
@@ -99,6 +108,7 @@ var Vault = (function () {
         var u = new Uint8Array(buf);
         return dec(k, u.slice(0, 12), u.slice(12));
       }).then(function (buf) {
+        if (g1 !== gen) throw new Error('forgotten');
         return URL.createObjectURL(new Blob([buf], { type: m.ptype || 'image/jpeg' }));
       });
     }).catch(function (e) { delete urls[n]; throw e; });

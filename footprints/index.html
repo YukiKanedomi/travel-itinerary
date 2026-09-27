@@ -93,12 +93,12 @@ header{position:fixed;left:0;right:0;top:0;z-index:20;padding:calc(12px + env(sa
 .ph img{width:100%;height:100%;object-fit:cover;display:block;-webkit-touch-callout:none;pointer-events:none}
 .ph.hc::after{content:"";position:absolute;left:0;right:0;bottom:0;height:46%;background:linear-gradient(180deg,rgba(0,0,0,0),rgba(0,0,0,.28) 40%,rgba(0,0,0,.6));opacity:0;transition:opacity .6s .25s;pointer-events:none}
 .page.on .ph.hc::after{opacity:1}
-.ph.full::after{display:none}
 .ph .cap{position:absolute;left:16px;right:16px;bottom:14px;z-index:2;font-family:var(--serif);font-size:13.5px;letter-spacing:.06em;line-height:1.55;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.8),0 0 14px rgba(0,0,0,.5);opacity:0;transition:opacity .6s .25s}
 .page.on .ph .cap{opacity:1}
-.ph.full .cap{bottom:calc(18px + env(safe-area-inset-bottom));font-size:14px}
-.ph.full{position:fixed;inset:0;width:auto;height:auto;margin:0;aspect-ratio:auto;border-radius:0;z-index:60;background:#111;box-shadow:none}
-.ph.full img{object-fit:contain}
+#full{position:fixed;inset:0;z-index:60;background:#111;display:none;align-items:center;justify-content:center;touch-action:none;overscroll-behavior:contain}
+body.full #full{display:flex}
+#full img{max-width:100%;max-height:100%;object-fit:contain;display:block}
+#full .cap{position:absolute;left:16px;right:16px;bottom:calc(18px + env(safe-area-inset-bottom));z-index:2;font-family:var(--serif);font-size:14px;line-height:1.55;letter-spacing:.06em;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.8),0 0 14px rgba(0,0,0,.5)}
 body.full header,body.full footer,body.full #hint{visibility:hidden}
 #fclose{position:fixed;right:16px;top:calc(14px + env(safe-area-inset-top));z-index:70;font-family:var(--en);font-size:12px;letter-spacing:.2em;color:#fff;padding:8px 14px;border-radius:16px;background:rgba(0,0,0,.45);display:none}
 body.full #fclose{display:block}
@@ -113,7 +113,9 @@ body.full #fnum{display:block}
 .dv .d b{font-weight:400}
 .dv h2{font-weight:500;font-size:16px;letter-spacing:.06em;color:var(--ink)}
 .dv em{display:block;font-style:normal;font-family:var(--en);font-size:10px;letter-spacing:.3em;color:var(--dim);margin-top:14px}
-.dv .dvl{display:inline-block;margin-top:22px;padding:8px 16px;border-radius:17px;font-size:12px;letter-spacing:.08em;color:var(--ink);text-decoration:none;background:rgba(255,255,255,.7)}
+.dv .city{max-width:300px;margin:22px auto 0;font-family:var(--serif);font-size:12px;line-height:1.85;letter-spacing:.04em;color:var(--mid);text-align:left}
+.dv .city small{display:block;font-family:var(--en);font-size:9.5px;letter-spacing:.3em;color:var(--dim);margin-bottom:6px;text-align:center}
+.dv .dvl{display:inline-block;margin-top:18px;padding:8px 16px;border-radius:17px;font-size:12px;letter-spacing:.08em;color:var(--ink);text-decoration:none;background:rgba(255,255,255,.7)}
 html.dark .dv .dvl{background:rgba(255,255,255,.12)}
 .dv i{display:block;width:1px;height:26px;background:var(--dim);margin:22px auto 0;opacity:.5}
 /* 下：地名・時間の線・地図の窓（手前の層） */
@@ -197,7 +199,9 @@ footer{position:fixed;left:0;right:0;bottom:0;z-index:20;padding:0 20px calc(18p
 
 <main id="feed"></main>
 <div id="hint">SCROLL · SWIPE FOR DAYS<i></i></div>
+<div id="full"><img id="full-img" alt=""><span class="cap" id="full-cap"></span></div>
 <button id="fclose" type="button">CLOSE</button><span id="fnum"></span>
+<div id="phprobe" style="position:fixed;left:-9999px;top:0;width:1px;height:var(--ph);visibility:hidden;pointer-events:none"></div>
 
 <footer>
   <div class="big" id="big"><div class="txt"><small id="h-time">—</small><h1 id="h-place">—</h1><em id="h-sub"></em></div><div id="mini" title="一日の地図を開く"></div></div>
@@ -213,7 +217,7 @@ footer{position:fixed;left:0;right:0;bottom:0;z-index:20;padding:0 20px calc(18p
 <input id="lock-pw" type="password" autocomplete="current-password" autocapitalize="off" spellcheck="false" placeholder="合言葉"><button type="submit" id="lock-btn">開く</button><div class="msg" id="lock-msg"></div><a href="../">‹ 旅の手帳へ</a></form></div>
 
 <script src="vendor/leaflet.js"></script>
-<script src="../vault.js?v=72"></script>
+<script src="../vault.js?v=74"></script>
 <script>
 Vault.base('../');
 (function () {
@@ -241,6 +245,16 @@ var PAPER = {
   '0923': ['#E6E9EC', '#F0F2F4', '#F5E7DF'], '0924': ['#EFE6DA', '#F6EFE5', '#F7E3D6'], '0925': ['#E4E9EE', '#EFF2F5', '#F3E4DC'], '0926': ['#E9E6E3', '#F3F0EC', '#F1E4DC']
 };
 var DAY_NO = { '0920': 1, '0921': 2, '0922': 3, '0923': 4, '0924': 5, '0925': 6, '0926': 7 };
+/* その日、街では（裏取り済み：気象局の観測、ABC、Wikipedia ほか） */
+var DAY_CITY = {
+  '0920': '大型で強い台風 25 号が日本の南を北上。翌日には関東に最接近し、千葉では 40 時間降り続いた雨で堤防が決壊した。その前をすり抜けての出発。',
+  '0921': '前日の最高 28.5 度から一転、寒冷前線で最高 14.5 度の肌寒い月曜。夜はクラウンでブラウンロー・メダルの授賞式、コリングウッドのニック・デイコスが史上最多の 47 票で初受賞。',
+  '0922': '旅でいちばん冷えた朝、最低 5.2 度。この日ジョン・ケイン・アリーナで MAMAMOO の豪州初公演、市内では人形劇の祭りも開幕。',
+  '0923': '午前 10 時 5 分に春分。南半球はこの日から昼が夜より長い。MCG の脇ではグランドファイナル週の Footy Fest が開幕。着いたシドニーは 22 mm の雨だった。',
+  '0924': 'カトゥーンバは雨上がりの曇りから晴れて最高 20 度、シドニーは 24 度。シドニー空港では保安検査員 400 人が朝と夕方に 2 時間ずつのストライキ。',
+  '0925': '中秋節の当日で、NSW の学校は 3 学期の最終日。夜、ルースターズが準決勝に勝って 7 年ぶりの NRL グランドファイナルへ。メルボルンはこの日「グランドファイナル・フライデー」の祝日で、街はパレード。',
+  '0926': 'シドニーは最高 28.8 度の夏日、夕方に寒冷前線。MCG では冷たい雨の中 10 万人が AFL グランドファイナルを見守り、ブリスベン・ライオンズが 7 点差で 3 連覇。日本の南には次の台風 26 号。'
+};
 var DAY_TITLE = { '0920': '成田から、夜の便で', '0921': 'メルボルン、路地とアーケード', '0922': '市場、庭園、図書館、劇場', '0923': 'メルボルンからシドニーへ', '0924': 'ブルーマウンテンズ', '0925': 'シドニー最終日', '0926': '帰国' };
 var WD = { '0920': '日', '0921': '月', '0922': '火', '0923': '水', '0924': '木', '0925': '金', '0926': '土' };
 var $ = function (id) { return document.getElementById(id); };
@@ -255,6 +269,12 @@ function mins(t) { var m = /(\d\d):(\d\d)$/.exec(t); return m ? (+m[1]) * 60 + (
 function dayNo(d) { return 'DAY ' + ('0' + DAY_NO[d]).slice(-2); }
 /* 頁の高さは小数（vw の 4/3）なので、丸めずに測る。丸めると 600 頁で 200px ずれる */
 var _ph = 0;
+var lastW = 0;
+function fixPh() {
+  var root = document.documentElement; root.style.removeProperty('--ph');
+  var h = $('phprobe').getBoundingClientRect().height; if (h > 120) root.style.setProperty('--ph', h + 'px');
+  _ph = 0; lastW = window.innerWidth;
+}
 function pageH() { if (!_ph) { var pg = document.querySelector('.page'); _ph = pg ? pg.getBoundingClientRect().height : 500; } return _ph; }
 function gOf(d, k) { return DAYS[d].off + 1 + k; }
 
@@ -285,7 +305,7 @@ function renderSkeleton() {
   days.forEach(function (d) {
     var info = DAYS[d];
     info.off = g;
-    h += '<section class="page dv" data-g="' + g + '" data-d="' + d + '"><div class="dv"><div class="in"><small>' + dayNo(d) + '</small><div class="d">' + (+d.slice(0, 2)) + '<b>/' + (+d.slice(2)) + '</b></div><h2>' + esc(DAY_TITLE[d] || '') + '</h2><em>' + WD[d] + '曜日 · ' + info.count + ' PHOTOS</em><a class="dvl" href="log.html#' + d + '">この日の記録を読む ›</a><i></i></div></div></section>';
+    h += '<section class="page dv" data-g="' + g + '" data-d="' + d + '"><div class="dv"><div class="in"><small>' + dayNo(d) + '</small><div class="d">' + (+d.slice(0, 2)) + '<b>/' + (+d.slice(2)) + '</b></div><h2>' + esc(DAY_TITLE[d] || '') + '</h2><em>' + WD[d] + '曜日 · ' + info.count + ' PHOTOS</em>' + (DAY_CITY[d] ? '<p class="city"><small>その日、街では</small>' + esc(DAY_CITY[d]) + '</p>' : '') + '<a class="dvl" href="log.html#' + d + '">この日の記録を読む ›</a><i></i></div></div></section>';
     PAGES.push({ d: d, k: -1 }); g++;
     for (var k = 0; k < info.count; k++) { h += '<section class="page" data-g="' + g + '" data-d="' + d + '" data-k="' + k + '"><figure class="ph" id="ph' + g + '"><img alt="" loading="lazy" decoding="async"></figure></section>'; PAGES.push({ d: d, k: k }); g++; }
   });
@@ -325,13 +345,15 @@ function renderLine() {
   $('line').innerHTML = h;
 }
 /* 720px の写真に差し替える（いまの前後 2 枚） */
+var bigSeq = 0;
 function upgrade(g) {
   for (var q = g - 1; q <= g + 2; q++) {
     (function (q) {
       var pg = PAGES[q]; if (!pg || pg.k < 0 || !parts[pg.d]) return;
       var x = parts[pg.d][pg.k], im = document.querySelector('#ph' + q + ' img'); if (!x || !im || !im.getAttribute('src') || im.getAttribute('data-big')) return;
-      im.setAttribute('data-big', '1');
-      Vault.photoURL(x.n).then(function (u) { if (u) im.src = u; }).catch(function () {});
+      var tok = String(++bigSeq); im.setAttribute('data-big', tok);
+      Vault.photoURL(x.n).then(function (u) { if (im.getAttribute('data-big') !== tok) return; if (u) im.src = u; else im.removeAttribute('data-big'); })
+        .catch(function () { if (im.getAttribute('data-big') === tok) im.removeAttribute('data-big'); });
     })(q);
   }
 }
@@ -437,11 +459,13 @@ function loadDay(d) {
 function loadAll(first) {
   var i = days.indexOf(first), order = [first];
   for (var s = 1; s < days.length; s++) { if (days[i + s]) order.push(days[i + s]); if (days[i - s]) order.push(days[i - s]); }
-  return order.slice(1).reduce(function (p, d) { return p.then(function () { return new Promise(function (r) { setTimeout(r, 350); }); }).then(function () { return loadDay(d); }); }, Promise.resolve());
+  return order.slice(1).reduce(function (p, d) { return p.then(function () { return new Promise(function (r) { setTimeout(r, 350); }); }).then(function () { return loadDay(d).catch(function () {}); }); }, Promise.resolve());
 }
 /* 日へ飛ぶ（日付の数字・横スワイプ・← →） */
 function gotoDay(d, fx) {
   if (days.indexOf(d) < 0) return;
+  fullClose(); closeMap();
+  if (!parts[d]) loadDay(d).catch(function () {});
   if (fx) swipeFx(fx);
   setIdx(DAYS[d].off + 1, 'auto');
 }
@@ -462,11 +486,11 @@ function start() {
     if (days.indexOf(want) < 0) want = days[0];
     try { if (location.hash) history.replaceState(null, '', location.pathname); } catch (e) {}
     return loadCaps().then(function () {
-      renderSkeleton();
+      fixPh(); renderSkeleton();
       return loadDay(want);
     }).then(function () {
-      var k = 0; if (pendingN) { parts[want].forEach(function (x, i) { if (x.n === pendingN) k = i; }); pendingN = null; }
-      setIdx(k ? gOf(want, k) : DAYS[want].off + (days.indexOf(want) === 0 ? 1 : 0), 'auto');
+      var k = -1; if (pendingN) { parts[want].forEach(function (x, i) { if (x.n === pendingN) k = i; }); pendingN = null; }
+      setIdx(k >= 0 ? gOf(want, k) : DAYS[want].off + (days.indexOf(want) === 0 ? 1 : 0), 'auto');
       $('loading').classList.add('off');
       var seen = false; try { seen = !!localStorage.getItem('fp_hint_v1'); } catch (e) {}
       if (!seen) setTimeout(function () { $('hint').classList.add('on'); }, 900);
@@ -503,18 +527,24 @@ $('play').addEventListener('click', function () {
   playT = setInterval(function () { if (idx >= PAGES.length - 1) { playStop(); return; } setIdx(idx + 1, 'smooth'); }, 1200);
 });
 $('feed').addEventListener('touchstart', function () { if (playT) playStop(); }, { passive: true });
+var fullG = -1;
 function fullOpen(g) {
   var ph = $('ph' + g); if (!ph || !ph.getAttribute('data-n')) return;
-  var was = document.querySelector('.ph.full'); if (was) was.classList.remove('full');
-  ph.classList.add('full'); document.body.classList.add('full');
-  var pg = PAGES[g]; $('fnum').textContent = (pg.k + 1) + ' / ' + DAYS[pg.d].count;
+  var pg = PAGES[g], x = parts[pg.d] && parts[pg.d][pg.k]; if (!x) return;
+  var im = ph.querySelector('img'), fi = $('full-img');
+  fullG = g;
+  fi.src = im.getAttribute('src') || x.img;
+  $('full-cap').textContent = CAP[x.n] || '';
+  $('fnum').textContent = (pg.k + 1) + ' / ' + DAYS[pg.d].count;
+  document.body.classList.add('full');
+  Vault.photoURL(x.n).then(function (u) { if (u && fullG === g) fi.src = u; }).catch(function () {});
 }
-function fullClose() { var ph = document.querySelector('.ph.full'); if (ph) ph.classList.remove('full'); document.body.classList.remove('full'); }
+function fullClose() { if (!document.body.classList.contains('full')) return; document.body.classList.remove('full'); fullG = -1; $('full-img').removeAttribute('src'); }
 function fullStep(dir) { var g = idx + dir; if (g < 0 || g >= PAGES.length) return; if (PAGES[g].k < 0) g += dir; if (g < 0 || g >= PAGES.length) return; setIdx(g, 'auto'); fullOpen(g); }
 $('fclose').addEventListener('click', fullClose);
+$('full').addEventListener('click', fullClose);
 $('feed').addEventListener('click', function (e) {
   var ph = e.target.closest('.ph'); if (!ph) return;
-  if (ph.classList.contains('full')) { fullClose(); return; }
   var g = +ph.closest('.page').getAttribute('data-g');
   if (g === idx) fullOpen(g); else setIdx(g, 'smooth');
 });
@@ -561,7 +591,8 @@ document.addEventListener('keydown', function (e) {
   if (e.key === 'ArrowLeft') stepDay(-1);
   if (e.key === 'Escape') { closeMap(); fullClose(); }
 });
-window.addEventListener('resize', function () { _ph = 0; if (idx >= 0) $('feed').scrollTo({ top: idx * pageH(), behavior: 'auto' }); });
+var rsT = null;
+window.addEventListener('resize', function () { if (rsT) clearTimeout(rsT); rsT = setTimeout(function () { rsT = null; if (touching || window.innerWidth === lastW) return; fixPh(); if (idx >= 0) $('feed').scrollTo({ top: idx * pageH(), behavior: 'auto' }); }, 250); });
 /* 鍵 */
 function lockSubmit(e) {
   e.preventDefault();
@@ -577,13 +608,14 @@ function lockSubmit(e) {
 (function init() {
   var m = /[#&]pw=([^&]+)/.exec(location.hash);
   if (m) {
-    var pw = decodeURIComponent(m[1]); var d = (/[#&]d=(\d{4}(?:-\d{4})?)/.exec(location.hash) || [])[1]; if (d && d.length > 4) pendingN = d.slice(5);
+    var pw = ''; try { pw = decodeURIComponent(m[1]); } catch (e) { pw = m[1]; } var d = (/[#&]d=(\d{4}(?:-\d{4})?)/.exec(location.hash) || [])[1]; if (d && d.length > 4) pendingN = d.slice(5);
     history.replaceState(null, '', location.pathname + (d ? '#' + d : ''));
     Vault.unlock(pw).then(function (ok) { if (ok) start(); else { $('lock').hidden = false; $('loading').classList.add('off'); } }).catch(function () { $('lock').hidden = false; $('loading').classList.add('off'); });
     return;
   }
   if (!Vault.hasKey()) { $('lock').hidden = false; $('loading').classList.add('off'); return; }
-  Vault.verify().then(function (ok) { if (ok) start(); else { Vault.forget(); $('lock').hidden = false; $('loading').classList.add('off'); } });
+  Vault.verify().then(function (ok) { if (ok) start(); else { Vault.forget(); $('lock').hidden = false; $('loading').classList.add('off'); } })
+    .catch(function () { $('loading').textContent = 'オンラインで開き直してください'; });
 })();
 </script>
 </body>
