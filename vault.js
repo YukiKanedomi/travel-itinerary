@@ -5,12 +5,14 @@
  * 別ディレクトリのページからは Vault.base('../') のように金庫の場所を指定する。
  */
 var Vault = (function () {
-  var base = '', man = null, key = null, cache = {}, pending = {}, KEY = 'vault_key_v1';
+  var base = '', dir = 'vault', man = null, key = null, cache = {}, pending = {};
+  /* 端末に保存する鍵の名前。本体の金庫は従来どおり、共有版は別の名前 */
+  function KEYN() { return dir === 'vault' ? 'vault_key_v1' : 'vault_key_' + dir; }
   function b64d(s) { var b = atob(s), u = new Uint8Array(b.length); for (var i = 0; i < b.length; i++) u[i] = b.charCodeAt(i); return u; }
   function b64e(u) { var s = ''; for (var i = 0; i < u.length; i++) s += String.fromCharCode(u[i]); return btoa(s); }
   function manifest() {
     if (man) return Promise.resolve(man);
-    return fetch(base + 'vault/manifest.json', { cache: 'no-store' }).then(function (r) {
+    return fetch(base + dir + '/manifest.json', { cache: 'no-store' }).then(function (r) {
       if (!r.ok) throw new Error('manifest ' + r.status);
       return r.json();
     }).then(function (m) { man = m; return m; });
@@ -28,10 +30,10 @@ var Vault = (function () {
       .then(function (buf) { return new TextDecoder().decode(buf) === 'tabi-techo-vault'; })
       .catch(function () { return false; });
   }
-  function hasKey() { try { return !!localStorage.getItem(KEY); } catch (e) { return false; } }
+  function hasKey() { try { return !!localStorage.getItem(KEYN()); } catch (e) { return false; } }
   function loadKey() {
     if (key) return Promise.resolve(key);
-    var raw = null; try { raw = localStorage.getItem(KEY); } catch (e) {}
+    var raw = null; try { raw = localStorage.getItem(KEYN()); } catch (e) {}
     if (!raw) return Promise.reject(new Error('nokey'));
     return crypto.subtle.importKey('raw', b64d(raw), { name: 'AES-GCM' }, true, ['decrypt']).then(function (k) { key = k; return k; });
   }
@@ -43,7 +45,7 @@ var Vault = (function () {
           if (!ok) return false;
           key = k; cache = {};
           return crypto.subtle.exportKey('raw', k).then(function (r) {
-            try { localStorage.setItem(KEY, b64e(new Uint8Array(r))); } catch (e) {}
+            try { localStorage.setItem(KEYN(), b64e(new Uint8Array(r))); } catch (e) {}
             return true;
           });
         });
@@ -59,7 +61,7 @@ var Vault = (function () {
   function forget() {
     key = null; cache = {}; pending = {}; gen++;
     Object.keys(urls).forEach(function (n) { var pr = urls[n]; delete urls[n]; pr.then(function (u) { if (u) URL.revokeObjectURL(u); }).catch(function () {}); });
-    try { localStorage.removeItem(KEY); } catch (e) {}
+    try { localStorage.removeItem(KEYN()); } catch (e) {}
   }
   /* 金庫の一区画（'journal' / 'photos-0924' など）を復号して JSON で返す */
   function load(id) {
@@ -70,7 +72,7 @@ var Vault = (function () {
       var m = a[0], k = a[1], p = null;
       m.parts.forEach(function (x) { if (x.id === id) p = x; });
       if (!p) throw new Error('no part ' + id);
-      return fetch(base + 'vault/' + p.file).then(function (r) {
+      return fetch(base + dir + '/' + p.file).then(function (r) {
         if (!r.ok) throw new Error('fetch ' + r.status);
         return r.arrayBuffer();
       }).then(function (buf) {
@@ -101,7 +103,7 @@ var Vault = (function () {
     urls[n] = Promise.all([manifest(), loadKey()]).then(function (a) {
       var m = a[0], k = a[1], f = m.photos && m.photos[n];
       if (!f) return null;
-      return fetch(base + 'vault/p/' + f).then(function (r) {
+      return fetch(base + dir + '/p/' + f).then(function (r) {
         if (!r.ok) throw new Error('fetch ' + r.status);
         return r.arrayBuffer();
       }).then(function (buf) {
@@ -122,5 +124,5 @@ var Vault = (function () {
       pr.then(function (u) { if (u) URL.revokeObjectURL(u); }).catch(function () {});
     });
   }
-  return { base: function (b) { base = b; }, manifest: manifest, hasKey: hasKey, unlock: unlock, verify: verify, forget: forget, load: load, partOf: partOf, photo: photo, photoURL: photoURL, release: release };
+  return { base: function (b) { base = b; }, dir: function (d) { dir = d; man = null; key = null; cache = {}; }, manifest: manifest, hasKey: hasKey, unlock: unlock, verify: verify, forget: forget, load: load, partOf: partOf, photo: photo, photoURL: photoURL, release: release };
 })();

@@ -14,15 +14,18 @@ import { createHash, randomBytes } from 'crypto';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const refDir = join(root, '参考資料');
-const outDir = join(root, 'vault');
+/* --guest：共有版（合言葉・ソルト・出力先が別。写真は 参考資料/guest-photos.txt の番号だけ。日ごとの区画は作らない） */
+const GUEST = process.argv.includes('--guest');
+const outDir = join(root, GUEST ? 'vault-guest' : 'vault');
+const ONLY = GUEST ? new Set(readFileSync(join(refDir, 'guest-photos.txt'), 'utf8').split(/\r?\n/).map(x => x.trim()).filter(Boolean)) : null;
 const JOURNAL_DIR = process.env.JOURNAL_DIR || 'C:\\Users\\kanedomi\\マイドライブ\\Claude成果物\\travel-itinerary\\旅の記録';
 const PHOTO_JSON = process.env.PHOTO_JSON || (existsSync(join(refDir, 'photomap_vault.json')) ? join(refDir, 'photomap_vault.json') : '');
 const ITER = 210000;
 const subtle = globalThis.crypto.subtle;
 
-const pw = readFileSync(join(refDir, 'vault-password.txt'), 'utf8').trim();
+const pw = readFileSync(join(refDir, GUEST ? 'vault-guest-password.txt' : 'vault-password.txt'), 'utf8').trim();
 if (!pw) throw new Error('合言葉が空です');
-const saltPath = join(refDir, 'vault-salt.txt');
+const saltPath = join(refDir, GUEST ? 'vault-guest-salt.txt' : 'vault-salt.txt');
 if (!existsSync(saltPath)) writeFileSync(saltPath, randomBytes(16).toString('base64') + '\n');
 const salt = Buffer.from(readFileSync(saltPath, 'utf8').trim(), 'base64');
 
@@ -64,6 +67,7 @@ if (PHOTO_JSON) {
   const byDay = {};
   for (const r of recs) {
     const day = r.t.slice(0, 5); // MM/DD
+    if (ONLY && !ONLY.has(r.n)) continue;
     (byDay[day] = byDay[day] || []).push(r);
     index[r.n] = day.replace('/', '');
     if (r.big) {
@@ -78,7 +82,7 @@ if (PHOTO_JSON) {
     }
   }
   let big = 0;
-  for (const day of Object.keys(byDay).sort()) {
+  for (const day of (GUEST ? [] : Object.keys(byDay).sort())) {
     const items = byDay[day].sort((a, b) => a.t.localeCompare(b.t) || a.n.localeCompare(b.n))
       .map(r => { const o = Object.assign({}, r); delete o.big; return o; });
     const enc = await encrypt(new TextEncoder().encode(JSON.stringify({ day, items })));
@@ -107,4 +111,13 @@ const manifest = {
   parts, index, photos, ptype
 };
 writeFileSync(join(outDir, 'manifest.json'), JSON.stringify(manifest));
-console.log('vault:', parts.map(p => `${p.id} ${(p.bytes / 1e6).toFixed(2)}MB (${p.count})`).join(', '));
+console.log((GUEST ? 'vault-guest:' : 'vault:'), parts.map(p => `${p.id} ${(p.bytes / 1e6).toFixed(2)}MB (${p.count})`).join(', '));
+/* 共有版の頁：log.html から作る（本体を直せば共有版も追いつく） */
+{
+  const src = readFileSync(join(root, 'footprints', 'log.html'), 'utf8');
+  let out = src.replace('<title>旅の記録 — オーストラリア 2026</title>', '<title>旅の記録（共有版） — オーストラリア 2026</title>');
+  out = out.replace("Vault.base('../');", "Vault.base('../'); Vault.dir('vault-guest'); window.GUEST = true; document.documentElement.classList.add('guest');");
+  if (out === src) throw new Error('share.html: 置き換え箇所が見つかりません');
+  writeFileSync(join(root, 'footprints', 'share.html'), out);
+  console.log('share.html ok');
+}

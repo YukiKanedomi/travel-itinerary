@@ -10,9 +10,9 @@
  * 旧世代（tabi-shiori-v* / tabi-techo-v*）は一度だけ掃除する。
  * /v1/ のアーカイブ（tabi-shiori-arch-*）には触れない。
  */
-const CACHE = 'tabi-techo-root-v74';
+const CACHE = 'tabi-techo-root-v75';
 const VCACHE = 'tabi-vault-v1'; /* 金庫の暗号文（ハッシュ名・不変）。版を上げても消さない */
-const V = '74'; // index.html の ?v= と揃える
+const V = '75'; // index.html の ?v= と揃える
 /* 必須シェル：1つでも取得に失敗したらインストール自体を失敗させる（約1MB） */
 const CORE = [
   './',
@@ -81,12 +81,13 @@ self.addEventListener('activate', function (e) {
 /* 新しい目録に無い暗号文を金庫のキャッシュから消す（写真を入れ替えたり合言葉を変えたりした後の掃除） */
 function pruneVault(res) {
   return res.json().then(function (m) {
+    var dir = '/' + ((/\/(vault(?:-\w+)?)\/manifest\.json$/.exec(res.url || '') || [])[1] || 'vault') + '/';
     var keep = {};
-    (m.parts || []).forEach(function (p) { keep['/vault/' + p.file] = 1; });
-    Object.keys(m.photos || {}).forEach(function (n) { keep['/vault/p/' + m.photos[n]] = 1; });
+    (m.parts || []).forEach(function (p) { keep[dir + p.file] = 1; });
+    Object.keys(m.photos || {}).forEach(function (n) { keep[dir + 'p/' + m.photos[n]] = 1; });
     return caches.open(VCACHE).then(function (c) {
       return c.keys().then(function (ks) {
-        return Promise.all(ks.map(function (k) { var p = new URL(k.url).pathname, i = p.indexOf('/vault/'); if (i < 0 || keep[p.slice(i)]) return null; return c.delete(k); }));
+        return Promise.all(ks.map(function (k) { var p = new URL(k.url).pathname, i = p.indexOf(dir); if (i < 0 || keep[p.slice(i)]) return null; return c.delete(k); }));
       });
     });
   }).catch(function () {});
@@ -105,9 +106,9 @@ self.addEventListener('fetch', function (e) {
               url.pathname.endsWith('/') ||
               url.pathname.endsWith('index.html') ||
               url.pathname.endsWith('articles.json') || // 朝刊は network-first（毎朝更新されるため）
-              url.pathname.endsWith('vault/manifest.json'); // 金庫の目録も network-first（暗号文はハッシュ名で cache-first）
+              /\/vault(-\w+)?\/manifest\.json$/.test(url.pathname); // 金庫（本体・共有版）の目録も network-first（暗号文はハッシュ名で cache-first）
 
-  var isVault = url.pathname.indexOf('/vault/') !== -1 && !url.pathname.endsWith('manifest.json');
+  var isVault = /\/vault(-\w+)?\//.test(url.pathname) && !url.pathname.endsWith('manifest.json');
   if (isVault) {
     e.respondWith(
       caches.open(VCACHE).then(function (c) {
@@ -129,7 +130,7 @@ self.addEventListener('fetch', function (e) {
         if (res && res.ok) {
           var cp = res.clone();
           e.waitUntil(caches.open(CACHE).then(function (c) { return c.put(req, cp); }).catch(function () {}));
-          if (url.pathname.endsWith('vault/manifest.json')) e.waitUntil(pruneVault(res.clone()));
+          if (/\/vault(-\w+)?\/manifest\.json$/.test(url.pathname)) e.waitUntil(pruneVault(res.clone()));
         }
         return res;
       }).catch(function () {
