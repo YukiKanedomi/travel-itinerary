@@ -42,6 +42,7 @@ header::before,footer::before{content:"";position:absolute;inset:0;z-index:-1;po
 header::before{-webkit-mask-image:linear-gradient(180deg,#000 62%,transparent);mask-image:linear-gradient(180deg,#000 62%,transparent)}
 footer::before{-webkit-mask-image:linear-gradient(0deg,#000 55%,transparent);mask-image:linear-gradient(0deg,#000 55%,transparent)}
 html.dark header::before,html.dark footer::before{opacity:calc(var(--grain) * 1.4)}
+html.guest .lk a{display:none}
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%}
 body{background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;overflow:hidden;transition:background 1.2s ease;touch-action:manipulation;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none}
@@ -217,7 +218,7 @@ footer{position:fixed;left:0;right:0;bottom:0;z-index:20;padding:0 20px calc(18p
 <input id="lock-pw" type="password" autocomplete="current-password" autocapitalize="off" spellcheck="false" placeholder="合言葉"><button type="submit" id="lock-btn">開く</button><div class="msg" id="lock-msg"></div><a href="../">‹ 旅の手帳へ</a></form></div>
 
 <script src="vendor/leaflet.js"></script>
-<script src="../vault.js?v=75"></script>
+<script src="../vault.js?v=76"></script>
 <script>
 Vault.base('../');
 (function () {
@@ -258,6 +259,7 @@ var DAY_CITY = {
 var DAY_TITLE = { '0920': '成田から、夜の便で', '0921': 'メルボルン、路地とアーケード', '0922': '市場、庭園、図書館、劇場', '0923': 'メルボルンからシドニーへ', '0924': 'ブルーマウンテンズ', '0925': 'シドニー最終日', '0926': '帰国' };
 var WD = { '0920': '日', '0921': '月', '0922': '火', '0923': '水', '0924': '木', '0925': '金', '0926': '土' };
 var $ = function (id) { return document.getElementById(id); };
+var LOGP = window.GUEST ? 'share.html' : 'log.html'; /* 記録の頁（共有版は共有版の記録へ） */
 /* 頁の並び：日ごとに「余白の頁 1 つ ＋ 写真の枚数」。全頁が同じ高さなので、位置は割り算で分かる */
 var CAP = {}, pendingN = null, man = null, days = [], DAYS = {}, PAGES = [], parts = {};
 var cur = null, items = [], stops = [], idx = -1, mini = null, big = null, miniPins = [], bigPins = [], seeking = false;
@@ -305,7 +307,7 @@ function renderSkeleton() {
   days.forEach(function (d) {
     var info = DAYS[d];
     info.off = g;
-    h += '<section class="page dv" data-g="' + g + '" data-d="' + d + '"><div class="dv"><div class="in"><small>' + dayNo(d) + '</small><div class="d">' + (+d.slice(0, 2)) + '<b>/' + (+d.slice(2)) + '</b></div><h2>' + esc(DAY_TITLE[d] || '') + '</h2><em>' + WD[d] + '曜日 · ' + info.count + ' PHOTOS</em>' + (DAY_CITY[d] ? '<p class="city"><small>その日、街では</small>' + esc(DAY_CITY[d]) + '</p>' : '') + '<a class="dvl" href="log.html#' + d + '">この日の記録を読む ›</a><i></i></div></div></section>';
+    h += '<section class="page dv" data-g="' + g + '" data-d="' + d + '"><div class="dv"><div class="in"><small>' + dayNo(d) + '</small><div class="d">' + (+d.slice(0, 2)) + '<b>/' + (+d.slice(2)) + '</b></div><h2>' + esc(DAY_TITLE[d] || '') + '</h2><em>' + WD[d] + '曜日 · ' + info.count + ' PHOTOS</em>' + (DAY_CITY[d] ? '<p class="city"><small>その日、街では</small>' + esc(DAY_CITY[d]) + '</p>' : '') + '<a class="dvl" href="' + LOGP + '#' + d + '">この日の記録を読む ›</a><i></i></div></div></section>';
     PAGES.push({ d: d, k: -1 }); g++;
     for (var k = 0; k < info.count; k++) { h += '<section class="page" data-g="' + g + '" data-d="' + d + '" data-k="' + k + '"><figure class="ph" id="ph' + g + '"><img alt="" loading="lazy" decoding="async"></figure></section>'; PAGES.push({ d: d, k: k }); g++; }
   });
@@ -480,6 +482,7 @@ function loadCaps() {
 function start() {
   Vault.manifest().then(function (m) {
     man = m;
+    $('wm').href = LOGP;
     m.parts.forEach(function (p) { if (p.id.indexOf('photos-') === 0) { var d = p.id.slice(7); days.push(d); DAYS[d] = { count: p.count || 0, off: 0 }; } });
     days.sort();
     var hh = location.hash.replace('#', ''), want = hh.slice(0, 4); var pm = /^\d{4}-(\d{4})/.exec(hh); if (pm) pendingN = pm[1];

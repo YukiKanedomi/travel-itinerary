@@ -10,9 +10,9 @@
  * 旧世代（tabi-shiori-v* / tabi-techo-v*）は一度だけ掃除する。
  * /v1/ のアーカイブ（tabi-shiori-arch-*）には触れない。
  */
-const CACHE = 'tabi-techo-root-v75';
+const CACHE = 'tabi-techo-root-v76';
 const VCACHE = 'tabi-vault-v1'; /* 金庫の暗号文（ハッシュ名・不変）。版を上げても消さない */
-const V = '75'; // index.html の ?v= と揃える
+const V = '76'; // index.html の ?v= と揃える
 /* 必須シェル：1つでも取得に失敗したらインストール自体を失敗させる（約1MB） */
 const CORE = [
   './',
@@ -35,7 +35,7 @@ const CORE = [
 ];
 /* 任意コンテンツ：1枚ずつ取得し、失敗してもインストールは成功させる（写真・誌面・挿絵 約16MB） */
 const OPTIONAL = [
-  './footprints/', './footprints/index.html', './footprints/log.html', './footprints/vendor/leaflet.js', './footprints/vendor/leaflet.css',
+  './footprints/', './footprints/index.html', './footprints/log.html', './footprints/share.html', './footprints/share-photos.html', './footprints/vendor/leaflet.js', './footprints/vendor/leaflet.css',
   './assets/day1.jpg', './assets/day2.jpg', './assets/day3.jpg', './assets/day4.jpg',
   './assets/day5.jpg', './assets/day6.jpg', './assets/day7.jpg',
   './assets/scrap-laneway.jpg', './assets/scrap-qvm.jpg', './assets/scrap-koala.jpg', './assets/scrap-opera.jpg',

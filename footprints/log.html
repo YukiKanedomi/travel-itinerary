@@ -36,7 +36,7 @@ html.dark .pin[data-d="0926"],html.dark #dz button[data-day="0926"]{--c:#CFC7B8 
 html.dark #grain{opacity:calc(var(--grain) * 1.4)}
 header::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background-image:var(--grain-img);background-size:220px 220px;mix-blend-mode:overlay;opacity:var(--grain);-webkit-mask-image:linear-gradient(180deg,#000 60%,transparent);mask-image:linear-gradient(180deg,#000 60%,transparent)}
 html.dark header::before{opacity:calc(var(--grain) * 1.4)}
-html.guest #lb-fp,html.guest .lk a{display:none}
+html.guest .lk a{display:none}
 *{box-sizing:border-box;margin:0;padding:0}
 /* 押した手応え */
 #days a,.toc a,.dayc,.fpbig,.fp,.hero button,#totop,.tmap .cap .dz button,.tmap .cap .z button,#lb-x,#lb-fp,.lk button,.wm{transition:transform .32s cubic-bezier(.34,1.56,.64,1)}
@@ -238,10 +238,11 @@ html.dark .city{background:rgba(255,255,255,.07)}
 <input id="lock-pw" type="password" autocomplete="current-password" autocapitalize="off" spellcheck="false" placeholder="合言葉"><button type="submit" id="lock-btn">開く</button><div class="msg" id="lock-msg"></div><a href="../">‹ 旅の手帳へ</a></form></div>
 
 <script src="vendor/leaflet.js"></script>
-<script src="../vault.js?v=75"></script>
+<script src="../vault.js?v=76"></script>
 <script>
 Vault.base('../');
 document.addEventListener('touchstart', function () {}, { passive: true });
+var FPP = window.GUEST ? 'share-photos.html' : './'; /* 足跡の頁（共有版は共有版の足跡へ） */
 (function () {
   var m = /[?&]grain=([\d.]+)/.exec(location.search), v = null;
   if (m) { v = m[1]; try { localStorage.setItem('grain_v1', v); } catch (e) {} }
@@ -323,12 +324,12 @@ function dayHTML(f) {
     h += '<div class="p' + (sub ? ' sub' : '') + '" data-t="">' + inline(text.trim()) + '</div>';
     para = [];
   }
-  function closeSec() { flushPara(); flushImgs(); if (fpLink && !window.GUEST) { h += '<a class="more" href="' + fpLink + '">ALL PHOTOS · FOOTPRINTS ›</a>'; } fpLink = ''; h += '</section>'; inSec = false; }
+  function closeSec() { flushPara(); flushImgs(); if (fpLink) { h += '<a class="more" href="' + fpLink + '">ALL PHOTOS · FOOTPRINTS ›</a>'; } fpLink = ''; h += '</section>'; inSec = false; }
   for (; i < lines.length; i++) {
     var l = lines[i], m;
     if ((m = /^#\s+(.*)$/.exec(l))) { title = m[1].replace(/^旅の記録\s*—\s*/, ''); continue; }
     if (/^---+\s*$/.test(l)) continue;
-    if ((m = /^<!--\s*fp:(\d{4}-\d{4})\s*-->/.exec(l))) { fpLink = './#' + m[1]; continue; }
+    if ((m = /^<!--\s*fp:(\d{4}-\d{4})\s*-->/.exec(l))) { fpLink = FPP + '#' + m[1]; continue; }
     if ((m = /^##\s+(.*)$/.exec(l))) {
       if (inSec) closeSec();
       var t = m[1]; skipSec = /写真の索引/.test(t);
@@ -352,7 +353,7 @@ function dayHTML(f) {
   var lead = ''; var ls = f.md.split(/\r?\n/); for (var q = 1; q < ls.length; q++) { if (/^##/.test(ls[q])) break; if (ls[q].trim() && !/^---/.test(ls[q])) { lead = ls[q].trim(); break; } }
   var head = '<div class="head' + (HERO[first] ? ' hp' : '') + '" data-day="' + first + '"' + (keys.length === 1 ? ' id="d' + first + '"' : '') + '>' + (HERO[first] ? '<img class="bg" alt="" data-n="' + HERO[first] + '">' : '') + '<div class="hin"><small>TRAVEL LOG · ' + dayLbl + '</small><div class="date">' + dateBig + '</div><h1>' +
     inline(title.replace(/^\d{1,2}\/\d{1,2}（.）\s*/, '').replace(/（\d{4}-\d{2}-\d{2}〜\d{2}）\s*$/, '').replace(/^([^。]+)。/, '$1　')) + '</h1>' + (lead ? '<div class="lead">' + inline(lead) + '</div>' : '') + (DAY_CITY[first] ? '<div class="city"><small>その日、街では</small>' + esc(DAY_CITY[first]) + '</div>' : '') + '</div></div>';
-  var fp = (HERO[first] && !window.GUEST) ? '<a class="fp" href="./#' + first + '"><small>PHOTO FOOTPRINTS</small><span>この日の写真の足跡</span><em>撮った場所と時間で、写真を一枚ずつたどる</em></a>' : '';
+  var fp = HERO[first] ? '<a class="fp" href="' + FPP + '#' + first + '"><small>PHOTO FOOTPRINTS</small><span>この日の写真の足跡</span><em>撮った場所と時間で、写真を一枚ずつたどる</em></a>' : '';
   return '<article class="day">' + head + h + fp + '</article>';
 }
 function tripMapHTML() {
@@ -373,7 +374,7 @@ function initPinMap() {
       bounds.push([x.lat, x.lng]);
       dset[x.d] = 1;
       var m = L.marker([x.lat, x.lng], { icon: L.divIcon({ className: '', html: '<div class="pin" data-d="' + x.d + '" style="--c:' + (DC[x.d] || '#3A3532') + '"></div>', iconSize: [8, 8], iconAnchor: [4, 4] }) }).addTo(pinmap); markers.push(m);
-      if (!window.GUEST) m.bindPopup('<b>' + esc(x.p || '') + '</b><br>' + '9/' + (+x.d.slice(2)) + ' ' + esc(x.t) + '<a href="./#' + x.d + '-' + x.n + '">OPEN IN FOOTPRINTS ›</a>', { closeButton: false });
+      m.bindPopup('<b>' + esc(x.p || '') + '</b><br>' + '9/' + (+x.d.slice(2)) + ' ' + esc(x.t) + '<a href="' + FPP + '#' + x.d + '-' + x.n + '">OPEN IN FOOTPRINTS ›</a>', { closeButton: false });
     });
     $('pincount').textContent = bounds.length + ' PHOTOS · ' + 'MEL & SYD';
     var ds = Object.keys(dset).sort();
@@ -400,7 +401,7 @@ var rendered = false, total = 0;
 function renderAll() {
   var h = '<div class="cover" data-day=""><small>TRAVEL LOG</small><div class="ttl">Australia <b>2026</b></div><h1>七日間の記録</h1><div class="lead">メルボルンからシドニーへ。写真を見ながら書いた、日ごとの記録。</div></div>';
   h += tripMapHTML();
-  if (!window.GUEST) h += '<a class="fpbig" href="./"><img alt="" data-n="2290"><div class="tx"><small>PHOTO FOOTPRINTS</small><b>写真の足跡</b><span>' + (total ? total + ' 枚の写真を、' : '') + '撮った場所と時間で一枚ずつたどる</span><i>→</i></div></a>';
+  h += '<a class="fpbig" href="' + FPP + '"><img alt="" data-n="2290"><div class="tx"><small>PHOTO FOOTPRINTS</small><b>写真の足跡</b><span>' + (total ? total + ' 枚の写真を、' : '') + '撮った場所と時間で一枚ずつたどる</span><i>→</i></div></a>';
   h += '<div class="toc">' + allKeys.map(function (k) { return '<a href="#' + k + '"><small>DAY ' + ('0' + DAY_NO[k]).slice(-2) + ' · ' + (+k.slice(2)) + ' SEP</small><span>' + esc(DAY_TITLE[k] || '') + '</span></a>'; }).join('') + '</div>';
   files.forEach(function (f) { h += dayHTML(f); });
   h += '<div class="foot"><a href="#" style="text-decoration:none">↑ TOP</a>　·　<button type="button" onclick="Vault.forget();location.reload()">FORGET PASSPHRASE ON THIS DEVICE</button></div>';
@@ -490,7 +491,7 @@ function lbShow(i) {
   lbAt = i; var n = lbList[i];
   $('lb-img').style.opacity = '0'; $('lb-cap').textContent = ''; $('lb').classList.add('on'); document.body.style.overflow = 'hidden';
   Vault.photoURL(n).then(function (u) { if (u && lbAt === i) { $('lb-img').src = u; $('lb-img').style.opacity = '1'; } return pinOf(n); })
-    .then(function (p) { if (p && lbAt === i) { $('lb-cap').textContent = p.t + ' · ' + (p.p || '') + (lbList.length > 1 ? '　' + (i + 1) + '/' + lbList.length : ''); $('lb-fp').href = './#' + p.d + '-' + n; } })
+    .then(function (p) { if (p && lbAt === i) { $('lb-cap').textContent = p.t + ' · ' + (p.p || '') + (lbList.length > 1 ? '　' + (i + 1) + '/' + lbList.length : ''); $('lb-fp').href = FPP + '#' + p.d + '-' + n; } })
     .catch(function () { if (lbAt === i) $('lb-cap').textContent = '読み込めませんでした'; });
 }
 function lbClose() { $('lb').classList.remove('on'); $('lb-img').removeAttribute('src'); document.body.style.overflow = ''; }

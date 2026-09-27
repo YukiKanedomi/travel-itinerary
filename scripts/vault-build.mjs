@@ -82,7 +82,7 @@ if (PHOTO_JSON) {
     }
   }
   let big = 0;
-  for (const day of (GUEST ? [] : Object.keys(byDay).sort())) {
+  for (const day of Object.keys(byDay).sort()) {
     const items = byDay[day].sort((a, b) => a.t.localeCompare(b.t) || a.n.localeCompare(b.n))
       .map(r => { const o = Object.assign({}, r); delete o.big; return o; });
     const enc = await encrypt(new TextEncoder().encode(JSON.stringify({ day, items })));
@@ -93,7 +93,7 @@ if (PHOTO_JSON) {
   }
   /* 全写真のピン（扉の地図用。小さいので 1 区画） */
   {
-    const pins = recs.map(r => ({ n: r.n, d: r.t.slice(0, 5).replace('/', ''), t: r.t.slice(6), lat: +(+r.lat).toFixed(5), lng: +(+r.lng).toFixed(5), p: String(r.p || '').split(/[,，（(]/)[0] }));
+    const pins = recs.filter(r => !ONLY || ONLY.has(r.n)).map(r => ({ n: r.n, d: r.t.slice(0, 5).replace('/', ''), t: r.t.slice(6), lat: +(+r.lat).toFixed(5), lng: +(+r.lng).toFixed(5), p: String(r.p || '').split(/[,，（(]/)[0] }));
     const enc = await encrypt(new TextEncoder().encode(JSON.stringify({ pins })));
     const file = 'pins.' + hash8(enc) + '.enc';
     writeFileSync(join(outDir, file), enc);
@@ -119,5 +119,10 @@ console.log((GUEST ? 'vault-guest:' : 'vault:'), parts.map(p => `${p.id} ${(p.by
   out = out.replace("Vault.base('../');", "Vault.base('../'); Vault.dir('vault-guest'); window.GUEST = true; document.documentElement.classList.add('guest');");
   if (out === src) throw new Error('share.html: 置き換え箇所が見つかりません');
   writeFileSync(join(root, 'footprints', 'share.html'), out);
-  console.log('share.html ok');
+  const src2 = readFileSync(join(root, 'footprints', 'index.html'), 'utf8');
+  let out2 = src2.replace('<title>写真の足跡 — オーストラリア 2026</title>', '<title>写真の足跡（共有版） — オーストラリア 2026</title>');
+  out2 = out2.replace("Vault.base('../');", "Vault.base('../'); Vault.dir('vault-guest'); window.GUEST = true; document.documentElement.classList.add('guest');");
+  if (out2 === src2) throw new Error('share-photos.html: 置き換え箇所が見つかりません');
+  writeFileSync(join(root, 'footprints', 'share-photos.html'), out2);
+  console.log('share.html / share-photos.html ok');
 }
