@@ -24,7 +24,7 @@
 | `info.js` | 情報タブ（為替・緊急連絡先・交通ガイド・参考リンク・予算） |
 | `pages.css` | 地図・準備・情報タブの装丁 |
 | `news.js` | 雑誌タブ「南十字星」（`articles.json` を読んで手帳に挟まったミニ雑誌として描画） |
-| `articles.json` | 雑誌の記事データ。**毎朝の自動配信（下記 TravelPressDaily）が追記する**。手で編集しない |
+| `articles.json` | 雑誌の記事データ。毎朝の自動配信（下記 TravelPressDaily）が追記していた（2026-09-19 終刊）。手で編集しない |
 | `wx.js` | 天気の実況（Open-Meteo・キー不要。3地点×16日、localStorage に3時間保持） |
 | `guide.js` | 手引きタブ（出発日タイムライン・現地の作法・誌面ライブラリ。2026-08-17 新設） |
 | `docs.js` | 書類ポケット（eチケット等を IndexedDB に端末内保存。ネットに送らない） |
@@ -46,9 +46,10 @@
 
 ※ push は自動でよい（`node validate.mjs`・構文チェック・必要なら描画確認が通ってから。`git pull --rebase --autostash` → push → デプロイ成功を確認）。個人情報（参考資料/）を含めない条件は変わらない。デザインプレビューは Read でチャットに見せる（保存が要るときだけ Drive の `Claude成果物/travel-itinerary/デザイン比較/`）。
 
-## 自動配信（TravelPressDaily・2026-09-06 確認、稼働中）
+## 自動配信（TravelPressDaily・2026-09-19 終刊、2026-09-29 タスク解除済み）
 
 - タスクスケジューラ `TravelPressDaily`（毎朝 6:47）が `scripts/auto-press.ps1` を起動し、`claude -p` がその日の記事を調べて `add-issue.mjs` で `articles.json` に追記し、**無人で git push する**（2026-09-06 時点で第59号）。2026-09-19 以降はプロンプトが自ら終了する。
+- **2026-09-29 にタスクを解除した**（以下は稼働当時の記録）。タスク定義の控えは `参考資料/TravelPressDaily-task.xml`。
 - 停止: `Unregister-ScheduledTask -TaskName 'TravelPressDaily' -Confirm:$false`。状態: `Get-ScheduledTaskInfo -TaskName 'TravelPressDaily'`。作法は `headless-job` スキル。
 - 2026-09-11 に手動セッションも自動 push 可となったため、自動配信との区別は不要になった。
 
